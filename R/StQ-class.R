@@ -1,0 +1,123 @@
+#' @title S4 class for sets of \emph{St}andarized \emph{Q}uestionnaires
+#'
+#' @description Definition of an S4 class named \code{StQ} for sets of
+#' standardized questionnaires.
+#'
+#' The structure of the class \code{StQ} comprises 2 attribute:
+#' \itemize{
+#' \item The attribute \code{Data}, which is a \linkS4class{data.table} with
+#' key-value pair structure containing all statistical variables,both from the
+#' questionnaire and any resulting metadata from the data processing.
+#'
+#' \item The attribute \code{DD}, which is an object of class \linkS4class{DD}.
+#' It basically contains the definition and properties of each variable.
+#' }
+#'
+#' Every variable name in the attribute \code{Data} must be present in the
+#' attribute \code{DD}.
+#'
+#' @slot Data Object of class \linkS4class{data.table} with key-value pair
+#' structure. It must have at least two columns: \code{IDDD} and \code{Value}.
+#' It contains all statistical variables (including some metadata) together with
+#' their corresponding values. If \code{Data} is not specified as an input
+#' parameter, an empty \linkS4class{data.table} with columns \code{IDDD} and
+#' \code{Value} will be initiated.
+#'
+#' @slot DD Object of class \linkS4class{DD} with the definition and properties
+#' of all variables. If \code{DD} is not specified as an input parameter, an
+#' empty \linkS4class{DD} object with columns \code{Variable}, \code{Sort},
+#' \code{Class} and \code{Qual1} will be initiated.
+#'
+#' @examples
+#' # An empty standardized questionnaire set:
+#' new(Class = 'StQ')
+#'
+#' # An empty data set:
+#' library(data.table)
+#' Data <- data.table(IDDD = character(0), Value = character(0))
+#'
+#' # An object DD in two steps:
+#' DDData <- data.table(Variable = c('NOrden', 'EsRemuner', 'Mes', 'Anno',
+#'                                   'CCAA','CNAE2009', 'CifraNeg', 'Empleo'),
+#'                      Sort = c('IDQual', 'NonIDQual', 'IDDD', 'IDDD',
+#'                               'IDDD', 'IDDD', 'IDDD', 'IDDD'),
+#'                      Class = c('character', 'integer', 'character', 'character',
+#'                                'character', 'character', 'numeric', 'integer'),
+#'                      Qual1 = c('', '', 'NOrden', 'NOrden',
+#'                                'NOrden', 'NOrden', 'NOrden', 'NOrden'),
+#'                      Qual2 = c('', '', '', '',
+#'                                '', '', '', 'EsRemuner'))
+#' DD <- new(Class = 'DD', Data = DDData)
+#'
+#' # We create an object StQ with no data
+#' Q <- new(Class = 'StQ', Data = Data, DD = DD)
+#' Q
+#' # Notice that only the slot Data appears on screen, but the object is not a
+#' # data.table:
+#' str(Q)
+#'
+#' @include DD-class.R
+#'
+#' @import data.table
+#'
+#' @export
+setClass(Class = "StQ",
+         slots = c(Data = 'data.table',
+                   DD = 'DD'),
+         prototype = list(Data = data.table::data.table(IDDD=character(0),
+                                                        Value=character(0)),
+                          DD = new(Class = 'DD')),
+         validity = function(object){
+
+             Data <- object@Data
+             DD <- (object@DD)@Data
+
+             # Data debe tener al menos dos columnas: IDDD y Value
+             if (names(Data)[length(names(Data)) - 1] != 'IDDD'){
+                 stop('[Validity StQ] The last but one of the columns of slot
+                      Data must have name "IDDD".')
+             }
+             if (names(Data)[length(names(Data))] != 'Value') {
+                 stop('[Validity StQ] The last column of slot Data must have
+                      name "Value".')
+             }
+
+             # Las columnas diferentes a IDDD y Value deben estar especificadas como IDQual o NonIDQual en el slot DD
+             QualinData <- sort(setdiff(names(Data), c('IDDD', 'Value')))
+             QualinDD <- sort(DD[Sort != 'IDDD'][['Variable']])
+             if (!all(QualinData %in% QualinDD)) {
+               stop('[Validity StQ] Columns not being "IDDD" and "Value" must be
+                    specified as "IDQual" or "NonIDQual" in slot DD.')
+             }
+             # Si un identificador de variable está idénticamente en blanco, esta columna se elimina
+             NonIDQualinData <- intersect(DD[Sort == 'NonIDQual'][['Variable']],
+                                          names(Data))
+             for (col in NonIDQualinData){
+
+                 if (all(Data[[col]] == '')) Data[, col := NULL, with = F]
+             }
+
+             # Las variables contenidas en IDDD en el slot Data deben estar definidas en el slot DD
+             UniqueData <- unique(Data[['IDDD']])
+             NotinDD <- setdiff(UniqueData, DD[['Variable']])
+             if (length(NotinDD) > 0) {
+                 stop(paste0('\n[Validity StQ] The following variables in the column IDDD are not defined in slot DD: \n',
+                             paste0(NotinDD, collapse = ', '), '.\n'))
+             }
+
+             # Detección de filas duplicadas
+             if (dim(Data)[[1]] != 0){
+
+                 setkeyv(Data, names(Data)[-which(names(Data) == 'Value')])
+                 DupRows <- duplicated(Data)
+                 if (sum(DupRows) > 0) {
+                     warning('[Validity StQ] The following rows are duplicated:
+                             \n\n')
+                     print(Data[DupRows])
+                     stop('[Validity StQ] Please remove duplicated rows.')
+                 }
+             }
+
+             return(TRUE)
+         }
+)
