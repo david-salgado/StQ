@@ -40,19 +40,20 @@ setClass(Class = "StQList",
          slots = c(Data = 'list',
                    Periods ='RepoTimeInt'),
          validity = function(object){
-
-           DataClass <- unique(unlist(lapply(object@Data, class)))
-           if (!identical(DataClass, 'StQ')) {
-
-               stop('[StQList::validity] Every component of slot Data must be of class StQ.')
-           }
-
-           PeriodClass <- object@Periods
-           if (length(object@Data) != length(PeriodClass@Repo)) {
-
-               stop('[StQList::validity] The lenght of both slots must be equal.')
-           }
-           return(TRUE)
-
+             
+             DataClass <- unique(unlist(lapply(object@Data, class)))
+             if (!identical(DataClass, 'StQ')) {
+                 
+                 stop('[StQList::validity] Every component of slot Data must be of class StQ.')
+             }
+             
+             PeriodClass <- object@Periods
+             if (length(object@Data) != length(PeriodClass@Repo)) {
+                 
+                 stop('[StQList::validity] The lenght of both slots must be equal.')
+             }
+             return(TRUE)
+             
          }
 )
+

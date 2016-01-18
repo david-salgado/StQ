@@ -32,8 +32,6 @@ setMethod(
     signature = c("VarNameCorresp"),
     function(object){
         
-        
-        
         for (Slot in slotNames(object)){
             lapply(slot(object, Slot), function(x){
                 NamesCol <- names(x)
