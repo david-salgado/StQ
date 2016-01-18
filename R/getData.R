@@ -1,42 +1,37 @@
-#' Obtiene el slot Data del objeto pasado como parámetro.
+#' @title Return slot Data from an object
 #'
-#' \code{getData} devuelve el slot \code{Data} del objeto especificado como 
-#' argumento de entrada.
+#' @description \code{getData} returns slot \code{Data} from the input object.  
 #' 
-#' En el caso de objetos \linkS4class{StQ} devuelve un conjunto de datos 
-#' restringido a los valores de la columna \code{IDDD} del slot \code{Data}
-#' indicados en el parámetro de entrada \code{VarNames}.
+#' In the case of objects of class \linkS4class{StQ}, it returns a data set 
+#' restricted to those root variable names in the column \code{IDDD} of slot
+#' \code{Data} specified in the input parameter \code{VarNames}.
 #' 
-#' Los objetos de entrada pueden tener las clases:
+#' Input objects can be of class: 
 #' \itemize{
-#' \item \code{StQ}: En estos casos esta función toma como input un objeto de 
-#' clase \linkS4class{StQ} y un vector, \code{VarNames}, con nombres de 
-#' variables y devuelve la \code{data.table} correspondiente al slot \code{Data}
-#' de dicho objeto \code{StQ}, pero sólo con los datos relativos a las 
-#' variables indicadas en \code{VarNames}.
+#' \item \code{StQ}: The input parameters are an object of class 
+#' \linkS4class{StQ} and a character vector, \code{VarNames}, with variable 
+#' names. It returns the \code{data.table} corresponding to slot \code{Data} of 
+#' such an object, but only with variables included in \code{VarNames}.
 #'
-#' Si no se especifica ninguna variable en \code{VarNames} la función devuelve 
-#' el slot \code{Data} del objeto \code{StQ} de entrada al completo.
+#' If no variable name is specified in \code{VarNames}, it returns the complete  
+#' slot \code{Data}. 
 #' 
-#' \item \code{DD}: En estos casos esta función toma como input un objeto de 
-#' clase \linkS4class{DD}. El parámetro \code{VarNames} no tiene efecto sobre la 
-#' ejecución.
+#' \item \code{DD}: The input parameter is an object of class \linkS4class{DD}. 
+#' The parameter \code{VarNames} has no effect. 
 #' }
 #' 
-#' @param object Objeto cuyo slot \code{Data} restringido a las variables 
-#' especificadas quiere obtenerse.
+#' @param object Object whose (possibly subsetted) slot \code{Data} is queried.
 #'
-#' @param VarNames \code{\link{vector}} de clase \code{character} con los nombres
-#' de las variables a extraer. Por defecto, incluye todas las variables en el
-#' slot \code{Data} del objeto \code{StQ}.
+#' @param VarNames Character vector with the variable names subsetting the data 
+#' set. 
 #'
-#' @return En el caso de objetos \linkS4class{StQ} devuelve una 
-#' \linkS4class{data.table} con estructura par clave-valor correspondiente al 
-#' slot \code{Data} del objeto de entrada \code{StQ}, con 
-#' los valores de la columna \code{IDDD} restringidos a la variables en \code{VarNames}.
+#' @return In the case of \linkS4class{StQ} objects, it returns a 
+#' \linkS4class{data.table} with key-value pair structure corresponding to slot
+#' \code{Data} from the input object with the values of the column \code{IDDD} 
+#' restriCted to variable names specified in \code{VarNames}. 
 #'
 #' @examples
-#' # De un objeto DD
+#' # From DD objects 
 #' DDData <- data.table(Variable = c('NumIdEst', 'EsMercNac', 'EsMercEuro', 'EsMercRM', 'Cod', 'IEPEntradaPed'),
 #'                      Sort = c('IDQual', 'NonIDQual', 'NonIDQual', 'NonIDQual', 'NonIDQual', 'IDDD'),
 #'                      Class = c('character', 'character', 'character', 'character', 'character', 'character'),
@@ -50,14 +45,14 @@
 #' getData(DD)
 #' 
 #' 
-#' # De un objeto StQ
+#' # From an StQ object 
 #' VarNames <- c('IASSCifraNeg', 'IASSEmpleo')
 #' getData(ExampleQ, VarNames)
 #' 
 #' VarNames <- c('IASSCifraNeg', 'IASSEmpleo_0')
 #' getData(ExampleQ, VarNames)
 #'
-#' # De un objeto StQList
+#' # From an StQList object 
 #' mm <- c(paste0('0', 1:9), 10:12)
 #' TimePer <- paste0('MM', mm, '2015')
 #' QList <- vector('list', 12)
@@ -106,7 +101,7 @@ setMethod(
     setcolorder(output, DataNames)
     if(dim(output)[1] == 0) {
       
-      warning('[getData StQ] No existen tales variables en el conjunto de datos.')
+      warning('[StQ::getData] No such variables in this data set.')
       return(output)
     }
     
@@ -120,9 +115,9 @@ setMethod(
     
     if (length(NotPresent) > 0){
       
-      warning(paste0('[getData StQ] Las siguientes variables no se encuentran en el conjunto de datos: ', 
+      warning(paste0('[StQ::getData] The following variables are not present in the data set: ', 
                      paste0(NotPresent, collapse = ', '),
-                     '.\n No se incluyen en la data.table de salida.'))
+                     '.\n They are not included in the output data.table.'))
       
     }
     
