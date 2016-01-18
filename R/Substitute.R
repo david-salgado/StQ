@@ -59,7 +59,8 @@
 #'                                'character',
 #'                                'numeric',
 #'                                'integer'),
-#'                      Qual1 = c('', '', 'NOrden', 'NOrden', 'NOrden', 'NOrden', 'NOrden', 'NOrden'),
+#'                      Qual1 = c('', '', 'NOrden', 'NOrden', 'NOrden', 
+#'                                'NOrden', 'NOrden', 'NOrden'),
 #'                      Qual2 = c('', '', '', '', '', '', '', 'EsRemuner'))
 #' DD <- new(Class = 'DD', Data = DDData)
 #'

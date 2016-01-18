@@ -5,45 +5,50 @@
 \alias{DD-class}
 \title{S4 class for the information contained in DD files}
 \description{
-Definition of an S4 class named \code{DD} with the information
+Definition of an S4 class named \code{DD} with the information 
 contained in a DD file with s slightly different structure to that of those
-files.
+files. 
 
 The class \code{DD} comprises a slot of class \linkS4class{data.table} with
 at least columns named \code{Variable}, \code{Sort}, \code{Class} and
-\code{Qual1}. These columns have the same meanings:
+\code{Qual1}. These columns have the same meanings: 
 
 \itemize{
- \item \code{Variable}: Name of the variable.
+ \item \code{Variable}: Name of the variable. 
  \item \code{Sort}: Semantic sort of the variable, which can be a statistical
- unit qualifier (\code{IDQual}), a variable (non-unit) qualifier
+ unit qualifier (\code{IDQual}), a variable (non-unit) qualifier 
  (\code{NonIDQual}) and a variable name (\code{IDDD}).
  \item \code{Class}: Class of the variable (\code{integer}, \code{numeric},
  \code{character},...).
- \item \code{Qual1}: Name of the variable qualifier 1.
+ \item \code{Qual1}: Name of the variable qualifier 1. 
 }
 
-This \linkS4class{data.table} is complete with as many columns named
+This \linkS4class{data.table} is complete with as many columns named 
 \code{Qualn} as necessary.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{Data}}{\linkS4class{data.table} with at least the columns \code{Variable},
-\code{Sort}, \code{Class}, \code{Qual1} (in that order).}
+\item{\code{@slot}}{Data \linkS4class{data.table} with at least the columns 
+\code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} (in that order).}
 }}
 \examples{
-# An empty DD object is built through the code:
+# An empty DD object is built through the code: 
 new(Class = 'DD')
 
 # An elementary example with three variables (1 unit qualifier, 1 non-unit
 # qualifier and 1 variable)
 library(data.table)
-DDData <- data.table(Variable = c('NOrden', 'CCAA', 'CifraNeg'),
-                     Sort = c('IDQual', 'NonIDQual', 'IDDD'),
-                     Class = c('character', 'character', 'numeric'),
-                     Qual1 = c('', '', 'NOrden'))
-new(Class = 'DD', Data = DDData)
+DDData <- data.table(Variable = c('NumIdEst', 'EsMercNac', 'EsMercEuro', 'EsMercRM', 'Cod', 'IEPEntradaPed'),
+                     Sort = c('IDQual', 'NonIDQual', 'NonIDQual', 'NonIDQual', 'NonIDQual', 'IDDD'),
+                     Class = c('character', 'character', 'character', 'character', 'character', 'character'),
+                     Qual1 = c('', '', '', '', '', 'NumIdEst'))
+VarList <- list(data.table(IDQual = c('NumIdEst','','','',''),
+                     NonIDQual = c('EsMercNac', 'EsMercEuro', 'EsMercRM','Cod',''),
+                     IDDD = c('','','','','IEPEntradaPed'),
+                     Unit1 = c('','','','','')))
+VarNameCorresp <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList)
+new(Class = 'DD', Data = DDData, VarNameCorresp = VarNameCorresp)
 
 }
 

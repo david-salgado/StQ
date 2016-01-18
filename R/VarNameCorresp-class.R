@@ -17,7 +17,7 @@
 #'  \item \emph{One column per each name of the \code{NonIDQual} qualifiers}: 
 #'  Values of the corresponding \code{NonIDQual} Qualifier for each variable 
 #'  (row).
-#'  \item \code{ProdUnit\emph{j}}: Variable name used by production Unit\emph{j}.
+#'  \item \code{ProdUnit}\emph{j}: Variable name used by production Unit\emph{j}.
 #' }
 #'
 #' @slot VarNameCorresp \linkS4class{list} with as many data.tables as tables of
@@ -26,7 +26,8 @@
 #' @examples
 #' library(data.table)
 #' VarList <- list(data.table(IDQual = c('NumIdEst','','','','',''),
-#'                      NonIDQual = c('', 'EsMercNac', 'EsMercEuro', 'EsMercRM','Cod',''),
+#'                      NonIDQual = c('', 'EsMercNac', 'EsMercEuro', 'EsMercRM',
+#'                                    'Cod',''),
 #'                      IDDD = c('','','','','', 'IEPEntradaPed'),
 #'                      Unit1 = c('','','','','','')))
 #' new(Class = 'VarNameCorresp', VarNameCorresp = VarList)

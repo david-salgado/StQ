@@ -30,6 +30,7 @@
 #' 
 #' # An elementary example with three variables (1 unit qualifier, 1 non-unit
 #' # qualifier and 1 variable)
+#' library(data.table)
 #' DDData <- data.table(Variable = c('NumIdEst', 'EsMercNac', 'EsMercEuro', 'EsMercRM', 'Cod', 'IEPEntradaPed'),
 #'                      Sort = c('IDQual', 'NonIDQual', 'NonIDQual', 'NonIDQual', 'NonIDQual', 'IDDD'),
 #'                      Class = c('character', 'character', 'character', 'character', 'character', 'character'),

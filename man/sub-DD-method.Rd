@@ -10,9 +10,9 @@
 \arguments{
 \item{x}{Object of class \linkS4class{DD}.}
 
-\item{i, j, ...}{indices corresponding to elements to be extracted. The
-indices are numeric or character vectors, \code{\link{missing}} or
-\code{\link{NULL}}. Numeric values are coerced to \code{integer} with
+\item{i, j, ...}{indices corresponding to elements to be extracted. The 
+indices are numeric or character vectors, \code{\link{missing}} or 
+\code{\link{NULL}}. Numeric values are coerced to \code{integer} with 
 \code{\link{as.integer}} (thus truncated to zero).}
 
 \item{drop}{Included by coherence.}
@@ -21,10 +21,10 @@ indices are numeric or character vectors, \code{\link{missing}} or
 Object of class \linkS4class{DD} with the subsetted input object.
 }
 \description{
-\code{[} extracts parts of an object of class \linkS4class{DD}.
+\code{[} extracts parts of an object of class \linkS4class{DD}. 
 
-It is indeed the method \code{[} for the class \linkS4class{DD}. This method
-returns subsets from an object of class \linkS4class{DD} specified as an
+It is indeed the method \code{[} for the class \linkS4class{DD}. This method 
+returns subsets from an object of class \linkS4class{DD} specified as an 
 input parameter. The output is an object of the same class \linkS4class{DD}
 as the input parameter \code{x}.
 }

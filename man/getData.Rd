@@ -19,64 +19,69 @@ getData(object, VarNames)
 \arguments{
 \item{object}{Object whose (possibly subsetted) slot \code{Data} is queried.}
 
-\item{VarNames}{Character vector with the variable names subsetting the data
+\item{VarNames}{Character vector with the variable names subsetting the data 
 set.}
 }
 \value{
-In the case of \linkS4class{StQ} objects, it returns a
+In the case of \linkS4class{StQ} objects, it returns a 
 \linkS4class{data.table} with key-value pair structure corresponding to slot
-\code{Data} from the input object with the values of the column \code{IDDD}
+\code{Data} from the input object with the values of the column \code{IDDD} 
 restriCted to variable names specified in \code{VarNames}.
 }
 \description{
-\code{getData} returns slot \code{Data} from the input object.
+\code{getData} returns slot \code{Data} from the input object.  
 
-In the case of objects of class \linkS4class{StQ}, it returns a data set
+In the case of objects of class \linkS4class{StQ}, it returns a data set 
 restricted to those root variable names in the column \code{IDDD} of slot
 \code{Data} specified in the input parameter \code{VarNames}.
 
-Input objects can be of class:
+Input objects can be of class: 
 \itemize{
-\item \code{StQ}: The input parameters are an object of class
-\linkS4class{StQ} and a character vector, \code{VarNames}, with variable
-names. It returns the \code{data.table} corresponding to slot \code{Data} of
+\item \code{StQ}: The input parameters are an object of class 
+\linkS4class{StQ} and a character vector, \code{VarNames}, with variable 
+names. It returns the \code{data.table} corresponding to slot \code{Data} of 
 such an object, but only with variables included in \code{VarNames}.
 
-If no variable name is specified in \code{VarNames}, it returns the complete
-slot \code{Data}.
+If no variable name is specified in \code{VarNames}, it returns the complete  
+slot \code{Data}. 
 
-\item \code{DD}: The input parameter is an object of class \linkS4class{DD}.
-The parameter \code{VarNames} has no effect.
+\item \code{DD}: The input parameter is an object of class \linkS4class{DD}. 
+The parameter \code{VarNames} has no effect. 
 }
 }
 \examples{
-# From DD objects
-library(data.table)
-DDData <- data.table(Variable = c('NOrden', 'CCAA', 'CifraNeg'),
-                     Sort = c('IDQual', 'NonIDQual', 'IDDD'),
-                     Class = c('character', 'character', 'numeric'),
-                     Qual1 = c('', '', 'NOrden'))
-DD <- new(Class = 'DD', Data = DDData)
+# From DD objects 
+DDData <- data.table(Variable = c('NumIdEst', 'EsMercNac', 'EsMercEuro',
+                                  'EsMercRM', 'Cod', 'IEPEntradaPed'),
+                     Sort = c('IDQual', 'NonIDQual', 'NonIDQual', 
+                              'NonIDQual', 'NonIDQual', 'IDDD'),
+                     Class = c('character', 'character', 'character', 
+                               'character', 'character', 'character'),
+                     Qual1 = c('', '', '', '', '', 'NumIdEst'))
+VarList <- list(data.table(IDQual = c('NumIdEst','','','',''),
+                     NonIDQual = c('EsMercNac', 'EsMercEuro', 'EsMercRM', 
+                                   'Cod',''),
+                     IDDD = c('','','','','IEPEntradaPed'),
+                     Unit1 = c('','','','','')))
+VarNameCorresp <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList)
+DD <- new(Class = 'DD', Data = DDData, VarNameCorresp = VarNameCorresp)
 getData(DD)
 
-data(ExampleDD)
-getData(ExampleDD)
 
-# From an StQ object
+# From an StQ object 
 VarNames <- c('IASSCifraNeg', 'IASSEmpleo')
 getData(ExampleQ, VarNames)
 
 VarNames <- c('IASSCifraNeg', 'IASSEmpleo_0')
 getData(ExampleQ, VarNames)
 
-# From an StQList object
-library(RepoTime)
+# From an StQList object 
 mm <- c(paste0('0', 1:9), 10:12)
 TimePer <- paste0('MM', mm, '2015')
 QList <- vector('list', 12)
 QList <- lapply(QList, function(x) ExampleQ)
 names(QList) <- TimePer
-QList <- new(Class = 'StQList', Data = QList, Periods = newRepoTime(TimePer))
+QList <- new(Class = 'StQList', QList)
 VarNames <- c('IASSCifraNeg', 'IASSEmpleo')
 getData(QList, VarNames)
 

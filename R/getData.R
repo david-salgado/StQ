@@ -32,12 +32,16 @@
 #'
 #' @examples
 #' # From DD objects 
-#' DDData <- data.table(Variable = c('NumIdEst', 'EsMercNac', 'EsMercEuro', 'EsMercRM', 'Cod', 'IEPEntradaPed'),
-#'                      Sort = c('IDQual', 'NonIDQual', 'NonIDQual', 'NonIDQual', 'NonIDQual', 'IDDD'),
-#'                      Class = c('character', 'character', 'character', 'character', 'character', 'character'),
+#' DDData <- data.table(Variable = c('NumIdEst', 'EsMercNac', 'EsMercEuro',
+#'                                   'EsMercRM', 'Cod', 'IEPEntradaPed'),
+#'                      Sort = c('IDQual', 'NonIDQual', 'NonIDQual', 
+#'                               'NonIDQual', 'NonIDQual', 'IDDD'),
+#'                      Class = c('character', 'character', 'character', 
+#'                                'character', 'character', 'character'),
 #'                      Qual1 = c('', '', '', '', '', 'NumIdEst'))
 #' VarList <- list(data.table(IDQual = c('NumIdEst','','','',''),
-#'                      NonIDQual = c('EsMercNac', 'EsMercEuro', 'EsMercRM','Cod',''),
+#'                      NonIDQual = c('EsMercNac', 'EsMercEuro', 'EsMercRM', 
+#'                                    'Cod',''),
 #'                      IDDD = c('','','','','IEPEntradaPed'),
 #'                      Unit1 = c('','','','','')))
 #' VarNameCorresp <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList)
