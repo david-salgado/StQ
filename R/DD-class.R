@@ -93,6 +93,14 @@ setClass(Class = "DD",
                  stop('[Validity DD] The fourth and succesive columns must be named "Qual1", "Qual2", ...')
              }
              
+             VariablesDD <- object@Data[Sort == 'IDDD'][['Variable']]
+             variablesVNC <- character()
+             lapply(object@VarNameCorresp@VarNameCorresp, function(SheetName){
+                 
+                 Var <- SheetName[['IDDD']]
+                 Var <- Var[Var != ""]
+             })
+             
              return(TRUE)
          }
 )
