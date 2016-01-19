@@ -4,9 +4,9 @@
 #' correspondence between variable names used by different production units for
 #' a given statistical variable.
 #'
-#' The class \code{VarNames} comprises a slot of class \linkS4class{list} whose
-#' components are data.tables with a row per each variable and the following 
-#' columns:
+#' The class \code{VarNameCorresp} comprises a slot of class \linkS4class{list}
+#' whose components are \code{data.table} with a row per each variable and the
+#' following columns:
 #'
 #' \itemize{
 #'  \item \code{IDQual}: Names of unit qualifiers.
@@ -58,23 +58,23 @@ setClass(Class = "VarNameCorresp",
               IDQual <- IDQual[IDQual != ""]
               if (any(duplicated(IDQual))){
                 
-                stop('[Validity VarNames] The column "IDQual" cannot have repeated values.')
+                stop('[Validity VarNameCorresp] The column "IDQual" cannot have repeated values.')
               }
               
               if (ColNames[2] != 'NonIDQual'){
                 
-                stop('[Validity VarNames] The second column of slot VarNames must be named "NonIDQual".')
+                stop('[Validity VarNameCorresp] The second column of slot VarNames must be named "NonIDQual".')
               }
               NonIDQual <- SheetName[['NonIDQual']]
               NonIDQual <- NonIDQual[NonIDQual!=""]
               if (any(duplicated(NonIDQual))) {
                 
-                stop('[Validity VarNames] The column "NonIDQual" cannot have repeated values.')
+                stop('[Validity VarNameCorresp] The column "NonIDQual" cannot have repeated values.')
               }
               
               if (ColNames[3] != 'IDDD'){
                 
-                stop('[Validity VarNames] The third column of slot VarNames must be named "IDDD".')
+                stop('[Validity VarNameCorresp] The third column of slot VarNames must be named "IDDD".')
               }
     
               ColIDQual <- ColNames[4:(3+length(IDQual))]
@@ -82,7 +82,7 @@ setClass(Class = "VarNameCorresp",
                 
                  if (length(ColIDQual[ColIDQual != IDQual]) > 0){
                    
-                   stop('[Validity VarNames] The names of unit qualifiers in the columns of slot VarNames are not right. ')
+                   stop('[Validity VarNameCorresp] The names of unit qualifiers in the columns of slot VarNames are not right. ')
                  }
                   
                  if (length(NonIDQual > 0)){
@@ -90,7 +90,7 @@ setClass(Class = "VarNameCorresp",
                    ColNonIDQual <- ColNames[(4+length(IDQual)):((3+length(IDQual))+length(NonIDQual))]
                    if (length(ColNonIDQual[ColNonIDQual != NonIDQual]) > 0){
                      
-                     stop('[Validity VarNames] The names of the (non-unit) qualifier in the columns of slot VarNames are not right. ')
+                     stop('[Validity VarNameCorresp] The names of the (non-unit) qualifier in the columns of slot VarNames are not right. ')
                    }
                  }
                 
@@ -98,14 +98,14 @@ setClass(Class = "VarNameCorresp",
     
                 if (length(Unitn[Unitn != paste0('Unit',seq(along = Unitn))]) > 0){
                   
-                  stop('[Validity VarNames] The names of the columns with Units must be "Unit1, Unit2, ...".')
+                  stop('[Validity VarNameCorresp] The names of the columns with Units must be "Unit1, Unit2, ...".')
                 } 
                  
               }else{
               
                 if (ColNames[4] != 'Unit1'){
                   
-                  stop('[Validity VarNames] The fourth column of slot VarNames must be named "Unit1".')
+                  stop('[Validity VarNameCorresp] The fourth column of slot VarNames must be named "Unit1".')
                 }
               }
           })
