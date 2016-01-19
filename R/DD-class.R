@@ -93,14 +93,18 @@ setClass(Class = "DD",
                  stop('[Validity DD] The fourth and succesive columns must be named "Qual1", "Qual2", ...')
              }
              
-             VariablesDD <- object@Data[Sort == 'IDDD'][['Variable']]
+             variablesDD <- object@Data[Sort == 'IDDD'][['Variable']]
              variablesVNC <- character()
-             lapply(object@VarNameCorresp@VarNameCorresp, function(SheetName){
-                 
-                 Var <- SheetName[['IDDD']]
-                 Var <- Var[Var != ""]
-             })
+             for (SheetName in object@VarNameCorresp@VarNameCorresp){
+                 var <- SheetName[['IDDD']]
+                 var <- var[var != ""]
+                 variablesVNC <- c(variablesVNC, setdiff(var, variablesVNC))
+             }
              
+             if (length(setdiff(variablesVNC, VariablesDD)) > 0){
+                 
+                 stop('[Validity DD] All variables in the column "IDDD" of each element of the slot VarNameCorresp must be variables ("Sort" = IDDD) in the slot Data.')
+             }
              return(TRUE)
          }
 )
