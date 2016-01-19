@@ -7,7 +7,7 @@
 #' \code{DD} from an object of class \linkS4class{StQ} specified as input
 #' argument.
 #'
-#' @param object Object of class \linkS4class{StQ}.
+#' @param Object of class \linkS4class{StQ}.
 #'
 #' @return Object of class \linkS4class{DD} corresponding to the slot \code{DD}
 #' of the input parameter.
