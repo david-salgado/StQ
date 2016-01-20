@@ -100,8 +100,8 @@ setClass(Class = "DD",
                  var <- var[var != ""]
                  variablesVNC <- c(variablesVNC, setdiff(var, variablesVNC))
              }
-             
-             if (length(setdiff(variablesVNC, VariablesDD)) > 0){
+
+             if (length(setdiff(variablesVNC, variablesDD)) > 0){
                  
                  stop('[Validity DD] All variables in the column "IDDD" of each element of the slot VarNameCorresp must be variables ("Sort" = IDDD) in the slot Data.')
              }
