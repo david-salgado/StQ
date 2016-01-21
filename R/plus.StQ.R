@@ -33,7 +33,13 @@
 #'                      Class = c('character',
 #'                                'numeric'),
 #'                      Qual1 = c('', 'NOrden'))
-#' DD1 <- new(Class = 'DD', Data = DDData1)
+#' VNC1List <- list(data.table(IDQual = c('Norden', ''),
+#'                             NonIDQual = c('', ''),
+#'                             IDDD = c('', 'CifraNeg'),
+#'                             Norden = c('', ''),
+#'                             Unit1 = c('', '')))
+#' VNC1 <- new(Class = 'VarNameCorresp', VarNameCorresp = VNC1List)
+#' DD1 <- new(Class = 'DD', Data = DDData1, VarNameCorresp = VNC1)
 #'
 #' DDData2 <- data.table(Variable = c('NOrden',
 #'                                    'EsRemuner',
@@ -46,7 +52,14 @@
 #'                                'integer'),
 #'                      Qual1 = c(rep('', 2), 'NOrden'),
 #'                      Qual2 = c(rep('', 2), 'EsRemuner'))
-#' DD2 <- new(Class = 'DD', Data = DDData2)
+#' VNC2List <- list(data.table(IDQual = c('Norden', '', ''),
+#'                             NonIDQual = c('', 'EsRemuner', ''),
+#'                             IDDD = c('', '', 'Empleo'),
+#'                             Norden = c('', '', ''),
+#'                             EsRemuner = c('', '', '1'),
+#'                             Unit1 = c('', '', '')))
+#' VNC2 <- new(Class = 'VarNameCorresp', VarNameCorresp = VNC2List)
+#' DD2 <- new(Class = 'DD', Data = DDData2, VarNameCorresp = VNC2)
 #'
 #' # We build both StQ objects and join them in a single object:
 #' Q1 <- new(Class = 'StQ', Data = Data1, DD = DD1)

@@ -87,7 +87,7 @@ setGeneric("Substitute", function(In,
 
 #' @rdname Substitute
 #'
-#' #@include StQ-class.R dcast_StQ.R getDD.R getUnits.R setVar.R getDD.R
+#' @include StQ-class.R dcast_StQ.R getDD.R getUnits.R setVar.R getDD.R
 #'
 #' @import data.table
 #'

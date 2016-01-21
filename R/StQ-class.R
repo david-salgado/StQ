@@ -36,7 +36,7 @@
 #' library(data.table)
 #' Data <- data.table(IDDD = character(0), Value = character(0))
 #'
-#' # An object DD in two steps:
+#' # An object DD:
 #' DDData <- data.table(Variable = c('NOrden', 'EsRemuner', 'Mes', 'Anno',
 #'                                   'CCAA','CNAE2009', 'CifraNeg', 'Empleo'),
 #'                      Sort = c('IDQual', 'NonIDQual', 'IDDD', 'IDDD',
@@ -47,7 +47,15 @@
 #'                                'NOrden', 'NOrden', 'NOrden', 'NOrden'),
 #'                      Qual2 = c('', '', '', '',
 #'                                '', '', '', 'EsRemuner'))
-#' DD <- new(Class = 'DD', Data = DDData)
+#' VNCList <- list(data.table(IDQual = c('Norden', '', '', '', '', '', '', ''),
+#'                            NonIDQual = c('', 'EsRemuner', '', '', '', '', '',
+#'                            ''), IDDD = c('', '', 'Mes', 'Anno', 'CCAA',
+#'                            'CNAE2009', 'CifraNeg', 'Empleo'), Norden = c('', 
+#'                            '', '', '', '', '', '', ''), EsRemuner = c('', '',
+#'                            '', '', '', '', '', ''), Unit1 = c('', '', '', '',
+#'                            '', '', '', '')))
+#' VNC <- new(Class = 'VarNameCorresp', VarNameCorresp = VNCList)
+#' DD <- new(Class = 'DD', Data = DDData, VarNameCorresp = VNC)
 #'
 #' # We create an object StQ with no data
 #' Q <- new(Class = 'StQ', Data = Data, DD = DD)
