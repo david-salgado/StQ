@@ -33,7 +33,17 @@
 #'                     EsRemuner = c('', ''),
 #'                     IDDD = c('CifraNeg', 'CifraNeg'),
 #'                     Value = c(10000, 188364))
-#'
+#'                     
+#' # Creamos el objeto VarNameCorresp
+#' VNCList <- list(data.table(IDQual = c('Norden', '', '', '', '', '', '', ''),
+#'                           NonIDQual = c('', 'EsRemuner', '', '', '', '', '',
+#'                            ''), IDDD = c('', '', 'Mes', 'Anno', 'CCAA',
+#'                           'CNAE2009', 'CifraNeg', 'Empleo'), Norden = c('',
+#'                           '', '', '', '', '', '', ''), EsRemuner = c('',
+#'                           '', '', '', '', '', '', '1'), Unit1 = c('', '', '',
+#'                           '', '', '', '', '')))
+#' VNC <- new(Class = 'VarNameCorresp', VarNameCorresp = VNCList)
+#' 
 #' # Creamos un slot DD:
 #' DDData <- data.table(Variable = c('NOrden',
 #'                                   'EsRemuner',
@@ -62,7 +72,7 @@
 #'                      Qual1 = c('', '', 'NOrden', 'NOrden', 'NOrden', 
 #'                                'NOrden', 'NOrden', 'NOrden'),
 #'                      Qual2 = c('', '', '', '', '', '', '', 'EsRemuner'))
-#' DD <- new(Class = 'DD', Data = DDData)
+#' DD <- new(Class = 'DD', Data = DDData, VarNameCorresp = VNC)
 #'
 #' # Finalmente creamos el objeto
 #' Q1 <- new(Class = 'StQ', Data = Data1, DD = DD)
@@ -77,7 +87,7 @@ setGeneric("Substitute", function(In,
 
 #' @rdname Substitute
 #'
-#' @include StQ-class.R dcast_StQ.R getDD.R getUnits.R setVar.R getDD.R
+#' #@include StQ-class.R dcast_StQ.R getDD.R getUnits.R setVar.R getDD.R
 #'
 #' @import data.table
 #'

@@ -45,9 +45,10 @@ VarNamesToDD <- function(VarNames, DD){
     # Para una sola variable
     if (is.character(VarNames) & length(VarNames) == 1){
 
+        DDSlotNames <- setdiff(slotNames(DD), 'VarNameCorresp')
         output <- list()
-        for (DDslot in slotNames(DD)){
-
+        for (DDslot in DDSlotNames){
+        
             DD <- slot(DD, DDslot)
             Names.DT <- DD[Variable == ExtractNames(VarNames)]
 
@@ -94,6 +95,7 @@ VarNamesToDD <- function(VarNames, DD){
                 }
 
                 output[[DDslot]] <- Names.DT
+                
             }
         }
         output <- rbindlist(output)

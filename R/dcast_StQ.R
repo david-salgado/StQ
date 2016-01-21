@@ -9,7 +9,7 @@
 #'  statistical units by row and variables specified in the input parameter
 #'  \code{VarNames} by columns.
 #'
-#' To distinguish between varaibles and qualifiers this function makes use of
+#' To distinguish between variables and qualifiers this function makes use of
 #' the slot \code{DD} of input \linkS4class{StQ} variable.
 #'
 #' This method is indeed a wrapper for the function
@@ -29,7 +29,8 @@
 #'
 #' @examples
 #' data(ExampleQ)
-#' Mat <- dcast_StQ(ExampleQ, c('IASSCifraNeg', 'IASSEmpleo_0', 'IASSEmpleo_1_1', 'IASSEmpleo_1_2'))
+#' Mat <- dcast_StQ(ExampleQ, c('IASSCifraNeg', 'IASSEmpleo_0',
+#'                  'IASSEmpleo_1_1', 'IASSEmpleo_1_2'))
 #' str(Mat)
 #'
 #' @seealso \code{\link{melt_StQ}}, \code{\link[data.table]{dcast.data.table}},

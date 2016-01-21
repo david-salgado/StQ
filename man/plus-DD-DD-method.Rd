@@ -23,16 +23,31 @@ overloads the operator \link{+} and returns a new object of class
 }
 \examples{
 library(data.table)
+VNC1List <- list(data.table(IDQual = c('Norden', '', ''),
+                            NonIDQual = c('', 'CCAA', ''),
+                            IDDD = c('', '', 'CifraNeg'),
+                            Norden = c('', '', ''),
+                            CCAA = c('', '', ''),
+                            Unit1 = c('', '', '')))
+names(VNC1List) <- seq(along = VNC1List)
+VNC1 <- new(Class = 'VarNameCorresp', VarNameCorresp = VNC1List)
 DD1 <- new(Class = 'DD',
            Data = data.table(Variable = c('NOrden', 'CCAA', 'CifraNeg'),
                              Sort = c('IDQual', 'NonIDQual', 'IDDD'),
-                             Class = c('character', 'character', 'numeric'),
-                             Qual1 = c('', '', 'NOrden')))
+                             Class = c('character', 'character', 'numeric'), 
+                             Qual1 = c('', '', 'NOrden')),
+           VarNameCorresp = VNC1)
+VNC2List <- list(data.table(IDQual = c('Norden',''), NonIDQual = c('', ''),
+                            IDDD = c('', 'logCifraNeg'),
+                            Norden = c('', ''),
+                            Unit1 = c('', '')))
+names(VNC2List) <- seq(along = VNC2List)
+VNC2 <- new(Class = 'VarNameCorresp', VarNameCorresp = VNC2List)
 DD2 <- new(Class = 'DD',
-           Data = data.table(Variable = c('logCifraNeg'),
-                             Sort = c('IDDD'),
-                             Class = c('numeric'),
-                             Qual1 = c('NOrden')))
+           Data = data.table(Variable = c('Norden', 'logCifraNeg'),
+                             Sort = c('IDQual', 'IDDD'),
+                             Class = c('character', 'numeric'),
+                             Qual1 = c('', 'NOrden')), VarNameCorresp = VNC2)
 DD1 + DD2
 
 }

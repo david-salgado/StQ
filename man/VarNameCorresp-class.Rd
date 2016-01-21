@@ -9,9 +9,9 @@ Definition of an S4 class named \code{VarNameCorresp} with the
 correspondence between variable names used by different production units for
 a given statistical variable.
 
-The class \code{VarNames} comprises a slot of class \linkS4class{list} whose
-components are data.tables with a row per each variable and the following 
-columns:
+The class \code{VarNameCorresp} comprises a slot of class \linkS4class{list}
+whose components are \code{data.table} with a row per each variable and the
+following columns:
 
 \itemize{
  \item \code{IDQual}: Names of unit qualifiers.

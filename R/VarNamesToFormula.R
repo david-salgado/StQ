@@ -53,9 +53,10 @@ setMethod(
 
         # Para una variable
         if (is.character(VarNames) & length(VarNames) == 1){
-
+            
+            DDSlotNames <- setdiff(slotNames(DD), 'VarNameCorresp')
             output <- list()
-            for (DDslot in slotNames(DD)){
+            for (DDslot in DDSlotNames){
 
                 DD <- slot(DD, DDslot)
                 IDQual <- DD[Sort == 'IDQual', Variable]

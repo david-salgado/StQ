@@ -11,7 +11,7 @@ getDD(object)
 \S4method{getDD}{StQ}(object)
 }
 \arguments{
-\item{object}{Object of class \linkS4class{StQ}.}
+\item{Object}{of class \linkS4class{StQ}.}
 }
 \value{
 Object of class \linkS4class{DD} corresponding to the slot \code{DD}

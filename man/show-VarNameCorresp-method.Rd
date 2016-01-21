@@ -8,7 +8,7 @@
 \S4method{show}{VarNameCorresp}(object)
 }
 \arguments{
-\item{object}{Object of class \linkS4class{VarNameCorresp}.}
+\item{Object}{of class \linkS4class{VarNameCorresp}.}
 }
 \value{
 Invisible object of class \code{\link{NULL}}.
