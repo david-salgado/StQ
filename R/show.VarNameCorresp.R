@@ -32,21 +32,20 @@ setMethod(
     signature = c("VarNameCorresp"),
     function(object){
         
+        ColMax <- 10 
         for (Slot in slotNames(object)){
             lapply(slot(object, Slot), function(x){
                 NamesCol <- names(x)
-                if (length(NamesCol) <= 8) {
+                if (length(NamesCol) <= ColMax) {
                     
-                    cat(paste0('Slot ', Slot, '\n'))
                     show(x)
                     
                 } else {
                     
-                    NumCols <- min(length(NamesCol), 8)
+                    NumCols <- min(length(NamesCol), ColMax)
                     NamesShowCol <- NamesCol[1:NumCols]
-                    cat(paste0('Slot ', Slot, '\n'))
                     show(x[, NamesShowCol, with = F])
-                    cat('\n')
+                    cat('\n\n')
                     cat(paste(rep('=', 40)), '\n\n')
                     cat(paste0('The following columns have been omitted for clarity:\n ', paste0(setdiff(NamesCol, NamesShowCol), collapse = ', '),'\n'))
                     cat(paste(rep('=', 40)), '\n\n')

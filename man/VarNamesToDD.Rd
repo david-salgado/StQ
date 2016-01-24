@@ -38,10 +38,8 @@ scripts.
 }
 \examples{
 # We load RepoReadWrite to obtain the included example DD object
-library(RepoReadWrite)
-data(RepoDD)
-DD <- RepoDDToDD(RepoDD)
-VarNamesToDD(c('IASSEmpleo_1_1', 'IASSEmpleo_0', 'IASSEmpleo_1_2'), DD)
+data(ExampleDD)
+VarNamesToDD(c('IASSEmpleo_1_1', 'IASSEmpleo_0', 'IASSEmpleo_1_2'), ExampleDD)
 
 }
 

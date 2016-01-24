@@ -22,7 +22,7 @@
 #' data(ExampleDD)
 #' ExampleDD[Variable == 'IASSCifraNeg']
 #' 
-#' @include StQ-class.R getData.R setData.R
+#' @include StQ-class.R getData.R setData.R getVNC.R
 #' 
 #' @import data.table
 #' 
@@ -32,10 +32,35 @@ setMethod(
   signature = c("DD"),
   function(x, i, j, ..., drop = TRUE){
     
+    DDslotNames <- setdiff(slotNames(x), 'VarNameCorresp')
+    output <- vector("list", length(DDslotNames))
     mc <- match.call()
-    mc[['x']] <- getData(x)
-    subDD <- eval(mc, envir = parent.frame())
-    output <- new(Class = 'DD', Data = subDD)
+    for (DDslot in DDslotNames){
+        output[[DDslot]] <- mc
+        output[[DDslot]][['x']] <- slot(x, DDslot)
+        output[[DDslot]] <- eval(output[[DDslot]], envir = parent.frame())
+    }
+    
+    VNC <- getVNC(x)
+    VNCList <- lapply(VNC@VarNameCorresp, function(x){
+        
+        CopyDT <- copy(x)
+        setnames(CopyDT, 'IDDD', 'Variable')
+        out <- mc
+        out[['x']] <- CopyDT
+        out <- eval(out)
+        setnames(out, 'Variable', 'IDDD')
+        return(out)
+    })
+
+    VNC <- new(Class = 'VarNameCorresp', VarNameCorresp = VNCList)
+    
+    output <- new(Class = 'DD',
+                  VarNameCorresp = VNC,
+                  MicroData = output[['MicroData']],
+                  Aggregates = output[['Aggregates']],
+                  AggWeights = output[['AggWeights']],
+                  Other = output[['Other']])
     return(output)
     
   }

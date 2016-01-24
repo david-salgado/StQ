@@ -16,19 +16,14 @@
 #' compute the values of the new variable in some circunstamces.
 #'
 #' @param object Object in which to include the new variable.
-#'
-#' @param VarName Character vector of length 1 with the name of the new
-#' variable.
+#' 
+#' @param newDD \linkS4class{DD} object with the information of the new variable
+#'  needed for the slot \code{DD} of the input object.
 #'
 #' @param Value Vector of length the number of statistical units in the input
 #' object with the values of the new variable for each of these units or
 #' alternatively an object of class \code{\link{expression}} with a mathematical
 #'  formula for the computation of these values.
-#'
-#' @param DDnl \linkS4class{DD} object with a row of columns \code{Variable},
-#'  \code{Sort}, \code{Class} and \code{Qual1} to \code{Qualn} with the
-#'  information of the new variable needed for the slot \code{DD} of the input
-#'  object.
 #'
 #' @param by Character vector with the names of the variables specifying those
 #' statistical units groups under which the mathematical formula will be
@@ -46,20 +41,32 @@
 #'
 #' @examples
 #' library(data.table)
-#' data(ExampleQ)
-#' newDD <- new(Class = 'DD', Data = data.table(Variable = 'lCN',
-#'                                              Sort = 'IDDD',
-#'                                              Class = 'numeric',
-#'                                              Qual1 = 'NOrden'))
-#' NewQ <- setVar(object = ExampleQ, VarName = 'lCN',
-#'                Value = expression(log(1 + IASSCifraNeg)), DDnl = newDD)
+#' newVNCVarList <- list(MicroData = 
+#'                    data.table(IDQual = '',
+#'                               NonIDQual = '',
+#'                               IDDD = 'IASSlCN',
+#'                               NOrden = '',
+#'                               CCAA = '',
+#'                               EsRemuner = '',
+#'                               TipoRem = '',
+#'                               Unit1 = '',
+#'                               Unit2 = ''))
+#' newVNC <- new(Class = 'VarNameCorresp', VarNameCorresp = newVNCVarList)
+#' newDD <- new(Class = 'DD',
+#'              VarNameCorresp = newVNC, 
+#'              MicroData = data.table(Variable = 'IASSlCN',
+#'                                     Sort = 'IDDD',
+#'                                     Class = 'numeric',
+#'                                     Qual1 = 'NOrden'))
+#' NewQ <- setVar(object = ExampleQ,
+#'                newDD = newDD, 
+#'                Value = expression(log(1 + IASSCifraNeg)))
 #' getVar(NewQ, 'lCN')
 #'
 #' @export
 setGeneric("setVar", function(object,
-                              VarName,
+                              newDD,
                               Value,
-                              DDnl,
                               lag = NULL,
                               by = NULL) {standardGeneric("setVar")})
 
@@ -72,48 +79,60 @@ setGeneric("setVar", function(object,
 #' @export
 setMethod(
     f = "setVar",
-    signature = c("StQ", "character", "ANY", "DD"),
+    signature = c("StQ", "DD"),
     function(object,
-             VarName,
+             newDD,
              Value,
-             DDnl,
              lag = NULL,
              by = NULL){
 
-        if (missing(VarName)) {
+        if (missing(newDD)) {
 
-            stop("[StQ::setVar] A name for the new variable is needed.")
+            stop("[StQ::setVar] A new DD object for the new variable is needed.")
         }
-        if (length(VarName) != 1) {
+        if (length(getVNC(newDD)) != 1 | dim(getVNC(newDD)@VarNameCorresp[[1]])[1] != 1) {
 
             stop('[StQ::setVar] Only one new variable at a time.')
         }
 
         if (missing(Value)) {
 
-            stop('[StQ::setVar] Value must be a vector of values or an object expression.')
+            stop('[StQ::setVar] Value must be a vector of values or an object of class expression.')
         }
-        if (!VarName %in% getData(getDD(object))[['Variable']] && missing(DDnl)){
 
-            stop('[StQ::setVar] It is necessary to specify a new line for the slot DD corresponding to the new varible.')
-
-        }
-        if (!class(Value) %in% c('expression', 'integer', 'numeric',
+        if (!class(Value) %in% c('expression', 'integer', 'numeric', 
                                  'character', 'logical')) {
             stop('[StQ::setVar] Value must be an atomic vector or of class expression.')
         }
 
         NewData <- getUnits(object)
-        Data <- getData(object)
-        DD <- getDD(object)
+        
+        pasteNA <- function(x, y){
+            out <- ifelse(is.na(y) | y == '', paste0(x, ''), paste(x, y, sep ="_"))
+            return(out)
+        }
+        
+        newVNC <- copy(getVNC(newDD)@VarNameCorresp[[1]])
+        newVNC <- newVNC[, 'IDQual' := NULL, with = F]
+        newVNC <- newVNC[, 'NonIDQual' := NULL, with = F]
+        UnitCols <- names(newVNC)[grep('Unit', names(newVNC))]
+        newVNC <- newVNC[, UnitCols := NULL, with = F]
+        NewVarName <- newVNC[['IDDD']]
+        for (col in names(newVNC)[-1]){
+            
+            NewVarName <- pasteNA(NewVarName, newVNC[[col]])
+            
+        }
 
-        if (VarName %in% Data[['IDDD']]) {
+        Data <- getData(object)
+        if (NewVarName %in% Data[['IDDD']]) {
 
             setData(object) <- Data[IDDD != VarName]
 
         }
-
-        newDD <- DD + DDnl
+        
+        DD <- getDD(object)
+        newDD <- DD + newDD
 
         if (class(Value) == 'expression'){
 
@@ -121,6 +140,7 @@ setMethod(
 
             Data <- getData(object, ExprVariables)
             newObject <- new(Class = 'StQ', Data = Data, DD = newDD)
+
             Data <- dcast_StQ(newObject)
 
             if (is.null(by)){
@@ -135,7 +155,7 @@ setMethod(
             }
 
             NewData <- Data[, ExprVariables := NULL, with = F]
-            NewData[, IDDD := VarName]
+            NewData[, IDDD := NewVarName]
             setcolorder(NewData,
                         c(setdiff(names(NewData), c('Value', 'IDDD')),
                           'IDDD', 'Value'))
@@ -144,7 +164,7 @@ setMethod(
 
         } else {
 
-            NewData[, IDDD := VarName]
+            NewData[, IDDD := NewVarName]
             NewData[, Value := Value]
             setkeyv(NewData, setdiff(names(NewData), 'Value'))
             NewObject <- new(Class = 'StQ', Data = NewData, DD = newDD)

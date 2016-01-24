@@ -1,9 +1,9 @@
-#' \code{\link{data.frame}} with the content of the variable names
+#' @title \code{\link{data.frame}} with the content of the variable names
 #' correspondence
 #'
-#' \code{XLS} is a \code{\link{data.frame}} with the correspondonce among the
-#' names of the variables used by conductors of different production phases of a
-#' statistical operation.
+#' @description \code{XLS} is a \code{\link{data.frame}} with the correspondence
+#'  among the names of the variables used by conductors of different production 
+#'  phases of a statistical operation.
 #'
 #' It contains the correspondence among the variable names of the variables
 #' from the Excel file of the microdata store (see vignettes).
@@ -24,3 +24,4 @@
 #'   \emph{P}romotor in Spanish).
 #'   \item SGMRD: Variable names used by the data collection unit (\emph{S.G.}
 #'   \emph{M}uestreo y \emph{R}ecogida de \emph{D}atos).
+#' 

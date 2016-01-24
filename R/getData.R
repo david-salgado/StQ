@@ -45,7 +45,7 @@
 #'                      IDDD = c('','','','','IEPEntradaPed'),
 #'                      Unit1 = c('','','','','')))
 #' VarNameCorresp <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList)
-#' DD <- new(Class = 'DD', Data = DDData, VarNameCorresp = VarNameCorresp)
+#' DD <- new(Class = 'DD', MicroData = DDData, VarNameCorresp = VarNameCorresp)
 #' getData(DD)
 #' 
 #' 
@@ -78,7 +78,7 @@ setMethod(
   signature = c("DD"),
   function(object, VarNames){
     
-    out <- object@Data
+    out <- object@MicroData
     return(out)
   }
 )
@@ -96,25 +96,26 @@ setMethod(
     
     
     if (missing(VarNames)) return(object@Data)
-    
+
     VarNames.DT <- VarNamesToDD(VarNames, getDD(object))
     setkeyv(VarNames.DT, names(VarNames.DT))
     DataNames <- names(object@Data)
     setkeyv(object@Data, names(VarNames.DT))
     output <- merge(getData(object), VarNames.DT)
-    setcolorder(output, DataNames)
+
     if(dim(output)[1] == 0) {
       
       warning('[StQ::getData] No such variables in this data set.')
       return(output)
     }
-    
-    for (col in sort(names(output))){
+    setcolorder(output, DataNames)
+    Cols <- sort(names(output))
+    for (col in Cols){
       
       if (all(output[[col]] == '')) output[, col := NULL, with = F]
       
     }
-    
+
     NotPresent <- VarNames[which(!ExtractNames(VarNames) %in% unique(getData(object)[['IDDD']]))]
     
     if (length(NotPresent) > 0){
@@ -142,12 +143,12 @@ setMethod(
     
     if (missing(VarNames)){
       
-      output <- lapply(object@Data,function(x) getData(x))
+      output <- lapply(object@Data, function(x) getData(x))
       
       return(output)
     }
     
-    output <- lapply(object@Data,function(x) getData(x,VarNames))  
+    output <- lapply(object@Data, function(x) getData(x, VarNames))  
     
     return(output)
   }

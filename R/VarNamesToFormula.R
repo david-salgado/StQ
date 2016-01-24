@@ -58,12 +58,12 @@ setMethod(
             output <- list()
             for (DDslot in DDSlotNames){
 
-                DD <- slot(DD, DDslot)
-                IDQual <- DD[Sort == 'IDQual', Variable]
-                NonIDQual <- DD[Sort == 'NonIDQual', Variable]
+                DDlocal <- slot(DD, DDslot)
+                IDQual <- DDlocal[Sort == 'IDQual', Variable]
+                NonIDQual <- DDlocal[Sort == 'NonIDQual', Variable]
 
-                Quals <- names(DD)[grep('Qual', names(DD))]
-                auxDD <- DD[Variable == ExtractNames(VarNames),
+                Quals <- names(DDlocal)[grep('Qual', names(DDlocal))]
+                auxDD <- DDlocal[Variable == ExtractNames(VarNames),
                             c('Variable', Quals),
                             with = F]
                 auxDD[, LHS := '']
@@ -89,11 +89,14 @@ setMethod(
                                        paste0(gsub(' ', ' + ', trim(RHS)),
                                               ' ~ IDDD'))]
                 auxDD <- auxDD[, c('Variable', 'Form'), with = F]
+                auxDD[, Form := as.character(Form)]
                 output[[DDslot]] <- auxDD
             }
-
-            output <- rbindlist(output)
-            return(output)
+            outputGlobal <- Reduce(function(x, y){
+                merge(x, y, all = TRUE,
+                      by = intersect(names(x), names(y)))},
+                output)
+            return(outputGlobal)
 
 
         } else {# Ahora para el resto de variables

@@ -27,7 +27,7 @@ setGeneric("renVar",
            function(object, VarNames, NewVarNames){standardGeneric("renVar")})
 #' @rdname renVar
 #'
-#' @include StQ-class.R DD-class.R getDD.R getData.R getUnits.R
+#' @include StQ-class.R DD-class.R getDD.R getData.R getUnits.R getVNC.R
 #'
 #' @import data.table
 #'
@@ -56,16 +56,34 @@ setMethod(
 
     outputData <- copy(getData(object))
     auxData <- outputData[['IDDD']]
-    outputDDData <- copy(getData(getDD(object)))
-    setkeyv(outputDDData, 'Variable')
     for (indexVar in seq(along = VarNames)){
-      auxData[auxData == VarNames[indexVar]] <- NewVarNames[indexVar]
-
-      outputDDData[Variable == VarNames[indexVar], Variable := NewVarNames[indexVar]]
-
+        
+        auxData[auxData == VarNames[indexVar]] <- NewVarNames[indexVar]
     }
+
+    outputDD <- list()
+    for (DDslot in setdiff(slotNames(getDD(object)), 'VarNameCorresp')){
+        outputDD[[DDslot]] <- copy(slot(getDD(object), DDslot))
+        setkeyv(outputDD[[DDslot]], 'Variable')
+        for (indexVar in seq(along = VarNames)){
+          
+          outputDD[[DDslot]][Variable == VarNames[indexVar], Variable := NewVarNames[indexVar]]
+        }
+    }
+    
+    outputDD[['VarNameCorresp']] <- getVNC(getDD(object))
+    for (VNCSlot in names(outputDD[['VarNameCorresp']]@VarNameCorresp)){
+        for (indexVar in seq(along = VarNames)){
+            
+            outputDD[['VarNameCorresp']]@VarNameCorresp[[VNCSlot]][IDDD == VarNames[indexVar], IDDD := NewVarNames[indexVar]]
+        }
+    }
+    
     outputData[, IDDD := auxData]
-    outputDD <- new(Class = 'DD', Data = outputDDData)
+    outputDD <- new(Class = 'DD', 
+                    MicroData = outputDD[['MicroData']], 
+                    Aggregates = outputDD[['Aggregates']], 
+                    AggWeights = outputDD[['AggWeights']])
     output <- new(Class = 'StQ', Data = outputData, DD = outputDD)
     return(output)
 

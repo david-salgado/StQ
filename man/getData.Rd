@@ -64,7 +64,7 @@ VarList <- list(data.table(IDQual = c('NumIdEst','','','',''),
                      IDDD = c('','','','','IEPEntradaPed'),
                      Unit1 = c('','','','','')))
 VarNameCorresp <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList)
-DD <- new(Class = 'DD', Data = DDData, VarNameCorresp = VarNameCorresp)
+DD <- new(Class = 'DD', MicroData = DDData, VarNameCorresp = VarNameCorresp)
 getData(DD)
 
 
