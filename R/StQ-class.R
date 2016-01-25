@@ -110,6 +110,21 @@ setClass(Class = "StQ",
                                      paste0(NotinDD, collapse = ', '), '.\n'))
                     }
                  }
+                 
+                 # Las columnas IDQual y NonIDQual deben tener la clase especificada en el slot DD
+                 QualinData <- names(object@Data)
+                 QualinData <- QualinData[-length(QualinData)]
+                 QualinData <- QualinData[-length(QualinData)]
+                 QualClassinData <- sapply(object@Data, class)[QualinData]
+                 QualClassinData <- sort(QualClassinData)
+                 
+                 QualClassinDD <- DDlocal[Sort != 'IDDD'][['Class']]
+                 QualinDD <- DDlocal[Sort != 'IDDD'][['Variable']]
+                 names(QualClassinDD) <- QualinDD
+                 QualClassinDD <- sort(QualClassinDD[QualinData])
+                 if (!all(QualClassinData == QualClassinDD)) {
+                     stop('[Validity StQ] The class of at least one qualifier in the slot Data does not coincide with that in slot DD.')
+                 }
              }
              # Detección de filas duplicadas
              if (dim(Data)[[1]] != 0){

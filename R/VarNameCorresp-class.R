@@ -46,10 +46,12 @@
 #' @export
 setClass(Class = "VarNameCorresp",
          slots = c(VarNameCorresp = 'list'),
-         prototype = list(VarNameCorresp = list(data.table(IDQual = character(0),
-                                                      NonIDQual = character(0),
-                                                      IDDD = character(0),
-                                                      Unit1 = character(0)))),
+         prototype = list(VarNameCorresp = 
+                              list(Microdata= 
+                                       data.table(IDQual = character(0),
+                                                  NonIDQual = character(0),
+                                                  IDDD = character(0),
+                                                  Unit1 = character(0)))),
          validity = function(object){
          
          if (is.null(names(object@VarNameCorresp))) stop('[Validity VarNameCorresp] VarNameCorresp slot must be a named list.')
