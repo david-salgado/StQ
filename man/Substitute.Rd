@@ -55,7 +55,7 @@ VNCList <- list(data.table(IDQual = c('Norden', '', '', '', '', '', '', ''),
                           '', '', '', '', '', '', ''), EsRemuner = c('',
                           '', '', '', '', '', '', '1'), Unit1 = c('', '', '',
                           '', '', '', '', '')))
-VNC <- new(Class = 'VarnameCorresp', VarnameCorresp = VNCList)
+VNC <- new(Class = 'VarNameCorresp', VarNameCorresp = VNCList)
 
 # Creamos un slot DD:
 DDData <- data.table(Variable = c('NOrden',

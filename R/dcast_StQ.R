@@ -21,6 +21,10 @@
 #' be converted.
 #'
 #' @param VarNames Character vector with names of the output variables.
+#' 
+#' @param DDslot Character vector of length 1 with the name of DD slot used
+#' to make the transformation of the input object. Its default value is 
+#' \code{MicroData}.
 #'
 #' @return \linkS4class{data.table} with data from slot \code{Data} of the input
 #' \linkS4class{StQ} object with statistical units by rows and variables by
@@ -38,7 +42,10 @@
 #' \code{\link[reshape2]{dcast}}
 #'
 #' @export
-setGeneric("dcast_StQ", function(object, VarNames){standardGeneric("dcast_StQ")})
+setGeneric("dcast_StQ", 
+           function(object, 
+                    VarNames, 
+                    DDslot = 'MicroData'){standardGeneric("dcast_StQ")})
 
 #' @rdname dcast_StQ
 #'
@@ -46,21 +53,23 @@ setGeneric("dcast_StQ", function(object, VarNames){standardGeneric("dcast_StQ")}
 #'
 #' @import data.table
 #'
-#' @include DD-class.R StQ-class.R getDD.R getData.R getUnits.R VarNamesToFormula.R
+#' @include StQ-class.R getDD.R getData.R getUnits.R plus.DD.R VarNamesToFormula.R
 #'
 #' @export
 setMethod(
     f = "dcast_StQ",
     signature = c("StQ"),
-    function(object, VarNames){
+    function(object, VarNames, DDslot = 'MicroData'){
 
-
-        nQual <- length(setdiff(names(getDD(object)@Data),
+        if (length(DDslot) > 1) stop('[StQ::dcast_StQ] DDslot must be a character vector of length 1.')
+        if (!DDslot %in% slotNames(getDD(object))) stop('[StQ::dcast_StQ] DDslot is not a component of the slot DD of the input object.')
+        
+        nQual <- length(setdiff(names(slot(getDD(object), DDslot)),
                                 c('Variable', 'Sort', 'Class')))
         if (nQual == 0) stop('[StQ::dcast_StQ] The slot DD has no qualifiers.')
 
-        IDQual <- (getDD(object)@Data)[Sort == 'IDQual', Variable]
-        NonIDQual <- (getDD(object)@Data)[Sort == 'NonIDQual', Variable]
+        IDQual <- (slot(getDD(object), DDslot))[Sort == 'IDQual', Variable]
+        NonIDQual <- (slot(getDD(object), DDslot))[Sort == 'NonIDQual', Variable]
 
         if (missing(VarNames)) {
 
@@ -104,7 +113,7 @@ setMethod(
             out <- data.table::dcast.data.table(data = aux,
                                                 formula = as.formula(Form),
                                                 drop = TRUE,
-                                                value.var='Value')
+                                                value.var = 'Value')
             outNames <- sort(names(out))
             for (col in outNames){
               if (all(is.na(out[[col]]))) out[, col := NULL, with = F]
@@ -137,11 +146,11 @@ setMethod(
 
         # Asignamos los tipos a cada variable
 
-        DD <- getData(getDD(object))
+        DD <- slot(getDD(object), DDslot)
         outCols <- names(output)
         for (col in outCols){
 
-            colClass <- DD[Variable == ExtractNames(col)][['Class']]
+            colClass <- copy(DD)[Variable == ExtractNames(col)][['Class']]
             output[, col := as(get(col), colClass), with = F]
 
         }

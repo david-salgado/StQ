@@ -28,7 +28,7 @@ setMethod(
   signature = c("StQ"),
   function(object){
 
-    DDData <- slot(getDD(object), 'Data')
+    DDData <- slot(getDD(object), 'MicroData')
     IDQual <- DDData[Sort == 'IDQual', Variable]
     output <- getData(object)[, IDQual, with = F]
     set2keyv(output, IDQual)

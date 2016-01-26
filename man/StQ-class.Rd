@@ -55,10 +55,13 @@ DDData <- data.table(Variable = c('NOrden', 'EsRemuner', 'Mes', 'Anno',
                                'NOrden', 'NOrden', 'NOrden', 'NOrden'),
                      Qual2 = c('', '', '', '',
                                '', '', '', 'EsRemuner'))
-DD <- new(Class = 'DD', Data = DDData)
+DD <- new(Class = 'DD', MicroData = DDData)
 
 # We create an object StQ with no data
-Q <- new(Class = 'StQ', Data = Data, DD = DD)
+Q <- new(Class = 'StQ', 
+         Data = data.table(IDDD = character(0),
+                           Value = character(0)),
+         DD = DD)
 Q
 # Notice that only the slot Data appears on screen, but the object is not a
 # data.table:

@@ -5,7 +5,7 @@
 #' files. 
 #' 
 #' The class \code{DD} comprises a slot of class \linkS4class{data.table} with
-#' at least columns named \code{Variable}, \code{Sort}, \code{Class} and
+#' at least four columns named \code{Variable}, \code{Sort}, \code{Class} and
 #' \code{Qual1}. These columns have the same meanings: 
 #' 
 #' \itemize{
@@ -18,10 +18,10 @@
 #'  \item \code{Qual1}: Name of the variable qualifier 1. 
 #' }
 #' 
-#' This \linkS4class{data.table} is complete with as many columns named 
+#' This \linkS4class{data.table} is completed with as many columns named 
 #' \code{Qualn} as necessary. 
 #' 
-#' @slot @slot Data \linkS4class{data.table} with at least the columns 
+#' @slot Data \linkS4class{data.table} with at least the four columns 
 #' \code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} (in that order).
 #'  
 #' @examples
@@ -40,7 +40,7 @@
 #'                      IDDD = c('','','','','IEPEntradaPed'),
 #'                      Unit1 = c('','','','','')))
 #' VarNameCorresp <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList)
-#' new(Class = 'DD', Data = DDData, VarNameCorresp = VarNameCorresp)
+#' new(Class = 'DD', MicroData = DDData, VarNameCorresp = VarNameCorresp)
 #' 
 #' @include ExtractNames.R VarNameCorresp-class.R
 #' 
@@ -48,62 +48,84 @@
 #' 
 #' @export
 setClass(Class = "DD",
-         slots = c(Data = 'data.table', VarNameCorresp = 'VarNameCorresp'),
-         prototype = list(Data = data.table(Variable = character(0),
-                                            Sort = character(0),
-                                            Class = character(0),
-                                            Qual1 = character(0)),
-                          VarNameCorresp = new(Class = 'VarNameCorresp')),
-         
+         slots = c(VarNameCorresp = 'VarNameCorresp',
+                   MicroData = 'data.table', 
+                   Aggregates = 'data.table',
+                   AggWeights = 'data.table',
+                   Other = 'data.table'),
+         prototype = list(VarNameCorresp = new(Class = 'VarNameCorresp'),
+                          MicroData = data.table(Variable = character(0),
+                                                 Sort = character(0),
+                                                 Class = character(0),
+                                                 Qual1 = character(0)),
+                          Aggregates = data.table(Variable = character(0),
+                                                  Sort = character(0),
+                                                  Class = character(0),
+                                                  Qual1 = character(0)),
+                          AggWeights = data.table(Variable = character(0),
+                                                  Sort = character(0),
+                                                  Class = character(0),
+                                                  Qual1 = character(0)),
+                          Other = data.table(Variable = character(0),
+                                             Sort = character(0),
+                                             Class = character(0),
+                                             Qual1 = character(0))
+                          ),
          validity = function(object){
              
-             ColNames <- names(object@Data)
+             variablesDD <- c()
+             for (Slot in setdiff(slotNames(object), 'VarNameCorresp')){
              
-             if (ColNames[1] != 'Variable'){
-                 stop('[Validity DD] The first column of slot Data must be named "Variable".')   
-             }
-             if (any(duplicated(object@Data[['Variable']]))){
-                 stop('[Validity DD] The column "Variable" cannot have repeated values.')
-             }
-             setkeyv(object@Data, 'Variable')
+                ColNames <- names(slot(object, Slot))
              
-             if (ColNames[2] != 'Sort'){
-                 stop('[Validity DD] The second column of slot Data must be named "Sort".')
-             }
-             if (length(object@Data[['Sort']]) != 0 && 
-                 !all(object@Data[['Sort']] %in% 
-                      c('IDQual', 'NonIDQual', 'IDDD'))){ 
-                 stop('[Validity DD] The column "Sort" can only have values "IDQual", "NonIDQual" and "IDDD".')
-             }
+                if (ColNames[1] != 'Variable'){
+                    stop(paste0('[Validity DD] The first column of slot ', Slot, 'must be named "Variable".'))   
+                }
+                if (any(duplicated(slot(object, Slot)[['Variable']]))){
+                    stop(paste0('[Validity DD] The column "Variable" of slot ', Slot, 'cannot have repeated values.'))
+                }
+                
+                #setkeyv(object@Data, 'Variable')
              
-             if (ColNames[3] != 'Class'){
-                 stop('[Validity DD] The third column of slot Data must be "Class".')
-             }
+                 if (ColNames[2] != 'Sort'){
+                     stop(paste0('[Validity DD] The second column of slot ', Slot, 'must be named "Sort".'))
+                 }
+                 if (length(slot(object, Slot)[['Sort']]) != 0 && 
+                     !all(slot(object, Slot)[['Sort']] %in% 
+                          c('IDQual', 'NonIDQual', 'IDDD'))){ 
+                     stop(paste0('[Validity DD] The column "Sort" of slot ', Slot, 'can only have values "IDQual", "NonIDQual" and "IDDD".'))
+                 }
              
-             if (ColNames[4] != 'Qual1'){
-                 stop('[Validity DD] The fourth column of slot DD must be named "Qual1".')
-             }
+                 if (ColNames[3] != 'Class'){
+                     stop(paste0('[Validity DD] The third column of slot ', Slot, 'must be "Class".'))
+                 }
              
-             if (!all(object@Data[['Variable']] == ExtractNames(object@Data[['Variable']]))){
-                 stop('[Validity DD] There are invalid variable names in the column "Variable".')
-             }
+                 if (ColNames[4] != 'Qual1'){
+                     stop(paste0('[Validity DD] The fourth column of slot ', Slot, 'must be named "Qual1".'))
+                 }
              
-             Quals <- setdiff(ColNames, c('Variable', 'Sort', 'Class'))
-             if (!all(Quals == paste0('Qual', seq(along = Quals)))){
-                 stop('[Validity DD] The fourth and succesive columns must be named "Qual1", "Qual2", ...')
-             }
+                 if (!all(slot(object, Slot)[['Variable']] == ExtractNames(slot(object, Slot)[['Variable']]))){
+                     stop('[Validity DD] There are invalid variable names in the column "Variable".')
+                 }
              
-             variablesDD <- object@Data[Sort == 'IDDD'][['Variable']]
+                 Quals <- setdiff(ColNames, c('Variable', 'Sort', 'Class'))
+                 if (!all(Quals == paste0('Qual', seq(along = Quals)))){
+                     stop(paste0('[Validity DD] The fourth and succesive columns of slot ', Slot, 'must be named "Qual1", "Qual2", ...'))
+                 }
+             
+                 variablesDD <- c(variablesDD, slot(object, Slot)[Sort == 'IDDD'][['Variable']])
+                 variablesDD <- unique(variablesDD)
+             }
              variablesVNC <- character()
              for (SheetName in object@VarNameCorresp@VarNameCorresp){
-                 var <- SheetName[['IDDD']]
-                 var <- var[var != ""]
-                 variablesVNC <- c(variablesVNC, setdiff(var, variablesVNC))
+                  var <- SheetName[['IDDD']]
+                  var <- var[var != ""]
+                  variablesVNC <- c(variablesVNC, setdiff(var, variablesVNC))
              }
-
              if (length(setdiff(variablesVNC, variablesDD)) > 0){
+                
+                     stop(paste0('[Validity DD] All variables in the column "IDDD" of each element of the slot VarNameCorresp must be variables ("Sort" = IDDD) in the data slots.'))
                  
-                 stop('[Validity DD] All variables in the column "IDDD" of each element of the slot VarNameCorresp must be variables ("Sort" = IDDD) in the slot Data.')
              }
              return(TRUE)
          }

@@ -21,7 +21,13 @@
 #'                      Sort = c('IDQual', 'NonIDQual', 'IDDD'),
 #'                      Class = c('character', 'character', 'numeric'),
 #'                      Qual1 = c('', '', 'NOrden'))
-#' DD <- new(Class = 'DD', Data = DDData)
+#' VarList <- list(data.table(IDQual = c('NOrden','','','',''),
+#'                            NonIDQual = c('EsMercNac', 'EsMercEuro', 'EsMercRM', 
+#'                                          'Cod',''),
+#'                            IDDD = c('','','','','CifraNeg'),
+#'                            Unit1 = c('','','','','')))
+#' VNC <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList)
+#' DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = DDData)
 #' # We assign this DD object to slot DD of the preceding StQ object:
 #' setDD(Q) <- DD
 #' str(Q)

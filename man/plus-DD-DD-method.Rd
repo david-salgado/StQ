@@ -32,7 +32,7 @@ VNC1List <- list(data.table(IDQual = c('Norden', '', ''),
 names(VNC1List) <- seq(along = VNC1List)
 VNC1 <- new(Class = 'VarNameCorresp', VarNameCorresp = VNC1List)
 DD1 <- new(Class = 'DD',
-           Data = data.table(Variable = c('NOrden', 'CCAA', 'CifraNeg'),
+           MicroData = data.table(Variable = c('NOrden', 'CCAA', 'CifraNeg'),
                              Sort = c('IDQual', 'NonIDQual', 'IDDD'),
                              Class = c('character', 'character', 'numeric'), 
                              Qual1 = c('', '', 'NOrden')),
@@ -44,7 +44,7 @@ VNC2List <- list(data.table(IDQual = c('Norden',''), NonIDQual = c('', ''),
 names(VNC2List) <- seq(along = VNC2List)
 VNC2 <- new(Class = 'VarNameCorresp', VarNameCorresp = VNC2List)
 DD2 <- new(Class = 'DD',
-           Data = data.table(Variable = c('Norden', 'logCifraNeg'),
+           MicroData = data.table(Variable = c('Norden', 'logCifraNeg'),
                              Sort = c('IDQual', 'IDDD'),
                              Class = c('character', 'numeric'),
                              Qual1 = c('', 'NOrden')), VarNameCorresp = VNC2)

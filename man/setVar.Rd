@@ -3,29 +3,23 @@
 \docType{methods}
 \name{setVar}
 \alias{setVar}
-\alias{setVar,StQ,character,ANY,DD-method}
+\alias{setVar,StQ,DD-method}
 \title{Method to set values of a variable}
 \usage{
-setVar(object, VarName, Value, DDnl, lag = NULL, by = NULL)
+setVar(object, newDD, Value, lag = NULL, by = NULL)
 
-\S4method{setVar}{StQ,character,ANY,DD}(object, VarName, Value, DDnl,
-  lag = NULL, by = NULL)
+\S4method{setVar}{StQ,DD}(object, newDD, Value, lag = NULL, by = NULL)
 }
 \arguments{
 \item{object}{Object in which to include the new variable.}
 
-\item{VarName}{Character vector of length 1 with the name of the new
-variable.}
+\item{newDD}{\linkS4class{DD} object with the information of the new variable
+needed for the slot \code{DD} of the input object.}
 
 \item{Value}{Vector of length the number of statistical units in the input
 object with the values of the new variable for each of these units or
 alternatively an object of class \code{\link{expression}} with a mathematical
  formula for the computation of these values.}
-
-\item{DDnl}{\linkS4class{DD} object with a row of columns \code{Variable},
-\code{Sort}, \code{Class} and \code{Qual1} to \code{Qualn} with the
-information of the new variable needed for the slot \code{DD} of the input
-object.}
 
 \item{lag}{Integer vector of length 1 with the lag to use when the input
 object is of class \linkS4class{StQList}.}
@@ -56,13 +50,26 @@ compute the values of the new variable in some circunstamces.
 }
 \examples{
 library(data.table)
-data(ExampleQ)
-newDD <- new(Class = 'DD', Data = data.table(Variable = 'lCN',
-                                             Sort = 'IDDD',
-                                             Class = 'numeric',
-                                             Qual1 = 'NOrden'))
-NewQ <- setVar(object = ExampleQ, VarName = 'lCN',
-               Value = expression(log(1 + IASSCifraNeg)), DDnl = newDD)
+newVNCVarList <- list(MicroData = 
+                   data.table(IDQual = '',
+                              NonIDQual = '',
+                              IDDD = 'IASSlCN',
+                              NOrden = '',
+                              CCAA = '',
+                              EsRemuner = '',
+                              TipoRem = '',
+                              Unit1 = '',
+                              Unit2 = ''))
+newVNC <- new(Class = 'VarNameCorresp', VarNameCorresp = newVNCVarList)
+newDD <- new(Class = 'DD',
+             VarNameCorresp = newVNC, 
+             MicroData = data.table(Variable = 'IASSlCN',
+                                    Sort = 'IDDD',
+                                    Class = 'numeric',
+                                    Qual1 = 'NOrden'))
+NewQ <- setVar(object = ExampleQ,
+               newDD = newDD, 
+               Value = expression(log(1 + IASSCifraNeg)))
 getVar(NewQ, 'lCN')
 
 }

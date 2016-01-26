@@ -65,11 +65,11 @@ melt_StQ <- function(DataMatrix, DD){
 
     #Construimos un objeto DD auxiliar
     auxDD <- list()
-    for (DDslot in slotNames(DD)){
+    for (DDslot in setdiff(slotNames(DD), 'VarNameCorresp')){
 
         DDlocal <- slot(DD, DDslot)
         nQual <- length(setdiff(names(DDlocal), c('Variable', 'Sort', 'Class')))
-        if (nQual == 0) stop('[meltStQ] DD no tiene calificadores.')
+        if (nQual == 0) stop('[StQ::melt_StQ] DD has no qualifiers.')
 
         auxDD[[DDslot]] <- copy(DDlocal)[, c('Variable',
                                              paste0('Qual', 1:nQual)), with = F]
@@ -112,7 +112,13 @@ melt_StQ <- function(DataMatrix, DD){
 
     }
 
-    auxDD <- rbindlist(auxDD)
+    auxDD <- rbindlist(auxDD, fill = TRUE)
+    
+    for (col in names(auxDD)){
+        
+        auxDD[, col := ifelse(is.na(get(col)), '', get(col)), with = F]
+        
+    }
 
     # Generamos una lista de data.tables que agrupen a las variables según sus calificadores
     auxMeasureVar <- split(auxDD[['Variable']], auxDD[['Qual']])

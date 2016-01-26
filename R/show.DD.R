@@ -28,28 +28,29 @@ setMethod(
     signature = c("DD"),
     function(object){
 
-     for (Slot in slotNames(object)){
+      for (Slot in slotNames(object)){
         NamesCol <- names(slot(object, Slot))
         if (length(NamesCol) <= 8) {
 
-            cat(paste0('Slot ', Slot, '\n'))
+            cat(paste0('Slot ', Slot, '\n\n'))
             show(slot(object, Slot))
-
+            cat('\n\n')
+            
         } else {
 
             NumCols <- min(length(NamesCol), 8)
             NamesShowCol <- NamesCol[1:NumCols]
             cat(paste0('Slot ', Slot, '\n'))
             show(slot(object, Slot)[, NamesShowCol, with = F])
-            cat('\n')
+            cat('\n\n')
             cat(paste(rep('=', 40)), '\n\n')
             cat(paste0('The following columns have been omited:\n ',
                        paste0(setdiff(NamesCol, NamesShowCol), collapse = ', '),
-                       '.\n'))
+                       '.\n\n'))
             cat(paste(rep('=', 40)), '\n\n')
         }
-     }
-        invisible(NULL)
+      }
+      invisible(NULL)
     }
 )
 

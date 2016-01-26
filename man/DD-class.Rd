@@ -10,7 +10,7 @@ contained in a DD file with s slightly different structure to that of those
 files. 
 
 The class \code{DD} comprises a slot of class \linkS4class{data.table} with
-at least columns named \code{Variable}, \code{Sort}, \code{Class} and
+at least four columns named \code{Variable}, \code{Sort}, \code{Class} and
 \code{Qual1}. These columns have the same meanings: 
 
 \itemize{
@@ -23,13 +23,13 @@ at least columns named \code{Variable}, \code{Sort}, \code{Class} and
  \item \code{Qual1}: Name of the variable qualifier 1. 
 }
 
-This \linkS4class{data.table} is complete with as many columns named 
+This \linkS4class{data.table} is completed with as many columns named 
 \code{Qualn} as necessary.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{@slot}}{Data \linkS4class{data.table} with at least the columns 
+\item{\code{Data}}{\linkS4class{data.table} with at least the four columns 
 \code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} (in that order).}
 }}
 \examples{
@@ -48,7 +48,7 @@ VarList <- list(data.table(IDQual = c('NumIdEst','','','',''),
                      IDDD = c('','','','','IEPEntradaPed'),
                      Unit1 = c('','','','','')))
 VarNameCorresp <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList)
-new(Class = 'DD', Data = DDData, VarNameCorresp = VarNameCorresp)
+new(Class = 'DD', MicroData = DDData, VarNameCorresp = VarNameCorresp)
 
 }
 

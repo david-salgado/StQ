@@ -30,10 +30,8 @@
 #'
 #' @examples
 #' # We load RepoReadWrite to obtain the included example DD object
-#' library(RepoReadWrite)
-#' data(RepoDD)
-#' DD <- RepoDDToDD(RepoDD)
-#' VarNamesToDD(c('IASSEmpleo_1_1', 'IASSEmpleo_0', 'IASSEmpleo_1_2'), DD)
+#' data(ExampleDD)
+#' VarNamesToDD(c('IASSEmpleo_1_1', 'IASSEmpleo_0', 'IASSEmpleo_1_2'), ExampleDD)
 #'
 #' @include ExtractNames.R
 #'
@@ -46,12 +44,13 @@ VarNamesToDD <- function(VarNames, DD){
     if (is.character(VarNames) & length(VarNames) == 1){
 
         DDSlotNames <- setdiff(slotNames(DD), 'VarNameCorresp')
+
         output <- list()
         for (DDslot in DDSlotNames){
-        
-            DD <- slot(DD, DDslot)
-            Names.DT <- DD[Variable == ExtractNames(VarNames)]
+            
+            DDlocal <- slot(DD, DDslot)
 
+            Names.DT <- DDlocal[Variable == ExtractNames(VarNames)]
             if(dim(Names.DT)[1] == 0) {
 
                 out <- data.table(IDDD = character(0))
@@ -64,7 +63,7 @@ VarNamesToDD <- function(VarNames, DD){
                 Names.DT[, Class := NULL]
 
                 ParsedNames <- strsplit(VarNames, '_')[[1]]
-                IDQual <- DD[Sort == 'IDQual'][['Variable']]
+                IDQual <- DDlocal[Sort == 'IDQual'][['Variable']]
                 IDQualCounter <- 0
 
                 for (i in seq(along = setdiff(names(Names.DT), 'IDDD'))){
@@ -98,8 +97,11 @@ VarNamesToDD <- function(VarNames, DD){
                 
             }
         }
-        output <- rbindlist(output)
-        return(output)
+        outputGlobal <- Reduce(function(x, y){
+                                merge(x, y, all = TRUE,
+                                      by = intersect(names(x), names(y)))},
+                                output)
+        return(outputGlobal)
 
     } else { # Ahora para varias variables de entrada
 
@@ -118,16 +120,12 @@ VarNamesToDD <- function(VarNames, DD){
                 out.list)
         }
 
-        # Eliminamos columnas vacías
-        for (col in rev(names(out))){
-
+        # Pasamos NA a '' y eliminamos columnas vacías
+        Cols <- sort(names(out))
+        for (col in Cols){
             out[, col := ifelse(is.na(get(col)), '', get(col)), with = F]
             if(all(out[[col]] == '')) out[, col := NULL, with = F]
-
         }
-
         return(out)
     }
-
-
 }
