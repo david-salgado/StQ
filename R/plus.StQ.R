@@ -21,7 +21,7 @@
 #'                     Value = c(0, 187364))
 #'
 #' Data2 <- data.table(NOrden = c('ID1', 'ID2', 'ID1', 'ID2'),
-#'                     EsRemuner = c(0, 0, 1, 1),
+#'                     EsRemuner = c('0', '0', '1', '1'),
 #'                     IDDD = c('Empleo', 'Empleo', 'Empleo', 'Empleo'),
 #'                     Value = c(0, 1, 23, 41))
 #' VarList1 <- list(MicroData = data.table(IDQual = c('NOrden', ''),
@@ -40,58 +40,13 @@
 #'                      Sort = c('IDQual', 'IDDD'),
 #'                      Class = c('character', 'numeric'),
 #'                      Qual1 = c('', 'NOrden'))
-<<<<<<< HEAD
-#' VNC1List <- list(data.table(IDQual = c('Norden', ''),
-#'                             NonIDQual = c('', ''),
-#'                             IDDD = c('', 'CifraNeg'),
-#'                             Norden = c('', ''),
-#'                             Unit1 = c('', '')))
-#' VNC1 <- new(Class = 'VarNameCorresp', VarNameCorresp = VNC1List)
-#' DD1 <- new(Class = 'DD', Data = DDData1, VarNameCorresp = VNC1)
-#'
-#' DDData2 <- data.table(Variable = c('NOrden',
-#'                                    'EsRemuner',
-#'                                    'Empleo'),
-#'                      Sort = c('IDQual',
-#'                               'NonIDQual',
-#'                               'IDDD'),
-#'                      Class = c('character',
-#'                                'integer',
-#'                                'integer'),
-#'                      Qual1 = c(rep('', 2), 'NOrden'),
-#'                      Qual2 = c(rep('', 2), 'EsRemuner'))
-#' VNC2List <- list(data.table(IDQual = c('Norden', '', ''),
-#'                             NonIDQual = c('', 'EsRemuner', ''),
-#'                             IDDD = c('', '', 'Empleo'),
-#'                             Norden = c('', '', ''),
-#'                             EsRemuner = c('', '', '1'),
-#'                             Unit1 = c('', '', '')))
-#' VNC2 <- new(Class = 'VarNameCorresp', VarNameCorresp = VNC2List)
-#' DD2 <- new(Class = 'DD', Data = DDData2, VarNameCorresp = VNC2)
-||||||| merged common ancestors
-#' DD1 <- new(Class = 'DD', Data = DDData1)
-#'
-#' DDData2 <- data.table(Variable = c('NOrden',
-#'                                    'EsRemuner',
-#'                                    'Empleo'),
-#'                      Sort = c('IDQual',
-#'                               'NonIDQual',
-#'                               'IDDD'),
-#'                      Class = c('character',
-#'                                'integer',
-#'                                'integer'),
-#'                      Qual1 = c(rep('', 2), 'NOrden'),
-#'                      Qual2 = c(rep('', 2), 'EsRemuner'))
-#' DD2 <- new(Class = 'DD', Data = DDData2)
-=======
 #' DD1 <- new(Class = 'DD', MicroData = MicroDD1, VarNameCorresp = VNC1)
 #' MicroDD2 <- data.table(Variable = c('NOrden', 'EsRemuner', 'Empleo'),
 #'                        Sort = c('IDQual', 'NonIDQual', 'IDDD'),
-#'                        Class = c('character', 'integer', 'integer'),
+#'                        Class = c('character', 'character', 'integer'),
 #'                        Qual1 = c(rep('', 2), 'NOrden'),
 #'                        Qual2 = c(rep('', 2), 'EsRemuner'))
 #' DD2 <- new(Class = 'DD', MicroData = MicroDD2, VarNameCorresp = VNC2)
->>>>>>> a291ccd6bc1a13d36b1d99d22d64648cfffb370f
 #'
 #' # We build both StQ objects and join them in a single object:
 #' Q1 <- new(Class = 'StQ', Data = Data1, DD = DD1)

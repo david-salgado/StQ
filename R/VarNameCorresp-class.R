@@ -110,7 +110,7 @@ setClass(Class = "VarNameCorresp",
                    #print(paste0('ColNonIDQual: ', ColNonIDQual))     
                    if (length(ColNonIDQual[ColNonIDQual != NonIDQual]) > 0){
                      
-                     stop(paste0('[Validity VarNameCorresp] The names of the (non-unit) qualifier in the columns of data.table ', VNCCompName, ' are not right. '))
+                     stop(paste0('[Validity VarNameCorresp] The names of the (non-unit) qualifiers in the columns of data.table ', VNCCompName, ' are not right. '))
                    }
                  }
                 

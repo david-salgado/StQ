@@ -37,7 +37,8 @@
 #'            MicroData = data.table(Variable = c('Norden', 'logCifraNeg'),
 #'                              Sort = c('IDQual', 'IDDD'),
 #'                              Class = c('character', 'numeric'),
-#'                              Qual1 = c('', 'NOrden')), VarNameCorresp = VNC2)
+#'                              Qual1 = c('', 'NOrden')),
+#'            VarNameCorresp = VNC2)
 #' DD1 + DD2
 #'
 #' @include DD-class.R getData.R getVNC.R

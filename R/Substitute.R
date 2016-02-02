@@ -78,7 +78,7 @@
 #' # Finalmente creamos el objeto
 #' Q1 <- new(Class = 'StQ', Data = Data1, DD = DD)
 #' Q2 <- new(Class = 'StQ', Data = Data2, DD = DD)
-#' Substitute(In = Q1, From = Q2, 'CifraNeg', data.table(NOrden = '000002896SS'))
+#' #Substitute(In = Q1, From = Q2, 'CifraNeg', data.table(NOrden = '000002896SS'))
 #'
 #' @export
 setGeneric("Substitute", function(In,
@@ -127,10 +127,10 @@ setMethod(
     }
     
     ### FALTA POR DEPURAR ESTA PARTE. HAY UN PROBLEMA DE SCOPING
-    auxnewDD <- getDD(In)[Variable %in% VarNames]
+    
     output <- copy(In)
     for(Var in VarNames){
-
+      auxnewDD <- getDD(In)[Variable == Var]    
       Val <- From.dt[[Var]]
       output <- setVar(output, newDD = auxnewDD, Value = Val)
     }
