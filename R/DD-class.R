@@ -21,9 +21,20 @@
 #' This \linkS4class{data.table} is completed with as many columns named 
 #' \code{Qualn} as necessary. 
 #' 
-#' @slot Data \linkS4class{data.table} with at least the four columns 
+#' @slot VarNameCorresp Object of class \linkS4class{VarNameCorresp}.
+#' 
+#' @slot MicroData \linkS4class{data.table} with at least the four columns 
 #' \code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} (in that order).
 #'  
+#' @slot Aggregates \linkS4class{data.table} with at least the four columns 
+#' \code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} (in that order).
+#' 
+#' @slot AggWeights \linkS4class{data.table} with at least the four columns 
+#' \code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} (in that order).
+#' 
+#' @slot Other \linkS4class{data.table} with at least the four columns 
+#' \code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} (in that order).
+#' 
 #' @examples
 #' # An empty DD object is built through the code: 
 #' new(Class = 'DD')
