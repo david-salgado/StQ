@@ -96,14 +96,15 @@ setClass(Class = "StQ",
              }
              
              # Si un identificador de variable está idénticamente en blanco, esta columna se elimina
-             for (col in colData){
+             colsData <- c('IDDD', 'Value')
+             for (col in setdiff(colData, colsData)){
                  
                  if (all(Data[[col]] == '')) Data[, col := NULL, with = F]
              }
              
              object@Data <- Data
              colData <- names(Data)
-             
+            
              # Detección de filas duplicadas
              if (dim(Data)[[1]] != 0){
                  

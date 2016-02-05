@@ -127,8 +127,8 @@ setMethod(
         Data <- getData(object)
         if (NewVarName %in% Data[['IDDD']]) {
 
-            setData(object) <- Data[IDDD != VarName]
-
+            #setData(object) <- Data[IDDD != VarName]
+            setData(object) <- Data[IDDD != NewVarName]
         }
         
         DD <- getDD(object)

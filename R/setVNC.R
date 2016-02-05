@@ -52,7 +52,7 @@
 #'                           Qual1 = 'NOrden')
 #' DD <- new(Class = 'DD', MicroData = MicroDataDD)
 #' StQ <- new(Class = 'StQ', 
-#'            Data = data.table(IDDD = character(0), Value = numeric(0)), 
+#'            Data = data.table(IDDD = character(0), Value = character(0)), 
 #'            DD = DD)
 #' VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','','',''),
 #'                                        NonIDQual = c('EsMercNac', 

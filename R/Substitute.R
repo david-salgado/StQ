@@ -37,12 +37,13 @@
 #' # Creamos el objeto VarNameCorresp
 #' VNCList <- list(Microdata = 
 #'                  data.table(IDQual = c('NOrden', '', '', '', '', '', '', ''),
-#'                             NonIDQual = c('', 'EsRemuner', '', '', '', '', '', ''), 
-#'                            IDDD = c('', '', 'Mes', 'Anno', 'CCAA',
-#'                                     'CNAE2009', 'CifraNeg', 'Empleo'), 
-#'                            NOrden = c('', '', '', '', '', '', '', ''), 
-#'                            EsRemuner = c('', '', '', '', '', '', '', '1'), 
-#'                            Unit1 = c('', '', 'Mes', 'anio', 'ccaa', 'cnae09', 'CN', 'EmpRem')))
+#'                      NonIDQual = c('', 'EsRemuner', '', '', '', '', '', ''), 
+#'                      IDDD = c('', '', 'Mes', 'Anno', 'CCAA', 'CNAE2009', 
+#'                               'CifraNeg','Empleo'), 
+#'                      NOrden = c('', '', '', '', '', '', '', ''), 
+#'                      EsRemuner = c('', '', '', '', '', '', '', '1'), 
+#'                      Unit1 = c('', '', 'Mes', 'anio', 'ccaa', 'cnae09', 'CN',
+#'                               'EmpRem')))
 #' VNC <- new(Class = 'VarNameCorresp', VarNameCorresp = VNCList)
 #' 
 #' # Creamos un slot DD:
@@ -78,7 +79,7 @@
 #' # Finalmente creamos el objeto
 #' Q1 <- new(Class = 'StQ', Data = Data1, DD = DD)
 #' Q2 <- new(Class = 'StQ', Data = Data2, DD = DD)
-#' #Substitute(In = Q1, From = Q2, 'CifraNeg', data.table(NOrden = '000002896SS'))
+#' Substitute(In = Q1, From = Q2, 'CifraNeg', data.table(NOrden = '000002896SS'))
 #'
 #' @export
 setGeneric("Substitute", function(In,
@@ -125,14 +126,37 @@ setMethod(
     for (Var in VarNames){
         In.dt[Units, Var := From.dt[Units][[Var]], with = F]
     }
-    
+
+
     ### FALTA POR DEPURAR ESTA PARTE. HAY UN PROBLEMA DE SCOPING
-    
-    output <- copy(In)
+    #output <- copy(In)
+    output <- copy(In.dt)
+
     for(Var in VarNames){
-      auxnewDD <- getDD(In)[Variable == Var]    
-      Val <- From.dt[[Var]]
-      output <- setVar(output, newDD = auxnewDD, Value = Val)
+      DDIn <- getDD(In)
+      DDSlotNames <- setdiff(slotNames(DDIn), 'VarNameCorresp')
+      auxnewslotsDD <- list()
+      for (DDslot in DDSlotNames){
+          auxnewslotsDD[[DDslot]] <- slot(DDIn, DDslot)[Variable == Var]
+      }
+      
+      auxnewVNC <- list()
+      for (SheetName in names(slot(slot(DDIn, 'VarNameCorresp'), 'VarNameCorresp'))){
+          auxnewVNC[[SheetName]] <- slot(slot(DDIn, 'VarNameCorresp'), 'VarNameCorresp')[[SheetName]][IDDD == Var]
+      }
+      auxnewVNC <- new(Class = 'VarNameCorresp', VarNameCorresp = auxnewVNC)
+
+      auxnewDD <- new(Class = 'DD', 
+                      MicroData = auxnewslotsDD[['MicroData']], 
+                      Aggregates = auxnewslotsDD[['Aggregates']],
+                      AggWeights = auxnewslotsDD[['AggWeights']],
+                      Other = auxnewslotsDD[['Other']],
+                      VarNameCorresp = auxnewVNC)
+      #auxnewDD <- getDD(In)[Variable == Var]
+      output <- melt_StQ(output, DD = DD)
+      output <- new(Class = 'StQ', Data = output@Data, DD = auxnewDD)
+      #Val <- From.dt[[Var]]
+      #output <- setVar(output, newDD = auxnewDD, Value = Val)
     }
 
     return(output)
