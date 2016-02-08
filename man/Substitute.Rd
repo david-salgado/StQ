@@ -48,44 +48,45 @@ Data2 <- data.table(NOrden = c('000002896SS', '000003986SS'),
                     Value = c(10000, 188364))
                     
 # Creamos el objeto VarNameCorresp
-VNCList <- list(data.table(IDQual = c('Norden', '', '', '', '', '', '', ''),
-                          NonIDQual = c('', 'EsRemuner', '', '', '', '', '',
-                           ''), IDDD = c('', '', 'Mes', 'Anno', 'CCAA',
-                          'CNAE2009', 'CifraNeg', 'Empleo'), Norden = c('',
-                          '', '', '', '', '', '', ''), EsRemuner = c('',
-                          '', '', '', '', '', '', '1'), Unit1 = c('', '', '',
-                          '', '', '', '', '')))
+VNCList <- list(Microdata = 
+                 data.table(IDQual = c('NOrden', '', '', '', '', '', '', ''),
+                            NonIDQual = c('', 'EsRemuner', '', '', '', '', '', ''), 
+                           IDDD = c('', '', 'Mes', 'Anno', 'CCAA',
+                                    'CNAE2009', 'CifraNeg', 'Empleo'), 
+                           NOrden = c('', '', '', '', '', '', '', ''), 
+                           EsRemuner = c('', '', '', '', '', '', '', '1'), 
+                           Unit1 = c('', '', 'Mes', 'anio', 'ccaa', 'cnae09', 'CN', 'EmpRem')))
 VNC <- new(Class = 'VarNameCorresp', VarNameCorresp = VNCList)
 
 # Creamos un slot DD:
-DDData <- data.table(Variable = c('NOrden',
-                                  'EsRemuner',
-                                  'Mes',
-                                  'Anno',
-                                  'CCAA',
-                                  'CNAE2009',
-                                  'CifraNeg',
-                                  'Empleo'),
-                     Sort = c('IDQual',
-                              'NonIDQual',
-                              'IDDD',
-                              'IDDD',
-                              'IDDD',
-                              'IDDD',
-                              'IDDD',
-                              'IDDD'),
-                     Class = c('character',
-                               'integer',
-                               'character',
-                               'character',
-                               'character',
-                               'character',
-                               'numeric',
-                               'integer'),
-                     Qual1 = c('', '', 'NOrden', 'NOrden', 'NOrden', 
-                               'NOrden', 'NOrden', 'NOrden'),
-                     Qual2 = c('', '', '', '', '', '', '', 'EsRemuner'))
-DD <- new(Class = 'DD', Data = DDData, VarNameCorresp = VNC)
+MicroDD <- data.table(Variable = c('NOrden',
+                                   'EsRemuner',
+                                   'Mes',
+                                   'Anno',
+                                   'CCAA',
+                                   'CNAE2009',
+                                   'CifraNeg',
+                                   'Empleo'),
+                      Sort = c('IDQual',
+                               'NonIDQual',
+                               'IDDD',
+                               'IDDD',
+                               'IDDD',
+                               'IDDD',
+                               'IDDD',
+                               'IDDD'),
+                      Class = c('character',
+                                'integer',
+                                'character',
+                                'character',
+                                'character',
+                                'character',
+                                'numeric',
+                                'integer'),
+                      Qual1 = c('', '', 'NOrden', 'NOrden', 'NOrden', 
+                                'NOrden', 'NOrden', 'NOrden'),
+                      Qual2 = c('', '', '', '', '', '', '', 'EsRemuner'))
+DD <- new(Class = 'DD', MicroData = MicroDD, VarNameCorresp = VNC)
 
 # Finalmente creamos el objeto
 Q1 <- new(Class = 'StQ', Data = Data1, DD = DD)

@@ -34,29 +34,29 @@ Data2 <- data.table(NOrden = c('ID1', 'ID2', 'ID1', 'ID2'),
                     EsRemuner = c(0, 0, 1, 1),
                     IDDD = c('Empleo', 'Empleo', 'Empleo', 'Empleo'),
                     Value = c(0, 1, 23, 41))
-
-# We build two corresponding DD objects:
-DDData1 <- data.table(Variable = c('NOrden',
-                                   'CifraNeg'),
-                     Sort = c('IDQual',
-                              'IDDD'),
-                     Class = c('character',
-                               'numeric'),
+VarList1 <- list(MicroData = data.table(IDQual = c('NOrden', ''),
+                                       IDDD = c('', 'CifraNeg'),
+                                       NOrden = c('', ''),
+                                       Unit1 = c('norden', 'cn')))
+VNC1 <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList1)
+VarList2 <- list(MicroData = data.table(IDQual = c('NOrden', '', '', ''),
+                                        NonIDQual = c('', 'EsRemuner', '', ''),
+                                        IDDD = c('', '', 'Empleo', 'Empleo'),
+                                        NOrden = c('', '', '', ''),
+                                        EsRemuner = c('', '', '0', '1'),
+                                        Unit1 = c('norden', '', 'EmpNoR', 'EmpR')))
+VNC2 <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList2)
+MicroDD1 <- data.table(Variable = c('NOrden', 'CifraNeg'),
+                     Sort = c('IDQual', 'IDDD'),
+                     Class = c('character', 'numeric'),
                      Qual1 = c('', 'NOrden'))
-DD1 <- new(Class = 'DD', Data = DDData1)
-
-DDData2 <- data.table(Variable = c('NOrden',
-                                   'EsRemuner',
-                                   'Empleo'),
-                     Sort = c('IDQual',
-                              'NonIDQual',
-                              'IDDD'),
-                     Class = c('character',
-                               'integer',
-                               'integer'),
-                     Qual1 = c(rep('', 2), 'NOrden'),
-                     Qual2 = c(rep('', 2), 'EsRemuner'))
-DD2 <- new(Class = 'DD', Data = DDData2)
+DD1 <- new(Class = 'DD', MicroData = MicroDD1, VarNameCorresp = VNC1)
+MicroDD2 <- data.table(Variable = c('NOrden', 'EsRemuner', 'Empleo'),
+                       Sort = c('IDQual', 'NonIDQual', 'IDDD'),
+                       Class = c('character', 'integer', 'integer'),
+                       Qual1 = c(rep('', 2), 'NOrden'),
+                       Qual2 = c(rep('', 2), 'EsRemuner'))
+DD2 <- new(Class = 'DD', MicroData = MicroDD2, VarNameCorresp = VNC2)
 
 # We build both StQ objects and join them in a single object:
 Q1 <- new(Class = 'StQ', Data = Data1, DD = DD1)
