@@ -61,7 +61,7 @@
 #' NewQ <- setVar(object = ExampleQ,
 #'                newDD = newDD, 
 #'                Value = expression(log(1 + IASSCifraNeg)))
-#' getVar(NewQ, 'lCN')
+#' getVar(NewQ, 'IASSlCN')
 #'
 #' @export
 setGeneric("setVar", function(object,
@@ -127,8 +127,8 @@ setMethod(
         Data <- getData(object)
         if (NewVarName %in% Data[['IDDD']]) {
 
-            setData(object) <- Data[IDDD != VarName]
-
+            #setData(object) <- Data[IDDD != VarName]
+            setData(object) <- Data[IDDD != NewVarName]
         }
         
         DD <- getDD(object)

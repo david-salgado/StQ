@@ -21,7 +21,7 @@
 #'                     Value = c(0, 187364))
 #'
 #' Data2 <- data.table(NOrden = c('ID1', 'ID2', 'ID1', 'ID2'),
-#'                     EsRemuner = c(0, 0, 1, 1),
+#'                     EsRemuner = c('0', '0', '1', '1'),
 #'                     IDDD = c('Empleo', 'Empleo', 'Empleo', 'Empleo'),
 #'                     Value = c(0, 1, 23, 41))
 #' VarList1 <- list(MicroData = data.table(IDQual = c('NOrden', ''),
@@ -43,7 +43,7 @@
 #' DD1 <- new(Class = 'DD', MicroData = MicroDD1, VarNameCorresp = VNC1)
 #' MicroDD2 <- data.table(Variable = c('NOrden', 'EsRemuner', 'Empleo'),
 #'                        Sort = c('IDQual', 'NonIDQual', 'IDDD'),
-#'                        Class = c('character', 'integer', 'integer'),
+#'                        Class = c('character', 'character', 'integer'),
 #'                        Qual1 = c(rep('', 2), 'NOrden'),
 #'                        Qual2 = c(rep('', 2), 'EsRemuner'))
 #' DD2 <- new(Class = 'DD', MicroData = MicroDD2, VarNameCorresp = VNC2)

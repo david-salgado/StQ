@@ -14,10 +14,11 @@
 #' library(data.table)
 #' Data <- data.table(IDDD = character(0), Value = numeric(0))
 #'
-#' # We assign this data.table to the slot Data of object ExampleQ:
+#' # We assign this data.table to the slot Data of object NewExampleQ:
 #' data(ExampleQ)
-#' setData(ExampleQ) <- Data
-#' ExampleQ
+#' NewExampleQ <- ExampleQ
+#' setData(NewExampleQ) <- Data
+#' NewExampleQ
 #'
 #' @rdname setData
 #'

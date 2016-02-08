@@ -66,11 +66,19 @@ setMethod(
         
         nQual <- length(setdiff(names(slot(getDD(object), DDslot)),
                                 c('Variable', 'Sort', 'Class')))
+        
         if (nQual == 0) stop('[StQ::dcast_StQ] The slot DD has no qualifiers.')
 
-        IDQual <- (slot(getDD(object), DDslot))[Sort == 'IDQual', Variable]
-        NonIDQual <- (slot(getDD(object), DDslot))[Sort == 'NonIDQual', Variable]
-
+        DD <- getDD(object)
+        IDQual <- (slot(DD, DDslot))[Sort == 'IDQual', Variable]
+        NonIDQual <- (slot(DD, DDslot))[Sort == 'NonIDQual', Variable]
+        
+        Quals <- c(IDQual, NonIDQual)
+        Quals <- intersect(VarNames, Quals)
+        if (length(Quals) > 0){
+            stop(paste0('[StQ::dcast_StQ]Variable ', Quals, ' is a qualifier in slot ', DDslot, ' of the slot DD of the input object. Please, remove it.'))
+        }
+        
         if (missing(VarNames)) {
 
             AllVar <- TRUE
@@ -83,8 +91,8 @@ setMethod(
         }
 
         # Creamos una data.table auxDD con la fórmula asociada a cada variable según el slot DD
+        auxDD <- VarNamesToFormula(IDDDVarNames, DD)
 
-        auxDD <- VarNamesToFormula(IDDDVarNames, getDD(object))
 
         # Se asocia a cada fórmula su correspondiente data.table dcasted
         auxData <- split(auxDD[['Variable']], auxDD[['Form']])

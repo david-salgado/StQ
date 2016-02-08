@@ -32,11 +32,17 @@
 #' # An empty standardized questionnaire set:
 #' new(Class = 'StQ')
 #'
+#' # An example with data created previosly:
+#' library(data.table)
+#' data(DataTot)
+#' data(ExampleDD)
+#' Q <- new(Class = 'StQ', Data = DataTot, DD = ExampleDD)
+#' 
 #' # An empty data set:
 #' library(data.table)
 #' Data <- data.table(IDDD = character(0), Value = character(0))
 #'
-#' # An object DD in two steps:
+#' # An object DD:
 #' DDData <- data.table(Variable = c('NOrden', 'EsRemuner', 'Mes', 'Anno',
 #'                                   'CCAA','CNAE2009', 'CifraNeg', 'Empleo'),
 #'                      Sort = c('IDQual', 'NonIDQual', 'IDDD', 'IDDD',
@@ -47,13 +53,20 @@
 #'                                'NOrden', 'NOrden', 'NOrden', 'NOrden'),
 #'                      Qual2 = c('', '', '', '',
 #'                                '', '', '', 'EsRemuner'))
-#' DD <- new(Class = 'DD', MicroData = DDData)
+#' VNCList <- list(MicroData= 
+#'                  data.table(IDQual = c('NOrden', '', '', '', '', '', '', ''),
+#'                             NonIDQual = c('', 'EsRemuner', '', '', '', '', '',
+#'                                           ''), 
+#'                             IDDD = c('', '', 'Mes', 'Anno', 'CCAA',
+#'                                      'CNAE2009', 'CifraNeg', 'Empleo'), 
+#'                             NOrden = c('', '', '', '', '', '', '', ''), 
+#'                             EsRemuner = c('', '', '', '', '', '', '', ''), 
+#'                             Unit1 = c('', '', '', '', '', '', '', '')))
+#' VNC <- new(Class = 'VarNameCorresp', VarNameCorresp = VNCList)
+#' DD <- new(Class = 'DD', MicroData = DDData, VarNameCorresp = VNC)
 #'
 #' # We create an object StQ with no data
-#' Q <- new(Class = 'StQ', 
-#'          Data = data.table(IDDD = character(0),
-#'                            Value = character(0)),
-#'          DD = DD)
+#' Q <- new(Class = 'StQ', Data = Data, DD = DD)
 #' Q
 #' # Notice that only the slot Data appears on screen, but the object is not a
 #' # data.table:
@@ -73,48 +86,29 @@ setClass(Class = "StQ",
          validity = function(object){
 
              Data <- object@Data
-             DDslotNames <- setdiff(slotNames(object@DD), 'VarNameCorresp')
-             for (DDslot in DDslotNames){
-
-                 DDlocal <- slot(object@DD, DDslot)
-    
-                 # Data debe tener al menos dos columnas: IDDD y Value
-                 if (names(Data)[length(names(Data)) - 1] != 'IDDD'){
-                     stop(paste0('[Validity StQ] The last but one of the columns of slot ', DDslot, ' must have name "IDDD".'))
-                 }
-                 if (names(Data)[length(names(Data))] != 'Value') {
-                     stop(paste0('[Validity StQ] The last column of slot ', DDslot, ' must have name "Value".'))
-                 }
-    
-                 # Las columnas diferentes a IDDD y Value deben estar especificadas como IDQual o NonIDQual en el slot DD
-                 QualinData <- sort(setdiff(names(Data), c('IDDD', 'Value')))
-
-                 QualinDD <- sort(DDlocal[Sort != 'IDDD'][['Variable']])
-                 if (length(QualinDD) > 0 && !all(QualinData %in% QualinDD)) {
-                   stop(paste0('[Validity StQ] Columns not being "IDDD" and "Value" of slot ', DDslot, ' must be specified as "IDQual" or "NonIDQual" in slot DD.'))
-                 }
-                 # Si un identificador de variable está idénticamente en blanco, esta columna se elimina
-                 NonIDQualinData <- intersect(DDlocal[Sort == 'NonIDQual'][['Variable']],
-                                              names(Data))
-                 for (col in NonIDQualinData){
-    
-                     if (all(Data[[col]] == '')) Data[, col := NULL, with = F]
-                 }
-    
-                 # Las variables contenidas en IDDD en el slot Data deben estar definidas en el slot DD
-                 UniqueData <- unique(Data[['IDDD']])
-                 if (dim(DDlocal)[1] > 0) {
-                    NotinDD <- setdiff(UniqueData, DDlocal[['Variable']])
-                    if (length(NotinDD) > 0) {
-                        stop(paste0('\n[Validity StQ] The following variables in the column IDDD of slot ', DDslot, ' are not defined in slot DD: \n',
-                                     paste0(NotinDD, collapse = ', '), '.\n'))
-                    }
-                 }
+             colData <- names(Data)
+             # Data debe tener al menos dos columnas: IDDD y Value
+             if (colData[length(colData) - 1] != 'IDDD'){
+                 stop(paste0('[Validity StQ] The last but one of the columns of slot "Data" must have name "IDDD".'))
              }
+             if (colData[length(colData)] != 'Value') {
+                 stop(paste0('[Validity StQ] The last column of slot "Data" must have name "Value".'))
+             }
+             
+             # Si un identificador de variable está idénticamente en blanco, esta columna se elimina
+             colsData <- c('IDDD', 'Value')
+             for (col in setdiff(colData, colsData)){
+                 
+                 if (all(Data[[col]] == '')) Data[, col := NULL, with = F]
+             }
+             
+             object@Data <- Data
+             colData <- names(Data)
+            
              # Detección de filas duplicadas
              if (dim(Data)[[1]] != 0){
-
-                 setkeyv(Data, names(Data)[-which(names(Data) == 'Value')])
+                 
+                 setkeyv(Data, colData[-which(colData == 'Value')])
                  DupRows <- duplicated(Data)
                  if (sum(DupRows) > 0) {
                      warning('[Validity StQ] The following rows are duplicated:\n\n')
@@ -122,7 +116,52 @@ setClass(Class = "StQ",
                      stop('[Validity StQ] Please remove duplicated rows.')
                  }
              }
+             
+             # Las columnas IDQual y NonIDQual deben tener la clase especificada en el slot DD
+             QualinData <- sort(setdiff(colData, c('IDDD', 'Value')))
+             QualClassinData <- sapply(Data, class)[QualinData]
+             QualClassinData <- sort(QualClassinData)
+             
+             
+             # Recorremos el slot DD para identificar los distintos calificadores
+             DDslotNames <- setdiff(slotNames(object@DD), 'VarNameCorresp')
+             QualinDD <- c()
+             IDDDinDD <- c()
+             for (DDslot in DDslotNames){
 
+                 DDlocal <- slot(object@DD, DDslot)
+    
+                 QualinDD <- unique(c(QualinDD, DDlocal[Sort != 'IDDD'][['Variable']]))
+                 
+                 IDDDinDD <- unique(c(IDDDinDD, DDlocal[Sort == 'IDDD'][['Variable']]))
+                 
+                 
+                 QualClassinDD <- DDlocal[Sort != 'IDDD'][['Class']]
+                 QualinDD <- DDlocal[Sort != 'IDDD'][['Variable']]
+                 names(QualClassinDD) <- QualinDD
+                 QualClassinDD <- sort(QualClassinDD[QualinData])
+                 if (length(QualClassinDD) > 0 && 
+                     !all(sort(QualClassinData[names(QualClassinDD)]) == QualClassinDD)) {
+                     stop(paste0('[Validity StQ] The class of at least one qualifier in the slot Data does not coincide with that of ', DDslot, ' in slot DD.'))
+                 }
+             }
+             
+             # Comparamos los calificadores en los slots Data y DD: Todos los calificadores en Data deben estar definidos en algún slot de DD
+             
+             if (length(QualinDD) > 0 && !all(QualinData %in% QualinDD)) {
+                 stop(paste0('[Validity StQ] Columns not being "IDDD" and "Value" of slot Data must be specified as "IDQual" or "NonIDQual" in slot DD.'))
+             }
+             
+             # Comparamos las variables en los slots Data y DD. Todas las variables en Data deben estar definidas en algún slot de DD
+             IDDDinData <- unique(Data[['IDDD']])
+             NotinDD <- setdiff(IDDDinData, IDDDinDD)
+             if (length(NotinDD) > 0) {
+                     stop(paste0('\n[Validity StQ] The following variables in the column IDDD of slot "Data" are not defined in slot DD: \n',
+                                 paste0(NotinDD, collapse = ', '), '.\n'))
+             }
+             
+             
+             
              return(TRUE)
          }
 )

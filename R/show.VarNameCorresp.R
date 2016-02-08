@@ -15,10 +15,10 @@
 #' show(new(Class = 'VarNameCorresp'))
 #'
 #' # A more elaborate example. See StQ-class and method getDD for details
-#' VarList <- list(data.table(IDQual = c('NumIdEst','','','',''),
-#'                      NonIDQual = c('EsMercNac', 'EsMercEuro', 'EsMercRM','Cod',''),
-#'                      IDDD = c('','','','','IEPEntradaPed'),
-#'                      Unit1 = c('','','','','')))
+#' VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','','',''),
+#'                NonIDQual = c('EsMercNac', 'EsMercEuro', 'EsMercRM','Cod',''),
+#'                IDDD = c('','','','','IEPEntradaPed'),
+#'                Unit1 = c('','','','','')))
 #' Example <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList)
 #' show(Example)
 #'

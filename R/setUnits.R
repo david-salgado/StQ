@@ -13,11 +13,12 @@
 #'
 #' @examples
 #' library(data.table)
+#' library(stringr)
 #' data(ExampleQ)
 #' NewExampleQ <- ExampleQ
-#' Units <- data.table(NOrden = 1:5)
+#' Units <- data.table(NOrden = str_pad(1:5, 11, 'left', '0'))
 #' setUnits(NewExampleQ) <- Units
-#' str(NewExampleQ)
+#' NewExampleQ
 #'
 #' @rdname setUnits
 #'
@@ -37,7 +38,6 @@ setReplaceMethod(
 
         Data <- getData(object)
         Data <- merge(Data, value, by = names(value))
-return(Data)
         setData(object) <- Data
         return(object)
     }

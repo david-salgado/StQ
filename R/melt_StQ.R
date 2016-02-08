@@ -15,11 +15,15 @@
 #'
 #' The input parameter \code{DD} must be of class \linkS4class{DD}.
 #'
-#' @param DataMatrix \linkS4class{data.table} with dcasted form (statistical
-#' units by rows and variables by columns).
-#'
+#' @param DataMatrix of class \linkS4class{data.table} with dcasted form
+#' (statistical units by rows and variables by columns).
+#' 
 #' @param DD Object of class \linkS4class{DD}.
 #'
+#' @param DDslot Character vector of length 1 with the name of DD slot used
+#' to make the transformation of the input object. Its default value is 
+#' \code{MicroData}.
+#' 
 #' @return Object of class \linkS4class{StQ}.
 #'
 #' @examples
@@ -37,80 +41,83 @@
 #' @import data.table
 #'
 #' @export
-melt_StQ <- function(DataMatrix, DD){
+    melt_StQ <- function(DataMatrix, DD, DDslot = 'MicroData'){
+        
+    if (length(DDslot) > 1) stop('[StQ::melt_StQ] DDslot must be a character vector of length 1.')
+    if (!DDslot %in% slotNames(DD)) stop('[StQ::melt_StQ] DDslot is not a component of the slot DD of the input object.')
 
     # Función que elimina carácter blanco al principio y al final
     trim <- function (x) gsub("^\\s+|\\s+$", "", x, useBytes = T)
-
-    # Función que divide por el guión bajo _ y escoge el componente n
-    StrSplit_ <- function(x, n){
-
-        x <- ifelse(substr(x, nchar(x), nchar(x)) == '_', paste0(x,' '), x)
-        out <- strsplit(x, "_", fixed = T, useBytes = T)
-        out <- lapply(out, function(VarVector){
-                              if(length(VarVector) <= n) {
-
-                                return(VarVector[n])
-
-                              } else {
-
-                                return(c(VarVector,
-                                         rep('', length(VarVector) - n))[n])
-                              }
-          })
-        out <- unlist(out)
+    
+    # Función para construir nombres de variables
+    pasteNA <- function(x, y){
+        out <- ifelse(is.na(y) | y == '', paste0(x, ''), paste(x, y, sep ="_"))
         return(out)
-
     }
 
     #Construimos un objeto DD auxiliar
     auxDD <- list()
-    for (DDslot in setdiff(slotNames(DD), 'VarNameCorresp')){
 
-        DDlocal <- slot(DD, DDslot)
-        nQual <- length(setdiff(names(DDlocal), c('Variable', 'Sort', 'Class')))
-        if (nQual == 0) stop('[StQ::melt_StQ] DD has no qualifiers.')
+    DDlocal <- slot(DD, DDslot)
+    
+    nQual <- length(setdiff(names(DDlocal), c('Variable', 'Sort', 'Class')))
+    if (nQual == 0) stop('[StQ::melt_StQ] DD has no qualifiers.')
 
-        auxDD[[DDslot]] <- copy(DDlocal)[, c('Variable',
-                                             paste0('Qual', 1:nQual)), with = F]
+    auxDD[[DDslot]] <- copy(DDlocal)[, c('Variable',
+                                         paste0('Qual', 1:nQual)), with = F]
 
-        IDQual <- DDlocal[Sort == 'IDQual', Variable]
-        NonIDQual <- DDlocal[Sort == 'NonIDQual', Variable]
-        IDDD <- DDlocal[Sort == 'IDDD', Variable]
+    IDQual <- DDlocal[Sort == 'IDQual', Variable]
+    NonIDQual <- DDlocal[Sort == 'NonIDQual', Variable]
+    IDDD <- DDlocal[Sort == 'IDDD', Variable]
 
-        # Calificadores ID, calificadores NonID y variables IDDD en la matriz de datos
-        DM.IDQual <- names(DataMatrix)
-        DM.IDQual <- DM.IDQual[DM.IDQual %in% IDQual]
+       # Calificadores ID, calificadores NonID y variables IDDD en la matriz de datos
+    DM.IDQual <- names(DataMatrix)
+    DM.IDQual <- DM.IDQual[DM.IDQual %in% IDQual]
 
-        DM.NonIDQual <- names(DataMatrix)
-        DM.NonIDQual <- DM.NonIDQual[DM.NonIDQual %in% NonIDQual]
+    DM.NonIDQual <- names(DataMatrix)
+    DM.NonIDQual <- DM.NonIDQual[DM.NonIDQual %in% NonIDQual]
 
-        DM.IDDD <- setdiff(ExtractNames(names(DataMatrix)),
-                           c(DM.IDQual, DM.NonIDQual))
+    DM.IDDD <- setdiff(ExtractNames(names(DataMatrix)),
+                       c(DM.IDQual, DM.NonIDQual))
 
-        # Generamos una data.table con una columna Qual que especifica los calificadores de cada variable de la matriz de entrada
-        DM.Names <- list()
-        for (DMiddd in DM.IDDD){
-
-          DM.Names[[DMiddd]] <- names(DataMatrix)[grep(paste0('^', DMiddd, '$'),
-                                                ExtractNames(names(DataMatrix)))]
-
+       # Comprobamos que el slot de DD indicado es el que corresponde a la matriz de datos del input
+    if (length(DM.IDQual) == 0 && length(DM.NonIDQual) == 0){
+        
+        stop(paste0('[StQ::melt_StQ] There is not consistency between the data.table and the slot ', DDslot, ' of the input object.'))
+    }
+    
+    lapply(DM.IDDD, function(var){
+        
+        if (!var %in% IDDD){
+            stop(paste0('[StQ::melt_StQ] Variable ', var, ' is not a variable in the slot ', DDslot, ' of the input object.
+                         There is not consistency between the data.table and that slot.'))
         }
+    })
+    
 
-        auxDD[[DDslot]] <- auxDD[[DDslot]][Variable %in% DM.IDDD]
+    
+       # Generamos una data.table con una columna Qual que especifica los calificadores de cada variable de la matriz de entrada
+    DM.Names <- list()
+    for (DMiddd in DM.IDDD){
 
-        auxDD[[DDslot]][, Qual := '']
-        for (i in 1:nQual){
-
-          auxDD[[DDslot]][, Qual := ifelse(get(paste0('Qual', i)) != '',
-                                           trim(paste(Qual, get(paste0('Qual',
-                                                                       i)))),
-                                           trim(Qual))]
-
-        }
-        auxDD[[DDslot]] <- auxDD[[DDslot]][Qual1 != '']
+      DM.Names[[DMiddd]] <- names(DataMatrix)[grep(paste0('^', DMiddd, '$'),
+                                            ExtractNames(names(DataMatrix)))]
 
     }
+    
+    auxDD[[DDslot]] <- auxDD[[DDslot]][Variable %in% DM.IDDD]
+
+    auxDD[[DDslot]][, Qual := '']
+    for (i in 1:nQual){
+
+      auxDD[[DDslot]][, Qual := ifelse(get(paste0('Qual', i)) != '',
+                                       trim(paste(Qual, get(paste0('Qual',
+                                                                   i)))),
+                                       trim(Qual))]
+
+    }
+    auxDD[[DDslot]] <- auxDD[[DDslot]][Qual1 != '']
+
 
     auxDD <- rbindlist(auxDD, fill = TRUE)
     
@@ -119,6 +126,8 @@ melt_StQ <- function(DataMatrix, DD){
         auxDD[, col := ifelse(is.na(get(col)), '', get(col)), with = F]
         
     }
+    
+    
 
     # Generamos una lista de data.tables que agrupen a las variables según sus calificadores
     auxMeasureVar <- split(auxDD[['Variable']], auxDD[['Qual']])
@@ -132,14 +141,14 @@ melt_StQ <- function(DataMatrix, DD){
         qual <- unlist(strsplit(QualName, ' '))
         qualinDM <- intersect(qual, names(DataMatrix))
         qualnotinDM <- setdiff(qual, names(DataMatrix))
-
+        
         aux <- DataMatrix[, c(qualinDM, auxVarNames), with = F]
         for (col in names(aux)){
 
             aux[, col := as.character(get(col)), with = F]
 
         }
-
+ 
         out <- data.table::melt.data.table(aux,
                                           id.vars = qualinDM,
                                           measure.vars= auxVarNames,
@@ -147,24 +156,27 @@ melt_StQ <- function(DataMatrix, DD){
                                           value.name = 'Value',
                                           variable.factor = FALSE,
                                           value.factor = FALSE)
-
-        for (qualNonID.index in seq(along = qualnotinDM)){
-
-          out[, qualnotinDM[qualNonID.index] :=
-                  StrSplit_(IDDD, 1 + qualNonID.index), with = F]
-          out[, qualnotinDM[qualNonID.index] :=
-                  as.character(get(qualnotinDM[qualNonID.index])), with = F]
-          out[, qualnotinDM[qualNonID.index] :=
-                  ifelse(is.na(get(qualnotinDM[qualNonID.index])),
-                         '',
-                         get(qualnotinDM[qualNonID.index])), with = F]
-
+        
+        for (VNCcomp in names(DD@VarNameCorresp@VarNameCorresp)){ 
+            if (length(qualnotinDM) > 0){
+                
+            var <- auxMeasureVar[[QualName]]
+            Excel <- DD@VarNameCorresp@VarNameCorresp[[VNCcomp]]
+            varExcel <- Excel[IDDD %in% var][, c('IDDD', qualnotinDM), with = FALSE]
+            for (suffix in setdiff(names(varExcel), 'IDDD')){
+                varExcel[, 'IDDD' := pasteNA(varExcel$IDDD, varExcel[[suffix]]), with = FALSE]
+            }
+                
+            out <- merge(out, varExcel, by = 'IDDD')
+            out[, IDDD := ExtractNames(IDDD)]
+            }
         }
-        out[, IDDD := ExtractNames(IDDD)]
-        setcolorder(out, c(qualinDM, qualnotinDM, 'IDDD', 'Value'))
-        return(out)
+        
+    setcolorder(out, c(qualinDM, qualnotinDM, 'IDDD', 'Value'))
+    return(out)
     })
-
+    
+        
     names(moltenData) <- names(auxMeasureVar)
 
     # Incluimos las mismas columnas en cada componente de la lista
