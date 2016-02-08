@@ -30,25 +30,25 @@ Collate:
     'VarNamesToDD.R'
     'getData.R'
     'getUnits.R'
-    'Substitute.R'
+    'plus.StQ.R'
     'VarNamesToFormula.R'
-    'XLS.R'
     'getVNC.R'
     'plus.DD.R'
     'dcast_StQ.R'
+    'setData.R'
+    'setDD.R'
+    'setVar.R'
+    'Substitute.R'
+    'XLS.R'
     'getPeriods.StQList.R'
     'extract.StQList.R'
     'getVar.R'
     'melt_StQ.R'
-    'plus.StQ.R'
     'plus.VarNameCorresp.R'
     'renVar.StQ.R'
-    'setData.R'
     'rmVar.R'
-    'setDD.R'
     'setUnits.R'
     'setVNC.R'
-    'setVar.R'
     'show.DD.R'
     'show.StQ.R'
     'show.StQList.R'
@@ -61,5 +61,6 @@ URL: https://github.com/david-salgado/StQ
 BugReports: https://github.com/david-salgado/StQ/issues
 Suggests:
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr
