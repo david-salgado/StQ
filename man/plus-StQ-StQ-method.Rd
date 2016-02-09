@@ -50,6 +50,7 @@ MicroDD1 <- data.table(Variable = c('NOrden', 'CifraNeg'),
                      Sort = c('IDQual', 'IDDD'),
                      Class = c('character', 'numeric'),
                      Qual1 = c('', 'NOrden'))
+<<<<<<< HEAD
 DD1 <- new(Class = 'DD', MicroData = MicroDD1, VarNameCorresp = VNC1)
 MicroDD2 <- data.table(Variable = c('NOrden', 'EsRemuner', 'Empleo'),
                        Sort = c('IDQual', 'NonIDQual', 'IDDD'),
@@ -57,6 +58,30 @@ MicroDD2 <- data.table(Variable = c('NOrden', 'EsRemuner', 'Empleo'),
                        Qual1 = c(rep('', 2), 'NOrden'),
                        Qual2 = c(rep('', 2), 'EsRemuner'))
 DD2 <- new(Class = 'DD', MicroData = MicroDD2, VarNameCorresp = VNC2)
+||||||| merged common ancestors
+DD1 <- new(Class = 'DD', Data = DDData1)
+
+DDData2 <- data.table(Variable = c('NOrden',
+                                   'EsRemuner',
+                                   'Empleo'),
+                     Sort = c('IDQual',
+                              'NonIDQual',
+                              'IDDD'),
+                     Class = c('character',
+                               'integer',
+                               'integer'),
+                     Qual1 = c(rep('', 2), 'NOrden'),
+                     Qual2 = c(rep('', 2), 'EsRemuner'))
+DD2 <- new(Class = 'DD', Data = DDData2)
+=======
+DD1 <- new(Class = 'DD', MicroData = MicroDD1, VarNameCorresp = VNC1)
+MicroDD2 <- data.table(Variable = c('NOrden', 'EsRemuner', 'Empleo'),
+                       Sort = c('IDQual', 'NonIDQual', 'IDDD'),
+                       Class = c('character', 'integer', 'integer'),
+                       Qual1 = c(rep('', 2), 'NOrden'),
+                       Qual2 = c(rep('', 2), 'EsRemuner'))
+DD2 <- new(Class = 'DD', MicroData = MicroDD2, VarNameCorresp = VNC2)
+>>>>>>> c7f443f230722c66db02ad71258ce41acc414e75
 
 # We build both StQ objects and join them in a single object:
 Q1 <- new(Class = 'StQ', Data = Data1, DD = DD1)
