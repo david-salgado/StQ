@@ -29,26 +29,31 @@ This \linkS4class{data.table} is completed with as many columns named
 \section{Slots}{
 
 \describe{
-\item{\code{Data}}{\linkS4class{data.table} with at least the four columns 
+\item{\code{VarNameCorresp}}{Object of class \linkS4class{VarNameCorresp}.}
+
+\item{\code{MicroData}}{\linkS4class{data.table} with at least the four columns 
+\code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} (in that order).}
+
+\item{\code{Aggregates}}{\linkS4class{data.table} with at least the four columns 
+\code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} (in that order).}
+
+\item{\code{AggWeights}}{\linkS4class{data.table} with at least the four columns 
+\code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} (in that order).}
+
+\item{\code{Other}}{\linkS4class{data.table} with at least the four columns 
 \code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} (in that order).}
 }}
 \examples{
 # An empty DD object is built through the code: 
 new(Class = 'DD')
 
-# An elementary example with three variables (1 unit qualifier, 1 non-unit
-# qualifier and 1 variable)
+# An example with data extracted of a DD object:
 library(data.table)
-DDData <- data.table(Variable = c('NumIdEst', 'EsMercNac', 'EsMercEuro', 'EsMercRM', 'Cod', 'IEPEntradaPed'),
-                     Sort = c('IDQual', 'NonIDQual', 'NonIDQual', 'NonIDQual', 'NonIDQual', 'IDDD'),
-                     Class = c('character', 'character', 'character', 'character', 'character', 'character'),
-                     Qual1 = c('', '', '', '', '', 'NumIdEst'))
-VarList <- list(data.table(IDQual = c('NumIdEst','','','',''),
-                     NonIDQual = c('EsMercNac', 'EsMercEuro', 'EsMercRM','Cod',''),
-                     IDDD = c('','','','','IEPEntradaPed'),
-                     Unit1 = c('','','','','')))
-VarNameCorresp <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList)
-new(Class = 'DD', MicroData = DDData, VarNameCorresp = VarNameCorresp)
+data(ExampleDD)
+VNC <- ExampleDD@VarNameCorresp
+DDData <- ExampleDD@MicroData
+DDAggregates <- ExampleDD@Aggregates
+new(Class = 'DD', VarNameCorresp = VNC, MicroData = DDData, Aggregates = DDAggregates)
 
 }
 

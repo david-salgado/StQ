@@ -47,7 +47,8 @@ DD2 <- new(Class = 'DD',
            MicroData = data.table(Variable = c('Norden', 'logCifraNeg'),
                              Sort = c('IDQual', 'IDDD'),
                              Class = c('character', 'numeric'),
-                             Qual1 = c('', 'NOrden')), VarNameCorresp = VNC2)
+                             Qual1 = c('', 'NOrden')),
+           VarNameCorresp = VNC2)
 DD1 + DD2
 
 }

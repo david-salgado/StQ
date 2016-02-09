@@ -70,7 +70,7 @@ newDD <- new(Class = 'DD',
 NewQ <- setVar(object = ExampleQ,
                newDD = newDD, 
                Value = expression(log(1 + IASSCifraNeg)))
-getVar(NewQ, 'lCN')
+getVar(NewQ, 'IASSlCN')
 
 }
 

@@ -40,11 +40,17 @@ empty \linkS4class{DD} object with columns \code{Variable}, \code{Sort},
 # An empty standardized questionnaire set:
 new(Class = 'StQ')
 
+# An example with data created previosly:
+library(data.table)
+data(DataTot)
+data(ExampleDD)
+Q <- new(Class = 'StQ', Data = DataTot, DD = ExampleDD)
+
 # An empty data set:
 library(data.table)
 Data <- data.table(IDDD = character(0), Value = character(0))
 
-# An object DD in two steps:
+# An object DD:
 DDData <- data.table(Variable = c('NOrden', 'EsRemuner', 'Mes', 'Anno',
                                   'CCAA','CNAE2009', 'CifraNeg', 'Empleo'),
                      Sort = c('IDQual', 'NonIDQual', 'IDDD', 'IDDD',
@@ -55,13 +61,20 @@ DDData <- data.table(Variable = c('NOrden', 'EsRemuner', 'Mes', 'Anno',
                                'NOrden', 'NOrden', 'NOrden', 'NOrden'),
                      Qual2 = c('', '', '', '',
                                '', '', '', 'EsRemuner'))
-DD <- new(Class = 'DD', MicroData = DDData)
+VNCList <- list(MicroData= 
+                 data.table(IDQual = c('NOrden', '', '', '', '', '', '', ''),
+                            NonIDQual = c('', 'EsRemuner', '', '', '', '', '',
+                                          ''), 
+                            IDDD = c('', '', 'Mes', 'Anno', 'CCAA',
+                                     'CNAE2009', 'CifraNeg', 'Empleo'), 
+                            NOrden = c('', '', '', '', '', '', '', ''), 
+                            EsRemuner = c('', '', '', '', '', '', '', ''), 
+                            Unit1 = c('', '', '', '', '', '', '', '')))
+VNC <- new(Class = 'VarNameCorresp', VarNameCorresp = VNCList)
+DD <- new(Class = 'DD', MicroData = DDData, VarNameCorresp = VNC)
 
 # We create an object StQ with no data
-Q <- new(Class = 'StQ', 
-         Data = data.table(IDDD = character(0),
-                           Value = character(0)),
-         DD = DD)
+Q <- new(Class = 'StQ', Data = Data, DD = DD)
 Q
 # Notice that only the slot Data appears on screen, but the object is not a
 # data.table:

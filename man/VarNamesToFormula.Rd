@@ -42,10 +42,8 @@ be of utility in some scripts.
 }
 \examples{
 # We build a DD object to be used as the second input parameter:
-library(RepoReadWrite)
-data(RepoDD)
-DD <- RepoDDToDD(RepoDD)
-VarNamesToFormula(c('IASSEmpleo_1_1', 'IASSEmpleo_0', 'IASSEmpleo'), DD)
+data(ExampleDD)
+VarNamesToFormula(c('IASSEmpleo_1_1', 'IASSEmpleo_0', 'IASSEmpleo'), ExampleDD)
 
 }
 

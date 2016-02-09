@@ -4,13 +4,13 @@
 \name{ExampleDM}
 \alias{ExampleDM}
 \title{\linkS4class{data.table} with a rectangular data set}
-\format{\code{data.table} with 29499 rows and 59 columns.}
+\format{\code{data.table} with 23629 rows and 55 columns.}
 \usage{
 data(ExampleDM)
 }
 \description{
-\code{ExampleDM} is a \linkS4class{data.table} in data matrix
-structure with anonymised data from an undisclosed period of the Sector
-Service Indicators Survey.
+\code{ExampleDM} is a \linkS4class{data.table} with data matrix
+structure and severely perturbed data by different methods from a real data 
+set.
 }
 

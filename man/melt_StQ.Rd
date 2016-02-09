@@ -5,13 +5,17 @@
 \title{Convert a dcasted \linkS4class{data.table} into an object of class
 \linkS4class{StQ}}
 \usage{
-melt_StQ(DataMatrix, DD)
+melt_StQ(DataMatrix, DD, DDslot = "MicroData")
 }
 \arguments{
-\item{DataMatrix}{\linkS4class{data.table} with dcasted form (statistical
-units by rows and variables by columns).}
+\item{DataMatrix}{of class \linkS4class{data.table} with dcasted form
+(statistical units by rows and variables by columns).}
 
 \item{DD}{Object of class \linkS4class{DD}.}
+
+\item{DDslot}{Character vector of length 1 with the name of DD slot used
+to make the transformation of the input object. Its default value is 
+\code{MicroData}.}
 }
 \value{
 Object of class \linkS4class{StQ}.
