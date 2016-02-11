@@ -2,7 +2,7 @@ Package: StQ
 Title: Construction of Standard Questionnaires
 Version: 0.2
 Author: David Salgado
-Maintainer: David Salgado <david.salgado.fernandez@ine.es>
+Maintainer: David Salgado <david.salgado.fernandez@gmail.com>
 Description: This package contains the definition of the class StBusQ for
     standard business-statistics questionnaires and the methods to manage them
     (show, subsetting, ...)
