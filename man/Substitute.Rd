@@ -51,7 +51,6 @@ Data2 <- data.table(NOrden = c('000002896SS', '000003986SS'),
                     Value = c(10000, 188364))
                     
 # Creamos el objeto VarNameCorresp
-<<<<<<< HEAD
 VNCList <- list(Microdata = 
                  data.table(IDQual = c('NOrden', '', '', '', '', '', '', ''),
                      NonIDQual = c('', 'EsRemuner', '', '', '', '', '', ''), 
@@ -61,24 +60,6 @@ VNCList <- list(Microdata =
                      EsRemuner = c('', '', '', '', '', '', '', '1'), 
                      Unit1 = c('', '', 'Mes', 'anio', 'ccaa', 'cnae09', 'CN',
                               'EmpRem')))
-||||||| merged common ancestors
-VNCList <- list(data.table(IDQual = c('Norden', '', '', '', '', '', '', ''),
-                          NonIDQual = c('', 'EsRemuner', '', '', '', '', '',
-                           ''), IDDD = c('', '', 'Mes', 'Anno', 'CCAA',
-                          'CNAE2009', 'CifraNeg', 'Empleo'), Norden = c('',
-                          '', '', '', '', '', '', ''), EsRemuner = c('',
-                          '', '', '', '', '', '', '1'), Unit1 = c('', '', '',
-                          '', '', '', '', '')))
-=======
-VNCList <- list(Microdata = 
-                 data.table(IDQual = c('NOrden', '', '', '', '', '', '', ''),
-                            NonIDQual = c('', 'EsRemuner', '', '', '', '', '', ''), 
-                           IDDD = c('', '', 'Mes', 'Anno', 'CCAA',
-                                    'CNAE2009', 'CifraNeg', 'Empleo'), 
-                           NOrden = c('', '', '', '', '', '', '', ''), 
-                           EsRemuner = c('', '', '', '', '', '', '', '1'), 
-                           Unit1 = c('', '', 'Mes', 'anio', 'ccaa', 'cnae09', 'CN', 'EmpRem')))
->>>>>>> c7f443f230722c66db02ad71258ce41acc414e75
 VNC <- new(Class = 'VarNameCorresp', VarNameCorresp = VNCList)
 
 # Creamos un slot DD:

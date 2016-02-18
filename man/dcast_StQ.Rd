@@ -17,7 +17,7 @@ be converted.}
 \item{VarNames}{Character vector with names of the output variables.}
 
 \item{DDslot}{Character vector of length 1 with the name of DD slot used
-to make the transformation of the input object. Its default value is 
+to make the transformation of the input object. Its default value is
 \code{MicroData}.}
 }
 \value{
