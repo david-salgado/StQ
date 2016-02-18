@@ -66,6 +66,6 @@ Suggests:
     knitr,
     rmarkdown,
     RepoReadWrite,
-    stringr
+    stringr,
     testthat
 VignetteBuilder: knitr
