@@ -63,6 +63,11 @@ setClass(Class = "VarNameCorresp",
          lapply(VNCCompNames, function(VNCCompName){
              
                 ColNames <- names(object@VarNameCorresp[[VNCCompName]])
+                if (ColNames[1] == 'CalificadoresID'){
+                    
+                    setnames(object@VarNameCorresp[[VNCCompName]], 'CalificadoresID', 'IDQual')
+                    
+                }
                 if (ColNames[1] != 'IDQual'){
                 
                  stop(paste0('[Validity VarNameCorresp] The first column of data.table ', VNCCompName, ' must be named "IDQual".'))
@@ -76,6 +81,11 @@ setClass(Class = "VarNameCorresp",
               NonIDQual <- object@VarNameCorresp[[VNCCompName]][['NonIDQual']]
               NonIDQual <- sort(NonIDQual[NonIDQual!=""])
               
+              if (length(NonIDQual) > 0 && ColNames[2] == 'CalificadoresNoID'){
+                  
+                  setnames(object@VarNameCorresp[[VNCCompName]], 'CalificadoresNoID', 'NonIDQual')
+                  
+              }
               if (length(NonIDQual) > 0 && ColNames[2] != 'NonIDQual'){
                 
                 stop(paste0('[Validity VarNameCorresp] The second column of data.table ', VNCCompName, ' must be named "NonIDQual".'))
