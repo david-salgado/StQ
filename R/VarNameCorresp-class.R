@@ -24,7 +24,6 @@
 #' variable names correspondences.
 #'
 #' @examples
-#' library(data.table)
 #' VarList <- list(MicroData = data.table(IDQual = c('NumIdEst', '', '', '', 
 #'                                                   '', ''),
 #'                                        NonIDQual = c('', 'EsMercNac', 
@@ -38,7 +37,7 @@
 #'                                        EsMercEuro = c('', '', '', '', '', '0'),
 #'                                        EsMercRM = c('', '', '', '', '', '1'),
 #'                                        Cod = c('', '', '', '', '', ''),
-#'                                        SP = c('', '', '', '', '', 'cp09')))
+#'                                        SP = c('', '', '', '', '', 'cp09'))
 #' new(Class = 'VarNameCorresp', VarNameCorresp = VarList)
 #'
 #' @import data.table
@@ -55,6 +54,14 @@ setClass(Class = "VarNameCorresp",
          validity = function(object){
          
          if (is.null(names(object@VarNameCorresp))) stop('[Validity VarNameCorresp] VarNameCorresp slot must be a named list.')
+         
+         for(VNCComp in names(object@VarNameCorresp)){
+             
+             if (is.data.frame(object@VarNameCorresp[[VNCComp]])){
+                 
+                 object@VarNameCorresp[[VNCComp]] <- data.table(object@VarNameCorresp[[VNCComp]], stringsAsFactors = FALSE)
+             }
+         }
          SlotClasses <- unlist(lapply(object@VarNameCorresp, 
                                       function(x){class(x)[1]}))
          if (!all(SlotClasses == 'data.table')) stop('[Validity VarNameCorresp] All components of slot VarNameCorresp must be data.tables.')     
