@@ -1,6 +1,6 @@
 Package: StQ
 Title: Construction of Standard Questionnaires
-Version: 0.1.1.9000
+Version: 0.1.2.9000
 Author: David Salgado
 Maintainer: David Salgado <david.salgado.fernandez@gmail.com>
 Description: This package contains the definition of the class StQ for
@@ -12,7 +12,7 @@ Imports:
     methods,
     data.table (>= 1.9.4),
     formula.tools (>= 1.5.4),
-    RepoTime (>= 0.1)
+    RepoTime (>= 0.1.0)
 License: file LICENSE
 LazyData: true
 Encoding: UTF-8
