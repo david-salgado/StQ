@@ -36,7 +36,7 @@
 #' \code{\link[data.table]{melt.data.table}}, \code{\link[reshape2]{melt}},
 #' \code{\link[reshape2]{dcast}}
 #'
-#' @include StQ-class.R DD-class.R getDD.R getData.R getUnits.R ExtractNames.R
+#' @include StQ-class.R DD-class.R getDD.R getData.R getUnits.R ExtractNames.R getVNC.R
 #'
 #' @import data.table
 #'
@@ -148,7 +148,7 @@
             aux[, col := as.character(get(col)), with = F]
 
         }
- 
+
         out <- data.table::melt.data.table(aux,
                                           id.vars = qualinDM,
                                           measure.vars= auxVarNames,
@@ -156,8 +156,8 @@
                                           value.name = 'Value',
                                           variable.factor = FALSE,
                                           value.factor = FALSE)
-        
-        for (VNCcomp in names(DD@VarNameCorresp@VarNameCorresp)){ 
+
+        for (VNCcomp in names(getVNC(DD)@VarNameCorresp)){ 
             if (length(qualnotinDM) > 0){
                 
             var <- auxMeasureVar[[QualName]]
@@ -175,7 +175,7 @@
     setcolorder(out, c(qualinDM, qualnotinDM, 'IDDD', 'Value'))
     return(out)
     })
-    
+
         
     names(moltenData) <- names(auxMeasureVar)
 

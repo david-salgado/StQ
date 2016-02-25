@@ -55,13 +55,6 @@ setClass(Class = "VarNameCorresp",
          
          if (is.null(names(object@VarNameCorresp))) stop('[Validity VarNameCorresp] VarNameCorresp slot must be a named list.')
          
-         for(VNCComp in names(object@VarNameCorresp)){
-             
-             if (is.data.frame(object@VarNameCorresp[[VNCComp]])){
-                 
-                 object@VarNameCorresp[[VNCComp]] <- data.table(object@VarNameCorresp[[VNCComp]], stringsAsFactors = FALSE)
-             }
-         }
          SlotClasses <- unlist(lapply(object@VarNameCorresp, 
                                       function(x){class(x)[1]}))
          if (!all(SlotClasses == 'data.table')) stop('[Validity VarNameCorresp] All components of slot VarNameCorresp must be data.tables.')     
@@ -70,11 +63,7 @@ setClass(Class = "VarNameCorresp",
          lapply(VNCCompNames, function(VNCCompName){
              
                 ColNames <- names(object@VarNameCorresp[[VNCCompName]])
-                if (ColNames[1] == 'CalificadoresID'){
-                    
-                    setnames(object@VarNameCorresp[[VNCCompName]], 'CalificadoresID', 'IDQual')
-                    
-                }
+                
                 if (ColNames[1] != 'IDQual'){
                 
                  stop(paste0('[Validity VarNameCorresp] The first column of data.table ', VNCCompName, ' must be named "IDQual".'))
@@ -86,11 +75,6 @@ setClass(Class = "VarNameCorresp",
                 stop('[Validity VarNameCorresp] The column "IDQual" cannot have repeated values.')
               }
               
-              if (ColNames[2] == 'CalificadoresNoID'){
-                  
-                  setnames(object@VarNameCorresp[[VNCCompName]], 'CalificadoresNoID', 'NonIDQual')
-                  
-              }
               NonIDQual <- object@VarNameCorresp[[VNCCompName]][['NonIDQual']]
               NonIDQual <- sort(NonIDQual[NonIDQual!=""])
               
@@ -105,15 +89,15 @@ setClass(Class = "VarNameCorresp",
                 stop('[Validity VarNameCorresp] The column "NonIDQual" cannot have repeated values.')
               }
               
-              #if (length(NonIDQual) == 0 && ColNames[2] != 'IDDD'){
+              if (length(NonIDQual) == 0 && ColNames[2] != 'IDDD'){
                 
-              #  stop(paste0('[Validity VarNameCorresp] The second column of data.table ', VNCCompName, ' must be named "IDDD".'))
-              #}
+                stop(paste0('[Validity VarNameCorresp] The second column of data.table ', VNCCompName, ' must be named "IDDD".'))
+              }
               
-              #if (length(NonIDQual) > 0 && ColNames[3] != 'IDDD'){
+              if (length(NonIDQual) > 0 && ColNames[3] != 'IDDD'){
                   
-              #    stop(paste0('[Validity VarNameCorresp] The third column of data.table ', VNCCompName, ' must be named "IDDD".'))
-              #}     
+                  stop(paste0('[Validity VarNameCorresp] The third column of data.table ', VNCCompName, ' must be named "IDDD".'))
+              }     
               
               ColIDQual <- sort(ColNames[4:(3 + length(IDQual))])
               if (length(ColNames) > 4){
@@ -133,10 +117,7 @@ setClass(Class = "VarNameCorresp",
                    }
                  }
                 
-                if ('SP' %in% ColNames) setnames(object@VarNameCorresp[[VNCCompName]], 'SP', 'Unit1')
-                if ('SGMRD' %in% ColNames) setnames(object@VarNameCorresp[[VNCCompName]], 'SGMRD', 'Unit2')
                 Unitn <- ColNames[grep('Unit', ColNames)]
-    
                 if (length(Unitn[Unitn != paste0('Unit', seq(along = Unitn))]) > 0){
                   
                   stop('[Validity VarNameCorresp] The names of the columns with Units must be "Unit1, Unit2, ...".')
@@ -163,6 +144,7 @@ setClass(Class = "VarNameCorresp",
                             order = -1)
                   
               }
+              print(object@VarNameCorresp[[VNCCompName]])
           })
           
           return(TRUE)
