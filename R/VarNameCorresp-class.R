@@ -38,7 +38,7 @@
 #'                                        EsMercEuro = c('', '', '', '', '', '0'),
 #'                                        EsMercRM = c('', '', '', '', '', '1'),
 #'                                        Cod = c('', '', '', '', '', ''),
-#'                                        Unit1 = c('', '', '', '', '', 'cp09')))
+#'                                        SP = c('', '', '', '', '', 'cp09')))
 #' new(Class = 'VarNameCorresp', VarNameCorresp = VarList)
 #'
 #' @import data.table
@@ -78,14 +78,16 @@ setClass(Class = "VarNameCorresp",
                 
                 stop('[Validity VarNameCorresp] The column "IDQual" cannot have repeated values.')
               }
-              NonIDQual <- object@VarNameCorresp[[VNCCompName]][['NonIDQual']]
-              NonIDQual <- sort(NonIDQual[NonIDQual!=""])
               
-              if (length(NonIDQual) > 0 && ColNames[2] == 'CalificadoresNoID'){
+              if (ColNames[2] == 'CalificadoresNoID'){
                   
                   setnames(object@VarNameCorresp[[VNCCompName]], 'CalificadoresNoID', 'NonIDQual')
                   
               }
+              NonIDQual <- object@VarNameCorresp[[VNCCompName]][['NonIDQual']]
+              NonIDQual <- sort(NonIDQual[NonIDQual!=""])
+              
+              
               if (length(NonIDQual) > 0 && ColNames[2] != 'NonIDQual'){
                 
                 stop(paste0('[Validity VarNameCorresp] The second column of data.table ', VNCCompName, ' must be named "NonIDQual".'))
@@ -124,6 +126,8 @@ setClass(Class = "VarNameCorresp",
                    }
                  }
                 
+                if ('SP' %in% ColNames) setnames(object@VarNameCorresp[[VNCCompName]], 'SP', 'Unit1')
+                if ('SGMRD' %in% ColNames) setnames(object@VarNameCorresp[[VNCCompName]], 'SGMRD', 'Unit2')
                 Unitn <- ColNames[grep('Unit', ColNames)]
     
                 if (length(Unitn[Unitn != paste0('Unit', seq(along = Unitn))]) > 0){
