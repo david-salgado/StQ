@@ -1,10 +1,11 @@
-#' @title Extract statistical units from an object of class \linkS4class{StQ}
+#' @title Extract statistical units from an object
 #'
 #' @description This method identifies the IDQual qualifiers in the input object
 #' and returns a \linkS4class{data.table} with the values of these qualifiers
 #' for each statistical unit.
 #'
-#' @param object Object of class \linkS4class{StQ}.
+#' @param object Object of class \linkS4class{StQ} or class 
+#' \linkS4class{data.table}.
 #'
 #' @return It returns a \code{data.table} with the statistical units in the
 #' input object.
@@ -40,4 +41,48 @@ setMethod(
     }
     return(output)
   }
+)
+
+#' @rdname getUnits
+#'
+#'
+#' @import data.table
+#'
+#' @export
+setMethod(
+    f = "getUnits",
+    signature = c("data.table"),
+    function(object){
+        
+        # For files FL; these files should be reformatted in the repo
+        # In Spanish
+        if (all(c('LimInf', 'LimSup') %in% names(object))){
+            
+            IDQual <- setdiff(names(object), 
+                              c('Mes', 'NomControl', 'Condicion', 'LimInf', 'LimSup'))
+            Units <- object[, IDQual, with = FALSE]
+            setkeyv(Units, IDQual)
+            Units <- Units[!duplicated(Units)]
+            return(Units)
+            
+        }
+        # In English    
+        if (all(c('LowBound', 'UpperBound') %in% names(object))){
+            
+            IDQual <- setdiff(names(object), 
+                              c('Month', 'EditName', 'Condition', 'LowBound', 'UpperBound'))
+            Units <- object[, IDQual, with = FALSE]
+            setkeyv(Units, IDQual)
+            Units <- Units[!duplicated(Units)]
+            return(Units)
+        }
+        
+        # For files FT; these files should be reformatted in the repo
+        # In Spanish
+        if (all(paste0(c('literal', 'error', 'std', 'quant'), '1') %in% names(object))){
+            
+            IDQual <- setdiff(names(object),)
+        }    
+        
+    }
 )
