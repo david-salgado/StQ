@@ -31,8 +31,13 @@ setMethod(
     DDData <- slot(getDD(object), 'MicroData')
     IDQual <- DDData[Sort == 'IDQual', Variable]
     output <- getData(object)[, IDQual, with = F]
-    set2keyv(output, IDQual)
+    setkeyv(output, IDQual)
     output <- output[!duplicated(output)]
+    for (IDQ in IDQual){
+        
+        output <- output[get(IDQ) != '']
+        
+    }
     return(output)
   }
 )
