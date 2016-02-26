@@ -89,10 +89,6 @@ setClass(Class = "VarNameCorresp",
                 stop('[Validity VarNameCorresp] The column "NonIDQual" cannot have repeated values.')
               }
               
-              if (length(NonIDQual) == 0 && ColNames[2] != 'IDDD'){
-                
-                stop(paste0('[Validity VarNameCorresp] The second column of data.table ', VNCCompName, ' must be named "IDDD".'))
-              }
               
               if (length(NonIDQual) > 0 && ColNames[3] != 'IDDD'){
                   
