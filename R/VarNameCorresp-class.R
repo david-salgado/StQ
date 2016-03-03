@@ -140,7 +140,6 @@ setClass(Class = "VarNameCorresp",
                             order = -1)
                   
               }
-              print(object@VarNameCorresp[[VNCCompName]])
           })
           
           return(TRUE)
