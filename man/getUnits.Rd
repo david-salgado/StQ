@@ -4,14 +4,18 @@
 \name{getUnits}
 \alias{getUnits}
 \alias{getUnits,StQ-method}
-\title{Extract statistical units from an object of class \linkS4class{StQ}}
+\alias{getUnits,data.table-method}
+\title{Extract statistical units from an object}
 \usage{
 getUnits(object)
 
 \S4method{getUnits}{StQ}(object)
+
+\S4method{getUnits}{data.table}(object)
 }
 \arguments{
-\item{object}{Object of class \linkS4class{StQ}.}
+\item{object}{Object of class \linkS4class{StQ} or class 
+\linkS4class{data.table}.}
 }
 \value{
 It returns a \code{data.table} with the statistical units in the
