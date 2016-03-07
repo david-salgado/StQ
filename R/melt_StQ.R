@@ -157,26 +157,27 @@
                                           variable.factor = FALSE,
                                           value.factor = FALSE)
 
-        for (VNCcomp in names(getVNC(DD)@VarNameCorresp)){ 
-            if (length(qualnotinDM) > 0){
-                
+        for (VNCcomp in names(getVNC(DD)@VarNameCorresp)){
+                 
             var <- auxMeasureVar[[QualName]]
             Excel <- DD@VarNameCorresp@VarNameCorresp[[VNCcomp]]
-            varExcel <- Excel[IDDD %in% var][, c('IDDD', qualnotinDM), with = FALSE]
-            for (suffix in setdiff(names(varExcel), 'IDDD')){
-                varExcel[, 'IDDD' := pasteNA(varExcel$IDDD, varExcel[[suffix]]), with = FALSE]
-            }
-                
-            out <- merge(out, varExcel, by = 'IDDD')
-            out[, IDDD := ExtractNames(IDDD)]
+            qualnotinDMinExcel <- intersect(qualnotinDM, names(Excel))
+            varExcel <- Excel[IDDD %in% var]
+            if (dim(varExcel)[1] > 0 && length(qualnotinDMinExcel) > 0){
+                varExcel <- varExcel[, c('IDDD', qualnotinDMinExcel), with = FALSE]
+                for (suffix in setdiff(names(varExcel), 'IDDD')){
+                    varExcel[, 'IDDD' := pasteNA(varExcel$IDDD, varExcel[[suffix]]), with = FALSE]
+                }
+                out <- merge(out, varExcel, by = 'IDDD')
+                out[, IDDD := ExtractNames(IDDD)]
             }
         }
+        
         
     setcolorder(out, c(qualinDM, qualnotinDM, 'IDDD', 'Value'))
     return(out)
     })
 
-        
     names(moltenData) <- names(auxMeasureVar)
 
     # Incluimos las mismas columnas en cada componente de la lista
