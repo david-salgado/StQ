@@ -41,7 +41,7 @@ setMethod(
     signature = c("DD"),
     function(object){
         
-        VNC <- object@VarNameCorresp
+        VNC <- copy(object@VarNameCorresp)
         return(VNC)
         
     }
