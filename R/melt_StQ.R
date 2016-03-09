@@ -70,7 +70,7 @@
     NonIDQual <- DDlocal[Sort == 'NonIDQual', Variable]
     IDDD <- DDlocal[Sort == 'IDDD', Variable]
 
-       # Calificadores ID, calificadores NonID y variables IDDD en la matriz de datos
+    # Calificadores ID, calificadores NonID y variables IDDD en la matriz de datos
     DM.IDQual <- names(DataMatrix)
     DM.IDQual <- DM.IDQual[DM.IDQual %in% IDQual]
 
