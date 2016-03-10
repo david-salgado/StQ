@@ -59,7 +59,6 @@
     auxDD <- list()
 
     DDlocal <- slot(DD, DDslot)
-    
     nQual <- length(setdiff(names(DDlocal), c('Variable', 'Sort', 'Class')))
     if (nQual == 0) stop('[StQ::melt_StQ] DD has no qualifiers.')
 
@@ -118,9 +117,8 @@
     }
     auxDD[[DDslot]] <- auxDD[[DDslot]][Qual1 != '']
 
-
     auxDD <- rbindlist(auxDD, fill = TRUE)
-    
+
     for (col in names(auxDD)){
         
         auxDD[, col := ifelse(is.na(get(col)), '', get(col)), with = F]
@@ -141,14 +139,16 @@
         qual <- unlist(strsplit(QualName, ' '))
         qualinDM <- intersect(qual, names(DataMatrix))
         qualnotinDM <- setdiff(qual, names(DataMatrix))
-        
+       
         aux <- DataMatrix[, c(qualinDM, auxVarNames), with = F]
+        
+
         for (col in names(aux)){
 
             aux[, col := as.character(get(col)), with = F]
 
         }
-
+        
         out <- data.table::melt.data.table(aux,
                                           id.vars = qualinDM,
                                           measure.vars= auxVarNames,
@@ -158,16 +158,17 @@
                                           value.factor = FALSE)
 
         for (VNCcomp in names(getVNC(DD)@VarNameCorresp)){
-                 
             var <- auxMeasureVar[[QualName]]
             Excel <- DD@VarNameCorresp@VarNameCorresp[[VNCcomp]]
             qualnotinDMinExcel <- intersect(qualnotinDM, names(Excel))
             varExcel <- Excel[IDDD %in% var]
-            if (dim(varExcel)[1] > 0 && length(qualnotinDMinExcel) > 0){
+            if (dim(varExcel)[1] > 0 && 
+                length(qualnotinDMinExcel) > 0){
                 varExcel <- varExcel[, c('IDDD', qualnotinDMinExcel), with = FALSE]
                 for (suffix in setdiff(names(varExcel), 'IDDD')){
                     varExcel[, 'IDDD' := pasteNA(varExcel$IDDD, varExcel[[suffix]]), with = FALSE]
                 }
+                if (length(intersect(out[['IDDD']], varExcel[['IDDD']])) == 0) next
                 out <- merge(out, varExcel, by = 'IDDD')
                 out[, IDDD := ExtractNames(IDDD)]
             }
@@ -203,6 +204,8 @@
     # Generamos el objeto StQ final
     output <- rbindlist(moltenData)
     output[is.nan(Value) | Value == 'NaN', Value := NA]
+    setkeyv(output, setdiff(names(output), 'Value'))
+    output <- output[!duplicated(output)]
 
     output.StQ <- new(Class = 'StQ', Data = output, DD = DD)
     validObject(output.StQ)
