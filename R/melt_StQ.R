@@ -124,8 +124,8 @@
         auxDD[, col := ifelse(is.na(get(col)), '', get(col)), with = F]
         
     }
-    
-    
+   
+  
 
     # Generamos una lista de data.tables que agrupen a las variables según sus calificadores
     auxMeasureVar <- split(auxDD[['Variable']], auxDD[['Qual']])
@@ -175,7 +175,7 @@
         }
         
         
-    setcolorder(out, c(qualinDM, qualnotinDM, 'IDDD', 'Value'))
+    setcolorder(out, c(qualinDM, intersect(names(out),qualnotinDM), 'IDDD', 'Value'))
     return(out)
     })
 
