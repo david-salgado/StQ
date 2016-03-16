@@ -79,19 +79,21 @@ setMethod(
                 outVarList[[Name]][, col := ifelse(is.na(get(col)), '', get(col)), with = F]
                 
             }
+            UnitCol <- names(outVarList[[Name]])[grep('Unit', names(outVarList[[Name]]))]
+            setkeyv(outVarList[[Name]], setdiff(names(outVarList[[Name]]), UnitCol))
             outVarList[[Name]] <- outVarList[[Name]][!duplicated(outVarList[[Name]])]
-            
         }
+
         for (Name in In1Not2Names){
             
             outVarList[[Name]] <- e1@VarNameCorresp[[Name]]
         }
-        
+
         for (Name in In2Not1Names){
             
             outVarList[[Name]] <- e2@VarNameCorresp[[Name]]
         }
-        
+
         for (Name in names(outVarList)){
             Unitn <- names(outVarList[[Name]])[grep('Unit', names(outVarList[[Name]]))]
             setcolorder(outVarList[[Name]] , c('IDQual', 'NonIDQual', 'IDDD', setdiff(names(outVarList[[Name]]), c('IDQual', 'NonIDQual', 'IDDD', Unitn)), Unitn))
