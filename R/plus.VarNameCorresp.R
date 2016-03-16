@@ -69,11 +69,9 @@ setMethod(
             
             CommonCols <- intersect(names(e1@VarNameCorresp[[Name]]),
                                     names(e2@VarNameCorresp[[Name]]))
-            setkeyv(e1@VarNameCorresp[[Name]], CommonCols)
-            setkeyv(e2@VarNameCorresp[[Name]], CommonCols)
-            outVarList[[Name]] <- rbindlist(list(e1@VarNameCorresp[[Name]], 
-                                                 e2@VarNameCorresp[[Name]]),
-                                            fill = TRUE)
+            VNC1 <- setkeyv(e1@VarNameCorresp[[Name]], CommonCols)
+            VNC2 <- setkeyv(e2@VarNameCorresp[[Name]], CommonCols)
+            outVarList[[Name]] <- rbindlist(list(VNC1, VNC2), fill = TRUE)
             for (col in names(outVarList[[Name]])){
             
                 outVarList[[Name]][, col := ifelse(is.na(get(col)), '', get(col)), with = F]

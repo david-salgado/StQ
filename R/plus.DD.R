@@ -97,7 +97,7 @@ setMethod(
         }
         
         VNCPlus <- getVNC(e1) + getVNC(e2)
-        
+
         plusDD <- new(Class = 'DD', 
                       MicroData = output[['MicroData']], 
                       Aggregates = output[['Aggregates']],
