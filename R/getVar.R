@@ -61,3 +61,31 @@ setMethod(
         return(output)
     }
 )
+
+#' @rdname getVar
+#'
+#' @include StQ-class.R getData.R getDD.R VarNamesToDD.R
+#'
+#' @import data.table
+#'
+#' @export
+setMethod(
+    f = "getVar",
+    signature = c("StQList", "character"),
+    function(object, VarName, Units = getUnits(object[[length(object)]])){
+        
+        if (length(VarName) != 1) {
+            
+            stop('[StQ::getVar] Only one variable can be specifed as input.')
+            
+        }
+        ListofStQ <- object@Data
+        output <- lapply(ListofStQ, function(StQ){
+            
+            out <- getVar(StQ, VarName = VarName, Units = Units)
+            return(out)
+        })
+        output <- unlist(output)
+        return(output)
+    }
+)
