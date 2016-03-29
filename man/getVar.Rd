@@ -4,11 +4,15 @@
 \name{getVar}
 \alias{getVar}
 \alias{getVar,StQ,character-method}
+\alias{getVar,StQList,character-method}
 \title{Return the values of a variable of specified statistical units}
 \usage{
 getVar(object, VarName, Units = getUnits(object))
 
 \S4method{getVar}{StQ,character}(object, VarName, Units = getUnits(object))
+
+\S4method{getVar}{StQList,character}(object, VarName,
+  Units = getUnits(object[[length(object)]]))
 }
 \arguments{
 \item{object}{Object of class \linkS4class{StQ}.}
