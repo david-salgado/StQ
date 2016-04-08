@@ -26,6 +26,7 @@ Collate:
     'StQ-class.R'
     'StQList-class.R'
     'StQList.constructor.R'
+    'StQListToStQ.R'
     'getDD.R'
     'VarNamesToDD.R'
     'getData.R'

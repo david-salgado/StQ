@@ -32,7 +32,7 @@ parameter of an input object.
 }
 \examples{
 library(data.table)
-Units <- data.table(NOrden = 1:5)
+Units <- data.table(NOrden = paste0('0000000000', 1:9))
 getVar(ExampleQ, 'IASSCifraNeg', Units)
 getVar(ExampleQ, 'IASSEmpleo', Units)
 getVar(ExampleQ, 'IASSEmpleo_0', Units)
