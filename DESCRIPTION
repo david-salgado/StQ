@@ -20,23 +20,25 @@ Collate:
     'VarNameCorresp-class.R'
     'ExtractNames.R'
     'DD-class.R'
+    'rawKey-class.R'
+    'DTToKey.R'
     'ExampleDD.R'
     'ExampleDM.R'
     'ExampleQ.R'
     'StQ-class.R'
     'StQList-class.R'
     'StQList.constructor.R'
+    'setData.R'
+    'setDD.R'
     'getDD.R'
     'VarNamesToDD.R'
     'getData.R'
     'getUnits.R'
     'plus.StQ.R'
-    'VarNamesToFormula.R'
     'getVNC.R'
     'plus.DD.R'
+    'VarNamesToFormula.R'
     'dcast_StQ.R'
-    'setData.R'
-    'setDD.R'
     'setVar.R'
     'Substitute.R'
     'XLS.R'
@@ -46,8 +48,10 @@ Collate:
     'getAggr.R'
     'getOtherDD.R'
     'getVar.R'
+    'keyToDT.R'
     'melt_StQ.R'
     'plus.VarNameCorresp.R'
+    'rawStQ-class.R'
     'renVar.StQ.R'
     'rmVar.R'
     'setUnits.R'
@@ -66,6 +70,6 @@ Suggests:
     knitr,
     rmarkdown,
     RepoReadWrite,
-    stringr
+    stringr,
     testthat
 VignetteBuilder: knitr
