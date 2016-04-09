@@ -130,17 +130,13 @@ setClass(Class = "StQ",
              for (DDslot in DDslotNames){
 
                  DDlocal <- slot(object@DD, DDslot)
-    
-                 QualinDD <- unique(c(QualinDD, DDlocal[Sort != 'IDDD'][['Variable']]))
                  
                  IDDDinDD <- unique(c(IDDDinDD, DDlocal[Sort == 'IDDD'][['Variable']]))
-                 
-                 
                  QualClassinDD <- DDlocal[Sort != 'IDDD'][['Class']]
                  QualinDD <- DDlocal[Sort != 'IDDD'][['Variable']]
                  names(QualClassinDD) <- QualinDD
                  QualClassinDD <- sort(QualClassinDD[QualinData])
-                 if (length(QualClassinDD) > 0 && 
+                 if (length(QualClassinDD) > 0 &&
                      !all(sort(QualClassinData[names(QualClassinDD)]) == QualClassinDD)) {
                      stop(paste0('[Validity StQ] The class of at least one qualifier in the slot Data does not coincide with that of ', DDslot, ' in slot DD.'))
                  }

@@ -4,11 +4,15 @@
 \name{getVar}
 \alias{getVar}
 \alias{getVar,StQ,character-method}
+\alias{getVar,StQList,character-method}
 \title{Return the values of a variable of specified statistical units}
 \usage{
 getVar(object, VarName, Units = getUnits(object))
 
 \S4method{getVar}{StQ,character}(object, VarName, Units = getUnits(object))
+
+\S4method{getVar}{StQList,character}(object, VarName,
+  Units = getUnits(object[[length(object)]]))
 }
 \arguments{
 \item{object}{Object of class \linkS4class{StQ}.}
@@ -28,7 +32,7 @@ parameter of an input object.
 }
 \examples{
 library(data.table)
-Units <- data.table(NOrden = 1:5)
+Units <- data.table(NOrden = paste0('0000000000', 1:9))
 getVar(ExampleQ, 'IASSCifraNeg', Units)
 getVar(ExampleQ, 'IASSEmpleo', Units)
 getVar(ExampleQ, 'IASSEmpleo_0', Units)

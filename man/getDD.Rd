@@ -4,11 +4,14 @@
 \name{getDD}
 \alias{getDD}
 \alias{getDD,StQ-method}
+\alias{getDD,StQList-method}
 \title{Return slot \code{DD} from an object of class \linkS4class{StQ}}
 \usage{
 getDD(object)
 
 \S4method{getDD}{StQ}(object)
+
+\S4method{getDD}{StQList}(object)
 }
 \arguments{
 \item{Object}{of class \linkS4class{StQ}.}

@@ -128,9 +128,12 @@ setClass(Class = "DD",
                   var <- var[var != ""]
                   variablesVNC <- c(variablesVNC, setdiff(var, variablesVNC))
              }
-             if (length(setdiff(variablesVNC, variablesDD)) > 0){
+             varVNCnotinDD <- setdiff(variablesVNC, variablesDD) 
+             if (length(varVNCnotinDD) > 0){
                 
-                     stop(paste0('[Validity DD] All variables in the column "IDDD" of each element of the slot VarNameCorresp must be variables ("Sort" = IDDD) in the data slots.'))
+                     stop(paste0('[Validity DD] The followings variables in the column "IDDD" of the slot VarNameCorresp must be variables ("Sort" = IDDD) in the other slots of the object DD:\n',
+                                 paste0(varVNCnotinDD, collapse = ', '),
+                                 '\n\n Check if file DD contains all variable names.'))
                  
              }
              return(TRUE)

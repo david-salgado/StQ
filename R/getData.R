@@ -78,7 +78,7 @@ setMethod(
   signature = c("DD"),
   function(object, VarNames){
     
-    out <- object@MicroData
+    out <- copy(object@MicroData)
     return(out)
   }
 )

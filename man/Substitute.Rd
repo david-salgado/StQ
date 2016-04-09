@@ -51,7 +51,11 @@ Data2 <- data.table(NOrden = c('000002896SS', '000003986SS'),
                     Value = c(10000, 188364))
 
 # Creamos el objeto VarNameCorresp
+<<<<<<< HEAD
 VNCList <- list(Microdata =
+=======
+VNCList <- list(Microdata = 
+>>>>>>> da378528fc760d6a0587caca95f78a118898b106
                  data.table(IDQual = c('NOrden', '', '', '', '', '', '', ''),
                      NonIDQual = c('', 'EsRemuner', '', '', '', '', '', ''),
                      IDDD = c('', '', 'Mes', 'Anno', 'CCAA', 'CNAE2009',

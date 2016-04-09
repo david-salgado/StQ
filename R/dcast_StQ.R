@@ -21,9 +21,9 @@
 #' be converted.
 #'
 #' @param VarNames Character vector with names of the output variables.
-#' 
+#'
 #' @param DDslot Character vector of length 1 with the name of DD slot used
-#' to make the transformation of the input object. Its default value is 
+#' to make the transformation of the input object. Its default value is
 #' \code{MicroData}.
 #'
 #' @return \linkS4class{data.table} with data from slot \code{Data} of the input
@@ -42,9 +42,9 @@
 #' \code{\link[reshape2]{dcast}}
 #'
 #' @export
-setGeneric("dcast_StQ", 
-           function(object, 
-                    VarNames, 
+setGeneric("dcast_StQ",
+           function(object,
+                    VarNames,
                     DDslot = 'MicroData'){standardGeneric("dcast_StQ")})
 
 #' @rdname dcast_StQ
@@ -63,22 +63,22 @@ setMethod(
 
         if (length(DDslot) > 1) stop('[StQ::dcast_StQ] DDslot must be a character vector of length 1.')
         if (!DDslot %in% slotNames(getDD(object))) stop('[StQ::dcast_StQ] DDslot is not a component of the slot DD of the input object.')
-        
+
         nQual <- length(setdiff(names(slot(getDD(object), DDslot)),
                                 c('Variable', 'Sort', 'Class')))
-        
+
         if (nQual == 0) stop('[StQ::dcast_StQ] The slot DD has no qualifiers.')
 
         DD <- getDD(object)
         IDQual <- (slot(DD, DDslot))[Sort == 'IDQual', Variable]
         NonIDQual <- (slot(DD, DDslot))[Sort == 'NonIDQual', Variable]
-        
+
         Quals <- c(IDQual, NonIDQual)
         Quals <- intersect(VarNames, Quals)
         if (length(Quals) > 0){
             stop(paste0('[StQ::dcast_StQ]Variable ', Quals, ' is a qualifier in slot ', DDslot, ' of the slot DD of the input object. Please, remove it.'))
         }
-        
+
         if (missing(VarNames)) {
 
             AllVar <- TRUE

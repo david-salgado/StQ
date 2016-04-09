@@ -32,8 +32,12 @@ following columns:
 variable names correspondences.}
 }}
 \examples{
+<<<<<<< HEAD
 library(data.table)
 VarList <- list(MicroData = data.table(IDQual = c('NumIdEst', '', '', '',
+=======
+VarList <- list(MicroData = data.table(IDQual = c('NumIdEst', '', '', '', 
+>>>>>>> da378528fc760d6a0587caca95f78a118898b106
                                                   '', ''),
                                        NonIDQual = c('', 'EsMercNac',
                                                      'EsMercEuro',
@@ -46,7 +50,7 @@ VarList <- list(MicroData = data.table(IDQual = c('NumIdEst', '', '', '',
                                        EsMercEuro = c('', '', '', '', '', '0'),
                                        EsMercRM = c('', '', '', '', '', '1'),
                                        Cod = c('', '', '', '', '', ''),
-                                       Unit1 = c('', '', '', '', '', 'cp09')))
+                                       SP = c('', '', '', '', '', 'cp09'))
 new(Class = 'VarNameCorresp', VarNameCorresp = VarList)
 }
 
