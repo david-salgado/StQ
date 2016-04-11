@@ -63,7 +63,7 @@ setMethod(
 
         if (length(DDslot) > 1) stop('[StQ::dcast_StQ] DDslot must be a character vector of length 1.')
         if (!DDslot %in% slotNames(getDD(object))) stop('[StQ::dcast_StQ] DDslot is not a component of the slot DD of the input object.')
-
+        
         nQual <- length(setdiff(names(slot(getDD(object), DDslot)),
                                 c('Variable', 'Sort', 'Class')))
 
@@ -146,12 +146,19 @@ setMethod(
         }
 
 #        IDQual <- unique(unlist(lapply(as.list(names(dcastData)), function(x){formula.tools::lhs.vars(as.formula(x))})))
-        output <- Reduce(function(x, y){merge(x, y,
-                                              by = intersect(intersect(IDQual,
-                                                                       names(x)),
-                                                             names(y)))},
-                         dcastData)
+#        IDQual <- unique(unlist(lapply(names(dcastData), function(x){gsub("^\\s+|\\s+$", "", strsplit(x, "~")[[1]][1])})))
 
+#        output <- Reduce(function(x, y){merge(x, y,
+#                                              by = intersect(intersect(IDQual,
+#                                                                       names(x)),
+#                                                             names(y)))},
+#                         dcastData)
+
+        output <- Reduce(
+            function(x, y){ merge(x, y, by = intersect(names(x), names(y)))}, 
+            dcastData)
+        
+        
         # Asignamos los tipos a cada variable
 
         DD <- slot(getDD(object), DDslot)
