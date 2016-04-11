@@ -59,7 +59,7 @@ setGeneric("dcast_StQ",
 setMethod(
     f = "dcast_StQ",
     signature = c("StQ"),
-    function(object, VarNames, DDslot = 'MicroData'){
+    function(object, VarNames = NULL, DDslot = 'MicroData'){
 
         if (length(DDslot) > 1) stop('[StQ::dcast_StQ] DDslot must be a character vector of length 1.')
         if (!DDslot %in% slotNames(getDD(object))) stop('[StQ::dcast_StQ] DDslot is not a component of the slot DD of the input object.')
