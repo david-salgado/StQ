@@ -17,7 +17,7 @@
 #' \linkS4class{data.table}, adapted to the structure of objecto
 #' \linkS4class{StQ}.
 #'
-#' @param object Objecto of class \linkS4class{StQ} whose slot \code{Data} will
+#' @param object Object of class \linkS4class{StQ} whose slot \code{Data} will
 #' be converted.
 #'
 #' @param VarNames Character vector with names of the output variables.
@@ -44,7 +44,7 @@
 #' @export
 setGeneric("dcast_StQ",
            function(object,
-                    VarNames,
+                    VarNames = NULL,
                     DDslot = 'MicroData'){standardGeneric("dcast_StQ")})
 
 #' @rdname dcast_StQ
