@@ -42,9 +42,9 @@
 #' # An example with data extracted of a DD object:
 #' library(data.table)
 #' data(ExampleDD)
-#' VNC <- ExampleDD@VarNameCorresp
-#' DDData <- ExampleDD@MicroData
-#' DDAggregates <- ExampleDD@Aggregates
+#' VNC <- ExampleDD@@VarNameCorresp
+#' DDData <- ExampleDD@@MicroData
+#' DDAggregates <- ExampleDD@@Aggregates
 #' new(Class = 'DD', VarNameCorresp = VNC, MicroData = DDData, Aggregates = DDAggregates)
 #' 
 #' @include ExtractNames.R VarNameCorresp-class.R
