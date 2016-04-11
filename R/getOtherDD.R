@@ -25,7 +25,7 @@ setMethod(
     signature = c("DD"),
     function(object){
         
-        out <- object@Other
+        out <- copy(object@Other)
         return(out)
     }
 )

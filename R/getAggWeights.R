@@ -25,7 +25,7 @@ setMethod(
     signature = c("DD"),
     function(object){
         
-        out <- object@AggWeights
+        out <- copy(object@AggWeights)
         return(out)
     }
 )

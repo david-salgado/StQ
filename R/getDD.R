@@ -12,8 +12,6 @@
 #' @return Object of class \linkS4class{DD} corresponding to the slot \code{DD}
 #' of the input parameter.
 #'
-#' @include StQ-class.R
-#'
 #' @examples
 #' data(ExampleQ)
 #' DD <- getDD(ExampleQ)
@@ -22,7 +20,7 @@
 #'
 #' @export
 setGeneric("getDD", function(object) {standardGeneric("getDD")})
-
+#'
 #' @rdname getDD
 #'
 #' @include StQ-class.R
@@ -35,7 +33,25 @@ setMethod(
   signature = c("StQ"),
   function(object){
 
-     return(object@DD)
+     return(copy(object@DD))
 
   }
+)
+
+#' @rdname getDD
+#' 
+#' @include StQList-class.R
+#' 
+#' @import data.table
+#' 
+#' @export
+setMethod(
+    f = "getDD",
+    signature = c("StQList"),
+    function(object){
+        
+        output <- lapply(copy(object@Data), function(x) getDD(x))  
+        
+        return(output)
+    }
 )

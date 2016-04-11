@@ -25,7 +25,7 @@ setMethod(
     signature = c("DD"),
     function(object){
         
-        out <- object@Aggregates
+        out <- copy(object@Aggregates)
         return(out)
     }
 )

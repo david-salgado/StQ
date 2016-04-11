@@ -1,12 +1,13 @@
-#' @title S4 class for sets of \emph{St}andarized \emph{Q}uestionnaires
+#' @title S4 class for sets of \emph{raw} \emph{St}andarized 
+#' \emph{Q}uestionnaires
 #'
-#' @description Definition of an S4 class named \code{StQ} for sets of
+#' @description Definition of an S4 class named \code{rawStQ} for sets of raw
 #' standardized questionnaires.
 #'
-#' The structure of the class \code{StQ} comprises 2 attribute:
+#' The structure of the class \code{rawStQ} comprises 2 attribute:
 #' \itemize{
 #' \item The attribute \code{Data}, which is a \linkS4class{data.table} with
-#' key-value pair structure containing all statistical variables,both from the
+#' key-value pair structure containing all statistical variables, both from the
 #' questionnaire and any resulting metadata from the data processing.
 #'
 #' \item The attribute \code{DD}, which is an object of class \linkS4class{DD}.
@@ -17,10 +18,10 @@
 #' attribute \code{DD}.
 #'
 #' @slot Data Object of class \linkS4class{data.table} with key-value pair
-#' structure. It must have at least two columns: \code{IDDD} and \code{Value}.
+#' structure. It must have exactly two columns: \code{Key} and \code{Value}.
 #' It contains all statistical variables (including some metadata) together with
 #' their corresponding values. If \code{Data} is not specified as an input
-#' parameter, an empty \linkS4class{data.table} with columns \code{IDDD} and
+#' parameter, an empty \linkS4class{data.table} with columns \code{Key} and
 #' \code{Value} will be initiated.
 #'
 #' @slot DD Object of class \linkS4class{DD} with the definition and properties
@@ -80,13 +81,14 @@
 setClass(Class = "StQ",
          slots = c(Data = 'data.table',
                    DD = 'DD'),
-         prototype = list(Data = data.table(IDDD=character(0),
-                                            Value=character(0)),
+         prototype = list(Data = data.table(Key = character(0),
+                                            Value = character(0)),
                           DD = new(Class = 'DD')),
          validity = function(object){
 
              Data <- object@Data
              colData <- names(Data)
+             
              # Data debe tener al menos dos columnas: IDDD y Value
              if (colData[length(colData) - 1] != 'IDDD'){
                  stop(paste0('[Validity StQ] The last but one of the columns of slot "Data" must have name "IDDD".'))
@@ -130,13 +132,17 @@ setClass(Class = "StQ",
              for (DDslot in DDslotNames){
 
                  DDlocal <- slot(object@DD, DDslot)
+    
+                 QualinDD <- unique(c(QualinDD, DDlocal[Sort != 'IDDD'][['Variable']]))
                  
                  IDDDinDD <- unique(c(IDDDinDD, DDlocal[Sort == 'IDDD'][['Variable']]))
+                 
+                 
                  QualClassinDD <- DDlocal[Sort != 'IDDD'][['Class']]
                  QualinDD <- DDlocal[Sort != 'IDDD'][['Variable']]
                  names(QualClassinDD) <- QualinDD
                  QualClassinDD <- sort(QualClassinDD[QualinData])
-                 if (length(QualClassinDD) > 0 &&
+                 if (length(QualClassinDD) > 0 && 
                      !all(sort(QualClassinData[names(QualClassinDD)]) == QualClassinDD)) {
                      stop(paste0('[Validity StQ] The class of at least one qualifier in the slot Data does not coincide with that of ', DDslot, ' in slot DD.'))
                  }
