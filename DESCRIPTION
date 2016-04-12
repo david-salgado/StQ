@@ -25,8 +25,13 @@ Collate:
     'ExampleDD.R'
     'ExampleDM.R'
     'ExampleQ.R'
+<<<<<<< HEAD
     'IDDDToUnitNames.R'
     'KeyToDT.R'
+||||||| merged common ancestors
+=======
+    'KeyToDT.R'
+>>>>>>> 325a90b9a06d37a0b6acf6a1e4f2a69729950088
     'StQ-class.R'
     'StQList-class.R'
     'StQList.constructor.R'
@@ -49,8 +54,13 @@ Collate:
     'extract.StQList.R'
     'getAggWeights.R'
     'getAggr.R'
+<<<<<<< HEAD
     'getEditNames.R'
     'getIDDD.R'
+||||||| merged common ancestors
+=======
+    'getEditNames.R'
+>>>>>>> 325a90b9a06d37a0b6acf6a1e4f2a69729950088
     'getOtherDD.R'
     'getVar.R'
     'melt_StQ.R'
