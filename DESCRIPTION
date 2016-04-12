@@ -25,6 +25,7 @@ Collate:
     'ExampleDD.R'
     'ExampleDM.R'
     'ExampleQ.R'
+    'IDDDToUnitNames.R'
     'KeyToDT.R'
     'StQ-class.R'
     'StQList-class.R'
