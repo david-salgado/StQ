@@ -125,6 +125,7 @@ setMethod(
         }
 
         Data <- getData(object)
+
         if (NewVarName %in% Data[['IDDD']]) {
 
             #setData(object) <- Data[IDDD != VarName]
@@ -138,6 +139,12 @@ setMethod(
 
             ExprVariables <- c(all.vars(Value), by)
 
+            ExprVariables <- unlist(lapply(ExprVariables, function(x){
+                                        ifelse(ExtractNames(x) %in% unique(Data[['IDDD']]), x, '')
+                                    }))
+            ExprVariables <- ExprVariables[ExprVariables != '']
+          
+              
             Data <- getData(object, ExprVariables)
             newObject <- new(Class = 'StQ', Data = Data, DD = newDD)
 
@@ -172,6 +179,29 @@ setMethod(
 
         }
 
+        return(output)
+    }
+)
+
+#' @rdname setVar
+#'
+#' @include StQList-class.R DD-class.R getData.R getDD.R getUnits.R setDD.R setData.R dcast_StQ.R plus.StQ.R
+#'
+#' @import data.table
+#'
+#' @export
+setMethod(
+    f = "setVar",
+    signature = c("StQList", "DD"),
+    function(object,
+             newDD,
+             Value,
+             lag = NULL,
+             by = NULL){
+        
+        output <- lapply(object@Data, setVar, newDD, Value, lag, by)
+        output <- BuildStQList(output)
+        
         return(output)
     }
 )
