@@ -55,8 +55,10 @@ setMethod(
     for (j in c(1:length(output))){
       output[[j]] <- new(Class = 'StQ', Data = DataList[[j]], DD = DD)
     }
-
+    
+    names(output) <- i
     output <- new(Class = 'StQList', Data = output, Periods = newRepoTime(i))
+    
     return(output)
 
   }
