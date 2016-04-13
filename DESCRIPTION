@@ -1,6 +1,6 @@
 Package: StQ
 Title: Construction of Standard Questionnaires
-Version: 0.5.1.9000
+Version: 0.5.2.9000
 Author: David Salgado
 Maintainer: David Salgado <david.salgado.fernandez@gmail.com>
 Description: This package contains the definition of the class StBusQ for
@@ -25,6 +25,7 @@ Collate:
     'ExampleDD.R'
     'ExampleDM.R'
     'ExampleQ.R'
+    'IDDDToUnitNames.R'
     'KeyToDT.R'
     'StQ-class.R'
     'StQList-class.R'
@@ -49,6 +50,7 @@ Collate:
     'getAggWeights.R'
     'getAggr.R'
     'getEditNames.R'
+    'getIDDD.R'
     'getOtherDD.R'
     'getVar.R'
     'melt_StQ.R'
