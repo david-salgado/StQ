@@ -21,8 +21,8 @@
 #' str(VNC)
 #'
 #'# From an object of class StQ
-#' data(Q)
-#' VNC <- getVNC(Q)
+#' data(ExampleQ)
+#' VNC <- getVNC(ExampleQ)
 #' VNC
 #' str(VNC)
 #' 

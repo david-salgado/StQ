@@ -34,7 +34,7 @@
 #' 
 #' 
 #' library(data.table)
-#' data(DD)
+#' data(ExampleDD)
 #' Data <- new(Class = 'Datadt',
 #'              data.table(NumIdEst = rep('001', 4),
 #'                         IsNatMarket = c('0', '1', '', ''),
@@ -42,7 +42,7 @@
 #'                         Province = c('', '', '', '04'),
 #'                         IDDD = rep('Turnover', 4),
 #'                         Value = c('625000', '23154', '10512', '25004')))
-#' Q <- new(Class = 'StQ', Data = Data, DD = DD)
+#' Q <- new(Class = 'StQ', Data = Data, DD = ExampleDD)
 #' Q
 #' # Notice that only the slot Data appears on screen, but the object is not a
 #' # data.table:

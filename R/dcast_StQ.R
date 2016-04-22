@@ -1,13 +1,12 @@
-#' @title Convert an \linkS4class{StQ} object into a dcasted data.table
+#' @title Convert an \linkS4class{StQ} object into a dcasted data.table.
 #'
 #' @description \code{dcast_StQ} returns a \linkS4class{data.table} in dcasted
 #' form (observations by row and variables by columns) with data from the input
 #' \linkS4class{StQ} object.
 #'
 #' This methods converts the slot \code{Data} from the input \code{StQ} object
-#'  with key-value pair structure into a \linkS4class{data.table} with
-#'  statistical units by row and variables specified in the input parameter
-#'  \code{VarNames} by columns.
+#'  into a \linkS4class{data.table} with statistical units by row and variables 
+#'  specified in the input parameter \code{VarNames} by columns.
 #'
 #' To distinguish between variables and qualifiers this function makes use of
 #' the slot \code{DD} of input \linkS4class{StQ} variable.
@@ -33,8 +32,7 @@
 #'
 #' @examples
 #' data(ExampleQ)
-#' Mat <- dcast_StQ(ExampleQ, c('IASSCifraNeg', 'IASSEmpleo_0',
-#'                  'IASSEmpleo_1_1', 'IASSEmpleo_1_2'))
+#' Mat <- dcast_StQ(ExampleQ, c('Turnover'))
 #' str(Mat)
 #'
 #' @seealso \code{\link{melt_StQ}}, \code{\link[data.table]{dcast.data.table}},
@@ -65,7 +63,7 @@ setMethod(
         if (!DDslot %in% slotNames(getDD(object))) stop('[StQ::dcast_StQ] DDslot is not a component of the slot DD of the input object.')
         
         nQual <- length(setdiff(names(slot(getDD(object), DDslot)),
-                                c('Variable', 'Sort', 'Class')))
+                                c('Variable', 'Sort', 'Class', 'ValueRegExp')))
 
         if (nQual == 0) stop('[StQ::dcast_StQ] The slot DD has no qualifiers.')
 

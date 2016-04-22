@@ -11,8 +11,8 @@
 #' input object.
 #'
 #' @examples
-#' data(Q)
-#' getUnits(Q)
+#' data(ExampleQ)
+#' getUnits(ExampleQ)
 #'
 #' @export
 setGeneric("getUnits", function(object) {standardGeneric("getUnits")})

@@ -133,20 +133,12 @@ setMethod(
         if (class(Value) == 'expression'){
 
             ExprVariables <- c(all.vars(Value), by)
-
-<<<<<<< HEAD
-            Data <- getData(object, ExprVariables[[1]])
-||||||| merged common ancestors
-            Data <- getData(object, ExprVariables)
-=======
             ExprVariables <- unlist(lapply(ExprVariables, function(x){
                                         ifelse(ExtractNames(x) %in% unique(Data[['IDDD']]), x, '')
                                     }))
             ExprVariables <- ExprVariables[ExprVariables != '']
-          
-              
-            Data <- getData(object, ExprVariables)
->>>>>>> e3ac9308c1978eb314de9c1fda9971de40a9bce7
+            Data <- getData(object, ExprVariables) 
+    
             newObject <- new(Class = 'StQ', Data = Data, DD = newDD)
 
             Data <- dcast_StQ(newObject)

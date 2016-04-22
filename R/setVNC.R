@@ -46,7 +46,7 @@
 #'
 #' # On an object of class StQ:
 #' library(data.table)
-#' data(Q)
+#' data(ExampleQ)
 #' VarList <- list(Aggregates = new(Class = 'VNCdt',
 #'                                 data.table(IDQual = c('Province','NACE09',
 #'                                                       'IsNatMarket',''),
@@ -57,9 +57,9 @@
 #'                                            IsNatMarket = c('', '', '', '1'),
 #'                                            Unit1 = c('provincia', 'actividad',
 #'                                                      '', 'cn01'))))
-#' setVNC(Q) <- VarList
-#' Q
-#' str(Q)
+#' setVNC(ExampleQ) <- VarList
+#' ExampleQ
+#' str(ExampleQ)
 #' 
 #' @rdname setVNC
 #'

@@ -16,9 +16,9 @@
 #' Q <- new(Class = 'StQ')
 #'
 #' # We use an DD object previously created:
-#' data(DD)
+#' data(ExampleDD)
 #' # We assign this DD object to slot DD of the preceding StQ object:
-#' setDD(Q) <- DD
+#' setDD(Q) <- ExampleDD
 #' str(Q)
 #'
 #' @rdname setDD

@@ -12,8 +12,8 @@
 #'
 #' @examples
 #' library(data.table)
-#' data(Q)
-#' newrawQ <- StQTorawStQ(Q)
+#' data(ExampleQ)
+#' newrawQ <- StQTorawStQ(ExampleQ)
 #'  
 #' @export
 setGeneric("StQTorawStQ", function(Q){standardGeneric("StQTorawStQ")})
