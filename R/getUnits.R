@@ -11,8 +11,8 @@
 #' input object.
 #'
 #' @examples
-#' data(ExampleQ)
-#' getUnits(ExampleQ)
+#' data(Q)
+#' getUnits(Q)
 #'
 #' @export
 setGeneric("getUnits", function(object) {standardGeneric("getUnits")})
@@ -31,7 +31,7 @@ setMethod(
 
     DDData <- slot(getDD(object), 'MicroData')
     IDQual <- DDData[Sort == 'IDQual', Variable]
-    output <- getData(object)[, IDQual, with = F]
+    output <- getData(object)[, IDQual, with = FALSE]
     setkeyv(output, IDQual)
     output <- output[!duplicated(output)]
     for (IDQ in IDQual){
@@ -39,6 +39,7 @@ setMethod(
         output <- output[get(IDQ) != '']
         
     }
+    
     return(output)
   }
 )

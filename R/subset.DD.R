@@ -42,7 +42,7 @@ setMethod(
     }
     
     VNC <- getVNC(x)
-    VNCList <- lapply(VNC@VarNameCorresp, function(x){
+    VNCList <- lapply(VNC, function(x){
         
         CopyDT <- copy(x)
         setnames(CopyDT, 'IDDD', 'Variable')
@@ -53,11 +53,13 @@ setMethod(
         return(out)
     })
 
-    VNC <- new(Class = 'VarNameCorresp', VarNameCorresp = VNCList)
+    VNC <- new(Class = 'VarNameCorresp', VNCList)
     
     output <- new(Class = 'DD',
                   VarNameCorresp = VNC,
+                  ID = output[['ID']],
                   MicroData = output[['MicroData']],
+                  ParaData = output[['ParaData']],
                   Aggregates = output[['Aggregates']],
                   AggWeights = output[['AggWeights']],
                   Other = output[['Other']])

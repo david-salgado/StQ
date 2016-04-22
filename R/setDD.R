@@ -1,4 +1,4 @@
-#' @title Set value of slot \code{DD}
+#' @title Set value of slot \code{DD}.
 #'
 #' @description \code{setDD} assigns an object of class \linkS4class{DD} to the
 #'  slot \code{DD} of the input object.
@@ -15,19 +15,8 @@
 #' library(data.table)
 #' Q <- new(Class = 'StQ')
 #'
-#' # We build a trivial DD object with three variables (one unit qualifier, one
-#' # variable qualifier and one variable):
-#' DDData <- data.table(Variable = c('NOrden', 'CCAA', 'CifraNeg'),
-#'                      Sort = c('IDQual', 'NonIDQual', 'IDDD'),
-#'                      Class = c('character', 'character', 'numeric'),
-#'                      Qual1 = c('', '', 'NOrden'))
-#' VarList <- list(data.table(IDQual = c('NOrden','','','',''),
-#'                            NonIDQual = c('EsMercNac', 'EsMercEuro', 'EsMercRM', 
-#'                                          'Cod',''),
-#'                            IDDD = c('','','','','CifraNeg'),
-#'                            Unit1 = c('','','','','')))
-#' VNC <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList)
-#' DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = DDData)
+#' # We use an DD object previously created:
+#' data(DD)
 #' # We assign this DD object to slot DD of the preceding StQ object:
 #' setDD(Q) <- DD
 #' str(Q)

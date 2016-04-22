@@ -95,7 +95,7 @@ setMethod(
   function(object, VarNames){
     
     
-    if (missing(VarNames)) return(object@Data)
+    if (missing(VarNames)) return(copy(object@Data))
 
     VarNames.DT <- VarNamesToDD(VarNames, getDD(object))
     setkeyv(VarNames.DT, names(VarNames.DT))
@@ -152,4 +152,52 @@ setMethod(
     
     return(output)
   }
+)
+#' @rdname getData
+#' 
+#' @include rawStQ-class.R ExtractNames.R VarNamesToDD.R getDD.R
+#' 
+#' @import data.table
+#' 
+#' @export
+setMethod(
+    f = "getData",
+    signature = c("rawStQ"),
+    function(object, VarNames){
+        
+        
+        if (missing(VarNames)) return(copy(object@Data))
+        
+        
+        key <- object@Data[['Key']]
+        VarNamesKey <- paste0('IDDD:', VarNames)
+        listVarNames.DT <- lapply(VarNamesKey, function(x){grep(x,key@.Data)})
+        VarNames.DT <- unlist(listVarNames.DT)
+        NotPresent <- c()
+        for(i in seq(along = listVarNames.DT)){
+            
+            if(length(listVarNames.DT[[i]]) == 0){
+                
+                NotPresent <- c(NotPresent, VarNames[i])
+            }
+        }
+            
+        if(length(VarNames.DT) == 0){
+            
+            stop('[rawStQ::getData] No such variables in this data set.')
+        }else if(length(NotPresent) > 0){
+            
+            warning(paste0('[rawStQ::getData] The following variables are not present in the data set: ', 
+                           paste0(NotPresent, collapse = ', '),
+                           '.\n They are not included in the output data.table.'))
+        }
+        
+        key <- object@Data[['Key']][VarNames.DT]
+        key <- new(Class = 'rawKey', key)
+        value <- object@Data[['Value']][VarNames.DT]
+        output <- new(Class = 'rawDatadt', data.table(Key = key, Value = value))
+        
+        
+        return(output)
+    }
 )

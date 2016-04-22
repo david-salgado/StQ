@@ -1,11 +1,11 @@
-#' @title Set value of slot \code{VarNameCorresp}
+#' @title Set value of slot \code{VarNameCorresp}.
 #'
-#' @description \code{setVNC} assigns a list of \linkS4class{data.table}s to the
+#' @description \code{setVNC} assigns a list of \linkS4class{VNCdt}s to the
 #'  slot \code{VarNameCorresp} of the input object.
 #'
 #' @param object Object containing slot \code{VarNameCorresp} to be assigned.
 #'
-#' @param value List of \linkS4class{data.table}s to be assigned to the slot 
+#' @param value List of \linkS4class{VNCdt}s to be assigned to the slot 
 #' \code{VarNameCorresp}.
 #'
 #' @return Object with slot \code{VarNameCorresp} updated.
@@ -22,8 +22,7 @@
 #'                                        IDDD = c('', '', '' ,'' ,
 #'                                                 'IEPEntradaPed'),
 #'                                        Unit1 = c('', '', '', '', 'cp02')))
-#' setVNC(VNC) <- VarList
-#' VNC
+#' VNC[['MicroData']] <- VarList
 #' str(VNC)
 #' 
 #' # On an object of class DD:
@@ -46,26 +45,21 @@
 #' str(DD)
 #'
 #' # On an object of class StQ:
-#' MicroDataDD <- data.table(Variable = 'IEPEntradaPed', 
-#'                           Sort = 'IDDD', 
-#'                           Class = 'numeric',
-#'                           Qual1 = 'NOrden')
-#' DD <- new(Class = 'DD', MicroData = MicroDataDD)
-#' StQ <- new(Class = 'StQ', 
-#'            Data = data.table(IDDD = character(0), Value = character(0)), 
-#'            DD = DD)
-#' VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','','',''),
-#'                                        NonIDQual = c('EsMercNac', 
-#'                                                      'EsMercEuro', 
-#'                                                      'EsMercRM',
-#'                                                      'Cod',
-#'                                                      ''),
-#'                                        IDDD = c('', '', '' ,'' ,
-#'                                                 'IEPEntradaPed'),
-#'                                        Unit1 = c('', '', '', '', 'cp02')))
-#' setVNC(StQ) <- VarList
-#' StQ
-#' str(StQ)
+#' library(data.table)
+#' data(Q)
+#' VarList <- list(Aggregates = new(Class = 'VNCdt',
+#'                                 data.table(IDQual = c('Province','NACE09',
+#'                                                       'IsNatMarket',''),
+#'                                            NonIDQual = rep('', 4),
+#'                                            IDDD = c('', '', '' ,'Turnover'),
+#'                                            Province = c('', '', '', '.'),
+#'                                            NACE09 = c('', '', '', '.'),
+#'                                            IsNatMarket = c('', '', '', '1'),
+#'                                            Unit1 = c('provincia', 'actividad',
+#'                                                      '', 'cn01'))))
+#' setVNC(Q) <- VarList
+#' Q
+#' str(Q)
 #' 
 #' @rdname setVNC
 #'
@@ -74,23 +68,6 @@
 #' @export
 setGeneric("setVNC<-", function(object, value){standardGeneric("setVNC<-")})
 
-#' @rdname setVNC
-#'
-#' @include VarNameCorresp-class.R
-#'
-#' @import data.table
-#'
-#' @export
-setReplaceMethod(
-    f = "setVNC",
-    signature = c("VarNameCorresp", "list"),
-    function(object, value){
-        
-        object@VarNameCorresp <- value
-        validObject(object)
-        return(object)
-    }
-)
 #' @rdname setVNC
 #'
 #' @include DD-class.R
@@ -103,7 +80,12 @@ setReplaceMethod(
     signature = c("DD", "list"),
     function(object, value){
         
-        setVNC(object@VarNameCorresp) <- value
+        classValue <- unique(unlist(lapply(value, class)))
+        if(length(classValue) > 1 | classValue != 'VNCdt'){
+            stop('[DD::setVNC] Value assigned to the slot VarNamecorresp of a DD object must be a list of VNCdt objects.')
+        }
+        object@VarNameCorresp@.Data <- value
+        setNames(object@VarNameCorresp@.Data, names(value))
         validObject(object)
         return(object)
     }

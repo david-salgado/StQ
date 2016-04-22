@@ -13,8 +13,8 @@
 #' of the input parameter.
 #'
 #' @examples
-#' data(ExampleQ)
-#' DD <- getDD(ExampleQ)
+#' data(Q)
+#' DD <- getDD(Q)
 #' DD
 #' str(DD)
 #'
@@ -53,5 +53,22 @@ setMethod(
         output <- lapply(copy(object@Data), function(x) getDD(x))  
         
         return(output)
+    }
+)
+
+#' @rdname getDD
+#'
+#' @include rawStQ-class.R
+#'
+#' @import data.table
+#'
+#' @export
+setMethod(
+    f = "getDD",
+    signature = c("rawStQ"),
+    function(object){
+        
+        return(copy(object@DD))
+        
     }
 )

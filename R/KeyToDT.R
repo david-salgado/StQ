@@ -1,4 +1,4 @@
-#' @title Return \linkS4class{data.table} out of a set of parsed keys 
+#' @title Return \linkS4class{data.table} out of a set of parsed keys.
 #'
 #' @description \code{KeyToDT} returns a \linkS4class{data.table} whose columns
 #' are the different qualifiers parsed in the input key with as many raws as
@@ -12,9 +12,9 @@
 #' key.
 #'
 #' @examples
-#' key <- new(Class = 'rawKey', c('ID:391092SS_Turnover:9834.3_Province:09',
-#'                                'ID:asd2SS',
-#'                                'ID:1231_Employees:841_NACE:0502'))
+#' key <- new(Class = 'rawKey', c('IDDD:IASSEmpleo_Norden:391092SS_EsRemuner:1_TipoRemuner:1',
+#'                                'IDDD:IASSCifraNeg_Norden:asd2SS',
+#'                                'IDDD:IASSLPCifraNeg_Norden:1231_CCAA:01'))
 #' KeyToDT(key)
 #' 
 #' @export
@@ -43,11 +43,13 @@ setMethod(
             DT <- as.data.table(Matrix)
             return(DT)
         })
+        
         outDT <- rbindlist(ParsedKey, use.names = TRUE, fill = TRUE)
         for (col in names(outDT)){
             
             outDT[is.na(get(col)), col := '', with = F]
         }
+        
         return(outDT)
     }
 )

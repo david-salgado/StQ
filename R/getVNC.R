@@ -21,8 +21,8 @@
 #' str(VNC)
 #'
 #'# From an object of class StQ
-#' data(ExampleQ)
-#' VNC <- getVNC(ExampleQ)
+#' data(Q)
+#' VNC <- getVNC(Q)
 #' VNC
 #' str(VNC)
 #' 
@@ -58,8 +58,8 @@ setMethod(
     signature = c("StQ"),
     function(object){
         
-        VNC <- object@DD
-        return(getVNC(VNC))
+        VNC <- getVNC(getDD(object))
+        return(VNC)
         
     }
 )
