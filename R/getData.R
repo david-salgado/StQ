@@ -117,7 +117,7 @@ setMethod(
     }
 
     NotPresent <- VarNames[which(!ExtractNames(VarNames) %in% unique(getData(object)[['IDDD']]))]
-    
+   
     if (length(NotPresent) > 0){
       
       warning(paste0('[StQ::getData] The following variables are not present in the data set: ', 

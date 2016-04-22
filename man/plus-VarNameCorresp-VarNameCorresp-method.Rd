@@ -26,6 +26,7 @@ The integration is carried out according to the names of the components.
 }
 \examples{
 library(data.table)
+<<<<<<< HEAD
 VarList1 <- list(MicroData = data.table(IDQual = c('NumIdEst', rep('', 4)),
                                         NonIDQual = c('', 
                                                       'IsNatMarket', 
@@ -52,6 +53,69 @@ VarList2 <- list(MicroData = data.table(IDQual = c('NumIdEst', rep('', 4)),
                                         IsRWMarket = c(rep('', 5)),
                                         Unit1 = c(rep('', 4), 'cn03')))
 VNC2 <- new(Class = 'VarNameCorresp', VarList2)
+||||||| merged common ancestors
+VarList1 <- list(MicroData = data.table(IDQual = c('NumIdEst', '', '', '',
+                                                   '', ''),
+                                        NonIDQual = c('', 'EsMercNac',
+                                                      'EsMercEuro',
+                                                      'EsMercRM',
+                                                      'Cod',''),
+                                        IDDD = c('', '', '', '', '',
+                                                 'IEPEntradaPed'),
+                                        NumIdEst = c('', '', '', '', '', ''),
+                                        EsMercNac = c('', '', '', '', '', '0'),
+                                        EsMercEuro = c('', '', '', '', '', '0'),
+                                        EsMercRM = c('', '', '', '', '', '1'),
+                                        Cod = c('', '', '', '', '', ''),
+                                        Unit1 = c('', '', '', '', '', 'cp09')))
+VNC1 <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList1)
+VarList2 <- list(MicroData = data.table(IDQual = c('NumIdEst', '', '', '',
+                                                   '', ''),
+                                        NonIDQual = c('', 'EsMercNac',
+                                                      'EsMercEuro',
+                                                      'EsMercRM',
+                                                      'Cod',''),
+                                        IDDD = c('', '', '', '', '',
+                                                 'IEPEntradaPed'),
+                                        NumIdEst = c('', '', '', '', '', ''),
+                                        EsMercNac = c('', '', '', '', '', '0'),
+                                        EsMercEuro = c('', '', '', '', '', '1'),
+                                        EsMercRM = c('', '', '', '', '', ''),
+                                        Cod = c('', '', '', '', '', ''),
+                                        Unit1 = c('', '', '', '', '', 'cp08')))
+VNC2 <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList2)
+=======
+VarList1 <- list(MicroData = data.table(IDQual = c('NumIdEst', '', '', '', 
+                                                   '', ''),
+                                        NonIDQual = c('', 'EsMercNac', 
+                                                      'EsMercEuro', 
+                                                      'EsMercRM',
+                                                      'Cod',''),
+                                        IDDD = c('', '', '', '', '', 
+                                                 'IEPEntradaPed'),
+                                        NumIdEst = c('', '', '', '', '', ''),
+                                        EsMercNac = c('', '', '', '', '', '0'),
+                                        EsMercEuro = c('', '', '', '', '', '0'),
+                                        EsMercRM = c('', '', '', '', '', '1'),
+                                        Cod = c('', '', '', '', '', ''),
+                                        Unit1 = c('', '', '', '', '', 'cp09')))
+VNC1 <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList1)
+VarList2 <- list(MicroData = data.table(IDQual = c('NumIdEst', '', '', '', 
+                                                   '', ''),
+                                        NonIDQual = c('', 'EsMercNac', 
+                                                      'EsMercEuro', 
+                                                      'EsMercRM',
+                                                      'Cod',''),
+                                        IDDD = c('', '', '', '', '', 
+                                                 'IEPEntradaPed'),
+                                        NumIdEst = c('', '', '', '', '', ''),
+                                        EsMercNac = c('', '', '', '', '', '0'),
+                                        EsMercEuro = c('', '', '', '', '', '1'),
+                                        EsMercRM = c('', '', '', '', '', ''),
+                                        Cod = c('', '', '', '', '', ''),
+                                        Unit1 = c('', '', '', '', '', 'cp08')))
+VNC2 <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList2)
+>>>>>>> e3ac9308c1978eb314de9c1fda9971de40a9bce7
 VNC1 + VNC2
 
 }

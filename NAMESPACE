@@ -12,7 +12,13 @@ export("setVNC<-")
 export(BuildStQList)
 export(DTToKey)
 export(ExtractNames)
+<<<<<<< HEAD
 export(KeyToDT)
+||||||| merged common ancestors
+=======
+export(IDDDToUnitNames)
+export(KeyToDT)
+>>>>>>> e3ac9308c1978eb314de9c1fda9971de40a9bce7
 export(StQListToStQ)
 export(StQTorawStQ)
 export(Substitute)
@@ -24,8 +30,13 @@ export(getAggr)
 export(getDD)
 export(getData)
 export(getEditNames)
+<<<<<<< HEAD
 export(getID)
 export(getIDDD)
+||||||| merged common ancestors
+=======
+export(getIDDD)
+>>>>>>> e3ac9308c1978eb314de9c1fda9971de40a9bce7
 export(getOtherDD)
 export(getParaData)
 export(getPeriods.StQList)
@@ -44,9 +55,14 @@ exportClasses(StQ)
 exportClasses(StQList)
 exportClasses(VNCdt)
 exportClasses(VarNameCorresp)
+<<<<<<< HEAD
 exportClasses(rawDatadt)
 exportClasses(rawKey)
 exportClasses(rawStQ)
+||||||| merged common ancestors
+=======
+exportClasses(rawKey)
+>>>>>>> e3ac9308c1978eb314de9c1fda9971de40a9bce7
 exportMethods("+")
 exportMethods("[")
 exportMethods("[[")
@@ -59,8 +75,15 @@ exportMethods("setOtherDD<-")
 exportMethods("setParaData<-")
 exportMethods("setUnits<-")
 exportMethods("setVNC<-")
+<<<<<<< HEAD
 exportMethods(DTToKey)
 exportMethods(KeyToDT)
+||||||| merged common ancestors
+=======
+exportMethods(DTToKey)
+exportMethods(IDDDToUnitNames)
+exportMethods(KeyToDT)
+>>>>>>> e3ac9308c1978eb314de9c1fda9971de40a9bce7
 exportMethods(StQListToStQ)
 exportMethods(StQTorawStQ)
 exportMethods(Substitute)
@@ -71,8 +94,13 @@ exportMethods(getAggr)
 exportMethods(getDD)
 exportMethods(getData)
 exportMethods(getEditNames)
+<<<<<<< HEAD
 exportMethods(getID)
 exportMethods(getIDDD)
+||||||| merged common ancestors
+=======
+exportMethods(getIDDD)
+>>>>>>> e3ac9308c1978eb314de9c1fda9971de40a9bce7
 exportMethods(getOtherDD)
 exportMethods(getParaData)
 exportMethods(getPeriods.StQList)

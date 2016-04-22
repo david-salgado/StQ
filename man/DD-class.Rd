@@ -5,15 +5,35 @@
 \alias{DD-class}
 \title{S4 class with the dictionary of data (variable specifications)}
 \description{
+<<<<<<< HEAD
 Definition of an S4 class named \code{DD} with the specification 
 of each variable. 
+||||||| merged common ancestors
+Definition of an S4 class named \code{DD} with the information
+contained in a DD file with s slightly different structure to that of those
+files.
+=======
+Definition of an S4 class named \code{DD} with the information 
+contained in a DD file with s slightly different structure to that of those
+files. 
+>>>>>>> e3ac9308c1978eb314de9c1fda9971de40a9bce7
 
+<<<<<<< HEAD
 The class \code{DD} comprises a slot of class \linkS4class{VarNameCorresp} 
 and slots of class \linkS4class{data.table} of names \code{ID}, 
 \code{MicroData}, \code{Aggregates}, \code{AggWeights}, \code{Other} each 
 with at least five columns named \code{Variable}, \code{Sort}, \code{Class}, 
 \code{Qual1}, and \code{ValueRegExp}. These columns have the following 
 meanings: 
+||||||| merged common ancestors
+The class \code{DD} comprises a slot of class \linkS4class{data.table} with
+at least four columns named \code{Variable}, \code{Sort}, \code{Class} and
+\code{Qual1}. These columns have the same meanings:
+=======
+The class \code{DD} comprises a slot of class \linkS4class{data.table} with
+at least four columns named \code{Variable}, \code{Sort}, \code{Class} and
+\code{Qual1}. These columns have the same meanings: 
+>>>>>>> e3ac9308c1978eb314de9c1fda9971de40a9bce7
 
 \itemize{
  \item \code{Variable}: Name of the variable. 
@@ -21,32 +41,73 @@ meanings:
  unit qualifier (\code{IDQual}), a variable (non-unit) qualifier 
  (\code{NonIDQual}) and a variable name (\code{IDDD}).
  \item \code{Class}: Class of the variable (\code{integer}, \code{numeric},
+<<<<<<< HEAD
  \code{character}, ...).
  \item \code{Qual1}: Name of the variable qualifier 1.
  \item \code{ValueRegExp}: regexp of the variable value. 
+||||||| merged common ancestors
+ \code{character},...).
+ \item \code{Qual1}: Name of the variable qualifier 1.
+=======
+ \code{character},...).
+ \item \code{Qual1}: Name of the variable qualifier 1. 
+>>>>>>> e3ac9308c1978eb314de9c1fda9971de40a9bce7
 }
 
+<<<<<<< HEAD
 This \linkS4class{data.table} is completed with as many columns named 
 \code{Qual}\emph{j} as necessary in between columns \code{Class} and 
 \code{ValueRegExp}.
+||||||| merged common ancestors
+This \linkS4class{data.table} is completed with as many columns named
+\code{Qualn} as necessary.
+=======
+This \linkS4class{data.table} is completed with as many columns named 
+\code{Qualn} as necessary.
+>>>>>>> e3ac9308c1978eb314de9c1fda9971de40a9bce7
 }
 \section{Slots}{
 
 \describe{
 \item{\code{VarNameCorresp}}{Object of class \linkS4class{VarNameCorresp}.}
 
+<<<<<<< HEAD
 \item{\code{ID}}{\linkS4class{data.table} with at least the five columns 
 \code{Variable}, \code{Sort}, \code{Class}, \code{Qual1}, \code{ValueRegExp} 
 (in that order).}
+||||||| merged common ancestors
+\item{\code{MicroData}}{\linkS4class{data.table} with at least the four columns
+\code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} (in that order).}
+=======
+\item{\code{MicroData}}{\linkS4class{data.table} with at least the four columns 
+\code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} (in that order).}
+>>>>>>> e3ac9308c1978eb314de9c1fda9971de40a9bce7
 
+<<<<<<< HEAD
 \item{\code{MicroData}}{\linkS4class{data.table} with at least the five columns 
 \code{Variable}, \code{Sort}, \code{Class}, \code{Qual1}, \code{ValueRegExp} 
 (in that order).}
+||||||| merged common ancestors
+\item{\code{Aggregates}}{\linkS4class{data.table} with at least the four columns
+\code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} (in that order).}
+=======
+\item{\code{Aggregates}}{\linkS4class{data.table} with at least the four columns 
+\code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} (in that order).}
+>>>>>>> e3ac9308c1978eb314de9c1fda9971de40a9bce7
 
+<<<<<<< HEAD
 \item{\code{Aggregates}}{\linkS4class{data.table} with at least the four columns 
 \code{Variable}, \code{Sort}, \code{Class}, \code{Qual1}, \code{ValueRegExp} 
 (in that order).}
+||||||| merged common ancestors
+\item{\code{AggWeights}}{\linkS4class{data.table} with at least the four columns
+\code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} (in that order).}
+=======
+\item{\code{AggWeights}}{\linkS4class{data.table} with at least the four columns 
+\code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} (in that order).}
+>>>>>>> e3ac9308c1978eb314de9c1fda9971de40a9bce7
 
+<<<<<<< HEAD
 \item{\code{AggWeights}}{\linkS4class{data.table} with at least the four columns 
 \code{Variable}, \code{Sort}, \code{Class}, \code{Qual1}, \code{ValueRegExp}
  (in that order).}
@@ -54,6 +115,13 @@ This \linkS4class{data.table} is completed with as many columns named
 \item{\code{Other}}{\linkS4class{data.table} with at least the four columns 
 \code{Variable}, \code{Sort}, \code{Class}, \code{Qual1}, \code{ValueRegExp}
  (in that order).}
+||||||| merged common ancestors
+\item{\code{Other}}{\linkS4class{data.table} with at least the four columns
+\code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} (in that order).}
+=======
+\item{\code{Other}}{\linkS4class{data.table} with at least the four columns 
+\code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} (in that order).}
+>>>>>>> e3ac9308c1978eb314de9c1fda9971de40a9bce7
 }}
 \examples{
 # An empty DD object is built through the code: 

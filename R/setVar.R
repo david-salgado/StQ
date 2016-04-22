@@ -121,6 +121,7 @@ setMethod(
         }
 
         Data <- getData(object)
+
         if (NewVarName %in% Data[['IDDD']]) {
 
             setData(object) <- Data[IDDD != NewVarName]
@@ -133,7 +134,19 @@ setMethod(
 
             ExprVariables <- c(all.vars(Value), by)
 
+<<<<<<< HEAD
             Data <- getData(object, ExprVariables[[1]])
+||||||| merged common ancestors
+            Data <- getData(object, ExprVariables)
+=======
+            ExprVariables <- unlist(lapply(ExprVariables, function(x){
+                                        ifelse(ExtractNames(x) %in% unique(Data[['IDDD']]), x, '')
+                                    }))
+            ExprVariables <- ExprVariables[ExprVariables != '']
+          
+              
+            Data <- getData(object, ExprVariables)
+>>>>>>> e3ac9308c1978eb314de9c1fda9971de40a9bce7
             newObject <- new(Class = 'StQ', Data = Data, DD = newDD)
 
             Data <- dcast_StQ(newObject)
@@ -167,6 +180,29 @@ setMethod(
 
         }
 
+        return(output)
+    }
+)
+
+#' @rdname setVar
+#'
+#' @include StQList-class.R DD-class.R getData.R getDD.R getUnits.R setDD.R setData.R dcast_StQ.R plus.StQ.R
+#'
+#' @import data.table
+#'
+#' @export
+setMethod(
+    f = "setVar",
+    signature = c("StQList", "DD"),
+    function(object,
+             newDD,
+             Value,
+             lag = NULL,
+             by = NULL){
+        
+        output <- lapply(object@Data, setVar, newDD, Value, lag, by)
+        output <- BuildStQList(output)
+        
         return(output)
     }
 )

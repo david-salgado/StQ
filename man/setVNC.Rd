@@ -16,7 +16,13 @@ setVNC(object) <- value
 \arguments{
 \item{object}{Object containing slot \code{VarNameCorresp} to be assigned.}
 
+<<<<<<< HEAD
 \item{value}{List of \linkS4class{VNCdt}s to be assigned to the slot 
+||||||| merged common ancestors
+\item{value}{List of \linkS4class{data.table}s to be assigned to the slot
+=======
+\item{value}{List of \linkS4class{data.table}s to be assigned to the slot 
+>>>>>>> e3ac9308c1978eb314de9c1fda9971de40a9bce7
 \code{VarNameCorresp}.}
 }
 \value{
@@ -61,6 +67,7 @@ DD
 str(DD)
 
 # On an object of class StQ:
+<<<<<<< HEAD
 library(data.table)
 data(Q)
 VarList <- list(Aggregates = new(Class = 'VNCdt',
@@ -77,5 +84,49 @@ setVNC(Q) <- VarList
 Q
 str(Q)
 
+||||||| merged common ancestors
+MicroDataDD <- data.table(Variable = 'IEPEntradaPed',
+                          Sort = 'IDDD',
+                          Class = 'numeric',
+                          Qual1 = 'NOrden')
+DD <- new(Class = 'DD', MicroData = MicroDataDD)
+StQ <- new(Class = 'StQ',
+           Data = data.table(IDDD = character(0), Value = character(0)),
+           DD = DD)
+VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','','',''),
+                                       NonIDQual = c('EsMercNac',
+                                                     'EsMercEuro',
+                                                     'EsMercRM',
+                                                     'Cod',
+                                                     ''),
+                                       IDDD = c('', '', '' ,'' ,
+                                                'IEPEntradaPed'),
+                                       Unit1 = c('', '', '', '', 'cp02')))
+setVNC(StQ) <- VarList
+StQ
+str(StQ)
+=======
+MicroDataDD <- data.table(Variable = 'IEPEntradaPed', 
+                          Sort = 'IDDD', 
+                          Class = 'numeric',
+                          Qual1 = 'NOrden')
+DD <- new(Class = 'DD', MicroData = MicroDataDD)
+StQ <- new(Class = 'StQ', 
+           Data = data.table(IDDD = character(0), Value = character(0)), 
+           DD = DD)
+VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','','',''),
+                                       NonIDQual = c('EsMercNac', 
+                                                     'EsMercEuro', 
+                                                     'EsMercRM',
+                                                     'Cod',
+                                                     ''),
+                                       IDDD = c('', '', '' ,'' ,
+                                                'IEPEntradaPed'),
+                                       Unit1 = c('', '', '', '', 'cp02')))
+setVNC(StQ) <- VarList
+StQ
+str(StQ)
+
+>>>>>>> e3ac9308c1978eb314de9c1fda9971de40a9bce7
 }
 

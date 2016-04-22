@@ -26,6 +26,7 @@ following columns:
 }
 }
 \examples{
+<<<<<<< HEAD
 library(data.table)
 VarList <- list(
   ID = new(Class = 'VNCdt', 
@@ -56,5 +57,44 @@ VarList <- list(
                      Unit1 = c('provincia', 'actividad', '', 'cn01'))))
 new(Class = 'VarNameCorresp', .Data = VarList)
 
+||||||| merged common ancestors
+<<<<<<< HEAD
+library(data.table)
+VarList <- list(MicroData = data.table(IDQual = c('NumIdEst', '', '', '',
+=======
+VarList <- list(MicroData = data.table(IDQual = c('NumIdEst', '', '', '', 
+>>>>>>> da378528fc760d6a0587caca95f78a118898b106
+                                                  '', ''),
+                                       NonIDQual = c('', 'EsMercNac',
+                                                     'EsMercEuro',
+                                                     'EsMercRM',
+                                                     'Cod',''),
+                                       IDDD = c('', '', '', '', '',
+                                                'IEPEntradaPed'),
+                                       NumIdEst = c('', '', '', '', '', ''),
+                                       EsMercNac = c('', '', '', '', '', '0'),
+                                       EsMercEuro = c('', '', '', '', '', '0'),
+                                       EsMercRM = c('', '', '', '', '', '1'),
+                                       Cod = c('', '', '', '', '', ''),
+                                       SP = c('', '', '', '', '', 'cp09'))
+new(Class = 'VarNameCorresp', VarNameCorresp = VarList)
+=======
+VarList <- list(MicroData = data.table(IDQual = c('NumIdEst', '', '', '', 
+                                                  '', ''),
+                                       NonIDQual = c('', 'EsMercNac', 
+                                                     'EsMercEuro', 
+                                                     'EsMercRM',
+                                                     'Cod',''),
+                                       IDDD = c('', '', '', '', '', 
+                                                'IEPEntradaPed'),
+                                       NumIdEst = c('', '', '', '', '', ''),
+                                       EsMercNac = c('', '', '', '', '', '0'),
+                                       EsMercEuro = c('', '', '', '', '', '0'),
+                                       EsMercRM = c('', '', '', '', '', '1'),
+                                       Cod = c('', '', '', '', '', ''),
+                                       SP = c('', '', '', '', '', 'cp09'))
+new(Class = 'VarNameCorresp', VarNameCorresp = VarList)
+
+>>>>>>> e3ac9308c1978eb314de9c1fda9971de40a9bce7
 }
 

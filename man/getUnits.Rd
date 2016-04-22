@@ -27,8 +27,17 @@ and returns a \linkS4class{data.table} with the values of these qualifiers
 for each statistical unit.
 }
 \examples{
+<<<<<<< HEAD
 data(Q)
 getUnits(Q)
 
+||||||| merged common ancestors
+data(ExampleQ)
+getUnits(ExampleQ)
+=======
+data(ExampleQ)
+getUnits(ExampleQ)
+
+>>>>>>> e3ac9308c1978eb314de9c1fda9971de40a9bce7
 }
 

@@ -28,8 +28,38 @@ Object of class \linkS4class{StQ} with slot DD updated.
 library(data.table)
 Q <- new(Class = 'StQ')
 
+<<<<<<< HEAD
 # We use an DD object previously created:
 data(DD)
+||||||| merged common ancestors
+# We build a trivial DD object with three variables (one unit qualifier, one
+# variable qualifier and one variable):
+DDData <- data.table(Variable = c('NOrden', 'CCAA', 'CifraNeg'),
+                     Sort = c('IDQual', 'NonIDQual', 'IDDD'),
+                     Class = c('character', 'character', 'numeric'),
+                     Qual1 = c('', '', 'NOrden'))
+VarList <- list(data.table(IDQual = c('NOrden','','','',''),
+                           NonIDQual = c('EsMercNac', 'EsMercEuro', 'EsMercRM',
+                                         'Cod',''),
+                           IDDD = c('','','','','CifraNeg'),
+                           Unit1 = c('','','','','')))
+VNC <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList)
+DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = DDData)
+=======
+# We build a trivial DD object with three variables (one unit qualifier, one
+# variable qualifier and one variable):
+DDData <- data.table(Variable = c('NOrden', 'CCAA', 'CifraNeg'),
+                     Sort = c('IDQual', 'NonIDQual', 'IDDD'),
+                     Class = c('character', 'character', 'numeric'),
+                     Qual1 = c('', '', 'NOrden'))
+VarList <- list(data.table(IDQual = c('NOrden','','','',''),
+                           NonIDQual = c('EsMercNac', 'EsMercEuro', 'EsMercRM', 
+                                         'Cod',''),
+                           IDDD = c('','','','','CifraNeg'),
+                           Unit1 = c('','','','','')))
+VNC <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList)
+DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = DDData)
+>>>>>>> e3ac9308c1978eb314de9c1fda9971de40a9bce7
 # We assign this DD object to slot DD of the preceding StQ object:
 setDD(Q) <- DD
 str(Q)
