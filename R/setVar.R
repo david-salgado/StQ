@@ -101,7 +101,16 @@ setMethod(
             stop('[StQ::setVar] Value must be an atomic vector or of class expression.')
         }
 
-        NewData <- getUnits(object)
+        for (DDslot in setdiff(slotNames(newDD), 'VarNameCorresp')){
+            
+            DDlocal <- slot(newDD, DDslot)
+            if (dim(DDlocal)[1] > 0){
+                
+                DDnewslot <- DDslot
+            }
+        }
+        
+        NewData <- getUnits(object, DDnewslot)
         
         pasteNA <- function(x, y){
             out <- ifelse(is.na(y) | y == '', paste0(x, ''), paste(x, y, sep ="_"))
@@ -133,7 +142,7 @@ setMethod(
         if (class(Value) == 'expression'){
 
             ExprVariables <- c(all.vars(Value), by)
-            ExprVariables <- unlist(lapply(ExprVariables, function(x){
+            ExprVariables <- unlist(lapply(ExprVariables[[1]], function(x){
                                         ifelse(ExtractNames(x) %in% unique(Data[['IDDD']]), x, '')
                                     }))
             ExprVariables <- ExprVariables[ExprVariables != '']
