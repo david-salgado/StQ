@@ -48,6 +48,7 @@ VarList1 <- list(
                                Var1 = c('', '', '', '', '', '', '', ''),
                                Var2 = c('', '', '', '', '', '', '', ''),
                                Unit1 = c('', '', '', '', '', '', '','cp09'))),
+    ParaData = new(Class = 'VNCdt'),
     Aggregates = new(Class = 'VNCdt', 
                      .Data = data.table(
                          IDQual = c('Province', 'NACE', 'IsNatMarket', ''),
@@ -79,6 +80,7 @@ VarList2 <- list(
                                Var1 = c('', '', '', '', '', '', '', ''),
                                Var2 = c('', '', '', '', '', '', '', ''),
                                Unit1 = c('', '', '', '', '', '', '','cp09'))),
+    ParaData = new(Class = 'VNCdt'),
     Aggregates = new(Class = 'VNCdt', 
                      .Data = data.table(
                          IDQual = c('Province', 'NACE', 'IsNatMarket', ''),
@@ -88,6 +90,7 @@ VarList2 <- list(
                          NACE = c('', '', '', '.'),
                          IsNatMarket = c('', '', '', '1'),
                          Unit1 = c('provincia', 'actividad', '', 'cn01'))))
+                         
 VNC2 <- new(Class = 'VarNameCorresp', .Data = VarList2)
 
 VNC1 + VNC2

@@ -26,16 +26,36 @@ It is indeed the method \link[methods]{show} adapted to the class
 show(new(Class = 'VarNameCorresp'))
 
 # A more elaborate example
-VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','', '', '', '', ''),
-                NonIDQual = c('', 'IsNatMarket', 'IsEuroMarket', 'IsRWMarket', '', '', ''),
-                IDDD = c('','','','','Turnover', 'Turnover', 'Turnover'),
-                NumIdEst = c('', '', '', '', '.', '.', '.'),
-                IsNatMarket = c('', '', '', '', '1', '0', '0'),
-                IsEuroMarket = c('', '', '', '', '', '1', '0'),
-                IsRWMarket = c('', '', '', '', '', '', '1'),
-                Unit1 = c('','','','','cn01', 'cn02', 'cn03')))
-Example <- new(Class = 'VarNameCorresp', VarList)
-show(Example)
+VarList <- list(
+  ID = new(Class = 'VNCdt', 
+           .Data = data.table(
+                 IDQual = c('NumIdEst', rep('', 4)),
+                 NonIDQual = rep('', 5),
+                 IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
+                 NumIdEst = c('', rep('.', 4)),
+                 Unit1 = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'))),
+  MicroData = new(Class = 'VNCdt', 
+                  .Data = data.table(
+                      IDQual = c('NumIdEst', rep('', 4)),
+                      NonIDQual = c('', 'IsNatMarket', 'IsEuroMarket', 'IsRWMarket', ''),
+                      IDDD = c(rep('', 4), 'NewOrders'),
+                      NumIdEst = c(rep('', 4), '.'),
+                      IsNatMarket = c(rep('', 4), '0'),
+                      IsEuroMarket = c(rep('', 4), '0'),
+                      IsRWMarket = c(rep('', 4), '1'),
+                      Unit1 = c('numidest', rep('', 3), 'cp09'))),
+ ParaData = new(Class = 'VNCdt'),
+ Aggregates = new(Class = 'VNCdt', 
+                  .Data = data.table(
+                     IDQual = c('Province', 'NACE', 'IsNatMarket', ''),
+                     NonIDQual = rep('', 4),
+                     IDDD = c('', '', '', 'TotalTurnover'),
+                     Province = c('', '', '', '.'),
+                     NACE = c('', '', '', '.'),
+                     IsNatMarket = c('', '', '', '1'),
+                     Unit1 = c('provincia', 'actividad', '', 'cn01'))))
+VNC2 <- new(Class = 'VarNameCorresp', .Data= VarList)
+show(VNC2)
 
 }
 
