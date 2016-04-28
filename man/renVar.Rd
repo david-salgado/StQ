@@ -31,7 +31,7 @@ input parameter \code{VarNames} renamed with the names in the input parameter
 }
 \examples{
 data(ExampleQ)
-renVar(ExampleQ, 'Orders', 'RealOrders')
+renVar(ExampleQ, 'IASSEmpleo', 'IASSEmp')
 
 }
 

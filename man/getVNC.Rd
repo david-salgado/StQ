@@ -35,8 +35,8 @@ VNC
 str(VNC)
 
 # From an object of class StQ
-data(ExampleQ)
-VNC <- getVNC(ExampleQ)
+data(Q)
+VNC <- getVNC(Q)
 VNC
 str(VNC)
 

@@ -4,7 +4,7 @@
 \name{dcast_StQ}
 \alias{dcast_StQ}
 \alias{dcast_StQ,StQ-method}
-\title{Convert an \linkS4class{StQ} object into a dcasted data.table.}
+\title{Convert an \linkS4class{StQ} object into a dcasted data.table}
 \usage{
 dcast_StQ(object, VarNames = NULL, DDslot = "MicroData")
 
@@ -32,8 +32,9 @@ form (observations by row and variables by columns) with data from the input
 \linkS4class{StQ} object.
 
 This methods converts the slot \code{Data} from the input \code{StQ} object
- into a \linkS4class{data.table} with statistical units by row and variables 
- specified in the input parameter \code{VarNames} by columns.
+ with key-value pair structure into a \linkS4class{data.table} with
+ statistical units by row and variables specified in the input parameter
+ \code{VarNames} by columns.
 
 To distinguish between variables and qualifiers this function makes use of
 the slot \code{DD} of input \linkS4class{StQ} variable.
@@ -45,7 +46,8 @@ This method is indeed a wrapper for the function
 }
 \examples{
 data(ExampleQ)
-Mat <- dcast_StQ(ExampleQ, c('Turnover'))
+Mat <- dcast_StQ(ExampleQ, c('IASSCifraNeg', 'IASSEmpleo_0',
+                 'IASSEmpleo_1_1', 'IASSEmpleo_1_2'))
 str(Mat)
 
 }
