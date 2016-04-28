@@ -1,12 +1,14 @@
 #' @title Return IDDD identifiers from an object
 #'
-#' @description \code{getIDDD} returns all IDDD identifiers from the input 
-#' object.  
-#' 
-#' @param object Object whose IDDD identifiers are queried.
+#' @description \code{getIDQual} returns a character vector with all unit qualifier 
+#' names (IDQual) included in the input object. 
 #'
-#' @return In the case of \linkS4class{VarNameCorresp} it returns the IDDD
-#' identifiers from all components of of its slot \code{VarNameCorresp}.
+#' @param object Object with the IDQual unit qualifier. 
+#' 
+#' @param Namesdt Character vector with the components or slots from which IDQuals
+#' are requiered. 
+#'
+#' @return Character vector with all the unit qualifier names.
 #'
 #' @examples
 #' # A more elaborate example
@@ -38,14 +40,13 @@
 #'                      IsNatMarket = c('', '', '', '1'),
 #'                      Unit1 = c('provincia', 'actividad', '', 'cn01'))))
 #' Example <- new(Class = 'VarNameCorresp', .Data = VarList)
-#' getIDDD(Example)
+#' getIDQual(Example)
 #' 
-#' @import data.table
 #' 
 #' @export
-setGeneric("getIDDD", function(object, Namesdt){standardGeneric("getIDDD")})
+setGeneric("getIDQual", function(object, Namesdt){standardGeneric("getIDQual")})
 
-#' @rdname getIDDD
+#' @rdname getIDQual
 #' 
 #' @include VNCdt-class.R
 #' 
@@ -53,17 +54,17 @@ setGeneric("getIDDD", function(object, Namesdt){standardGeneric("getIDDD")})
 #' 
 #' @export
 setMethod(
-    f = "getIDDD",
+    f = "getIDQual",
     signature = c("VNCdt"),
     function(object){
         
-        output <- unique(object[['IDDD']])
+        output <- unique(object[['IDQual']])
         output <- output[output != '']
         return(output)
         
     }
 )
-#' @rdname getIDDD
+#' @rdname getIDQual
 #' 
 #' @include VarNameCorresp-class.R 
 #' 
@@ -71,7 +72,7 @@ setMethod(
 #' 
 #' @export
 setMethod(
-    f = "getIDDD",
+    f = "getIDQual",
     signature = c("VarNameCorresp"),
     function(object, Namesdt){
         
@@ -79,19 +80,19 @@ setMethod(
         
         aux <- object[Namesdt]
         
-        IDDD.list <- lapply(aux, function(x) { 
-            IDDD <- getIDDD(x)
-            return(IDDD)
+        IDQual.list <- lapply(aux, function(x) { 
+            IDQual <- getIDQual(x)
+            return(IDQual)
         }
         )
         
-        output <- unique(Reduce(c, IDDD.list, init = IDDD.list[[1]]))
+        output <- unique(Reduce(c, IDQual.list, init = IDQual.list[[1]]))
         return(output)
         
     }
 )
 
-#' @rdname getIDDD
+#' @rdname getIDQual
 #' 
 #' @include DDdt-class.R
 #' 
@@ -99,18 +100,18 @@ setMethod(
 #' 
 #' @export
 setMethod(
-    f = "getIDDD",
+    f = "getIDQual",
     signature = c("DDdt"),
     function(object){
         
-        output <- unique(object[Sort == 'IDDD', Variable])
+        output <- unique(object[Sort == 'IDQual', Variable])
         output <- output[output != '']
         
         return(output)
     }
 )
 
-#' @rdname getIDDD
+#' @rdname getIDQual
 #' 
 #' @include DD-class.R
 #' 
@@ -118,7 +119,7 @@ setMethod(
 #' 
 #' @export
 setMethod(
-    f = "getIDDD",
+    f = "getIDQual",
     signature = c("DD"),
     function(object, Namesdt){
         
@@ -126,10 +127,10 @@ setMethod(
         
         #Namesdt <- setdiff(Namesdt, 'VarNameCorresp')
         output <- c()
-        for (slotDD in Namesdt) {
+        for (DDdt in Namesdt) {
             
-            IDDD <- getIDDD(slot(object,slotDD))
-            output <- c(output, IDDD)
+            IDQual <- getIDQual(slot(object,DDdt))
+            output <- c(output, IDQual)
         }
         
         output <- unique(output)
@@ -137,37 +138,36 @@ setMethod(
     }
 )
 
-#' @rdname getIDDD
+#' @rdname getIDQual
 #' 
-#' @include Datadt-class.R
+#' @include Datadt-class.R 
 #' 
 #' @import data.table
 #' 
 #' @export
 setMethod(
-    f = "getIDDD",
+    f = "getIDQual",
     signature = c("Datadt"),
     function(object){
         
-        output <- unique(object[['IDDD']])
+        output <- unique(object[['IDQual']])
         return(output)
     }
 )
 
-#' @rdname getIDDD
+#' @rdname getIDQual
 #' 
-#' @include StQ-class.R
+#' @include StQ-class.R 
 #' 
 #' @import data.table
 #' 
 #' @export
 setMethod(
-    f = "getIDDD",
+    f = "getIDQual",
     signature = c("StQ"),
     function(object){
         
-        output <- getIDDD(object@Data)
+        output <- getIDQual(object@Data)
         return(output)
     }
 )
-
