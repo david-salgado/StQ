@@ -27,7 +27,8 @@
 #'                    NumIdEst = c('', '.'),
 #'                    Unit1 = c('numidest', 'cp01'))
 #' VNC1 <- new(Class = 'VNCdt', VNC1)
-#' VNC1 <- new(Class = 'VarNameCorresp', list(MicroData = VNC1))
+#' VNC1 <- BuildVNC(list(MicroData = VNC1))
+#'
 #' MicroDD1 <- data.table(Variable = c('NumIdEst', 'NewOrders'),
 #'                        Sort = c('IDQual', 'IDDD'),
 #'                        Class = c('character', 'numeric'),
