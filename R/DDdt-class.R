@@ -26,7 +26,7 @@
 #'
 #' @export
 setClass(Class = "DDdt",
-         contains = 'data.table',
+         contains = c('data.table'),
          prototype = data.table(Variable = character(0),
                                 Sort = character(0),
                                 Class = character(0),
@@ -35,6 +35,22 @@ setClass(Class = "DDdt",
          validity = function(object){
              
              NCol <- dim(object)[2]
+             
+             if (NCol < 4) {
+                 stop(paste0('[Validity DDdt] The object must be a data table with 
+                                at least four columns named "Variable", "Sort", "Class"
+                                and "Qual1.'))   
+             } 
+             
+             
+             Data <- slot(object, ".Data")
+             if (!all(unlist(lapply(Data, function(x){is.character(unlist(x)) }))) == TRUE) {
+                 
+                 stop(paste0('[Validity DDdt] All columns of the object must be character vectors.'))
+                 
+             }
+             
+             
              NQual <- max(0, NCol - 4)
              if (NQual > 0) {
                  
@@ -49,15 +65,46 @@ setClass(Class = "DDdt",
             
              if (!all(names(object) %in% ColNames)) {
                  
-                 stop('[Validity DDdt] The names of a DDdt object must be: Variable, Sort, Class, Qual1-Qualj, ValueRegExp.')
+                 stop('[Validity DDdt] The names of a DDdt object must be: Variable, Sort, "Class, Qual1-Qualj, ValueRegExp.')
                  
              }
-            
-             if (!all(object[['Sort']] %in% c('IDDD', 'IDQual', 'NonIDQual'))) {
-                 
-                 stop('[validity DDdt] The column Sort values must be IDDD, IDQual or NonIDQual.')
+             
+             ColNames <- slot(object, "names")
+             if (ColNames[1] != 'Variable') {
+                 stop(paste0('[Validity DDdt] The first column object must be "Variable".'))   
              }
-            
-             return(TRUE)
+             
+             if (any(duplicated(object[['Variable']]))) {
+                 stop(paste0('[Validity DDdt] The column "Variable" of the object cannot have repeated values.'))
+             }
+             
+             if (ColNames[2] != 'Sort') {
+                 stop(paste0('[Validity DDdt] The second column of object must be "Sort".'))
+             }
+             
+             if (length(object[['Sort']]) != 0 &&  !all(object[['Sort']] %in% c('IDQual', 'NonIDQual', 'IDDD'))) { 
+                 stop(paste0('[Validity DDdt] The column "Sort" of the object can only have values "IDQual", "NonIDQual" and "IDDD".'))
+             }
+             
+             if (ColNames[3] != 'Class') {
+                 stop(paste0('[Validity DDdt] The third column of the object must be named "Class".'))
+             }
+             
+             
+             
+             if (length(Quals) != 0 ) {
+                 
+                 if (ColNames[4] != 'Qual1') {
+                     stop(paste0('[Validity DDdt] The fourth column of of the object must be named "Qual1".'))
+                 }
+                 
+            }else {
+                
+                if (ColNames[4] != 'ValueRegExp') {
+                    stop(paste0('[Validity DDdt] The fourth column of of the object must be named "ValueRegExp".'))
+                }
+            }
+             
+            return(TRUE)
          }
 )

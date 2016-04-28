@@ -14,43 +14,33 @@
 #' \code{Data}.
 #'
 #' @examples
-#' # We build two trivial data sets:
+#' # We build a trivial data set:
 #' library(data.table)
-#' Data1 <- data.table(NOrden = c('ID1', 'ID2'),
-#'                     IDDD = c('CifraNeg', 'CifraNeg'),
-#'                     Value = c(0, 187364))
 #'
-#' Data2 <- data.table(NOrden = c('ID1', 'ID2', 'ID1', 'ID2'),
-#'                     EsRemuner = c('0', '0', '1', '1'),
-#'                     IDDD = c('Empleo', 'Empleo', 'Empleo', 'Empleo'),
-#'                     Value = c(0, 1, 23, 41))
-#' VarList1 <- list(MicroData = data.table(IDQual = c('NOrden', ''),
-#'                                        IDDD = c('', 'CifraNeg'),
-#'                                        NOrden = c('', ''),
-#'                                        Unit1 = c('norden', 'cn')))
-#' VNC1 <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList1)
-#' VarList2 <- list(MicroData = data.table(IDQual = c('NOrden', '', '', ''),
-#'                                         NonIDQual = c('', 'EsRemuner', '', ''),
-#'                                         IDDD = c('', '', 'Empleo', 'Empleo'),
-#'                                         NOrden = c('', '', '', ''),
-#'                                         EsRemuner = c('', '', '0', '1'),
-#'                                         Unit1 = c('norden', '', 'EmpNoR', 'EmpR')))
-#' VNC2 <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList2)
-#' MicroDD1 <- data.table(Variable = c('NOrden', 'CifraNeg'),
-#'                      Sort = c('IDQual', 'IDDD'),
-#'                      Class = c('character', 'numeric'),
-#'                      Qual1 = c('', 'NOrden'))
-#' DD1 <- new(Class = 'DD', MicroData = MicroDD1, VarNameCorresp = VNC1)
-#' MicroDD2 <- data.table(Variable = c('NOrden', 'EsRemuner', 'Empleo'),
-#'                        Sort = c('IDQual', 'NonIDQual', 'IDDD'),
-#'                        Class = c('character', 'character', 'integer'),
-#'                        Qual1 = c(rep('', 2), 'NOrden'),
-#'                        Qual2 = c(rep('', 2), 'EsRemuner'))
-#' DD2 <- new(Class = 'DD', MicroData = MicroDD2, VarNameCorresp = VNC2)
+#' Data1 <- data.table(NumIdEst = c('002', '003', '004'),
+#'                     IDDD = c('NewOrders', 'NewOrders', 'NewOrders'),
+#'                     Value = c(32150, 12574, 23896))
+#' Data1 <- new(Class = 'Datadt', Data1)
+#' VNC1 <- data.table(IDQual = c('NumIdEst', ''),
+#'                    NonIDQual = c('', ''),
+#'                    IDDD = c('', 'NewOrders'),
+#'                    NumIdEst = c('', '.'),
+#'                    Unit1 = c('numidest', 'cp01'))
+#' VNC1 <- new(Class = 'VNCdt', VNC1)
+#' VNC1 <- new(Class = 'VarNameCorresp', list(MicroData = VNC1))
+#' MicroDD1 <- data.table(Variable = c('NumIdEst', 'NewOrders'),
+#'                        Sort = c('IDQual', 'IDDD'),
+#'                        Class = c('character', 'numeric'),
+#'                        Qual1 = c('', 'NumIdEst'),
+#'                        ValueRegExp = c('[0-9]{9}PP', '([0-9]{1, 10}| )'))
+#' MicroDD1 <- new(Class = 'DDdt', MicroDD1)
+#' DD1 <- new(Class = 'DD', VarNameCorresp = VNC1, MicroData = MicroDD1)
 #'
-#' # We build both StQ objects and join them in a single object:
+#' # We build the StQ object, and join it with another previously created in a
+#'   single object:
+#' data(ExampleQ)  
 #' Q1 <- new(Class = 'StQ', Data = Data1, DD = DD1)
-#' Q2 <- new(Class = 'StQ', Data = Data2, DD = DD2)
+#' Q2 <- ExampleQ
 #' Q <- Q1 + Q2
 #' str(Q)
 #'
@@ -72,14 +62,25 @@ setMethod(
     NewCol.e2 <- setdiff(ColNames.e2, ColNames.e1)
     NewCol.e1 <- setdiff(ColNames.e1, ColNames.e2)
     
-    if (length(NewCol.e2) > 0) e1@Data <- copy(e1@Data)[, NewCol.e2 := character(.N), with = FALSE]
-    if (length(NewCol.e1) > 0) e2@Data <- copy(e2@Data)[, NewCol.e1 := character(.N), with = FALSE]
+    if (length(NewCol.e2) > 0){
+        
+        Datae1 <- copy(getData(e1))[, NewCol.e2 := character(.N), with = FALSE]
+    }
+    
+    if (length(NewCol.e1) > 0){
+        
+        Datae2 <- copy(getData(e2))[, NewCol.e1 := character(.N), with = FALSE]
+    }else{
+        
+        Datae2 <- copy(getData(e2))
+    }
+    
 
     # Unimos los slots Data con rbindlist eliminando los duplicados
     ColNames <- c(setdiff(names(getData(e1)), c('IDDD', 'Value')), setdiff(names(getData(e2)), setdiff(names(getData(e1)), c('IDDD', 'Value'))))
-    setcolorder(getData(e1), ColNames)
-    setcolorder(getData(e2), ColNames)
-    output.Data <- rbindlist(list(getData(e1), getData(e2)))
+    setcolorder(Datae1, ColNames)
+    setcolorder(Datae2, ColNames)
+    output.Data <- rbindlist(list(Datae1, Datae2))
     setkeyv(output.Data, names(output.Data)[-which(names(output.Data) == 'Value')])
     DupRows <- duplicated(output.Data)
     if (sum(DupRows) > 0) {
@@ -89,7 +90,7 @@ setMethod(
           The next rows are duplicated and will be removed:\n\n')
       print(output.Data[DupRows])
     }
-    output.Data <- output.Data[!DupRows]
+    output.Data <- new(Class = 'Datadt', output.Data[!DupRows])
 
     # Generamos el objeto final
     output <- new(Class = 'StQ', Data = output.Data, DD = outputDD)

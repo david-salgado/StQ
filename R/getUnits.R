@@ -6,6 +6,9 @@
 #'
 #' @param object Object of class \linkS4class{StQ} or class 
 #' \linkS4class{data.table}.
+#' 
+#' @param DDslot Character vector of length 1 with the name of DD slot in which
+#' qualifiers will be looked for. Its default value is \code{MicroData}.
 #'
 #' @return It returns a \code{data.table} with the statistical units in the
 #' input object.
@@ -15,7 +18,7 @@
 #' getUnits(ExampleQ)
 #'
 #' @export
-setGeneric("getUnits", function(object) {standardGeneric("getUnits")})
+setGeneric("getUnits", function(object, DDslot = 'MicroData') {standardGeneric("getUnits")})
 
 #' @rdname getUnits
 #'
@@ -27,9 +30,19 @@ setGeneric("getUnits", function(object) {standardGeneric("getUnits")})
 setMethod(
   f = "getUnits",
   signature = c("StQ"),
-  function(object){
+  function(object, DDslot = 'MicroData'){
 
-    DDData <- slot(getDD(object), 'MicroData')
+    if (length(DDslot) > 1){
+      
+        stop('[StQ::getUnits] DDslot must be a character vector of length 1.')
+    }
+  
+    if (!DDslot %in% slotNames(DD)){
+      
+        stop('[StQ:getUnits] DDslot is not a component of the slot DD of the input object.')
+    }
+      
+    DDData <- slot(getDD(object), DDslot)
     IDQual <- DDData[Sort == 'IDQual', Variable]
     output <- getData(object)[, IDQual, with = FALSE]
     setkeyv(output, IDQual)

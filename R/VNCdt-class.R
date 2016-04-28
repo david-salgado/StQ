@@ -30,7 +30,7 @@
 #'
 #' @export
 setClass(Class = "VNCdt",
-         contains = 'data.table',
+         contains = c('data.table'),
          prototype = data.table(IDQual = character(0),
                                 NonIDQual = character(0),
                                 IDDD = character(0),
@@ -84,7 +84,7 @@ setClass(Class = "VNCdt",
              
              ReadColNames <- c('IDQual', 'NonIDQual', 'IDDD', IDQuals, 
                                NonIDQuals, Units)
-        
+            
              if (!all(ColNames %in% ReadColNames)) {
                  
                  stop('[Validity VarNameCorresp] The names of the columns with production unit variable names must be "Unit1, Unit2, ...".')

@@ -19,7 +19,7 @@
 #' @examples
 #' data(ExampleQ)
 #' rmVar(ExampleQ)
-#' rmVar(ExampleQ, 'IASSTame')
+#' rmVar(ExampleQ, 'Orders')
 #'
 #' @export
 setGeneric("rmVar",
@@ -58,7 +58,8 @@ setMethod(
 
         } else {
 
-            setData(object) <- getData(object)[!IDDD %in% PresentVar]
+            Data <- new(Class = 'Datadt', getData(object)[!IDDD %in% PresentVar])
+            setData(object) <- Data
 
             return(object)
         }
