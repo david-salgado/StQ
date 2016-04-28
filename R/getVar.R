@@ -45,7 +45,6 @@ setMethod(
             stop('[StQ::getVar] Only one variable can be specifed as input.')
 
         }
-        
         if (length(DDslot) > 1){
             
             stop('[StQ::getVar] DDslot must be a character vector of length 1.')
