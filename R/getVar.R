@@ -70,11 +70,12 @@ setMethod(
             
             stop('[StQ::getVar] The variable ', ExtractNames(VarName), ' is not defined in the slot ', DDslot, ' of the slot DD of the input object.')
         }
-        
-        Quals <- setdiff(names(slot(DDVar, DDslot)), c('Variable', 'Sort', 'Class', 'ValueRegExp'))
-        if (length(Quals) == 0 & VarName == ExtractNames(VarName)){
+    
+        Varslot <- slot(DD, DDslot)
+        Quals <- Varslot[Sort == 'NonIDQual', Variable]
+        if (length(Quals) == 0 & VarName != ExtractNames(VarName)){
             
-            stop('[StQ::getVar] The variable ', ExtractNames(VarName), ' has not qualifiers, so VarName cannot be ', VarName, '.')
+            stop('[StQ::getVar] The variable ', ExtractNames(VarName), ' has not any non-identity qualifiers, so VarName cannot be ', VarName, '.')
         }
         
         if (DDslot != 'MicroData'){
