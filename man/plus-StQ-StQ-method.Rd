@@ -24,43 +24,33 @@ This method overloads the operator \code{\link{+}} and builds a new
 \linkS4class{StQ} object joining both input objects.
 }
 \examples{
-# We build two trivial data sets:
+# We build a trivial data set:
 library(data.table)
-Data1 <- data.table(NOrden = c('ID1', 'ID2'),
-                    IDDD = c('CifraNeg', 'CifraNeg'),
-                    Value = c(0, 187364))
 
-Data2 <- data.table(NOrden = c('ID1', 'ID2', 'ID1', 'ID2'),
-                    EsRemuner = c('0', '0', '1', '1'),
-                    IDDD = c('Empleo', 'Empleo', 'Empleo', 'Empleo'),
-                    Value = c(0, 1, 23, 41))
-VarList1 <- list(MicroData = data.table(IDQual = c('NOrden', ''),
-                                       IDDD = c('', 'CifraNeg'),
-                                       NOrden = c('', ''),
-                                       Unit1 = c('norden', 'cn')))
-VNC1 <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList1)
-VarList2 <- list(MicroData = data.table(IDQual = c('NOrden', '', '', ''),
-                                        NonIDQual = c('', 'EsRemuner', '', ''),
-                                        IDDD = c('', '', 'Empleo', 'Empleo'),
-                                        NOrden = c('', '', '', ''),
-                                        EsRemuner = c('', '', '0', '1'),
-                                        Unit1 = c('norden', '', 'EmpNoR', 'EmpR')))
-VNC2 <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList2)
-MicroDD1 <- data.table(Variable = c('NOrden', 'CifraNeg'),
-                     Sort = c('IDQual', 'IDDD'),
-                     Class = c('character', 'numeric'),
-                     Qual1 = c('', 'NOrden'))
-DD1 <- new(Class = 'DD', MicroData = MicroDD1, VarNameCorresp = VNC1)
-MicroDD2 <- data.table(Variable = c('NOrden', 'EsRemuner', 'Empleo'),
-                       Sort = c('IDQual', 'NonIDQual', 'IDDD'),
-                       Class = c('character', 'character', 'integer'),
-                       Qual1 = c(rep('', 2), 'NOrden'),
-                       Qual2 = c(rep('', 2), 'EsRemuner'))
-DD2 <- new(Class = 'DD', MicroData = MicroDD2, VarNameCorresp = VNC2)
+Data1 <- data.table(NumIdEst = c('002', '003', '004'),
+                    IDDD = c('NewOrders', 'NewOrders', 'NewOrders'),
+                    Value = c(32150, 12574, 23896))
+Data1 <- new(Class = 'Datadt', Data1)
+VNC1 <- data.table(IDQual = c('NumIdEst', ''),
+                   NonIDQual = c('', ''),
+                   IDDD = c('', 'NewOrders'),
+                   NumIdEst = c('', '.'),
+                   Unit1 = c('numidest', 'cp01'))
+VNC1 <- new(Class = 'VNCdt', VNC1)
+VNC1 <- new(Class = 'VarNameCorresp', list(MicroData = VNC1))
+MicroDD1 <- data.table(Variable = c('NumIdEst', 'NewOrders'),
+                       Sort = c('IDQual', 'IDDD'),
+                       Class = c('character', 'numeric'),
+                       Qual1 = c('', 'NumIdEst'),
+                       ValueRegExp = c('[0-9]{9}PP', '([0-9]{1, 10}| )'))
+MicroDD1 <- new(Class = 'DDdt', MicroDD1)
+DD1 <- new(Class = 'DD', VarNameCorresp = VNC1, MicroData = MicroDD1)
 
-# We build both StQ objects and join them in a single object:
+# We build the StQ object, and join it with another previously created in a
+  single object:
+data(ExampleQ)  
 Q1 <- new(Class = 'StQ', Data = Data1, DD = DD1)
-Q2 <- new(Class = 'StQ', Data = Data2, DD = DD2)
+Q2 <- ExampleQ
 Q <- Q1 + Q2
 str(Q)
 

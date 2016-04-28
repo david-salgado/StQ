@@ -16,10 +16,18 @@
 #' @return Object of class \linkS4class{VNCdt} with the subsetted input object.
 #'
 #' @examples
-#' \dontrun{
-#' data(ExampleQ)
-#' ExampleQ[IDDD == 'IASSCifraNeg']
-#' }
+#' MicroData = new(Class = 'VNCdt', 
+#'                   .Data = data.table(IDQual = c('NumIdEst', rep('', 4)),
+#'                                      NonIDQual = c('', 'IsNatMarket', 
+#'                                           'IsEuroMarket', 'IsRWMarket', ''),
+#'                                      IDDD = c(rep('', 4), 'NewOrders'),
+#'                                      NumIdEst = c(rep('', 4), '.'),
+#'                                      IsNatMarket = c(rep('', 4), '0'),
+#'                                      IsEuroMarket = c(rep('', 4), '0'),
+#'                                      IsRWMarket = c(rep('', 4), '1'),
+#'                                      Unit1 = c('numidest', rep('', 3), 'cp09')))
+#' MicroData[IDDD == 'NewOrders']
+#' 
 #'
 #' @include VNCdt-class.R
 #'

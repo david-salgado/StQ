@@ -13,21 +13,19 @@
 #'
 #' @param NewVarNames Character vector with the new variable names.
 #'
-#' @include StQ-class.R
-#'
 #' @return Object with the same class as the input object and all specified
 #' variable names duly renamed in all slots.
 #'
 #' @examples
 #' data(ExampleQ)
-#' renVar(ExampleQ, 'IASSEmpleo', 'IASSEmp')
+#' renVar(ExampleQ, 'Orders', 'RealOrders')
 #'
 #' @export
 setGeneric("renVar",
            function(object, VarNames, NewVarNames){standardGeneric("renVar")})
 #' @rdname renVar
 #'
-#' @include StQ-class.R DD-class.R getDD.R getData.R getUnits.R getVNC.R
+#' @include StQ-class.R getData.R getDD.R getVNC.R Datadt-class.R DD-class.R
 #'
 #' @import data.table
 #'
@@ -71,20 +69,25 @@ setMethod(
         }
     }
     
-    outputDD[['VarNameCorresp']] <- getVNC(getDD(object))
-    for (VNCSlot in names(outputDD[['VarNameCorresp']]@VarNameCorresp)){
+    outputDD[['VarNameCorresp']] <- getVNC(object)
+    for (VNCSlot in names(outputDD[['VarNameCorresp']])){
         for (indexVar in seq(along = VarNames)){
             
-            outputDD[['VarNameCorresp']]@VarNameCorresp[[VNCSlot]][IDDD == VarNames[indexVar], IDDD := NewVarNames[indexVar]]
+            outputDD[['VarNameCorresp']][[VNCSlot]][IDDD == VarNames[indexVar], IDDD := NewVarNames[indexVar]]
         }
     }
     
-    outputData[, IDDD := auxData]
+    outputData <- new(Class = 'Datadt', outputData[, IDDD := auxData])
     outputDD <- new(Class = 'DD', 
-                    MicroData = outputDD[['MicroData']], 
+                    VarNameCorresp = outputDD[['VarNameCorresp']],
+                    ID = outputDD[['ID']],
+                    MicroData = outputDD[['MicroData']],
+                    ParaData = outputDD[['ParaData']],
                     Aggregates = outputDD[['Aggregates']], 
-                    AggWeights = outputDD[['AggWeights']])
+                    AggWeights = outputDD[['AggWeights']],
+                    Other = outputDD[['Other']])
     output <- new(Class = 'StQ', Data = outputData, DD = outputDD)
+    
     return(output)
 
   }

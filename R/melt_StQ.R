@@ -36,7 +36,7 @@
 #' \code{\link[data.table]{melt.data.table}}, \code{\link[reshape2]{melt}},
 #' \code{\link[reshape2]{dcast}}
 #'
-#' @include StQ-class.R DD-class.R getDD.R getData.R getUnits.R ExtractNames.R getVNC.R
+#' @include Datadt-class.R StQ-class.R ExtractNames.R getVNC.R
 #'
 #' @import data.table
 #'
@@ -59,7 +59,7 @@
     auxDD <- list()
 
     DDlocal <- slot(DD, DDslot)
-    nQual <- length(setdiff(names(DDlocal), c('Variable', 'Sort', 'Class')))
+    nQual <- length(setdiff(names(DDlocal), c('Variable', 'Sort', 'Class', 'ValueRegExp')))
     if (nQual == 0) stop('[StQ::melt_StQ] DD has no qualifiers.')
 
     auxDD[[DDslot]] <- copy(DDlocal)[, c('Variable',
@@ -157,9 +157,9 @@
                                           variable.factor = FALSE,
                                           value.factor = FALSE)
 
-        for (VNCcomp in names(getVNC(DD)@VarNameCorresp)){
+        for (VNCcomp in names(getVNC(DD))){
             var <- auxMeasureVar[[QualName]]
-            Excel <- DD@VarNameCorresp@VarNameCorresp[[VNCcomp]]
+            Excel <- DD@VarNameCorresp[[VNCcomp]]
             qualnotinDMinExcel <- intersect(qualnotinDM, names(Excel))
             varExcel <- Excel[IDDD %in% var]
             if (dim(varExcel)[1] > 0 && 
@@ -206,7 +206,8 @@
     output[is.nan(Value) | Value == 'NaN', Value := NA]
     setkeyv(output, setdiff(names(output), 'Value'))
     output <- output[!duplicated(output)]
-
+    output <- new(Class = 'Datadt', output)
+    
     output.StQ <- new(Class = 'StQ', Data = output, DD = DD)
     validObject(output.StQ)
     return(output.StQ)

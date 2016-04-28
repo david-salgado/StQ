@@ -38,7 +38,7 @@ setMethod(
     for (DDslot in DDslotNames){
         output[[DDslot]] <- mc
         output[[DDslot]][['x']] <- slot(x, DDslot)
-        output[[DDslot]] <- eval(output[[DDslot]], envir = parent.frame())
+        #output[[DDslot]] <- eval(output[[DDslot]], envir = parent.frame())
     }
     
     VNC <- getVNC(x)

@@ -20,7 +20,8 @@
 #'
 #' @examples
 #' data(ExampleQ)
-#' ExampleQ[IDDD == 'IASSCifraNeg']
+#' ExampleQ[IDDD == 'Turnover']
+#' ExampleQ[3:4]
 #'
 #' @include StQ-class.R getData.R setData.R
 #'
@@ -35,7 +36,7 @@ setMethod(
     mc <- match.call()
     mc[['x']] <- getData(x)
     output <- x
-    setData(output) <- eval(mc, envir = parent.frame())
+    setData(output) <- new(Class = 'Datadt', eval(mc, envir = parent.frame()))
     return(output)
 
   }

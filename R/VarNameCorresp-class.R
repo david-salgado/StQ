@@ -40,6 +40,7 @@
 #'                       IsEuroMarket = c(rep('', 4), '0'),
 #'                       IsRWMarket = c(rep('', 4), '1'),
 #'                       Unit1 = c('numidest', rep('', 3), 'cp09'))),
+#'  ParaData = new(Class = 'VNCdt'),
 #'  Aggregates = new(Class = 'VNCdt', 
 #'                   .Data = data.table(
 #'                      IDQual = c('Province', 'NACE', 'IsNatMarket', ''),
@@ -60,17 +61,17 @@ setClass(Class = "VarNameCorresp",
          contains = 'list',
          prototype = list(ID = new(Class = 'VNCdt'),
                           MicroData = new(Class = 'VNCdt'),
-                          Aggregates = new(Class = 'VNCdt')),    
+                          ParaData = new(Class = 'VNCdt')),    
          
          validity = function(object){
          
-         if(is.null(names(object))) {
+         if (is.null(names(object))) {
              
              stop('[Validity VarNameCorresp] A VarNameCorresp object must be a named list.')
          
          }
          ComponentClasses <- unlist(lapply(object, function(x){class(x)[1]}))
-         if(!all(ComponentClasses == 'VNCdt')) {
+         if (!all(ComponentClasses == 'VNCdt')) {
              
              stop('[Validity VarNameCorresp] All components of slot VarNameCorresp must be objects of class VNCdt.')     
          
