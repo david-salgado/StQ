@@ -12,7 +12,8 @@ Imports:
     methods,
     data.table (>= 1.9.4),
     formula.tools (>= 1.5.4),
-    RepoTime (>= 0.1)
+    RepoTime (>= 0.1),
+    stringr (>= 1.0.0)
 License: file LICENSE
 LazyData: true
 Encoding: UTF-8
@@ -99,6 +100,5 @@ Suggests:
     knitr,
     rmarkdown,
     RepoReadWrite,
-    stringr,
     testthat
 VignetteBuilder: knitr

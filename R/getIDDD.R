@@ -10,39 +10,106 @@
 #'
 #' @examples
 #' # A more elaborate example
-#' VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','', '', '', '', ''),
-#'                 NonIDQual = c('', 'IsNatMarket', 'IsEuroMarket', 'IsRWMarket', '', '', ''),
-#'                 IDDD = c('','','','','Turnover', 'Turnover', 'Turnover'),
-#'                 NumIdEst = c('', '', '', '', '.', '.', '.'),
-#'                 IsNatMarket = c('', '', '', '', '1', '0', '0'),
-#'                 IsEuroMarket = c('', '', '', '', '', '1', '0'),
-#'                 IsRWMarket = c('', '', '', '', '', '', '1'),
-#'                 Unit1 = c('','','','','cn01', 'cn02', 'cn03')))
-#' Example <- new(Class = 'VarNameCorresp', VarList)
+#' VarList <- list(
+#'   ID = new(Class = 'VNCdt', 
+#'            .Data = data.table(
+#'                  IDQual = c('NumIdEst', rep('', 4)),
+#'                  NonIDQual = rep('', 5),
+#'                  IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
+#'                  NumIdEst = c('', rep('.', 4)),
+#'                  Unit1 = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'))),
+#'   MicroData = new(Class = 'VNCdt', 
+#'                   .Data = data.table(
+#'                       IDQual = c('NumIdEst', rep('', 4)),
+#'                       NonIDQual = c('', 'IsNatMarket', 'IsEuroMarket', 'IsRWMarket', ''),
+#'                       IDDD = c(rep('', 4), 'NewOrders'),
+#'                       NumIdEst = c(rep('', 4), '.'),
+#'                       IsNatMarket = c(rep('', 4), '0'),
+#'                       IsEuroMarket = c(rep('', 4), '0'),
+#'                       IsRWMarket = c(rep('', 4), '1'),
+#'                       Unit1 = c('numidest', rep('', 3), 'cp09'))),
+#'  Aggregates = new(Class = 'VNCdt', 
+#'                   .Data = data.table(
+#'                      IDQual = c('Province', 'NACE', 'IsNatMarket', ''),
+#'                      NonIDQual = rep('', 4),
+#'                      IDDD = c('', '', '', 'TotalTurnover'),
+#'                      Province = c('', '', '', '.'),
+#'                      NACE = c('', '', '', '.'),
+#'                      IsNatMarket = c('', '', '', '1'),
+#'                      Unit1 = c('provincia', 'actividad', '', 'cn01'))))
+#' Example <- new(Class = 'VarNameCorresp', .Data = VarList)
 #' getIDDD(Example)
 #' 
+#' @import data.table
+#' 
 #' @export
-setGeneric("getIDDD", function(object){standardGeneric("getIDDD")})
+setGeneric("getIDDD", function(object, Namesdt){standardGeneric("getIDDD")})
+
 #' @rdname getIDDD
 #' 
-#' @include VarNameCorresp-class.R
+#' @include VNCdt-class.R
+#' 
+#' @import data.table
+#' 
+#' @export
+setMethod(
+    f = "getIDDD",
+    signature = c("VNCdt"),
+    function(object){
+        
+        output <- unique(object[['IDDD']])
+        output <- output[output != '']
+        return(output)
+        
+    }
+)
+#' @rdname getIDDD
+#' 
+#' @include VarNameCorresp-class.R 
+#' 
+#' @import data.table
 #' 
 #' @export
 setMethod(
     f = "getIDDD",
     signature = c("VarNameCorresp"),
+    function(object, Namesdt){
+        
+        if (missing(Namesdt)) Namesdt <- names(object)
+        
+        aux <- object[Namesdt]
+        
+        IDDD.list <- lapply(aux, function(x) { 
+            IDDD <- getIDDD(x)
+            return(IDDD)
+        }
+        )
+        
+        output <- unique(Reduce(c, IDDD.list, init = IDDD.list[[1]]))
+        return(output)
+        
+    }
+)
+
+#' @rdname getIDDD
+#' 
+#' @include DDdt-class.R
+#' 
+#' @import data.table
+#' 
+#' @export
+setMethod(
+    f = "getIDDD",
+    signature = c("DDdt"),
     function(object){
         
-        IDDD.list <- lapply(object, function(DT){
-            
-            out <- DT[['IDDD']]
-            out <- out[out != '']
-            return(out)
-        })
-        output <- unique(Reduce(c, IDDD.list, init = IDDD.list[[1]]))
+        output <- unique(object[Sort == 'IDDD', Variable])
+        output <- output[output != '']
+        
         return(output)
     }
 )
+
 #' @rdname getIDDD
 #' 
 #' @include DD-class.R
@@ -53,14 +120,15 @@ setMethod(
 setMethod(
     f = "getIDDD",
     signature = c("DD"),
-    function(object){
+    function(object, Namesdt){
         
-        DTNames <- setdiff(slotNames(object), 'VarNameCorresp')
+        if (missing(Namesdt)) Namesdt <- slotNames(object)
+        
+        #Namesdt <- setdiff(Namesdt, 'VarNameCorresp')
         output <- c()
-        for (sl in DTNames) {
+        for (slotDD in Namesdt) {
             
-            DT <- slot(object, sl)
-            IDDD <- DT[Sort == 'IDDD', Variable]
+            IDDD <- getIDDD(slot(object,slotDD))
             output <- c(output, IDDD)
         }
         
@@ -68,9 +136,27 @@ setMethod(
         return(output)
     }
 )
+
 #' @rdname getIDDD
 #' 
-#' @include StQ-class.R getData.R
+#' @include Datadt-class.R
+#' 
+#' @import data.table
+#' 
+#' @export
+setMethod(
+    f = "getIDDD",
+    signature = c("Datadt"),
+    function(object){
+        
+        output <- unique(object[['IDDD']])
+        return(output)
+    }
+)
+
+#' @rdname getIDDD
+#' 
+#' @include StQ-class.R
 #' 
 #' @import data.table
 #' 
@@ -80,7 +166,8 @@ setMethod(
     signature = c("StQ"),
     function(object){
         
-        output <- unique(getData(object)[['IDDD']])
+        output <- getIDDD(object@Data)
         return(output)
     }
 )
+
