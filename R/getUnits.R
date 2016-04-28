@@ -43,6 +43,7 @@ setMethod(
     }
       
     DDData <- slot(getDD(object), DDslot)
+    DDData <- slot(getDD(object), DDslot)
     IDQual <- DDData[Sort == 'IDQual', Variable]
     output <- getData(object)[, IDQual, with = FALSE]
     setkeyv(output, IDQual)
