@@ -56,7 +56,7 @@
 #'                                         ValueRegExp = '')))
 #' NewQ <- setVar(object = Q,
 #'                newDD = newDD, 
-#'                Value = expression(log(1 + Turnover)))
+#'                Value = expression(log(1 + as.numeric(Turnover))))
 #' getVar(NewQ, 'lTurnover')
 #'
 #' @export
@@ -168,19 +168,17 @@ setMethod(
             setcolorder(NewData,
                         c(setdiff(names(NewData), c('Value', 'IDDD')),
                           'IDDD', 'Value'))
-            newObject <- new(Class = 'StQ', Data = NewData, DD = newDD)
-            output <- object + newObject
-
         } else {
 
             NewData[, IDDD := NewVarName]
             NewData[, Value := Value]
             setkeyv(NewData, setdiff(names(NewData), 'Value'))
-            NewObject <- new(Class = 'StQ', Data = NewData, DD = newDD)
-            output <- object + NewObject
-
         }
 
+        NewData <- new(Class = 'Datadt', NewData)
+        NewObject <- new(Class = 'StQ', Data = NewData, DD = newDD)
+        output <- object + NewObject
+        
         return(output)
     }
 )
