@@ -35,7 +35,7 @@
 #'
 #' @import data.table
 #'
-#' @importFrom RepoTime newRepoTime
+#' @import RepoTime
 #'
 #' @export
 setMethod(

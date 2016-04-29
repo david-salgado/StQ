@@ -1,26 +1,27 @@
-#' @title Object of class \linkS4class{StQ}
+#' @title Object of class \linkS4class{VarNameCorresp}
 #'
-#' @description \code{ExampleQ} is an object of class \linkS4class{StQ} whose
-#' slot \code{Data} is a \link{data.table} with key-value pair structure with
-#' anonymised data of an undisclosed time period.
+#' @description \code{ExampleVNC} is an object of class 
+#' \linkS4class{VarNameCorresp} with only one slot \code{MicroData}.
 #'
-#' The columns of slot \code{Data} of this object is:
+#' The columns of slot \code{MicroData} of this object are:
 #' \itemize{
-#'   \item NOrden: First qualifier (statistical unit qualifier).
-#'   \item CCAA: Second qualifier (variable name qualifier).
-#'   \item EsRemuner: Third qualifier (variable name qualifier).
-#'   \item TipoRem: Fourth qualifier (variable name qualifier).
-#'   \item IDDD: Variable names.
-#'   \item Value: Variable values (default class: \code{character}).
+#'   \item \code{IDQual}: statistical unit qualifiers.
+#'   \item \code{NonIDQual}: variable name qualifiers.
+#'   \item \code{IDDD}: variable names.
+#'   \item \code{ID}: first qualifier values.
+#'   \item \code{IsRemun}: second qualifier values.
+#'   \item \code{IsPartTime}: third qualifier values.
+#'   \item \code{Unit}\emph{1}-\emph{3}: variable names for production units 1, 
+#'   2 and 3.
 #' }
 #'
 #'
 #' @docType data
 #'
-#' @name ExampleQ
+#' @name ExampleVNC
 #'
-#' @usage data(ExampleQ)
+#' @usage data(ExampleVNC)
 #'
-#' @format Object of class \code{StQ}. Its slot \code{Data} has 1710942 rows and
-#'  6 columns.
+#' @format Object of class \code{VarNameCorresp}. Its slot \code{MicroData} has 
+#' 16 rows and 9 columns.
 NULL

@@ -34,7 +34,9 @@
 #' str(QList)
 #'
 #' @include StQ-class.R
-#'
+#' 
+#' @import RepoTime
+#' 
 #' @export
 setClass(Class = "StQList",
          slots = c(Data = 'list',
