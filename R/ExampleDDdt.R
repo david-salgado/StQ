@@ -1,28 +1,25 @@
-#' @title Object of class \linkS4class{DD}
+#' @title Object of class \linkS4class{DDdt}
 #'
-#' @description \code{ExampleDD} is an object of class \linkS4class{DD}.
+#' @description \code{ExampleDDdt} is an object of class \linkS4class{DDdt}.
 #'
-#' The slot \code{VarNameCorresp} is a list with one component (name 
-#' \code{Microdata}) with 9 columns and 65 rows. It belongs to a real 
-#' statistical operation at Statistics Spain (thus the Spanish names).
+#' This class is a subclass of \linkS4class{data.table} with columns 
+#' \code{Variable}, \code{Sort}, \code{Class}, \code{Qual}\emph{1}-\emph{j}, and
+#' \code{ValueRegExp}.
 #'
-#' The columns of the slot \code{MicroData} are:
+#' The meaning of these columns are:
 #' \itemize{
-#'   \item Variable: statistical variable name.
-#'   \item Sort: semantic sort of the variable (IDQual, NonIDQual, IDDD).
-#'   \item Class: class of the variable (\code{numeric}, \code{character},...).
-#'   \item Qual1 to Qual8: 1st to 8th variable qualifier.
+#'   \item \code{Variable}: statistical variable name.
+#'   \item \code{Sort}: semantic sort of the variable (IDQual, NonIDQual, IDDD).
+#'   \item \code{Class}: class of the variable (\code{numeric}, \code{character},...).
+#'   \item \code{Qual1} to \code{Qual3}: 1st to 3rd variable qualifier.
+#'   \item \code{ValueRegExp}: regexp for the variable values.
 #' }
-#' 
-#' The slots \code{Aggregates}, \code{AggWeights}, and \code{Other} are empty.
 #' 
 #' @docType data
 #'
-#' @name ExampleDD
+#' @name ExampleDDdt
 #'
-#' @usage data(ExampleDD)
+#' @usage data(ExampleDDdt)
 #'
-#' @format Object of class \linkS4class{DD}. Its slot \code{VarNameCorresp} is 
-#' a list of one component with a \linkS4class{data.table} with 65 rows and 
-#' 9 columns. Its slot \code{MicroData} has 52 rows and 11 columns.
+#' @format Object of class \linkS4class{DDdt} with 14 rows and 7 columns.
 NULL

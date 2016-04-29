@@ -63,7 +63,6 @@ Collate:
     'setVar.R'
     'Substitute.R'
     'UnitToIDDDNames.R'
-    'XLS.R'
     'getPeriods.StQList.R'
     'extract.StQList.R'
     'getAggWeights.R'
