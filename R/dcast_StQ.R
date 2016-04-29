@@ -51,7 +51,7 @@ setGeneric("dcast_StQ",
 #'
 #' @import data.table
 #'
-#' @include StQ-class.R getDD.R getData.R getUnits.R plus.DD.R VarNamesToFormula.R
+#' @include StQ-class.R getSlotDD.R getDD.R getData.R getDD.R VarNamesToFormula.R
 #'
 #' @export
 setMethod(
@@ -59,15 +59,45 @@ setMethod(
     signature = c("StQ"),
     function(object, VarNames = NULL, DDslot = 'MicroData'){
 
-        if (length(DDslot) > 1) stop('[StQ::dcast_StQ] DDslot must be a character vector of length 1.')
-        if (!DDslot %in% slotNames(getDD(object))) stop('[StQ::dcast_StQ] DDslot is not a component of the slot DD of the input object.')
+        if (length(DDslot) > 1){
+            
+            stop('[StQ::dcast_StQ] DDslot must be a character vector of length 1.')
+        }
         
-        nQual <- length(setdiff(names(slot(getDD(object), DDslot)),
-                                c('Variable', 'Sort', 'Class', 'ValueRegExp')))
-
-        if (nQual == 0) stop('[StQ::dcast_StQ] The slot DD has no qualifiers.')
-
         DD <- getDD(object)
+        
+        if (!DDslot %in% slotNames(DD)){
+            
+            stop('[StQ::dcast_StQ] DDslot is not a component of the slot DD of the input object.')
+        }
+        
+        for (VarName in VarNames){
+            
+            Varslot <- getSlotDD(DD, VarName, DDslot)
+        }
+
+        
+        Quals <- setdiff(names(Varslot),
+                         c('Variable', 'Sort', 'Class', 'ValueRegExp'))
+        for (VarName in VarNames){
+            
+            NameQuals <- c()
+            for (Qual in Quals){
+                
+                NameQuals <- c(NameQuals,Varslot[Variable == ExtractNames(VarName)][[Qual]])
+            }
+            
+            nonIDQuals <- getNonIDQual(Varslot)
+            
+            
+            if (!all(NameQuals %in% nonIDQuals) & VarName != ExtractNames(VarName)){
+                
+                stop('[StQ::getVar] Variable ', ExtractNames(VarName), ' has not any non-identity qualifiers, so VarName cannot be ', VarName, '.')
+            }
+            
+        }
+
+
         IDQual <- (slot(DD, DDslot))[Sort == 'IDQual', Variable]
         NonIDQual <- (slot(DD, DDslot))[Sort == 'NonIDQual', Variable]
 
@@ -156,17 +186,6 @@ setMethod(
             function(x, y){ merge(x, y, by = intersect(names(x), names(y)))}, 
             dcastData)
         
-        
-        # Asignamos los tipos a cada variable
-
-        DD <- slot(getDD(object), DDslot)
-        outCols <- names(output)
-        for (col in outCols){
-
-            colClass <- copy(DD)[Variable == ExtractNames(col)][['Class']]
-            output[, col := as(get(col), colClass), with = F]
-
-        }
         return(output)
     }
 )
