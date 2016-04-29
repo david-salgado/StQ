@@ -51,7 +51,7 @@ setGeneric("dcast_StQ",
 #'
 #' @import data.table
 #'
-#' @include StQ-class.R getSlotDD.R getDD.R getData.R getDD.R VarNamesToFormula.R
+#' @include StQ-class.R getSlotDD.R getNonIDQual.R getDD.R getData.R getDD.R VarNamesToFormula.R
 #'
 #' @export
 setMethod(
