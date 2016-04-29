@@ -96,12 +96,12 @@ setClass(Class = "DD",
                    AggWeights = 'DDdt',
                    Other = 'DDdt'),
          prototype = list(VarNameCorresp = new(Class = 'VarNameCorresp'),
-                          ID = new(Class = 'DDdt'),
-                          MicroData = new(Class = 'DDdt'),
-                          ParaData = new(Class = 'DDdt'),
-                          Aggregates = new(Class = 'DDdt'),
-                          AggWeights = new(Class = 'DDdt'),
-                          Other = new(Class = 'DDdt')
+                          ID = new(Class='DDdt'),
+                          MicroData = new(Class='DDdt'),
+                          ParaData = new(Class='DDdt'),
+                          Aggregates = new(Class='DDdt'),
+                          AggWeights = new(Class='DDdt'),
+                          Other = new(Class='DDdt')
                           ),
          validity = function(object){
              
