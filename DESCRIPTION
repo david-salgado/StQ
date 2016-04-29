@@ -19,6 +19,7 @@ LazyData: true
 Encoding: UTF-8
 Collate:
     'Datadt-class.R'
+    'DDdt-class.R'
     'VNCdt-class.R'
     'VarNameCorresp-class.R'
     'ExtractNames.R'
@@ -26,8 +27,7 @@ Collate:
     'StQ-class.R'
     'StQList-class.R'
     'BuildStQList.R'
-    'BuildVCN.R'
-    'DDdt-class.R'
+    'BuildVNC.R'
     'rawKey-class.R'
     'DTToKey.R'
     'ExampleDD.R'
