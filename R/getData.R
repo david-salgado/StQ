@@ -73,7 +73,7 @@ setMethod(
 )
 #' @rdname getData
 #' 
-#' @include StQ-class.R getData.R ExtractNames.R VarNamesToDT.R getDD.R
+#' @include Datadt-class.R StQ-class.R getData.R ExtractNames.R VarNamesToDT.R getDD.R
 #' 
 #' @import data.table
 #' 
@@ -116,6 +116,7 @@ setMethod(
       
     }
     
+    output <- new(Class = 'Datadt', output)
     return(output)
   }
 )

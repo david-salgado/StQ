@@ -28,7 +28,7 @@ setGeneric("getVar", function(object, VarName, DDslot = 'MicroData', Units = get
 
 #' @rdname getVar
 #'
-#' @include StQ-class.R getData.R getDD.R VarNamesToDT.R
+#' @include StQ-class.R getData.R getDD.R VarNamesToDD.R VarNamesToDT.R ExtractNames.R
 #'
 #' @import data.table RepoTime
 #' 
@@ -38,10 +38,44 @@ setMethod(
     signature = c("StQ", "character"),
     function(object, VarName, DDslot = 'MicroData', Units = getUnits(object, 'MicroData')){
 
+        DD <- getDD(object)
+        
         if (length(VarName) != 1) {
 
             stop('[StQ::getVar] Only one variable can be specifed as input.')
 
+        }
+        if (length(DDslot) > 1){
+            
+            stop('[StQ::getVar] DDslot must be a character vector of length 1.')
+        }
+        
+        if (!DDslot %in% slotNames(DD)){
+            
+            stop('[StQ:getVar] DDslot is not a component of the slot DD of the input object.')
+        }
+        
+        DDVar <- VarNamesToDD(VarName, DD)
+        Varslot <- DDslot
+        for (DDvarslot in setdiff(slotNames(DDVar), 'VarNameCorresp')){
+            
+            DDlocal <- slot(DDVar, DDvarslot)
+            if(dim(DDlocal)[1] != 0){
+                
+                Varslot <- DDvarslot
+            }
+        }
+        
+        if (Varslot != DDslot){
+            
+            stop('[StQ::getVar] The variable ', ExtractNames(VarName), ' is not defined in the slot ', DDslot, ' of the slot DD of the input object.')
+        }
+    
+        Varslot <- slot(DD, DDslot)
+        Quals <- Varslot[Sort == 'NonIDQual', Variable]
+        if (length(Quals) == 0 & VarName != ExtractNames(VarName)){
+            
+            stop('[StQ::getVar] The variable ', ExtractNames(VarName), ' has not any non-identity qualifiers, so VarName cannot be ', VarName, '.')
         }
         
         if (DDslot != 'MicroData'){
@@ -51,7 +85,6 @@ setMethod(
         
         Data <- getData(object)
         Data <- merge(Data, Units, by = names(Units), all.y = TRUE)
-        DD <- getDD(object)
         
         Var <- VarNamesToDT(VarName, DD)
         for (col in names(Var)){
@@ -59,7 +92,10 @@ setMethod(
             Data[, col := ifelse(is.na(get(col)), Var[[col]], get(col)), with = FALSE]
         }
 
-        Data <- merge(Data, Var, by = names(Var))
+        if (VarName != ExtractNames(VarName)){
+            
+            Data <- merge(Data, Var, by = names(Var))
+        }
         Data <- Data[, c(names(Units), 'Value'), with = F]
 
         if (dim(Data)[1] == 0) {

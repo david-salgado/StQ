@@ -7,18 +7,15 @@
 \alias{getUnits,data.table-method}
 \title{Extract statistical units from an object}
 \usage{
-getUnits(object, DDslot = "MicroData")
+getUnits(object)
 
-\S4method{getUnits}{StQ}(object, DDslot = "MicroData")
+\S4method{getUnits}{StQ}(object)
 
 \S4method{getUnits}{data.table}(object)
 }
 \arguments{
 \item{object}{Object of class \linkS4class{StQ} or class 
 \linkS4class{data.table}.}
-
-\item{DDslot}{Character vector of length 1 with the name of DD slot in which
-qualifiers will be looked for. Its default value is \code{MicroData}.}
 }
 \value{
 It returns a \code{data.table} with the statistical units in the
@@ -30,8 +27,17 @@ and returns a \linkS4class{data.table} with the values of these qualifiers
 for each statistical unit.
 }
 \examples{
+<<<<<<< HEAD
+data(Q)
+getUnits(Q)
+
+||||||| merged common ancestors
+data(ExampleQ)
+getUnits(ExampleQ)
+=======
 data(ExampleQ)
 getUnits(ExampleQ)
 
+>>>>>>> e3ac9308c1978eb314de9c1fda9971de40a9bce7
 }
 

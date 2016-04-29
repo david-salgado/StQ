@@ -1,21 +1,17 @@
-#' @title Show an object of class \linkS4class{VarNameCorresp}
+#' @title Constructor of objects of class \linkS4class{VarNameCorresp}
 #'
-#' @description The method \code{show} shows the slots of an object
-#' \linkS4class{VarNameCorresp} limiting the number of columns on screen up to 
-#' 10.
+#' @description This constructor returns objects of class \linkS4class{VarNameCorresp}.
+#' THe input parameter is a \code{list} of objects of class \linkS4class{VNCdt}.
 #'
-#' It is indeed the method \link[methods]{show} adapted to the class
-#' \linkS4class{VarNameCorresp}.
+#' @param Data \code{List} of named objects of class \linkS4class{VNCdt}.
 #'
-#' @param Object of class \linkS4class{VarNameCorresp}.
-#'
-#' @return Invisible object of class \code{\link{NULL}}.
+#' @return An object of class \linkS4class{VarNameCorresp} with components 
+#' specified in the input Data. Components 'ID', 'MicroData' and/or 'ParaData' 
+#' no specified are set as an empty \linkS4class{VNCdt} object.
+#' 
 #'
 #' @examples
-#' # A trivial example
-#' show(new(Class = 'VarNameCorresp'))
-#'
-#' # A more elaborate example
+#' library(data.table)
 #' VarList <- list(
 #'   ID = new(Class = 'VNCdt', 
 #'            .Data = data.table(
@@ -34,7 +30,6 @@
 #'                       IsEuroMarket = c(rep('', 4), '0'),
 #'                       IsRWMarket = c(rep('', 4), '1'),
 #'                       Unit1 = c('numidest', rep('', 3), 'cp09'))),
-#'  ParaData = new(Class = 'VNCdt'),
 #'  Aggregates = new(Class = 'VNCdt', 
 #'                   .Data = data.table(
 #'                      IDQual = c('Province', 'NACE', 'IsNatMarket', ''),
@@ -44,28 +39,31 @@
 #'                      NACE = c('', '', '', '.'),
 #'                      IsNatMarket = c('', '', '', '1'),
 #'                      Unit1 = c('provincia', 'actividad', '', 'cn01'))))
-#' VNC2 <- new(Class = 'VarNameCorresp', .Data= VarList)
-#' show(VNC2)
+#'                      
+#' VNC <- BuildVNC(VarList)
+#' VNC
+#' 
+#' #Notice that it is indeed an object with complex structure:
+#' str(VNC)
 #'
 #' @include VarNameCorresp-class.R
 #'
 #' @import data.table
-#' 
+#'
 #' @export
-setMethod(
-    f = "show",
-    signature = c("VarNameCorresp"),
-    function(object){
-        
-        lapply(names(object), function(Name){
-            
-            NamesCol <- names(Name)
-            cat(paste('\n', Name, '\n\n'))    
-            show(object[[Name]])    
-        }
-        )
-        
-        invisible(NULL)            
-    }
+BuildVNC <- function(Data){
     
-)
+    if (is.null(names(Data))) stop('[StQ::BuildVNC] Data must be a named list of VNCdt objects.')
+    
+    if (is.null(Data$ID)) Data$ID <- new(Class = 'VNCdt')
+    
+    if (is.null(Data$MicroData)) Data$MicroData <- new(Class = 'VNCdt')
+    
+    if (is.null(Data$ParaData)) Data$ParaData <- new(Class = 'VNCdt')
+    
+    Data <- Data[c('ID', 'MicroData', 'ParaData', setdiff(names(Data), c('ID', 'MicroData', 'ParaData' )))]
+    out <- new(Class = 'VarNameCorresp', .Data = Data)
+    validObject(out)
+    
+    return(out)
+}

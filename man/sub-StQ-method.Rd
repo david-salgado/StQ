@@ -30,8 +30,7 @@ returns subsets of the slot \code{Data} from an object of class
 }
 \examples{
 data(ExampleQ)
-ExampleQ[IDDD == 'Turnover']
-ExampleQ[3:4]
+ExampleQ[IDDD == 'IASSCifraNeg']
 
 }
 

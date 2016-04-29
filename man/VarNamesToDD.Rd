@@ -14,12 +14,14 @@ VarNamesToDD(VarNames, DD)
 of the variables.}
 }
 \value{
-\linkS4class{DD} identifying those qualifiers corresponding to the 
-values appearing in the compound variable names specified in the input 
-parameter \code{VarNames}.
+\linkS4class{data.table} with as many rows as the length of
+\code{VarNames}, with the column \code{IDDD} containing the root name and
+one more column for each suffix in the compound input name under the
+corresponding qualifier name. The resulting \linkS4class{data.table} contains
+the values of each qualifier for each input variable name.
 }
 \description{
-\code{VarNamesToDD} returns a \linkS4class{DD}
+\code{VarNamesToDD} returns a \linkS4class{data.table}
 identifying those qualifiers corresponding to the values appearing in the
 compound variable names specified in the input parameter \code{VarNames}.
 
@@ -35,82 +37,9 @@ construction of editing strategies, but it can also be of utility in some
 scripts.
 }
 \examples{
-# An example:
-library(data.table)
-### We build the VNC object
-VarList <- list(ID = new(Class = 'VNCdt',data.table(IDQual = c('NumIdEst', rep('', 4)),
-                                                    NonIDQual = c('','','','',''),
-                                                    IDDD = c('', 'Name', 'Surname', 'PostalAddr',
-                                                             'PhoneNo'),
-                                                    NumIdEst = c('', rep('.', 4)),
-                                                    Unit1 = c('numidest', 'nombre', 'apellidos', 
-                                                              'direccion', 'telefono')     
-)),
-MicroData =new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 4)),
-                                           NonIDQual = c('', 'IsNatMarket', 
-                                                         'IsEuroMarket', 
-                                                         'IsRWMarket',
-                                                         ''),
-                                           IDDD = c(rep('', 4), 'NewOrders'),
-                                           NumIdEst = c(rep('', 4), '.'),
-                                           IsNatMarket = c(rep('', 4), '0'),
-                                           IsEuroMarket = c(rep('', 4), '0'),
-                                           IsRWMarket = c(rep('', 4), '1'),
-                                           Unit1 = c('numidest', rep('', 3), 'cp09'))),
-ParaData = new(Class = 'VNCdt',data.table(IDQual = c('NumIdEst', rep('', 2)),
-                                          NonIDQual = c('', 'Action', ''),
-                                          IDDD = c(rep('', 2), 'Date'),
-                                          NumIdEst = c(rep('', 2), '.'),
-                                          Action = c(rep('', 2), 'Imputation'),
-                                          Unit1 = c('numidest', '', 'FechaImput'))))
+# We load RepoReadWrite to obtain the included example DD object
+data(ExampleDD)
+VarNamesToDD(c('IASSEmpleo_1_1', 'IASSEmpleo_0', 'IASSEmpleo_1_2'), ExampleDD)
 
-VNC <- new(Class = 'VarNameCorresp', VarList)
-
-### We build the specification data.tables
-IDdt <- new( Class='DDdt',data.table(
-    Variable = c('NOrden','NumIdEst', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
-    Sort = c('IDQual','IDQual', rep('IDDD', 4)),
-    Class = rep('character', 6),
-    Qual1 = c('EsRemuner','', rep('NumIdEst', 4)),
-    Qual2 = c('Turnover','', rep('', 4)),
-    ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}')
-))
-Microdt <- new( Class='DDdt',data.table(
-    Variable = c('NumIdEst', 'IsNatMarket', 'IsEuroMarket', 
-                 'IsRWMarket', 'NewOrders'),
-    Sort = c('IDQual', rep('NonIDQual', 3), 'IDDD'),
-    Class = c(rep('character', 4), 'numeric'),
-    Qual1 = c(rep('', 4), 'NumIdEst'),
-    ValueRegExp = c('[0-9]{9}PP', rep('(0|1| )', 3), '([0-9]{1, 10}| )')
-))
-Paradt <-new( Class='DDdt', data.table(
-    Variable = c('NumIdEst', 'Action', 'Date'),
-    Sort = c('IDQual', 'NonIDQual', 'IDDD'),
-    Class = rep('character', 3),
-    Qual1 = c(rep('', 2), 'NumIdEst'),
-    Qual2 = c(rep('', 2), 'Action'),
-    ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')
-))
-Aggdt <- new( Class='DDdt',data.table(
-    Variable = c('Province', 'NACE09', 'Turnover'),
-    Sort = c(rep('IDQual', 2), 'IDDD'),
-    Class = c(rep('character', 2), 'numeric'),
-    Qual1 = c(rep('', 2), 'Province'),
-    Qual2 = c(rep('', 2), 'NACE09'),
-    ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])', '([0-9]{1, 15}| )')
-))
-
-DD <- new(Class = 'DD', 
-          VarNameCorresp = VNC, 
-          ID = IDdt, 
-          MicroData = Microdt, 
-          ParaData = Paradt,
-          Aggregates = Aggdt)
-          
- 
-VarNames1 = c('NOrden_Turnover') 
-VarNames2 = c('NOrden', 'NOrden_Turnover','Name','NOrden_EsRemuner')
-VarNamesToDD(VarNames1, DD)        
-VarNamesToDD(VarNames2, DD)                     
 }
 

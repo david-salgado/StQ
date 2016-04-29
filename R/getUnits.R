@@ -32,6 +32,17 @@ setMethod(
   signature = c("StQ"),
   function(object, DDslot = 'MicroData'){
 
+    if (length(DDslot) > 1){
+      
+        stop('[StQ::getUnits] DDslot must be a character vector of length 1.')
+    }
+  
+    if (!DDslot %in% slotNames(DD)){
+      
+        stop('[StQ:getUnits] DDslot is not a component of the slot DD of the input object.')
+    }
+      
+    DDData <- slot(getDD(object), DDslot)
     DDData <- slot(getDD(object), DDslot)
     IDQual <- DDData[Sort == 'IDQual', Variable]
     output <- getData(object)[, IDQual, with = FALSE]
