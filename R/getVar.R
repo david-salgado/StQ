@@ -30,7 +30,7 @@ setGeneric("getVar", function(object, VarName, DDslot = 'MicroData', Units = get
 #'
 #' @include StQ-class.R getData.R getDD.R getSlotDD.R getNonIDQual.R VarNamesToDD.R VarNamesToDT.R ExtractNames.R
 #'
-#' @import data.table
+#' @import data.table RepoTime
 #' 
 #' @export
 setMethod(
@@ -55,22 +55,27 @@ setMethod(
             stop('[StQ:getVar] DDslot is not a component of the slot DD of the input object.')
         }
         
-        Varslot <- getSlotDD(DD, VarName, DDslot)
-        
-        Quals <- setdiff(names(Varslot),
-                         c('Variable', 'Sort', 'Class', 'ValueRegExp'))
-        NameQuals <- c()
-        for (Qual in Quals){
+        DDVar <- VarNamesToDD(VarName, DD)
+        Varslot <- DDslot
+        for (DDvarslot in setdiff(slotNames(DDVar), 'VarNameCorresp')){
             
-            NameQuals <- c(NameQuals,Varslot[Variable == ExtractNames(VarName)][[Qual]])
+            DDlocal <- slot(DDVar, DDvarslot)
+            if(dim(DDlocal)[1] != 0){
+                
+                Varslot <- DDvarslot
+            }
         }
         
-        nonIDQuals <- getNonIDQual(Varslot)
-        
-        
-        if (!all(NameQuals %in% nonIDQuals) & VarName != ExtractNames(VarName)){
+        if (Varslot != DDslot){
             
-            stop('[StQ::getVar] Variable ', ExtractNames(VarName), ' has not any non-identity qualifiers, so VarName cannot be ', VarName, '.')
+            stop('[StQ::getVar] The variable ', ExtractNames(VarName), ' is not defined in the slot ', DDslot, ' of the slot DD of the input object.')
+        }
+    
+        Varslot <- slot(DD, DDslot)
+        Quals <- Varslot[Sort == 'NonIDQual', Variable]
+        if (length(Quals) == 0 & VarName != ExtractNames(VarName)){
+            
+            stop('[StQ::getVar] The variable ', ExtractNames(VarName), ' has not any non-identity qualifiers, so VarName cannot be ', VarName, '.')
         }
         
         if (DDslot != 'MicroData'){

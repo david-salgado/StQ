@@ -28,8 +28,8 @@ library(data.table)
 Data <- new(Class = 'Datadt', data.table(IDDD = character(0), Value = numeric(0)))
 
 # We assign this data.table to the slot Data of object NewExampleQ:
-data(Q)
-NewExampleQ <- Q
+data(ExampleQ)
+NewExampleQ <- ExampleQ
 setData(NewExampleQ) <- Data
 NewExampleQ
 

@@ -25,6 +25,10 @@
 #'                         'Turnover', 'Turnover', 'Province', 'NACE09'),
 #'                Value = c('625000', '23154', '04', '0512',
 #'                          '25345', '1224', '01', '0601')))
+#' 
+#' # A more realistic example:
+#' ExampleDatadt                         
+#'                          
 #' @import data.table
 #'
 #' @export

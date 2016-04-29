@@ -56,7 +56,7 @@
 #'                                         ValueRegExp = '')))
 #' NewQ <- setVar(object = Q,
 #'                newDD = newDD, 
-#'                Value = expression(log(1 + as.numeric(Turnover))))
+#'                Value = expression(log(1 + Turnover)))
 #' getVar(NewQ, 'lTurnover')
 #'
 #' @export
@@ -101,16 +101,7 @@ setMethod(
             stop('[StQ::setVar] Value must be an atomic vector or of class expression.')
         }
 
-        for (DDslot in setdiff(slotNames(newDD), 'VarNameCorresp')){
-            
-            DDlocal <- slot(newDD, DDslot)
-            if (dim(DDlocal)[1] > 0){
-                
-                DDnewslot <- DDslot
-            }
-        }
-        
-        NewData <- getUnits(object, DDnewslot)
+        NewData <- getUnits(object)
         
         pasteNA <- function(x, y){
             out <- ifelse(is.na(y) | y == '', paste0(x, ''), paste(x, y, sep ="_"))
@@ -142,7 +133,7 @@ setMethod(
         if (class(Value) == 'expression'){
 
             ExprVariables <- c(all.vars(Value), by)
-            ExprVariables <- unlist(lapply(ExprVariables[[1]], function(x){
+            ExprVariables <- unlist(lapply(ExprVariables, function(x){
                                         ifelse(ExtractNames(x) %in% unique(Data[['IDDD']]), x, '')
                                     }))
             ExprVariables <- ExprVariables[ExprVariables != '']
@@ -168,17 +159,19 @@ setMethod(
             setcolorder(NewData,
                         c(setdiff(names(NewData), c('Value', 'IDDD')),
                           'IDDD', 'Value'))
+            newObject <- new(Class = 'StQ', Data = NewData, DD = newDD)
+            output <- object + newObject
+
         } else {
 
             NewData[, IDDD := NewVarName]
             NewData[, Value := Value]
             setkeyv(NewData, setdiff(names(NewData), 'Value'))
+            NewObject <- new(Class = 'StQ', Data = NewData, DD = newDD)
+            output <- object + NewObject
+
         }
 
-        NewData <- new(Class = 'Datadt', NewData)
-        NewObject <- new(Class = 'StQ', Data = NewData, DD = newDD)
-        output <- object + NewObject
-        
         return(output)
     }
 )
