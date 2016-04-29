@@ -3,9 +3,12 @@
 #' @description This constructor returns objects of class \linkS4class{VarNameCorresp}.
 #' THe input parameter is a \code{list} of objects of class \linkS4class{VNCdt}.
 #'
-#' @param Data \code{List} of objects of class \linkS4class{VNCdt}.
+#' @param Data \code{List} of named objects of class \linkS4class{VNCdt}.
 #'
-#' @return An object of class \linkS4class{VarNameCorresp}.
+#' @return An object of class \linkS4class{VarNameCorresp} with components 
+#' specified in the input Data. Components 'ID', 'MicroData' and/or 'ParaData' 
+#' no specified are set as an empty \linkS4class{VNCdt} object.
+#' 
 #'
 #' @examples
 #' library(data.table)
@@ -36,10 +39,10 @@
 #'                      NACE = c('', '', '', '.'),
 #'                      IsNatMarket = c('', '', '', '1'),
 #'                      Unit1 = c('provincia', 'actividad', '', 'cn01'))))
-#' new(Class = 'VarNameCorresp', .Data = VarList)
-#'
+#'                      
 #' VNC <- BuildVNC(VarList)
 #' VNC
+#' 
 #' #Notice that it is indeed an object with complex structure:
 #' str(VNC)
 #'
@@ -50,9 +53,7 @@
 #' @export
 BuildVNC <- function(Data){
     
-    if (is.null(names(Data))) stop('[StQ::BuildVNC] Data must be a named list of VNcdt objects.')
-    
-    VNC <- new(Class = 'VarNameCorresp')
+    if (is.null(names(Data))) stop('[StQ::BuildVNC] Data must be a named list of VNCdt objects.')
     
     if (is.null(Data$ID)) Data$ID <- new(Class = 'VNCdt')
     
@@ -60,7 +61,7 @@ BuildVNC <- function(Data){
     
     if (is.null(Data$ParaData)) Data$ParaData <- new(Class = 'VNCdt')
     
-    
+    Data <- Data[c('ID', 'MicroData', 'ParaData', setdiff(names(Data), c('ID', 'MicroData', 'ParaData' )))]
     out <- new(Class = 'VarNameCorresp', .Data = Data)
     validObject(out)
     
