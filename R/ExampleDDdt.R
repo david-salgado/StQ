@@ -2,8 +2,7 @@
 #'
 #' @description \code{ExampleDD} is an object of class \linkS4class{DD}.
 #'
-#' The slot \code{VarNameCorresp} is of class \linkS4class{VarNameCorresp}. The
-#' first (name 
+#' The slot \code{VarNameCorresp} is a list with one component (name 
 #' \code{Microdata}) with 9 columns and 65 rows. It belongs to a real 
 #' statistical operation at Statistics Spain (thus the Spanish names).
 #'
