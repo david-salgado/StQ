@@ -181,7 +181,7 @@ setMethod(
 )
 #' @rdname getData
 #' 
-#' @include rawStQ-class.R ExtractNames.R VarNamesToDD.R getDD.R
+#' @include rawStQ-class.R rawDatadt-class.R getDD.R getSlotDD.R getNonIDQual.R ExtractNames.R 
 #' 
 #' @import data.table
 #' 
@@ -194,6 +194,32 @@ setMethod(
         
         if (missing(VarNames)) return(copy(object@Data))
         
+        DD <- getDD(object)
+        
+        for (VarName in VarNames){
+            
+            Varslot <- getSlotDD(DD, VarName, DDslot)
+        }
+        
+        Quals <- setdiff(names(Varslot),
+                         c('Variable', 'Sort', 'Class', 'ValueRegExp'))
+        for (VarName in VarNames){
+            
+            NameQuals <- c()
+            for (Qual in Quals){
+                
+                NameQuals <- c(NameQuals,Varslot[Variable == ExtractNames(VarName)][[Qual]])
+            }
+            
+            nonIDQuals <- getNonIDQual(Varslot)
+            
+            
+            if (!all(NameQuals %in% nonIDQuals) & VarName != ExtractNames(VarName)){
+                
+                stop('[rawStQ::getData] Variable ', ExtractNames(VarName), ' has not any non-identity qualifiers, so VarName cannot be ', VarName, '.')
+            }
+            
+        }
         
         key <- object@Data[['Key']]
         VarNamesKey <- paste0('IDDD:', VarNames)
