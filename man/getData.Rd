@@ -34,6 +34,9 @@ restriCted to variable names specified in \code{VarNames}.
 \description{
 \code{getData} returns slot \code{Data} from the input object.  
 
+In the case of objects of class \linkS4class{DD}, it returns the slot
+\code{MicroData} of the input object.
+
 In the case of objects of class \linkS4class{StQ}, it returns a data set 
 restricted to those root variable names in the column \code{IDDD} of slot
 \code{Data} specified in the input parameter \code{VarNames}.
@@ -54,28 +57,14 @@ The parameter \code{VarNames} has no effect.
 }
 \examples{
 # From DD objects 
-DDData <- data.table(Variable = c('NumIdEst', 'EsMercNac', 'EsMercEuro',
-                                  'EsMercRM', 'Cod', 'IEPEntradaPed'),
-                     Sort = c('IDQual', 'NonIDQual', 'NonIDQual', 
-                              'NonIDQual', 'NonIDQual', 'IDDD'),
-                     Class = c('character', 'character', 'character', 
-                               'character', 'character', 'character'),
-                     Qual1 = c('', '', '', '', '', 'NumIdEst'))
-VarList <- list(data.table(IDQual = c('NumIdEst','','','',''),
-                     NonIDQual = c('EsMercNac', 'EsMercEuro', 'EsMercRM', 
-                                   'Cod',''),
-                     IDDD = c('','','','','IEPEntradaPed'),
-                     Unit1 = c('','','','','')))
-VarNameCorresp <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList)
-DD <- new(Class = 'DD', MicroData = DDData, VarNameCorresp = VarNameCorresp)
-getData(DD)
-
+data(ExampleDD)
+getData(ExampleDD)
 
 # From an StQ object 
-VarNames <- c('IASSCifraNeg', 'IASSEmpleo')
+VarNames <- c('Orders_0')
 getData(ExampleQ, VarNames)
 
-VarNames <- c('IASSCifraNeg', 'IASSEmpleo_0')
+VarNames <- c('Turnover')
 getData(ExampleQ, VarNames)
 
 # From an StQList object 

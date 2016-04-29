@@ -25,8 +25,8 @@ key-value pair structure.
 }
 \examples{
 library(data.table)
-data(Q)
-newrawQ <- StQTorawStQ(Q)
+data(ExampleQ)
+newrawQ <- StQTorawStQ(ExampleQ)
  
 }
 

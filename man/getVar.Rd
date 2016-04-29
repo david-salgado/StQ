@@ -7,9 +7,11 @@
 \alias{getVar,StQList,character-method}
 \title{Return the values of a variable of specified statistical units}
 \usage{
-getVar(object, VarName, Units = getUnits(object))
+getVar(object, VarName, DDslot = "MicroData", Units = getUnits(object,
+  "MicroData"))
 
-\S4method{getVar}{StQ,character}(object, VarName, Units = getUnits(object))
+\S4method{getVar}{StQ,character}(object, VarName, DDslot = "MicroData",
+  Units = getUnits(object, "MicroData"))
 
 \S4method{getVar}{StQList,character}(object, VarName,
   Units = getUnits(object[[length(object)]]))
@@ -18,6 +20,9 @@ getVar(object, VarName, Units = getUnits(object))
 \item{object}{Object of class \linkS4class{StQ}.}
 
 \item{VarName}{Character vector with the name of the variable.}
+
+\item{DDslot}{Character vector of length 1 with the name of DD slot in which
+variables in VarName are defined. Its default value is \code{MicroData}.}
 
 \item{Units}{\linkS4class{data.table} with the qualifier values identifying
 each statistical unit in the input object.}
@@ -32,12 +37,8 @@ parameter of an input object.
 }
 \examples{
 library(data.table)
-Units <- data.table(NOrden = paste0('0000000000', 1:9))
-getVar(ExampleQ, 'IASSCifraNeg', Units)
-getVar(ExampleQ, 'IASSEmpleo', Units)
-getVar(ExampleQ, 'IASSEmpleo_0', Units)
-getVar(ExampleQ, 'IASSEmpleo_1', Units)
-getVar(ExampleQ, 'IASSEmpleo_1_1', Units)
+getVar(ExampleQ, 'Orders_0')
+getVar(ExampleQ, 'Turnover')
 
 }
 
