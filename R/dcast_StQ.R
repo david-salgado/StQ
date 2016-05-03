@@ -70,15 +70,12 @@ setMethod(
             
             stop('[StQ::dcast_StQ] DDslot is not a component of the slot DD of the input object.')
         }
-   
+
         for (VarName in VarNames){
             
             Varslot <- getSlotDD(DD, VarName, DDslot)
-        }
-   
-        Quals <- setdiff(names(Varslot),
-                         c('Variable', 'Sort', 'Class', 'ValueRegExp'))
-        for (VarName in VarNames){
+            Quals <- setdiff(names(Varslot),
+                             c('Variable', 'Sort', 'Class', 'ValueRegExp'))
             
             NameQuals <- c()
             for (Qual in Quals){
@@ -93,7 +90,6 @@ setMethod(
                 
                 stop('[StQ::dcast_StQ] Variable ', ExtractNames(VarName), ' has not any non-identity qualifiers, so VarName cannot be ', VarName, '.')
             }
-            
         }
         
 
@@ -120,7 +116,6 @@ setMethod(
         # Creamos una data.table auxDD con la fórmula asociada a cada variable según el slot DD
         auxDD <- VarNamesToFormula(IDDDVarNames, DD)
 
-
         # Se asocia a cada fórmula su correspondiente data.table dcasted
         auxData <- split(auxDD[['Variable']], auxDD[['Form']])
 
@@ -132,7 +127,7 @@ setMethod(
 
             } else {
 
-                aux <- getData(object, VarNames)[IDDD %in% auxData[[Form]]]
+                aux <- getData(object, VarNames, DDslot)[IDDD %in% auxData[[Form]]]
 
             }
 
