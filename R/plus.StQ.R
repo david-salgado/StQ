@@ -61,21 +61,25 @@ setMethod(
     ColNames.e2 <- copy(names(getData(e2)))
     NewCol.e2 <- setdiff(ColNames.e2, ColNames.e1)
     NewCol.e1 <- setdiff(ColNames.e1, ColNames.e2)
-    
+  
     if (length(NewCol.e2) > 0){
         
         Datae1 <- copy(getData(e1))[, NewCol.e2 := character(.N), with = FALSE]
+        
+    } else {
+        
+        Datae1 <- copy(getData(e1))
     }
-    
+
     if (length(NewCol.e1) > 0){
         
         Datae2 <- copy(getData(e2))[, NewCol.e1 := character(.N), with = FALSE]
-    }else{
+
+    } else {
         
         Datae2 <- copy(getData(e2))
     }
     
-
     # Unimos los slots Data con rbindlist eliminando los duplicados
     ColNames <- c(setdiff(names(getData(e1)), c('IDDD', 'Value')), setdiff(names(getData(e2)), setdiff(names(getData(e1)), c('IDDD', 'Value'))))
     setcolorder(Datae1, ColNames)
