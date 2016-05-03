@@ -89,34 +89,42 @@ setMethod(
     
     
     if (missing(VarNames)) return(copy(object@Data))
-
-    DD <- getDD(object)
-    
-    for (VarName in VarNames){
-        
-        Varslot <- getSlotDD(DD, VarName, DDslot)
-    }
-    
-    Quals <- setdiff(names(Varslot),
-                   c('Variable', 'Sort', 'Class', 'ValueRegExp'))
-    for (VarName in VarNames){
       
+
+    if (length(DDslot) > 1){
+          
+        stop('[StQ::getData] DDslot must be a character vector of length 1.')
+    }
+      
+    DD <- getDD(object)
+      
+    if (!DDslot %in% slotNames(DD)){
+          
+        stop('[StQ::getData] DDslot is not a component of the slot DD of the input object.')
+    }
+ 
+    for (VarName in VarNames){
+ 
+        Varslot <- getSlotDD(DD, VarName, DDslot)
+        Quals <- setdiff(names(Varslot),
+                         c('Variable', 'Sort', 'Class', 'ValueRegExp'))
+        
         NameQuals <- c()
         for (Qual in Quals){
-          
+            
             NameQuals <- c(NameQuals,Varslot[Variable == ExtractNames(VarName)][[Qual]])
         }
-      
+        
         nonIDQuals <- getNonIDQual(Varslot)
-      
-      
+        
+        
         if (!all(NameQuals %in% nonIDQuals) & VarName != ExtractNames(VarName)){
-          
+            
             stop('[StQ::getData] Variable ', ExtractNames(VarName), ' has not any non-identity qualifiers, so VarName cannot be ', VarName, '.')
         }
-      
     }
-      
+    
+
     VarNames.DT <- VarNamesToDT(VarNames, getDD(object))
     for (col in names(VarNames.DT)){
         
