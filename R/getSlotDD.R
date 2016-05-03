@@ -54,10 +54,10 @@ setMethod(
                 Varslot <- DDvarslot
             }
         }
-        
+     
         if (Varslot != DDslot){
             
-            stop('[DD::getSlotDD] Variable ', ExtractNames(VarName), ' is not defined in the slot ', DDslot, ' of the input object.')
+            stop('[DD::getSlotDD] Variable ', ExtractNames(VarName), ' is not defined in slot ', DDslot, ' of the input object.')
         }
         
         output <- slot(DD, Varslot)

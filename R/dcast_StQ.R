@@ -70,12 +70,12 @@ setMethod(
             
             stop('[StQ::dcast_StQ] DDslot is not a component of the slot DD of the input object.')
         }
-        
+   
         for (VarName in VarNames){
             
             Varslot <- getSlotDD(DD, VarName, DDslot)
         }
-        
+   
         Quals <- setdiff(names(Varslot),
                          c('Variable', 'Sort', 'Class', 'ValueRegExp'))
         for (VarName in VarNames){
@@ -91,14 +91,14 @@ setMethod(
             
             if (!all(NameQuals %in% nonIDQuals) & VarName != ExtractNames(VarName)){
                 
-                stop('[rawStQ::dcast_StQ] Variable ', ExtractNames(VarName), ' has not any non-identity qualifiers, so VarName cannot be ', VarName, '.')
+                stop('[StQ::dcast_StQ] Variable ', ExtractNames(VarName), ' has not any non-identity qualifiers, so VarName cannot be ', VarName, '.')
             }
             
         }
         
 
-        IDQual <- (slot(DD, DDslot))[Sort == 'IDQual', Variable]
-        NonIDQual <- (slot(DD, DDslot))[Sort == 'NonIDQual', Variable]
+        IDQual <- Varslot[Sort == 'IDQual', Variable]
+        NonIDQual <- Varslot[Sort == 'NonIDQual', Variable]
 
         Quals <- c(IDQual, NonIDQual)
         Quals <- intersect(VarNames, Quals)
