@@ -1,20 +1,15 @@
-#' @title Return slot \code{DD} from an object of class \linkS4class{StQ}
+#' @title Return slot \code{DD} from the input object
 #'
-#' @description \code{getDD} extracts slot \code{DD} from an object of class
-#'  \linkS4class{StQ}.
+#' @description \code{getDD} extracts the slot \code{DD} of the input object.
 #'
-#' This method returns the \linkS4class{data.table} corresponding to slot
-#' \code{DD} from an object of class \linkS4class{StQ} specified as input
-#' argument.
+#' @param object Object of class \linkS4class{StQ} or \linkS4class{StQList}.
 #'
-#' @param Object of class \linkS4class{StQ}.
-#'
-#' @return Object of class \linkS4class{DD} corresponding to the slot \code{DD}
-#' of the input parameter.
+#' @return Object of class \linkS4class{DD} corresponding to the slot \code{DD} of the input 
+#' parameter.
 #'
 #' @examples
-#' data(Q)
-#' DD <- getDD(Q)
+#' data(ExampleStQ)
+#' DD <- getDD(ExampleStQ)
 #' DD
 #' str(DD)
 #'
@@ -50,7 +45,7 @@ setMethod(
     signature = c("StQList"),
     function(object){
         
-        output <- lapply(copy(object@Data), function(x) getDD(x))  
+        output <- lapply(object, function(x) getDD(x))  
         
         return(output)
     }

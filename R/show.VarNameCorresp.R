@@ -7,7 +7,7 @@
 #' It is indeed the method \link[methods]{show} adapted to the class
 #' \linkS4class{VarNameCorresp}.
 #'
-#' @param Object of class \linkS4class{VarNameCorresp}.
+#' @param object Object of class \linkS4class{VarNameCorresp}.
 #'
 #' @return Invisible object of class \code{\link{NULL}}.
 #'

@@ -51,7 +51,8 @@ VarList1 <- list(ID = new(Class = "VNCdt",
                                                     Province = c('', '', '', '.'),
                                                     NACE = c('', '', '', '.'),
                                                     IsNatMarket = c('', '', '', '1'),
-                                                    Unit1 = c('provincia', 'actividad', '', 'cn01'))))
+                                                    Unit1 = c('provincia', 'actividad', 
+                                                              '', 'cn01'))))
 VNC1 <- new(Class = 'VarNameCorresp', VarList1)
 
 ID1dt <- new(Class = 'DDdt', 
@@ -80,7 +81,8 @@ Agg1dt <- new(Class = 'DDdt',
                                  ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])',
                                           '([0-9]{1, 15}| )'))) 
 
-DD1 <- new(Class = 'DD', VarNameCorresp = VNC1, ID = ID1dt, MicroData = Micro1dt, Aggregates = Agg1dt)
+DD1 <- new(Class = 'DD', VarNameCorresp = VNC1, ID = ID1dt, MicroData = Micro1dt, 
+           Aggregates = Agg1dt)
 
 VarList2 <- list(ID = new(Class = "VNCdt",
                           .Data = data.table(IDQual = c('NumIdEst', rep('', 4)),
@@ -110,7 +112,8 @@ VarList2 <- list(ID = new(Class = "VNCdt",
                                                    Province = c('', '', '', '.'),
                                                    NACE = c('', '', '', '.'),
                                                    IsNatMarket = c('', '', '', '1'),
-                                                   Unit1 = c('provincia', 'actividad', '', 'cp02'))))
+                                                   Unit1 = c('provincia', 'actividad',
+                                                             '', 'cp02'))))
 VNC2 <- new(Class = 'VarNameCorresp', VarList2)
 
 ID2dt <- new(Class = 'DDdt',
@@ -138,7 +141,8 @@ Agg2dt <- new(Class = 'DDdt',
                                  ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])',
                                              '([0-9]{1, 15}| )'))) 
 
-DD2 <- new(Class = 'DD', VarNameCorresp = VNC2, ID = ID2dt, MicroData = Micro2dt, Aggregates = Agg2dt)
+DD2 <- new(Class = 'DD', VarNameCorresp = VNC2, ID = ID2dt, MicroData = Micro2dt,
+           Aggregates = Agg2dt)
 
 DD1 + DD2
 

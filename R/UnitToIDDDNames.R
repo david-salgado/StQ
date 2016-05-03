@@ -81,7 +81,6 @@
 #'                      Class = rep('character', 5),
 #'                      Qual1 = c('', rep('NumIdEst', 4)),
 #'                      ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}')))
-#' ))
 #' Microdt <- new(Class = "DDdt", 
 #'             .Data = data.table(
 #'                      Variable = c('NumIdEst', 'IsNatMarket', 'IsEuroMarket', 
@@ -92,8 +91,7 @@
 #'                      Qual2 = c(rep('', 4), 'IsNatMarket'),
 #'                      Qual3 = c(rep('', 4), 'IsEuroMarket'),
 #'                      Qual4 = c(rep('', 4), 'IsRWMarket'),
-#'                      ValueRegExp = c('[0-9]{9}PP', rep('(0|1| )', 3), '([0-9]{1, 10}| )')
-#' ))
+#'                      ValueRegExp = c('[0-9]{9}PP', rep('(0|1| )', 3), '([0-9]{1, 10}| )')))
 #' Paradt <- new(Class = "DDdt",
 #'             .Data = data.table(
 #'                      Variable = c('NumIdEst', 'Action', 'Date'),
@@ -101,8 +99,8 @@
 #'                      Class = rep('character', 3),
 #'                      Qual1 = c(rep('', 2), 'NumIdEst'),
 #'                      Qual2 = c(rep('', 2), 'Action'),
-#'                      ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')
-#' ))
+#'                      ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 
+#'                                      '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')))
 #' Aggdt <- new(Class = "DDdt", 
 #'             .Data = data.table(
 #'                      Variable = c('Province', 'NACE09', 'Turnover'),
@@ -110,8 +108,7 @@
 #'                      Class = c(rep('character', 2), 'numeric'),
 #'                      Qual1 = c(rep('', 2), 'Province'),
 #'                      Qual2 = c(rep('', 2), 'NACE09'),
-#'                      ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])', '([0-9]{1, 15}| )')
-#' ))
+#'                      ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])', '([0-9]{1, 15}| )')))
 #' 
 #' DD <- new(Class = 'DD', 
 #'           VarNameCorresp = VNC, 
@@ -206,7 +203,7 @@ setMethod(
 
 #' @rdname UnitToIDDDNames
 #'
-#' @include DD-class.R VarNamesToDD.R
+#' @include DD-class.R VarNamesToDD.R getVNC.R
 #'
 #' @import data.table
 #' 
@@ -217,12 +214,12 @@ setMethod(
     function(object, Unit, UnitNames){
         
         
-        VNC <- slot(object, 'VarNameCorresp')
+        VNC <- getVNC(object)
         
         output <- UnitToIDDDNames(VNC, Unit, UnitNames)
-        
-        aux <- VarNamesToDD(output[['IDDDName']], DD)
-        output <- cbind(output, aux)
+
+        #aux <- VarNamesToDD(output[['IDDDName']], DD)
+        #output <- cbind(output, aux)
         
         return(output)
         

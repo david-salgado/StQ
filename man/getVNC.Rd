@@ -14,7 +14,7 @@ getVNC(object)
 \S4method{getVNC}{StQ}(object)
 }
 \arguments{
-\item{Object}{of class \linkS4class{DD} or \linkS4class{StQ}.}
+\item{object}{Object of class \linkS4class{DD} or \linkS4class{StQ}.}
 }
 \value{
 Object of class \linkS4class{VarNameCorresp} of the input parameter.
