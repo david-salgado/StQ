@@ -83,7 +83,8 @@
 #'                      Class = rep('character', 3),
 #'                      Qual1 = c(rep('', 2), 'NumIdEst'),
 #'                      Qual2 = c(rep('', 2), 'Action'),
-#'                      ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')
+#'                      ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 
+#'                      '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')
 #' ))
 #' Aggdt <- new(Class = "DDdt", 
 #'             .Data = data.table(

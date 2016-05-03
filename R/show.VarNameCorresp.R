@@ -7,7 +7,7 @@
 #' It is indeed the method \link[methods]{show} adapted to the class
 #' \linkS4class{VarNameCorresp}.
 #'
-#' @param Object of class \linkS4class{VarNameCorresp}.
+#' @param object Object of class \linkS4class{VarNameCorresp}.
 #'
 #' @return Invisible object of class \code{\link{NULL}}.
 #'
@@ -44,8 +44,8 @@
 #'                      NACE = c('', '', '', '.'),
 #'                      IsNatMarket = c('', '', '', '1'),
 #'                      Unit1 = c('provincia', 'actividad', '', 'cn01'))))
-#' VNC2 <- new(Class = 'VarNameCorresp', .Data= VarList)
-#' show(VNC2)
+#' VNC <- new(Class = 'VarNameCorresp', .Data= VarList)
+#' show(VNC)
 #'
 #' @include VarNameCorresp-class.R
 #'
