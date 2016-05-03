@@ -20,7 +20,10 @@
 #' 
 #' @param newDD \linkS4class{DD} object with the information of the new variable
 #'  needed for the slot \code{DD} of the input object.
-#'
+#'  
+#' @param DDslot Character vector of length 1 with the name of the slot of newDD
+#' in which the new variable is defined. Its default value is \code{MicroData}.
+#' 
 #' @param Value Vector of length the number of statistical units in the input
 #' object with the values of the new variable for each of these units or
 #' alternatively an object of class \code{\link{expression}} with a mathematical
@@ -55,13 +58,15 @@
 #'                                         Qual1 = 'NOrden',
 #'                                         ValueRegExp = '')))
 #' NewQ <- setVar(object = Q,
-#'                newDD = newDD, 
+#'                newDD = newDD,
+#'                DDslot = 'Aggregates',
 #'                Value = expression(log(1 + Turnover)))
 #' getVar(NewQ, 'lTurnover')
 #'
 #' @export
 setGeneric("setVar", function(object,
                               newDD,
+                              DDslot = 'MicroData',
                               Value,
                               lag = NULL,
                               by = NULL) {standardGeneric("setVar")})
@@ -78,6 +83,7 @@ setMethod(
     signature = c("StQ", "DD"),
     function(object,
              newDD,
+             DDslot = 'MicroData',
              Value,
              lag = NULL,
              by = NULL){
@@ -86,9 +92,21 @@ setMethod(
 
             stop("[StQ::setVar] A new DD object for the new variable is needed.")
         }
+        
         if (length(getVNC(newDD)) != 1 | dim(getVNC(newDD)[[1]])[1] != 1) {
 
             stop('[StQ::setVar] Only one new variable at a time.')
+        }
+        
+        if (length(DDslot) > 1){
+            
+            stop('[StQ::setVar] DDslot must be a character vector of length 1.')
+        }
+        
+        
+        if (!DDslot %in% slotNames(newDD)){
+            
+            stop('[StQ::setVar] DDslot is not a component of the slot DD of the input object.')
         }
 
         if (missing(Value)) {
@@ -121,27 +139,28 @@ setMethod(
         }
 
         Data <- getData(object)
-
+        
         if (NewVarName %in% Data[['IDDD']]) {
 
             setData(object) <- Data[IDDD != NewVarName]
         }
-        
+             
         DD <- getDD(object)
         newDD <- DD + newDD
 
         if (class(Value) == 'expression'){
 
             ExprVariables <- c(all.vars(Value), by)
-            ExprVariables <- unlist(lapply(ExprVariables, function(x){
+            ExprVariables <- unlist(lapply(ExprVariables[[1]], function(x){
                                         ifelse(ExtractNames(x) %in% unique(Data[['IDDD']]), x, '')
                                     }))
             ExprVariables <- ExprVariables[ExprVariables != '']
-            Data <- getData(object, ExprVariables) 
-    
+
+            Data <- getData(object, ExprVariables, DDslot) 
+         
             newObject <- new(Class = 'StQ', Data = Data, DD = newDD)
 
-            Data <- dcast_StQ(newObject)
+            Data <- dcast_StQ(newObject, DDslot = DDslot)
 
             if (is.null(by)){
 
@@ -156,9 +175,11 @@ setMethod(
 
             NewData <- Data[, ExprVariables := NULL, with = F]
             NewData[, IDDD := NewVarName]
+
             setcolorder(NewData,
                         c(setdiff(names(NewData), c('Value', 'IDDD')),
                           'IDDD', 'Value'))
+            NewData <- new(Class = 'Datadt', NewData)
             newObject <- new(Class = 'StQ', Data = NewData, DD = newDD)
             output <- object + newObject
 
@@ -167,6 +188,7 @@ setMethod(
             NewData[, IDDD := NewVarName]
             NewData[, Value := Value]
             setkeyv(NewData, setdiff(names(NewData), 'Value'))
+            NewData <- new(Class = 'Datadt', NewData)
             NewObject <- new(Class = 'StQ', Data = NewData, DD = newDD)
             output <- object + NewObject
 
