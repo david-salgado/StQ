@@ -9,7 +9,7 @@
 #' @param VarName Character vector with the name of the variable.
 #' 
 #' @param DDslot Character vector of length 1 with the name of DD slot in which
-#' variables in VarName are defined. Its default value is \code{MicroData}.
+#' variable in VarName is defined. Its default value is \code{MicroData}.
 #' 
 #' @param Units \linkS4class{data.table} with the qualifier values identifying
 #' each statistical unit in the input object.
@@ -28,7 +28,7 @@ setGeneric("getVar", function(object, VarName, DDslot = 'MicroData', Units = get
 
 #' @rdname getVar
 #'
-#' @include StQ-class.R getData.R getDD.R VarNamesToDD.R VarNamesToDT.R ExtractNames.R
+#' @include StQ-class.R getData.R getDD.R getSlotDD.R getNonIDQual.R VarNamesToDD.R VarNamesToDT.R ExtractNames.R
 #'
 #' @import data.table RepoTime
 #' 
