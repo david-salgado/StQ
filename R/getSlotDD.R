@@ -45,22 +45,22 @@ setMethod(
         }
         
         DDVar <- VarNamesToDD(VarName, object)
-        Varslot <- DDslot
+        Varslot <- c()
         for (DDvarslot in setdiff(slotNames(DDVar), 'VarNameCorresp')){
             
             DDlocal <- slot(DDVar, DDvarslot)
             if(dim(DDlocal)[1] != 0){
                 
-                Varslot <- DDvarslot
+                Varslot <- c(Varslot, DDvarslot)
             }
         }
      
-        if (Varslot != DDslot){
+        if (!DDslot %in% Varslot){
             
             stop('[DD::getSlotDD] Variable ', ExtractNames(VarName), ' is not defined in slot ', DDslot, ' of the input object.')
         }
         
-        output <- slot(DD, Varslot)
+        output <- slot(DD, DDslot)
         
         return(output)
     }
