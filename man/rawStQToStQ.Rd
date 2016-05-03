@@ -24,15 +24,10 @@ columns \code{IDDD} and \code{Value}.
 from the input\linkS4class{rawStQ} object.
 }
 \examples{
-data(ExampleDD)
-key <- new(Class = 'rawKey', 
-           c('IDDD:Turnover_NumIdEst:001_IsNatMarket:0', 
-             'IDDD:Turnover_NumIdEst:001_IsNatMarket:1', 
-             'IDDD:Turnover_NumIdEst:001_Province:04', 
-             'IDDD:Turnover_NumIdEst:001_NACE09:0512'))
-rawData <- new(Class = 'rawDatadt', 
-               data.table(Key = key, Value = c('625000', '23154', '25004', '10512')))
-rawQ <- new(Class = 'rawStQ', Data = Data, DD = ExampleDD)
+data(DD)
+key <- new(Class = 'rawKey', c('IDDD:Turnover_NumIdEst:001_IsNatMarket:0', 'IDDD:Turnover_NumIdEst:001_IsNatMarket:1', 'IDDD:Turnover_NumIdEst:001_Province:04', 'IDDD:Turnover_NumIdEst:001_NACE09:0512'))
+rawData <- new(Class = 'rawDatadt', data.table(Key = key, Value = c('625000', '23154', '25004', '10512')))
+rawQ <- new(Class = 'rawStQ', Data = Data, DD = DD)
 
 newQ <- rawStQToStQ(rawQ)
 }

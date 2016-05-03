@@ -5,12 +5,14 @@
 #'
 #' @param object Object with the IDDD variable identifiers.
 #' 
-#' @param Unit character vector with the Unit name.
+#' @param Unit character vector with the Unit name ('Unit1', 'Unit2', ...).
 #' 
-#' @param UnitNames character vector with the name of variable correspondinf to Unit
-#' specified.
+#' @param UnitNames character vector with the name of variable corresponding to 
+#' the specified Unit.
 #'
-#' @return Data table with all the corresponding IDDD variable names.
+#' @return Data table with all the corresponding IDDD variable names. For objects
+#' the classes \linkS4class{DD} and \linkS4class{StQ} it returns the IDDD the
+#' slot VarNameCorresp of the corresponding DD object.
 #'
 #' @examples
 #' # An example for VNCdt:
@@ -100,7 +102,8 @@
 #'                      Qual1 = c(rep('', 2), 'NumIdEst'),
 #'                      Qual2 = c(rep('', 2), 'Action'),
 #'                      ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 
-#'                                      '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')))
+#'                      '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')
+#' ))
 #' Aggdt <- new(Class = "DDdt", 
 #'             .Data = data.table(
 #'                      Variable = c('Province', 'NACE09', 'Turnover'),
@@ -122,7 +125,6 @@
 #' 
 #' UnitToIDDDNames(DD, Unit = 'Unit1', UnitNames = 'cp09')
 #'
-#' @import data.table 
 #'
 #' @export
 setGeneric("UnitToIDDDNames", function(object, Unit, UnitNames){standardGeneric("UnitToIDDDNames")})

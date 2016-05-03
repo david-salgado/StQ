@@ -1,5 +1,7 @@
 .Rproj.user
 .Rhistory
 .RData
-Ejemplos.RData
 .Rd
+NAMESPACE
+Ejemplos.RData
+

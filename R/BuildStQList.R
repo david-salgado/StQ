@@ -22,7 +22,7 @@
 #'
 #' @include StQ-class.R StQList-class.R
 #'
-#' @import RepoTime
+#' @importFrom RepoTime newRepoTime
 #'
 #' @export
 BuildStQList <- function(Data){

@@ -49,16 +49,6 @@ setMethod(
             
             outDT[is.na(get(col)), col := '', with = F]
         }
-
-        if ('Value' %in% names(outDT)){
-        
-            setcolorder(outDT, c(setdiff(names(outDT), c('IDDD', 'Value')), 'IDDD', 'Value'))
-            
-        } else {
-            
-            setcolorder(outDT, c(setdiff(names(outDT), c('IDDD')), 'IDDD'))
-        }
-        #outDT <- new(Class = 'Datadt', outDT)
         
         return(outDT)
     }

@@ -10,5 +10,5 @@
 #'
 #' @usage data(ExampleDM)
 #'
-#' @format \code{data.table} with 29538 rows and 14 columns.
+#' @format \code{data.table} with 23629 rows and 55 columns.
 NULL

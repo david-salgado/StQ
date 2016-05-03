@@ -17,13 +17,12 @@
 #' }
 #'
 #' @examples
-#' library(data.table)
 #' new(Class = 'DDdt', 
 #'     data.table(Variable = 'NOrden', 
 #'                Sort = 'IDQual', 
-#'                Class = 'character', 
+#'                Class = 'character',
+#'                Qual1 = 'NOrden', 
 #'                ValueRegExp = '[0-9]{9}SS'))
-#'                
 #' @import data.table
 #'
 #' @export
@@ -38,10 +37,10 @@ setClass(Class = "DDdt",
              
              NCol <- dim(object)[2]
              
-             if (NCol < 4) {
+             if (NCol < 5) {
                  stop(paste0('[Validity DDdt] The object must be a data table with 
-                                at least four columns named "Variable", "Sort", "Class"
-                                and "Qual1.'))   
+                                at least five columns named "Variable", "Sort", "Class", 
+                                "Qual1" and "ValueRegExp"'))   
              } 
              
              
@@ -53,14 +52,14 @@ setClass(Class = "DDdt",
              }
              
              
-             NQual <- max(0, NCol - 4)
+             NQual <- max(0, NCol - 5)
              if (NQual > 0) {
                  
-                 Quals <- paste0('Qual', 1:NQual)
+                 Quals <- paste0('Qual', 1:(NQual+1))
                  
              } else {
                  
-                 Quals <- character(0)
+                 Quals <- 'Qual1'
              
              }
              ColNames <- c('Variable', 'Sort', 'Class', 'ValueRegExp', Quals)
@@ -92,18 +91,15 @@ setClass(Class = "DDdt",
                  stop(paste0('[Validity DDdt] The third column of the object must be named "Class".'))
              }
              
+             if (ColNames[4] != 'Qual1') {
+                 stop(paste0('[Validity DDdt] The fourth column of of the object must be named "Qual1".'))
+             }
              
              
-             if (length(Quals) != 0 ) {
+             if (length(Quals) == 1 ) {
                  
-                 if (ColNames[4] != 'Qual1') {
-                     stop(paste0('[Validity DDdt] The fourth column of of the object must be named "Qual1".'))
-                 }
-                 
-            }else {
-                
-                if (ColNames[4] != 'ValueRegExp') {
-                    stop(paste0('[Validity DDdt] The fourth column of of the object must be named "ValueRegExp".'))
+                if (ColNames[5] != 'ValueRegExp') {
+                    stop(paste0('[Validity DDdt] The fifth column of of the object must be named "ValueRegExp".'))
                 }
             }
              

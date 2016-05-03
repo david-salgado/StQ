@@ -44,8 +44,8 @@
 #'                      NACE = c('', '', '', '.'),
 #'                      IsNatMarket = c('', '', '', '1'),
 #'                      Unit1 = c('provincia', 'actividad', '', 'cn01'))))
-#' VNC2 <- new(Class = 'VarNameCorresp', .Data= VarList)
-#' show(VNC2)
+#' VNC <- new(Class = 'VarNameCorresp', .Data= VarList)
+#' show(VNC)
 #'
 #' @include VarNameCorresp-class.R
 #'

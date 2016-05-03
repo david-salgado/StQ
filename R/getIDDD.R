@@ -1,17 +1,19 @@
 #' @title Return IDDD identifiers from an object
 #'
-#' @description \code{getIDDD} returns all IDDD identifiers from the input object.  
+#' @description \code{getIDDD} returns the IDDD identifiers from the input 
+#' object.  
+#' @param object Object whose IDDD identifiers are required.
 #' 
-#' @param object Object whose IDDD identifiers are queried.
-#' 
-#' @param CompNames Character vector of the component(s) of the input object whose IDDD identifiers 
-#' are queried.
+#' @param Namesdt Character vector with the names of components or slots of the 
+#' object from which the IDDD identifiers are requested.
 #'
-#' @return In the case of \linkS4class{VarNameCorresp} it returns the IDDD
-#' identifiers from all components of of its slot \code{VarNameCorresp}.
+#' @return In the case of \linkS4class{VarNameCorresp} it returns a character
+#' vector with the IDDD identifiers from the components specified in Namesdt. 
+#' If no Namesdt is specified, it returns the IDDD identifier from all the 
+#' components of the object.
 #'
 #' @examples
-#' # A more elaborate example
+#' library(data.table)
 #' VarList <- list(
 #'   ID = new(Class = 'VNCdt', 
 #'            .Data = data.table(
@@ -30,19 +32,19 @@
 #'                       IsEuroMarket = c(rep('', 4), '0'),
 #'                       IsRWMarket = c(rep('', 4), '1'),
 #'                       Unit1 = c('numidest', rep('', 3), 'cp09'))),
-#'  Aggregates = new(Class = 'VNCdt', 
-#'                   .Data = data.table(
-#'                      IDQual = c('Province', 'NACE', 'IsNatMarket', ''),
-#'                      NonIDQual = rep('', 4),
-#'                      IDDD = c('', '', '', 'TotalTurnover'),
-#'                      Province = c('', '', '', '.'),
-#'                      NACE = c('', '', '', '.'),
-#'                      IsNatMarket = c('', '', '', '1'),
-#'                      Unit1 = c('provincia', 'actividad', '', 'cn01'))))
-#' Example <- new(Class = 'VarNameCorresp', .Data = VarList)
-#' getIDDD(Example)
+#'   ParaData = new(Class = 'VNCdt'),
+#'   Aggregates = new(Class = 'VNCdt', 
+#'                    .Data = data.table(
+#'                       IDQual = c('Province', 'NACE', 'IsNatMarket', ''),
+#'                       NonIDQual = rep('', 4),
+#'                       IDDD = c('', '', '', 'TotalTurnover'),
+#'                       Province = c('', '', '', '.'),
+#'                       NACE = c('', '', '', '.'),
+#'                       IsNatMarket = c('', '', '', '1'),
+#'                       Unit1 = c('provincia', 'actividad', '', 'cn01'))))
+#' VNC <- new(Class = 'VarNameCorresp', .Data = VarList)
+#' getIDDD(VNC)
 #' 
-#' @import data.table
 #' 
 #' @export
 setGeneric("getIDDD", function(object, CompNames){standardGeneric("getIDDD")})
@@ -126,7 +128,6 @@ setMethod(
         
         if (missing(CompNames)) CompNames <- slotNames(object)
         
-        #CompNames <- setdiff(CompNames, 'VarNameCorresp')
         output <- c()
         for (slotDD in CompNames) {
             

@@ -41,7 +41,6 @@
 #' 
 #' VNC <- new(Class = 'VarNameCorresp', VarList)
 #' 
-#' ### We build the specification data.tables
 #' IDdt <- new( Class='DDdt',data.table(
 #'     Variable = c('NumIdEst', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
 #'     Sort = c('IDQual', rep('IDDD', 4)),

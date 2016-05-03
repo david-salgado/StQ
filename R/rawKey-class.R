@@ -29,22 +29,21 @@ setClass(Class = "rawKey",
              IDDD <- str_detect(object, 'IDDD:')
              if(length(object[IDDD]) != length(object@.Data)){
                  
-                 stop('[Validity rawKey] In each element of the character vector there must be an element named "IDDD".')
+                 stop('[Validity rawKey] In each element of the caracter vector there must be an element named "IDDD".')
              }
              
-             numkeySyntax <- "^IDDD:[A-Za-z0-9]+(_[A-Za-z0-9]+:(-?[0-9\\.]+(e(\\+|-)[0-9]+)?))*$"
+             numkeySyntax <- "^[A-Za-z]+:[A-Za-z0-9]+(_[A-Za-z0-9]+:[0-9\\.]+)*"
              Validnum <- regexpr(numkeySyntax, object)
-             #ExactLength <- (attributes(Validnum)$match.length == nchar(object))
-             Validnum <- unlist(Validnum)# & ExactLength
+             ExactLength <- (attributes(Validnum)$match.length == nchar(object))
+             Validnum <- unlist(Validnum) & ExactLength
              
-             charkeySyntax <- "^IDDD:[A-Za-z0-9]+(_[A-Za-z0-9]+:[A-Za-z0-9]+)*$"
+             charkeySyntax <- "^[A-Za-z]+:[A-Za-z0-9]+(_[A-Za-z0-9]+:[A-Za-z0-9]+)*"
              Validchar <- regexpr(charkeySyntax, object)
-             #ExactLength <- (attributes(Validchar)$match.length == nchar(object))
-             Validchar <- unlist(Validchar)# & ExactLength
-
-             Validany <- as.logical(Validnum * Validchar)
-             Validany[is.na(Validany)] <- TRUE
-
+             ExactLength <- (attributes(Validchar)$match.length == nchar(object))
+             Validchar <- unlist(Validchar) & ExactLength
+                
+             Validany <- Validnum | Validchar
+             
              if (!all(Validany)) {
                  
                  indexNotValid <- which(!Validany)

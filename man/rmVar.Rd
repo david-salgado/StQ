@@ -31,7 +31,7 @@ the input parameter \code{VarNames} removed from the data set.
 \examples{
 data(ExampleQ)
 rmVar(ExampleQ)
-rmVar(ExampleQ, 'Orders')
+rmVar(ExampleQ, 'IASSTame')
 
 }
 
