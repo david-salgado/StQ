@@ -2,7 +2,6 @@
 #'
 #' @description \code{getIDDD} returns the IDDD identifiers from the input 
 #' object.  
-#' 
 #' @param object Object whose IDDD identifiers are required.
 #' 
 #' @param Namesdt Character vector with the names of components or slots of the 
@@ -48,7 +47,7 @@
 #' 
 #' 
 #' @export
-setGeneric("getIDDD", function(object, Namesdt){standardGeneric("getIDDD")})
+setGeneric("getIDDD", function(object, CompNames){standardGeneric("getIDDD")})
 
 #' @rdname getIDDD
 #' 
@@ -78,11 +77,11 @@ setMethod(
 setMethod(
     f = "getIDDD",
     signature = c("VarNameCorresp"),
-    function(object, Namesdt){
+    function(object, CompNames){
         
-        if (missing(Namesdt)) Namesdt <- names(object)
+        if (missing(CompNames)) CompNames <- names(object)
         
-        aux <- object[Namesdt]
+        aux <- object[CompNames]
         
         IDDD.list <- lapply(aux, function(x) { 
             IDDD <- getIDDD(x)
@@ -125,12 +124,12 @@ setMethod(
 setMethod(
     f = "getIDDD",
     signature = c("DD"),
-    function(object, Namesdt){
+    function(object, CompNames){
         
-        if (missing(Namesdt)) Namesdt <- slotNames(object)
+        if (missing(CompNames)) CompNames <- slotNames(object)
         
         output <- c()
-        for (slotDD in Namesdt) {
+        for (slotDD in CompNames) {
             
             IDDD <- getIDDD(slot(object,slotDD))
             output <- c(output, IDDD)
