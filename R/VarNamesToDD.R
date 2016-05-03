@@ -120,7 +120,7 @@ VarNamesToDD <- function(VarNames, DD){
             DDlocal <- slot(DD, DDslot)
             Names.DT <- DDlocal[Variable == ExtractNames(VarNames)]
             
-            
+                      
             if(dim(Names.DT)[1] != 0) {
                 
                 Names.Aux <- copy(Names.DT)
@@ -139,16 +139,15 @@ VarNamesToDD <- function(VarNames, DD){
                     EmptyDT <- c()
                     for (i in 1:length(Empty)) {EmptyDT[i] <- names(Names.DT)[Names.DT[1]== Empty[i]]}
                     for (Emptyvar in EmptyDT) {   
-                        Names.DT[,grep(paste0('^',Emptyvar,'$'), colnames(Names.DT)) := NULL]
+                        Names.DT[,grep(paste0('^',Emptyvar,'$'), colnames(Names.DT)) := '']
                         
                     }
                     L=length(Names.DT)
                     names(Names.DT)[4:(L-1)] <- paste0(rep('Qual',L-4),c(1:(L-4)))
                 }else if (LE==LE_Max){
                     EmptyDT <- paste0(rep('Qual',L-4),c(1:(L-4)))
-                    for (Emptyvar in EmptyDT) {   
-                        Names.DT[,grep(paste0('^',Emptyvar,'$'), colnames(Names.DT)) := NULL]
-                        
+                    for (Emptyvar in EmptyDT) {
+                        Names.DT[,grep(paste0('^',Emptyvar,'$'), colnames(Names.DT)) := '']
                     }
                     Names.DT[[4]]=''
                 }
