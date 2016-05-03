@@ -17,11 +17,13 @@
 #' }
 #'
 #' @examples
+#' library(data.table)
 #' new(Class = 'DDdt', 
 #'     data.table(Variable = 'NOrden', 
 #'                Sort = 'IDQual', 
 #'                Class = 'character', 
 #'                ValueRegExp = '[0-9]{9}SS'))
+#'                
 #' @import data.table
 #'
 #' @export

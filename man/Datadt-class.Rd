@@ -21,6 +21,7 @@ columns:
 }
 }
 \examples{
+library(data.table)
 new(Class = 'Datadt', 
     data.table(ID = c('001', '001', '001', '001', 
                       '002', '002', '002', '002'), 

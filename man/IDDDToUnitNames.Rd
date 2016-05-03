@@ -35,7 +35,6 @@ Unit\emph{j} names.
 variable name for each IDDD variable name.
 }
 \examples{
-# An example:
 library(data.table)
 ### We build the VNC object
 VarList <- list(ID = new(Class = 'VNCdt',
@@ -45,8 +44,7 @@ VarList <- list(ID = new(Class = 'VNCdt',
                                                  'PhoneNo'),
                                             NumIdEst = c('', rep('.', 4)),
                                             Unit1 = c('numidest', 'nombre', 'apellidos', 
-                                               'direccion', 'telefono')     
-                                )),
+                                               'direccion', 'telefono'))),
                 MicroData = new(Class = 'VNCdt',
                                 .Data =data.table(
                                        IDQual = c('NumIdEst', rep('', 4)),
@@ -88,7 +86,6 @@ IDdt <- new(Class = "DDdt",
                      Class = rep('character', 5),
                      Qual1 = c('', rep('NumIdEst', 4)),
                      ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}')))
-))
 Microdt <- new(Class = "DDdt", 
             .Data = data.table(
                      Variable = c('NumIdEst', 'IsNatMarket', 'IsEuroMarket', 
@@ -105,7 +102,8 @@ Paradt <- new(Class = "DDdt",
                      Class = rep('character', 3),
                      Qual1 = c(rep('', 2), 'NumIdEst'),
                      Qual2 = c(rep('', 2), 'Action'),
-                     ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')
+                     ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 
+                                     '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')
 ))
 Aggdt <- new(Class = "DDdt", 
             .Data = data.table(

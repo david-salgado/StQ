@@ -1,9 +1,11 @@
 #' @title Return IDDD identifiers from an object
 #'
-#' @description \code{getIDDD} returns all IDDD identifiers from the input 
-#' object.  
+#' @description \code{getIDDD} returns all IDDD identifiers from the input object.  
 #' 
 #' @param object Object whose IDDD identifiers are queried.
+#' 
+#' @param CompNames Character vector of the component(s) of the input object whose IDDD identifiers 
+#' are queried.
 #'
 #' @return In the case of \linkS4class{VarNameCorresp} it returns the IDDD
 #' identifiers from all components of of its slot \code{VarNameCorresp}.
@@ -43,7 +45,7 @@
 #' @import data.table
 #' 
 #' @export
-setGeneric("getIDDD", function(object, Namesdt){standardGeneric("getIDDD")})
+setGeneric("getIDDD", function(object, CompNames){standardGeneric("getIDDD")})
 
 #' @rdname getIDDD
 #' 
@@ -73,11 +75,11 @@ setMethod(
 setMethod(
     f = "getIDDD",
     signature = c("VarNameCorresp"),
-    function(object, Namesdt){
+    function(object, CompNames){
         
-        if (missing(Namesdt)) Namesdt <- names(object)
+        if (missing(CompNames)) CompNames <- names(object)
         
-        aux <- object[Namesdt]
+        aux <- object[CompNames]
         
         IDDD.list <- lapply(aux, function(x) { 
             IDDD <- getIDDD(x)
@@ -120,13 +122,13 @@ setMethod(
 setMethod(
     f = "getIDDD",
     signature = c("DD"),
-    function(object, Namesdt){
+    function(object, CompNames){
         
-        if (missing(Namesdt)) Namesdt <- slotNames(object)
+        if (missing(CompNames)) CompNames <- slotNames(object)
         
-        #Namesdt <- setdiff(Namesdt, 'VarNameCorresp')
+        #CompNames <- setdiff(CompNames, 'VarNameCorresp')
         output <- c()
-        for (slotDD in Namesdt) {
+        for (slotDD in CompNames) {
             
             IDDD <- getIDDD(slot(object,slotDD))
             output <- c(output, IDDD)

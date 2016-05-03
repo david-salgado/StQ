@@ -43,17 +43,10 @@ new(Class = 'StQ')
 
 library(data.table)
 data(ExampleDD)
-Data <- new(Class = 'Datadt',
-             data.table(NumIdEst = rep('001', 4),
-                        IsNatMarket = c('0', '1', '', ''),
-                        NACE09 = c('', '', '0512', ''),
-                        Province = c('', '', '', '04'),
-                        IDDD = rep('Turnover', 4),
-                        Value = c('625000', '23154', '10512', '25004')))
-Q <- new(Class = 'StQ', Data = Data, DD = ExampleDD)
+data(ExampleDatadt)
+Q <- new(Class = 'StQ', Data = ExampleDatadt, DD = ExampleDD)
 Q
-# Notice that only the slot Data appears on screen, but the object is not a
-# data.table:
+# Notice that only the slot Data appears on screen, but the object is not a Datadt data.table:
 str(Q)
 
 }

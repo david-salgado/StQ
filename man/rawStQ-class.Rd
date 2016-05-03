@@ -41,8 +41,13 @@ new(Class = 'rawStQ')
 
 
 data(ExampleDD)
-key <- new(Class = 'rawKey', c('IDDD:Turnover_NumIdEst:001_IsNatMarket:0', 'IDDD:Turnover_NumIdEst:001_IsNatMarket:1', 'IDDD:Turnover_NumIdEst:001_Province:04', 'IDDD:Turnover_NumIdEst:001_NACE09:0512'))
-rawData <- new(Class = 'rawDatadt', data.table(Key = key, Value = c('625000', '23154', '25004', '10512')))
+key <- new(Class = 'rawKey', 
+           c('IDDD:Turnover_NumIdEst:001_IsNatMarket:0', 
+             'IDDD:Turnover_NumIdEst:001_IsNatMarket:1', 
+             'IDDD:Turnover_NumIdEst:001_Province:04', 
+             'IDDD:Turnover_NumIdEst:001_NACE09:0512'))
+rawData <- new(Class = 'rawDatadt', 
+               data.table(Key = key, Value = c('625000', '23154', '25004', '10512')))
 rawQ <- new(Class = 'rawStQ', Data = rawData, DD = ExampleDD)
 
 }

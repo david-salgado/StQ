@@ -2,8 +2,7 @@
 % Please edit documentation in R/VarNamesToDD.R
 \name{VarNamesToDD}
 \alias{VarNamesToDD}
-\title{Return root names and NonID-qualifier values of compound variable
-names}
+\title{Return root names and NonID-qualifier values of compound variable names}
 \usage{
 VarNamesToDD(VarNames, DD)
 }
@@ -19,23 +18,22 @@ values appearing in the compound variable names specified in the input
 parameter \code{VarNames}.
 }
 \description{
-\code{VarNamesToDD} returns a \linkS4class{DD}
-identifying those qualifiers corresponding to the values appearing in the
-compound variable names specified in the input parameter \code{VarNames}.
+\code{VarNamesToDD} returns a \linkS4class{DD} identifying those qualifiers 
+corresponding to the values appearing in the compound variable names specified in the input 
+parameter \code{VarNames}.
 
-This function is designed for variable names with suffixes appending
-qualifier values with underscores _.
+This function is designed for variable names with suffixes appending qualifier values with 
+underscores _.
 
-The function determines the correspondind qualifier names for the values
-contained in the compound variable names using the information from the
-\linkS4class{DD} object specified as the second input parameter.
+The function determines the correspondind qualifier names for the values contained in the 
+compound variable names using the information from the \linkS4class{DD} object specified as the
+ second input parameter.
 
 \code{VarNamesToDD} has been designed fundamentally for internal use in the
 construction of editing strategies, but it can also be of utility in some
 scripts.
 }
 \examples{
-# An example:
 library(data.table)
 ### We build the VNC object
 VarList <- list(ID = new(Class = 'VNCdt',data.table(IDQual = c('NumIdEst', rep('', 4)),
@@ -71,10 +69,9 @@ IDdt <- new( Class='DDdt',data.table(
     Variable = c('NOrden','NumIdEst', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
     Sort = c('IDQual','IDQual', rep('IDDD', 4)),
     Class = rep('character', 6),
-    Qual1 = c('EsRemuner','', rep('NumIdEst', 4)),
-    Qual2 = c('Turnover','', rep('', 4)),
-    ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}')
-))
+    Qual1 = c('EsRemuner', '', rep('NumIdEst', 4)),
+    Qual2 = c('Turnover', '', rep('', 4)),
+    ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '.+', '(6|9)[0-9]{8}')))
 Microdt <- new( Class='DDdt',data.table(
     Variable = c('NumIdEst', 'IsNatMarket', 'IsEuroMarket', 
                  'IsRWMarket', 'NewOrders'),
@@ -89,7 +86,8 @@ Paradt <-new( Class='DDdt', data.table(
     Class = rep('character', 3),
     Qual1 = c(rep('', 2), 'NumIdEst'),
     Qual2 = c(rep('', 2), 'Action'),
-    ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')
+    ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 
+                    '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')
 ))
 Aggdt <- new( Class='DDdt',data.table(
     Variable = c('Province', 'NACE09', 'Turnover'),

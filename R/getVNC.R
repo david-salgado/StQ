@@ -7,7 +7,7 @@
 #' object of class \linkS4class{DD} or \linkS4class{StQ} specified as input 
 #' argument.
 #'
-#' @param Object of class \linkS4class{DD} or \linkS4class{StQ}.
+#' @param object Object of class \linkS4class{DD} or \linkS4class{StQ}.
 #'
 #' @return Object of class \linkS4class{VarNameCorresp} of the input parameter.
 #'

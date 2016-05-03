@@ -11,15 +11,15 @@
 \alias{getIDDD,VarNameCorresp-method}
 \title{Return IDDD identifiers from an object}
 \usage{
-getIDDD(object, Namesdt)
+getIDDD(object, CompNames)
 
 \S4method{getIDDD}{VNCdt}(object)
 
-\S4method{getIDDD}{VarNameCorresp}(object, Namesdt)
+\S4method{getIDDD}{VarNameCorresp}(object, CompNames)
 
 \S4method{getIDDD}{DDdt}(object)
 
-\S4method{getIDDD}{DD}(object, Namesdt)
+\S4method{getIDDD}{DD}(object, CompNames)
 
 \S4method{getIDDD}{Datadt}(object)
 
@@ -27,14 +27,16 @@ getIDDD(object, Namesdt)
 }
 \arguments{
 \item{object}{Object whose IDDD identifiers are queried.}
+
+\item{CompNames}{Character vector of the component(s) of the input object whose IDDD identifiers 
+are queried.}
 }
 \value{
 In the case of \linkS4class{VarNameCorresp} it returns the IDDD
 identifiers from all components of of its slot \code{VarNameCorresp}.
 }
 \description{
-\code{getIDDD} returns all IDDD identifiers from the input 
-object.
+\code{getIDDD} returns all IDDD identifiers from the input object.
 }
 \examples{
 # A more elaborate example

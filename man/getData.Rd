@@ -9,21 +9,25 @@
 \alias{getData,rawStQ-method}
 \title{Return slot Data from an object}
 \usage{
-getData(object, VarNames)
+getData(object, VarNames, DDslot = "MicroData")
 
-\S4method{getData}{DD}(object, VarNames)
+\S4method{getData}{DD}(object, VarNames, DDslot = "MicroData")
 
-\S4method{getData}{StQ}(object, VarNames)
+\S4method{getData}{StQ}(object, VarNames, DDslot = "MicroData")
 
-\S4method{getData}{StQList}(object, VarNames)
+\S4method{getData}{StQList}(object, VarNames, DDslot = "MicroData")
 
-\S4method{getData}{rawStQ}(object, VarNames)
+\S4method{getData}{rawStQ}(object, VarNames, DDslot = "MicroData")
 }
 \arguments{
 \item{object}{Object whose (possibly subsetted) slot \code{Data} is queried.}
 
 \item{VarNames}{Character vector with the variable names subsetting the data 
 set.}
+
+\item{DDslot}{Character vector of length 1 with the name of DD slot in which
+variables in VarNames are defined. Its default value is \code{MicroData} and
+has no efect if the input object is a \linkS4class{DD} object.}
 }
 \value{
 In the case of \linkS4class{StQ} objects, it returns a 
