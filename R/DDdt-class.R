@@ -55,7 +55,7 @@ setClass(Class = "DDdt",
              NQual <- max(0, NCol - 5)
              if (NQual > 0) {
                  
-                 Quals <- paste0('Qual', 1:NQual)
+                 Quals <- paste0('Qual', 1:(NQual+1))
                  
              } else {
                  
