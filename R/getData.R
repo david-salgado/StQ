@@ -123,7 +123,7 @@ setMethod(
             stop('[StQ::getData] Variable ', ExtractNames(VarName), ' has not any non-identity qualifiers, so VarName cannot be ', VarName, '.')
         }
     }
-    
+  
 
     VarNames.DT <- VarNamesToDT(VarNames, getDD(object))
     for (col in names(VarNames.DT)){

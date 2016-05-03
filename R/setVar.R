@@ -48,7 +48,7 @@
 #' newVNCVar <- new(Class = 'VNCdt',
 #'                  data.table(IDQual = '', NonIDQual = '', IDDD = 'lTurnover',
 #'                             Unit1 = ''))
-#' newVNC <- new(Class = 'VarNameCorresp', list(Aggregates = newVNCVar))
+#' newVNC <- BuildVNC(list(Aggregates = newVNCVar))
 #' newDD <- new(Class = 'DD',
 #'              VarNameCorresp = newVNC, 
 #'              Aggregates = new(Class = 'DDdt',
@@ -93,7 +93,7 @@ setMethod(
             stop("[StQ::setVar] A new DD object for the new variable is needed.")
         }
         
-        if (length(getVNC(newDD)) != 1 | dim(getVNC(newDD)[[1]])[1] != 1) {
+        if (dim(getVNC(newDD)[[DDslot]])[1] != 1) {
 
             stop('[StQ::setVar] Only one new variable at a time.')
         }
@@ -126,7 +126,7 @@ setMethod(
             return(out)
         }
         
-        newVNC <- copy(getVNC(newDD)[[1]])
+        newVNC <- copy(getVNC(newDD)[[DDslot]])
         newVNC <- newVNC[, 'IDQual' := NULL, with = F]
         newVNC <- newVNC[, 'NonIDQual' := NULL, with = F]
         UnitCols <- names(newVNC)[grep('Unit', names(newVNC))]
@@ -144,10 +144,10 @@ setMethod(
 
             setData(object) <- Data[IDDD != NewVarName]
         }
-             
+           
         DD <- getDD(object)
         newDD <- DD + newDD
-
+         
         if (class(Value) == 'expression'){
 
             ExprVariables <- c(all.vars(Value), by)
@@ -157,7 +157,6 @@ setMethod(
             ExprVariables <- ExprVariables[ExprVariables != '']
 
             Data <- getData(object, ExprVariables, DDslot) 
-         
             newObject <- new(Class = 'StQ', Data = Data, DD = newDD)
 
             Data <- dcast_StQ(newObject, DDslot = DDslot)
