@@ -50,6 +50,9 @@ setMethod(
             outDT[is.na(get(col)), col := '', with = F]
         }
         
+        setcolorder(outDT, c(setdiff(names(outDT), c('IDDD', 'Value')), 'IDDD', 'Value'))
+        #outDT <- new(Class = 'Datadt', outDT)
+        
         return(outDT)
     }
 )
