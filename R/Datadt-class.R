@@ -16,11 +16,20 @@
 #' }
 #'
 #' @examples
+#' library(data.table)
 #' new(Class = 'Datadt', 
-#'     data.table(ID = c('001', '001', '001', '001'), 
-#'                IsNatMarket = c('0', '1', '', ''),
-#'                IDDD = c('Turnover', 'Turnover', 'Province', 'NACE09'),
-#'                Value = c('625000', '23154', '04', '0512')))
+#'     data.table(ID = c('001', '001', '001', '001', 
+#'                       '002', '002', '002', '002'), 
+#'                IsNatMarket = c('0', '1', '', '',
+#'                                '0', '1', '', ''),
+#'                IDDD = c('Turnover', 'Turnover', 'Province', 'NACE09',
+#'                         'Turnover', 'Turnover', 'Province', 'NACE09'),
+#'                Value = c('625000', '23154', '04', '0512',
+#'                          '25345', '1224', '01', '0601')))
+#' 
+#' # A more realistic example:
+#' ExampleDatadt                         
+#'                          
 #' @import data.table
 #'
 #' @export

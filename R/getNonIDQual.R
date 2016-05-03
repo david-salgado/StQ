@@ -1,17 +1,17 @@
 #' @title Return the variable names included in columns 'NonIDQual" of the input object
 #'
-#' @description \code{getNonIDQual} returns a character vector with all unit qualifier 
-#' names (NonIDQual) included in the input object.
+#' @description \code{getNonIDQual} returns a character vector with all variable 
+#' qualifiers names (NonIDQual) included in the input object.
 #'
-#' @param object Object with the NonIDQual unit qualifier. 
+#' @param object Object with the NonIDQual variable qualifiers. 
 #' 
-#' @param Namesdt Character vector with the components or slots from which 
-#' NonIDQuals are requiered. 
+#' @param Namesdt Character vector with the components or slots of the object
+#' from which NonIDQuals are required. 
 #'
-#' @return Character vector with all the variable qualifier names.
+#' @return Character vector with the NonIDQual variable qualifiers names.
 #'
 #' @examples
-#' # A more elaborate example
+#' library(data.table)
 #' VarList <- list(
 #'   ID = new(Class = 'VNCdt', 
 #'            .Data = data.table(
@@ -30,6 +30,7 @@
 #'                       IsEuroMarket = c(rep('', 4), '0'),
 #'                       IsRWMarket = c(rep('', 4), '1'),
 #'                       Unit1 = c('numidest', rep('', 3), 'cp09'))),
+#'  ParaData = new(Class = 'VNCdt'),
 #'  Aggregates = new(Class = 'VNCdt', 
 #'                   .Data = data.table(
 #'                      IDQual = c('Province', 'NACE', 'IsNatMarket', ''),
@@ -39,8 +40,8 @@
 #'                      NACE = c('', '', '', '.'),
 #'                      IsNatMarket = c('', '', '', '1'),
 #'                      Unit1 = c('provincia', 'actividad', '', 'cn01'))))
-#' Example <- new(Class = 'VarNameCorresp', .Data = VarList)
-#' getNonIDQual(Example)
+#' VNC <- new(Class = 'VarNameCorresp', .Data = VarList)
+#' getNonIDQual(VNC)
 #' 
 #' 
 #' @export

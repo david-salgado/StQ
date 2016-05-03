@@ -11,7 +11,7 @@
 #' @return Character vector with all the unit qualifier names.
 #'
 #' @examples
-#' # A more elaborate example
+#' library(data.table)
 #' VarList <- list(
 #'   ID = new(Class = 'VNCdt', 
 #'            .Data = data.table(
@@ -30,6 +30,7 @@
 #'                       IsEuroMarket = c(rep('', 4), '0'),
 #'                       IsRWMarket = c(rep('', 4), '1'),
 #'                       Unit1 = c('numidest', rep('', 3), 'cp09'))),
+#'  ParaData = new(Class = 'VNCdt'),
 #'  Aggregates = new(Class = 'VNCdt', 
 #'                   .Data = data.table(
 #'                      IDQual = c('Province', 'NACE', 'IsNatMarket', ''),
@@ -39,8 +40,8 @@
 #'                      NACE = c('', '', '', '.'),
 #'                      IsNatMarket = c('', '', '', '1'),
 #'                      Unit1 = c('provincia', 'actividad', '', 'cn01'))))
-#' Example <- new(Class = 'VarNameCorresp', .Data = VarList)
-#' getIDQual(Example)
+#' VNC <- new(Class = 'VarNameCorresp', .Data = VarList)
+#' getIDQual(VNC)
 #' 
 #' 
 #' @export

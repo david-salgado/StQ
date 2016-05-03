@@ -9,21 +9,25 @@
 \alias{getData,rawStQ-method}
 \title{Return slot Data from an object}
 \usage{
-getData(object, VarNames)
+getData(object, VarNames, DDslot = "MicroData")
 
-\S4method{getData}{DD}(object, VarNames)
+\S4method{getData}{DD}(object, VarNames, DDslot = "MicroData")
 
-\S4method{getData}{StQ}(object, VarNames)
+\S4method{getData}{StQ}(object, VarNames, DDslot = "MicroData")
 
-\S4method{getData}{StQList}(object, VarNames)
+\S4method{getData}{StQList}(object, VarNames, DDslot = "MicroData")
 
-\S4method{getData}{rawStQ}(object, VarNames)
+\S4method{getData}{rawStQ}(object, VarNames, DDslot = "MicroData")
 }
 \arguments{
 \item{object}{Object whose (possibly subsetted) slot \code{Data} is queried.}
 
 \item{VarNames}{Character vector with the variable names subsetting the data 
 set.}
+
+\item{DDslot}{Character vector of length 1 with the name of DD slot in which
+variables in VarNames are defined. Its default value is \code{MicroData} and
+has no efect if the input object is a \linkS4class{DD} object.}
 }
 \value{
 In the case of \linkS4class{StQ} objects, it returns a 
@@ -33,6 +37,9 @@ restriCted to variable names specified in \code{VarNames}.
 }
 \description{
 \code{getData} returns slot \code{Data} from the input object.  
+
+In the case of objects of class \linkS4class{DD}, it returns the slot
+\code{MicroData} of the input object.
 
 In the case of objects of class \linkS4class{StQ}, it returns a data set 
 restricted to those root variable names in the column \code{IDDD} of slot
@@ -54,28 +61,14 @@ The parameter \code{VarNames} has no effect.
 }
 \examples{
 # From DD objects 
-DDData <- data.table(Variable = c('NumIdEst', 'EsMercNac', 'EsMercEuro',
-                                  'EsMercRM', 'Cod', 'IEPEntradaPed'),
-                     Sort = c('IDQual', 'NonIDQual', 'NonIDQual', 
-                              'NonIDQual', 'NonIDQual', 'IDDD'),
-                     Class = c('character', 'character', 'character', 
-                               'character', 'character', 'character'),
-                     Qual1 = c('', '', '', '', '', 'NumIdEst'))
-VarList <- list(data.table(IDQual = c('NumIdEst','','','',''),
-                     NonIDQual = c('EsMercNac', 'EsMercEuro', 'EsMercRM', 
-                                   'Cod',''),
-                     IDDD = c('','','','','IEPEntradaPed'),
-                     Unit1 = c('','','','','')))
-VarNameCorresp <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList)
-DD <- new(Class = 'DD', MicroData = DDData, VarNameCorresp = VarNameCorresp)
-getData(DD)
-
+data(ExampleDD)
+getData(ExampleDD)
 
 # From an StQ object 
-VarNames <- c('IASSCifraNeg', 'IASSEmpleo')
+VarNames <- c('Orders_0')
 getData(ExampleQ, VarNames)
 
-VarNames <- c('IASSCifraNeg', 'IASSEmpleo_0')
+VarNames <- c('Turnover')
 getData(ExampleQ, VarNames)
 
 # From an StQList object 

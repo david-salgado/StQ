@@ -51,7 +51,7 @@ setGeneric("dcast_StQ",
 #'
 #' @import data.table
 #'
-#' @include StQ-class.R getDD.R getData.R getUnits.R plus.DD.R VarNamesToFormula.R
+#' @include StQ-class.R getSlotDD.R getNonIDQual.R getDD.R getData.R getDD.R VarNamesToFormula.R
 #'
 #' @export
 setMethod(
@@ -59,17 +59,42 @@ setMethod(
     signature = c("StQ"),
     function(object, VarNames = NULL, DDslot = 'MicroData'){
 
-        if (length(DDslot) > 1) stop('[StQ::dcast_StQ] DDslot must be a character vector of length 1.')
-        if (!DDslot %in% slotNames(getDD(object))) stop('[StQ::dcast_StQ] DDslot is not a component of the slot DD of the input object.')
+        if (length(DDslot) > 1){
+            
+            stop('[StQ::dcast_StQ] DDslot must be a character vector of length 1.')
+        }
         
-        nQual <- length(setdiff(names(slot(getDD(object), DDslot)),
-                                c('Variable', 'Sort', 'Class', 'ValueRegExp')))
-
-        if (nQual == 0) stop('[StQ::dcast_StQ] The slot DD has no qualifiers.')
-
         DD <- getDD(object)
-        IDQual <- (slot(DD, DDslot))[Sort == 'IDQual', Variable]
-        NonIDQual <- (slot(DD, DDslot))[Sort == 'NonIDQual', Variable]
+        
+        if (!DDslot %in% slotNames(DD)){
+            
+            stop('[StQ::dcast_StQ] DDslot is not a component of the slot DD of the input object.')
+        }
+
+        for (VarName in VarNames){
+            
+            Varslot <- getSlotDD(DD, VarName, DDslot)
+            Quals <- setdiff(names(Varslot),
+                             c('Variable', 'Sort', 'Class', 'ValueRegExp'))
+            
+            NameQuals <- c()
+            for (Qual in Quals){
+                
+                NameQuals <- c(NameQuals,Varslot[Variable == ExtractNames(VarName)][[Qual]])
+            }
+            
+            nonIDQuals <- getNonIDQual(Varslot)
+            
+            
+            if (!all(NameQuals %in% nonIDQuals) & VarName != ExtractNames(VarName)){
+                
+                stop('[StQ::dcast_StQ] Variable ', ExtractNames(VarName), ' has not any non-identity qualifiers, so VarName cannot be ', VarName, '.')
+            }
+        }
+        
+
+        IDQual <- Varslot[Sort == 'IDQual', Variable]
+        NonIDQual <- Varslot[Sort == 'NonIDQual', Variable]
 
         Quals <- c(IDQual, NonIDQual)
         Quals <- intersect(VarNames, Quals)
@@ -91,7 +116,6 @@ setMethod(
         # Creamos una data.table auxDD con la fórmula asociada a cada variable según el slot DD
         auxDD <- VarNamesToFormula(IDDDVarNames, DD)
 
-
         # Se asocia a cada fórmula su correspondiente data.table dcasted
         auxData <- split(auxDD[['Variable']], auxDD[['Form']])
 
@@ -103,7 +127,7 @@ setMethod(
 
             } else {
 
-                aux <- getData(object, VarNames)[IDDD %in% auxData[[Form]]]
+                aux <- getData(object, VarNames, DDslot)[IDDD %in% auxData[[Form]]]
 
             }
 

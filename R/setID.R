@@ -1,69 +1,96 @@
 #' @title Set value of slot \code{ID} of an object \linkS4class{DD}
 #'
-#' @description \code{setID} assigns a \linkS4class{data.table} to the
+#' @description \code{setID} assigns a \linkS4class{DDdt} to the
 #'  slot \code{ID} of the input object.
 #'
 #' @param object Object containing slot \code{ID} to be assigned.
 #'
-#' @param value \linkS4class{data.table} to be assigned to the slot \code{ID}.
+#' @param value \linkS4class{DDdt} to be assigned to the slot \code{ID}.
 #'
 #' @return Object \linkS4class{DD} with slot \code{ID} updated.
 #'
 #' @examples
-#' # On an empty object of class VarNameCorresp:
-#' VNC <- new(Class = 'VarNameCorresp')
-#' VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','','',''),
-#'                                        NonIDQual = c('EsMercNac', 
-#'                                                      'EsMercEuro', 
-#'                                                      'EsMercRM',
-#'                                                      'Cod',
-#'                                                      ''),
-#'                                        IDDD = c('', '', '' ,'' ,
-#'                                                 'IEPEntradaPed'),
-#'                                        Unit1 = c('', '', '', '', 'cp02')))
-#' VNC[['MicroData']] <- VarList
-#' str(VNC)
+#' # An example:
+#' library(data.table)
+#' ### We build the VNC object
+#' VarList <- list(ID = new(Class = 'VNCdt',data.table(IDQual = c('NumIdEst', rep('', 4)),
+#'                                                     NonIDQual = c('','','','',''),
+#'                                                     IDDD = c('', 'Name', 'Surname', 'PostalAddr',
+#'                                                              'PhoneNo'),
+#'                                                     NumIdEst = c('', rep('.', 4)),
+#'                                                     Unit1 = c('numidest', 'nombre', 'apellidos', 
+#'                                                               'direccion', 'telefono')     
+#' )),
+#' MicroData =new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 4)),
+#'                                            NonIDQual = c('', 'IsNatMarket', 
+#'                                                          'IsEuroMarket', 
+#'                                                          'IsRWMarket',
+#'                                                          ''),
+#'                                            IDDD = c(rep('', 4), 'NewOrders'),
+#'                                            NumIdEst = c(rep('', 4), '.'),
+#'                                            IsNatMarket = c(rep('', 4), '0'),
+#'                                            IsEuroMarket = c(rep('', 4), '0'),
+#'                                            IsRWMarket = c(rep('', 4), '1'),
+#'                                            Unit1 = c('numidest', rep('', 3), 'cp09'))),
+#' ParaData = new(Class = 'VNCdt',data.table(IDQual = c('NumIdEst', rep('', 2)),
+#'                                           NonIDQual = c('', 'Action', ''),
+#'                                           IDDD = c(rep('', 2), 'Date'),
+#'                                           NumIdEst = c(rep('', 2), '.'),
+#'                                           Action = c(rep('', 2), 'Imputation'),
+#'                                           Unit1 = c('numidest', '', 'FechaImput'))))
 #' 
-#' # On an object of class DD:
-#' MicroDataDD <- data.table(Variable = 'IEPEntradaPed', 
-#'                           Sort = 'IDDD', 
-#'                           Class = 'numeric',
-#'                           Qual1 = 'NOrden')
-#' DD <- new(Class = 'DD', MicroData = MicroDataDD)
-#' VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','','',''),
-#'                                        NonIDQual = c('EsMercNac', 
-#'                                                      'EsMercEuro', 
-#'                                                      'EsMercRM',
-#'                                                      'Cod',
-#'                                                      ''),
-#'                                        IDDD = c('', '', '' ,'' ,
-#'                                                 'IEPEntradaPed'),
-#'                                        Unit1 = c('', '', '', '', 'cp02')))
-#' setID(DD) <- VarList
-#' DD
-#' str(DD)
-#'
-#' # On an object of class StQ:
-#' MicroDataDD <- data.table(Variable = 'IEPEntradaPed', 
-#'                           Sort = 'IDDD', 
-#'                           Class = 'numeric',
-#'                           Qual1 = 'NOrden')
-#' DD <- new(Class = 'DD', MicroData = MicroDataDD)
-#' StQ <- new(Class = 'StQ', 
-#'            Data = data.table(IDDD = character(0), Value = character(0)), 
-#'            DD = DD)
-#' VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','','',''),
-#'                                        NonIDQual = c('EsMercNac', 
-#'                                                      'EsMercEuro', 
-#'                                                      'EsMercRM',
-#'                                                      'Cod',
-#'                                                      ''),
-#'                                        IDDD = c('', '', '' ,'' ,
-#'                                                 'IEPEntradaPed'),
-#'                                        Unit1 = c('', '', '', '', 'cp02')))
-#' setID(StQ) <- VarList
-#' StQ
-#' str(StQ)
+#' VNC <- new(Class = 'VarNameCorresp', VarList)
+#' 
+#' ### We build the specification data.tables
+#' IDdt <- new( Class='DDdt',data.table(
+#'     Variable = c('NumIdEst', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
+#'     Sort = c('IDQual', rep('IDDD', 4)),
+#'     Class = rep('character', 5),
+#'     Qual1 = c('', rep('NumIdEst', 4)),
+#'     ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}')
+#' ))
+#' Microdt <- new( Class='DDdt',data.table(
+#'     Variable = c('NumIdEst', 'IsNatMarket', 'IsEuroMarket', 
+#'                  'IsRWMarket', 'NewOrders'),
+#'     Sort = c('IDQual', rep('NonIDQual', 3), 'IDDD'),
+#'     Class = c(rep('character', 4), 'numeric'),
+#'     Qual1 = c(rep('', 4), 'NumIdEst'),
+#'     ValueRegExp = c('[0-9]{9}PP', rep('(0|1| )', 3), '([0-9]{1, 10}| )')
+#' ))
+#' Paradt <-new( Class='DDdt', data.table(
+#'     Variable = c('NumIdEst', 'Action', 'Date'),
+#'     Sort = c('IDQual', 'NonIDQual', 'IDDD'),
+#'     Class = rep('character', 3),
+#'     Qual1 = c(rep('', 2), 'NumIdEst'),
+#'     Qual2 = c(rep('', 2), 'Action'),
+#'     ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 
+#'                     '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')
+#' ))
+#' Aggdt <- new( Class='DDdt',data.table(
+#'     Variable = c('Province', 'NACE09', 'Turnover'),
+#'     Sort = c(rep('IDQual', 2), 'IDDD'),
+#'     Class = c(rep('character', 2), 'numeric'),
+#'     Qual1 = c(rep('', 2), 'Province'),
+#'     Qual2 = c(rep('', 2), 'NACE09'),
+#'     ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])', '([0-9]{1, 15}| )')
+#' ))
+#' 
+#' DD <- new(Class = 'DD', 
+#'           VarNameCorresp = VNC, 
+#'           ID = IDdt, 
+#'           MicroData = Microdt, 
+#'           ParaData = Paradt,
+#'           Aggregates = Aggdt)
+#' 
+#' newIDdt <- new( Class='DDdt',data.table(
+#'                 Variable = c('Name', 'Surname', 'PostalAddr', 'PhoneNo'),
+#'                 Sort = c( rep('IDDD', 4)),
+#'                 Class = rep('character', 4),
+#'                 Qual1 = c(rep('NumIdEst', 4)),
+#'                 ValueRegExp = c('.+', '.+', '.+', '(6|9)[0-9]{8}')
+#'                 ))
+#' 
+#' setID(DD) <- newIDdt
 #' 
 #' @rdname setID
 #'
@@ -81,7 +108,7 @@ setGeneric("setID<-", function(object, value){standardGeneric("setID<-")})
 #' @export
 setReplaceMethod(
     f = "setID",
-    signature = c("DD", "data.table"),
+    signature = c("DD", "DDdt"),
     function(object, value){
         
         object@ID <- value

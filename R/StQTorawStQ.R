@@ -12,14 +12,14 @@
 #'
 #' @examples
 #' library(data.table)
-#' data(ExampleQ)
-#' newrawQ <- StQTorawStQ(ExampleQ)
+#' data(ExampleStQ)
+#' newrawQ <- StQTorawStQ(ExampleStQ)
 #'  
 #' @export
 setGeneric("StQTorawStQ", function(Q){standardGeneric("StQTorawStQ")})
 #' @rdname StQTorawStQ
 #' 
-#' @include StQ-class.R rawKey-class.R rawDatadt-class.R rawStQ-class.R 
+#' @include StQ-class.R rawKey-class.R rawDatadt-class.R rawStQ-class.R getDD.R getData.R DTToKey.R
 #' 
 #' @export
 setMethod(
@@ -34,9 +34,9 @@ setMethod(
         keyValue <- strsplit(QData, '_Value:')
         key <- unlist(lapply(keyValue, function(x){x[1]}))
         value <- unlist(lapply(keyValue, function(x){x[2]}))
-        
         key <- new(Class = 'rawKey', key)    
         Datadt <- new(Class = 'rawDatadt', data.table(Key = key, Value = value))
+return(Datadt)
         rawQ <- new(Class = 'rawStQ', Data = Datadt, DD = QDD)
 
         return(rawQ)

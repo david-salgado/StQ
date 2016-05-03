@@ -27,6 +27,8 @@ setMethod(
     function(DT){
         
         ColNames <- names(DT)
+        if (!'IDDD' %in% ColNames) stop('[StQ::DTToKey] IDDD must a column of the data.table.')
+        ColNames <- c('IDDD', setdiff(ColNames, 'IDDD'))
         key <- vector('character', dim(DT)[1])
         for(index.col in seq(along = ColNames)){
             
@@ -35,12 +37,15 @@ setMethod(
                 key <- paste0(paste0(ColNames[index.col], ':'), DT[[ColNames[index.col]]])
             
             } else {
-                               
-                key <- ifelse(DT[[ColNames[index.col]]] == '', 
-                              key,
-                              paste0(key, '_', ColNames[index.col], ':', DT[[ColNames[index.col]]]))
+                
+                    key <- ifelse(!is.na(DT[[ColNames[index.col]]]),
+                                  ifelse(DT[[ColNames[index.col]]] == '', 
+                                         key,
+                                         paste0(key, '_', ColNames[index.col], ':', DT[[ColNames[index.col]]])),
+                                  paste0(key, '_', ColNames[index.col], ':', ' '))
             }
         }
+
         OutKey <- new(Class = 'rawKey', key)
         return(OutKey)
     }

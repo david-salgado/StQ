@@ -6,9 +6,6 @@
 #'
 #' @param object Object of class \linkS4class{StQ} or class 
 #' \linkS4class{data.table}.
-#' 
-#' @param DDslot Character vector of length 1 with the name of DD slot in which
-#' qualifiers will be looked for. Its default value is \code{MicroData}.
 #'
 #' @return It returns a \code{data.table} with the statistical units in the
 #' input object.
@@ -18,7 +15,7 @@
 #' getUnits(ExampleQ)
 #'
 #' @export
-setGeneric("getUnits", function(object, DDslot = 'MicroData') {standardGeneric("getUnits")})
+setGeneric("getUnits", function(object) {standardGeneric("getUnits")})
 
 #' @rdname getUnits
 #'
@@ -30,22 +27,11 @@ setGeneric("getUnits", function(object, DDslot = 'MicroData') {standardGeneric("
 setMethod(
   f = "getUnits",
   signature = c("StQ"),
-  function(object, DDslot = 'MicroData'){
+  function(object){
 
-    if (length(DDslot) > 1){
-      
-        stop('[StQ::getUnits] DDslot must be a character vector of length 1.')
-    }
-  
-    if (!DDslot %in% slotNames(DD)){
-      
-        stop('[StQ:getUnits] DDslot is not a component of the slot DD of the input object.')
-    }
-      
-    DDData <- slot(getDD(object), DDslot)
-    DDData <- slot(getDD(object), DDslot)
+    DDData <- slot(getDD(object), 'MicroData')
     IDQual <- DDData[Sort == 'IDQual', Variable]
-    output <- getData(object)[, IDQual, with = FALSE]
+    output <- getData(object)[, IDQual, with = F]
     setkeyv(output, IDQual)
     output <- output[!duplicated(output)]
     for (IDQ in IDQual){
@@ -53,7 +39,6 @@ setMethod(
         output <- output[get(IDQ) != '']
         
     }
-    
     return(output)
   }
 )
@@ -98,6 +83,25 @@ setMethod(
             
             IDQual <- setdiff(names(object),)
         }    
+        
+    }
+)
+
+
+#' @rdname getUnits
+#'
+#'
+#' @import data.table
+#'
+#' @export
+setMethod(
+    f = "getUnits",
+    signature = c("Datadt"),
+    function(object){
+        ColNames.object <- copy(names(object))
+        Units <- unique(object[[ColNames.object[1]]])
+        Units <- data.table(Units)
+        return(Units)
         
     }
 )

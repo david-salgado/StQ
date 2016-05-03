@@ -5,7 +5,7 @@
 \alias{setVar}
 \alias{setVar,StQ,DD-method}
 \alias{setVar,StQList,DD-method}
-\title{Method to set values of a variable}
+\title{Method to set values of a variable.}
 \usage{
 setVar(object, newDD, Value, lag = NULL, by = NULL)
 
@@ -45,35 +45,31 @@ the input variable, the method overwrites it.
 It is also necessary to provide as input parameter an object of class
 \linkS4class{DD} named \code{DDnl} with the row corresponding to the variable
 set with this method to be included in the slot \code{DD}. This row is
-specified as a data.table with a single row and columns Variable, Sort, Class
-and Qual1-Qualn (as many as so many qualifiers are necessary).
+specified as a \linkS4class{DDdt} with a single row and columns Variable,
+Sort, Class, Qual1-Qualn (as many as so many qualifiers are necessary) and
+ValueRegExp.
 
 Input parameters \code{by} and \code{lag} are optional and specify how to
 compute the values of the new variable in some circunstamces.
 }
 \examples{
 library(data.table)
-newVNCVarList <- list(MicroData = 
-                   data.table(IDQual = '',
-                              NonIDQual = '',
-                              IDDD = 'IASSlCN',
-                              NOrden = '',
-                              CCAA = '',
-                              EsRemuner = '',
-                              TipoRem = '',
-                              Unit1 = '',
-                              Unit2 = ''))
-newVNC <- new(Class = 'VarNameCorresp', VarNameCorresp = newVNCVarList)
+newVNCVar <- new(Class = 'VNCdt',
+                 data.table(IDQual = '', NonIDQual = '', IDDD = 'lTurnover',
+                            Unit1 = ''))
+newVNC <- new(Class = 'VarNameCorresp', list(Aggregates = newVNCVar))
 newDD <- new(Class = 'DD',
              VarNameCorresp = newVNC, 
-             MicroData = data.table(Variable = 'IASSlCN',
-                                    Sort = 'IDDD',
-                                    Class = 'numeric',
-                                    Qual1 = 'NOrden'))
-NewQ <- setVar(object = ExampleQ,
+             Aggregates = new(Class = 'DDdt',
+                             data.table(Variable = 'lTurnover',
+                                        Sort = 'IDDD',
+                                        Class = 'numeric',
+                                        Qual1 = 'NOrden',
+                                        ValueRegExp = '')))
+NewQ <- setVar(object = Q,
                newDD = newDD, 
-               Value = expression(log(1 + IASSCifraNeg)))
-getVar(NewQ, 'IASSlCN')
+               Value = expression(log(1 + Turnover)))
+getVar(NewQ, 'lTurnover')
 
 }
 

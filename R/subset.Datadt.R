@@ -16,10 +16,13 @@
 #' @return Object of class \linkS4class{Datadt} with the subsetted input object.
 #'
 #' @examples
-#' \dontrun{
-#' data(ExampleQ)
-#' ExampleQ[IDDD == 'IASSCifraNeg']
-#' }
+#' Ddt <- new(Class = 'Datadt', 
+#'        data.table(ID = c('001', '001', '001', '001'), 
+#'                   IsNatMarket = c('0', '1', '', ''),
+#'                   IDDD = c('Turnover', 'Turnover', 'Province', 'NACE09'),
+#'                   Value = c('625000', '23154', '04', '0512')))
+#' 
+#'  Ddt[IDDD == 'Turnover']                       
 #'
 #' @include Datadt-class.R
 #'
@@ -27,16 +30,17 @@
 #'
 #' @export
 setMethod(
-   f = "[",
-   signature = c("Datadt"),
-   function(x, i, j, ..., drop = TRUE){
-    
-       mc <- match.call()
-       New.x <- x@.Data
-       names(New.x) <- x@names
-       New.x <- setDT(New.x)
-       mc[['x']] <- New.x
-       output <- eval(mc, envir = parent.frame())
-       return(output)
-   }
+    f = "[",
+    signature = c("Datadt"),
+    function(x, i, j, ..., drop = TRUE){
+        
+        mc <- match.call()
+        New.x <- x@.Data
+        names(New.x) <- x@names
+        New.x <- setDT(New.x)
+        mc[['x']] <- New.x
+        output <- eval(mc, envir = parent.frame())
+        
+        return(output)
+    }
 )

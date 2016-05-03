@@ -70,10 +70,20 @@ setClass(Class = "VarNameCorresp",
              stop('[Validity VarNameCorresp] A VarNameCorresp object must be a named list.')
          
          }
+             
+         if (!all(c('ID', 'MicroData', 'ParaData') %in% names(object))) {
+                 
+                 stop('[Validity VarNameCorresp] A VarNamesCorrespo object must
+                       be a list with at least components "ID", "MicroData" and 
+                      "Paradata"')
+                 
+         }     
+             
          ComponentClasses <- unlist(lapply(object, function(x){class(x)[1]}))
          if (!all(ComponentClasses == 'VNCdt')) {
              
-             stop('[Validity VarNameCorresp] All components of slot VarNameCorresp must be objects of class VNCdt.')     
+             stop('[Validity VarNameCorresp] All components of slot VarNameCorresp
+                    must be objects of class VNCdt.')     
          
          }
           

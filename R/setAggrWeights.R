@@ -1,11 +1,11 @@
 #' @title Set value of slot \code{AggrWeights}
 #'
-#' @description \code{setAggrWeights} assigns a \linkS4class{data.table} to the slot
+#' @description \code{setAggrWeights} assigns a \linkS4class{DDdt} to the slot
 #' \code{AggrWeights} of the input object.
 #'
 #' @param object Object whose slot \code{AggrWeights} is to be assigned.
 #'
-#' @param value \linkS4class{data.table} to be assigned to the slot \code{AggrWeights}.
+#' @param value \linkS4class{DDdt} to be assigned to the slot \code{AggrWeights}.
 #'
 #' @return Object with slot AggrWeights updated.
 #'
@@ -35,7 +35,7 @@ setGeneric("setAggrWeights<-", function(object, value){standardGeneric("setAggrW
 #' @export
 setReplaceMethod(
     f = "setAggrWeights",
-    signature = c("DD", "data.table"),
+    signature = c("DD", "DDdt"),
     function(object, value){
         
         setkeyv(value, setdiff(names(value), 'Value'))
