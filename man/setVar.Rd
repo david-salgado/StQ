@@ -61,7 +61,7 @@ library(data.table)
 newVNCVar <- new(Class = 'VNCdt',
                  data.table(IDQual = '', NonIDQual = '', IDDD = 'lTurnover',
                             Unit1 = ''))
-newVNC <- new(Class = 'VarNameCorresp', list(Aggregates = newVNCVar))
+newVNC <- BuildVNC(list(Aggregates = newVNCVar))
 newDD <- new(Class = 'DD',
              VarNameCorresp = newVNC, 
              Aggregates = new(Class = 'DDdt',
