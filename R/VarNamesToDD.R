@@ -1,27 +1,13 @@
-#' @title Return root names and NonID-qualifier values of compound variable names
+#' @title Return a reduced \linkS4class{DD} involving the input variable names
 #'
-#' @description \code{VarNamesToDD} returns a \linkS4class{DD} identifying those qualifiers 
-#' corresponding to the values appearing in the compound variable names specified in the input 
-#' parameter \code{VarNames}.
-#'
-#' This function is designed for variable names with suffixes appending qualifier values with 
-#' underscores _.
-#'
-#' The function determines the correspondind qualifier names for the values contained in the 
-#' compound variable names using the information from the \linkS4class{DD} object specified as the
-#'  second input parameter.
-#'
-#' \code{VarNamesToDD} has been designed fundamentally for internal use in the
-#' construction of editing strategies, but it can also be of utility in some
-#' scripts.
+#' @description \code{VarNamesToDD} returns a \linkS4class{DD} object including only the variable 
+#' names specified in the input parameter \code{VarNames}.
 #'
 #' @param VarNames Character vector with the compound variable names.
 #'
-#' @param DD Object of class \linkS4class{DD} with the definition and properties
-#' of the variables.
+#' @param DD Object of class \linkS4class{DD} with the definition and properties of the variables.
 #'
-#' @return \linkS4class{DD} identifying those qualifiers corresponding to the 
-#' values appearing in the compound variable names specified in the input 
+#' @return \linkS4class{DD} involving only the compound variable names specified in the input 
 #' parameter \code{VarNames}.
 #'
 #'
@@ -114,46 +100,24 @@ VarNamesToDD <- function(VarNames, DD){
     if (is.character(VarNames) & length(VarNames) == 1){
         
         DDSlotNames <- setdiff(slotNames(DD), 'VarNameCorresp')
-        
+
         for (DDslot in DDSlotNames){
             
-            DDlocal <- slot(DD, DDslot)
-            Names.DT <- DDlocal[Variable == ExtractNames(VarNames)]
+            DDdtlocal <- slot(DD, DDslot)
+            Names.DT <- DDdtlocal[Variable == ExtractNames(VarNames)]
             
-                      
-            if(dim(Names.DT)[1] != 0) {
-                
-                Names.Aux <- copy(Names.DT)
-                for (i in 1:length(names(Names.Aux))){
-                    if ('Qual' == substr(names(Names.Aux)[i],1,4)) {
-                        names(Names.Aux)[i] <- Names.Aux[[i]] 
-                    } 
-                }
-                
-                ParsedNames <- strsplit(VarNames, '_')
-                Empty <- setdiff(names(Names.Aux),c(unlist(ParsedNames),'Sort','Class','ValueRegExp','Variable'))
-                LE=length(Empty)
-                L=length(Names.DT)
-                LE_Max=L-4
-                if (LE>0 & LE<LE_Max){
-                    EmptyDT <- c()
-                    for (i in 1:length(Empty)) {EmptyDT[i] <- names(Names.DT)[Names.DT[1]== Empty[i]]}
-                    for (Emptyvar in EmptyDT) {   
-                        Names.DT[,grep(paste0('^',Emptyvar,'$'), colnames(Names.DT)) := '']
-                        
+            if (dim(Names.DT)[1] != 0) {
+                ColNames <- setdiff(names(Names.DT), 
+                                    c('Variable', 'Sort', 'Class', 'Qual1', 'ValueRegExp'))
+                for (col in ColNames){
+                    
+                    if (all(Names.DT[[col]] == '')) {
+                        Names.DT[, col := NULL, with = F]
                     }
-                    L=length(Names.DT)
-                    names(Names.DT)[4:(L-1)] <- paste0(rep('Qual',L-4),c(1:(L-4)))
-                }else if (LE==LE_Max){
-                    EmptyDT <- paste0(rep('Qual',L-4),c(1:(L-4)))
-                    for (Emptyvar in EmptyDT) {
-                        Names.DT[,grep(paste0('^',Emptyvar,'$'), colnames(Names.DT)) := '']
-                    }
-                    Names.DT[[4]]=''
+                    
                 }
+            }
                 
-            } 
-            
             #Construimos el objecto DD por Slots
             if (DDslot=='ID'){
                 
