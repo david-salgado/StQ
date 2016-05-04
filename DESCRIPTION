@@ -73,7 +73,6 @@ Collate:
     'getID.R'
     'getIDDD.R'
     'getMicroData.R'
-    'getNonIDQual.R'
     'getOtherDD.R'
     'getParaData.R'
     'getVar.R'

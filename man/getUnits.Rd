@@ -3,22 +3,22 @@
 \docType{methods}
 \name{getUnits}
 \alias{getUnits}
+\alias{getUnits,Datadt-method}
 \alias{getUnits,StQ-method}
 \alias{getUnits,data.table-method}
 \title{Extract statistical units from an object}
 \usage{
-getUnits(object, DDslot = "MicroData")
+getUnits(object)
 
-\S4method{getUnits}{StQ}(object, DDslot = "MicroData")
+\S4method{getUnits}{StQ}(object)
 
 \S4method{getUnits}{data.table}(object)
+
+\S4method{getUnits}{Datadt}(object)
 }
 \arguments{
 \item{object}{Object of class \linkS4class{StQ} or class 
 \linkS4class{data.table}.}
-
-\item{DDslot}{Character vector of length 1 with the name of DD slot in which
-qualifiers will be looked for. Its default value is \code{MicroData}.}
 }
 \value{
 It returns a \code{data.table} with the statistical units in the
