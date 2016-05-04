@@ -3,27 +3,27 @@
 \docType{methods}
 \name{setVNC<-}
 \alias{setVNC<-}
-\alias{setVNC<-,DD,list-method}
-\alias{setVNC<-,StQ,list-method}
-\title{Set value of slot \code{VarNameCorresp}.}
+\alias{setVNC<-,DD,VarNameCorresp-method}
+\alias{setVNC<-,StQ,VarNameCorresp-method}
+\title{Set value of slot \code{VarNameCorresp}}
 \usage{
 setVNC(object) <- value
 
-\S4method{setVNC}{DD,list}(object) <- value
+\S4method{setVNC}{DD,VarNameCorresp}(object) <- value
 
-\S4method{setVNC}{StQ,list}(object) <- value
+\S4method{setVNC}{StQ,VarNameCorresp}(object) <- value
 }
 \arguments{
 \item{object}{Object containing slot \code{VarNameCorresp} to be assigned.}
 
-\item{value}{List of \linkS4class{VNCdt}s to be assigned to the slot 
+\item{value}{List of \linkS4class{data.table}s to be assigned to the slot 
 \code{VarNameCorresp}.}
 }
 \value{
 Object with slot \code{VarNameCorresp} updated.
 }
 \description{
-\code{setVNC} assigns a list of \linkS4class{VNCdt}s to the
+\code{setVNC} assigns a list of \linkS4class{data.table}s to the
  slot \code{VarNameCorresp} of the input object.
 }
 \examples{
@@ -61,21 +61,26 @@ DD
 str(DD)
 
 # On an object of class StQ:
-library(data.table)
-data(ExampleQ)
-VarList <- list(Aggregates = new(Class = 'VNCdt',
-                                data.table(IDQual = c('Province','NACE09',
-                                                      'IsNatMarket',''),
-                                           NonIDQual = rep('', 4),
-                                           IDDD = c('', '', '' ,'Turnover'),
-                                           Province = c('', '', '', '.'),
-                                           NACE09 = c('', '', '', '.'),
-                                           IsNatMarket = c('', '', '', '1'),
-                                           Unit1 = c('provincia', 'actividad',
-                                                     '', 'cn01'))))
-setVNC(ExampleQ) <- VarList
-ExampleQ
-str(ExampleQ)
+MicroDataDD <- data.table(Variable = 'IEPEntradaPed', 
+                          Sort = 'IDDD', 
+                          Class = 'numeric',
+                          Qual1 = 'NOrden')
+DD <- new(Class = 'DD', MicroData = MicroDataDD)
+StQ <- new(Class = 'StQ', 
+           Data = data.table(IDDD = character(0), Value = character(0)), 
+           DD = DD)
+VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','','',''),
+                                       NonIDQual = c('EsMercNac', 
+                                                     'EsMercEuro', 
+                                                     'EsMercRM',
+                                                     'Cod',
+                                                     ''),
+                                       IDDD = c('', '', '' ,'' ,
+                                                'IEPEntradaPed'),
+                                       Unit1 = c('', '', '', '', 'cp02')))
+setVNC(StQ) <- VarList
+StQ
+str(StQ)
 
 }
 

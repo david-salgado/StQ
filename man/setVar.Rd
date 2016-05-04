@@ -7,9 +7,10 @@
 \alias{setVar,StQList,DD-method}
 \title{Method to set values of a variable.}
 \usage{
-setVar(object, newDD, Value, lag = NULL, by = NULL)
+setVar(object, newDD, DDslot = "MicroData", Value, lag = NULL, by = NULL)
 
-\S4method{setVar}{StQ,DD}(object, newDD, Value, lag = NULL, by = NULL)
+\S4method{setVar}{StQ,DD}(object, newDD, DDslot = "MicroData", Value,
+  lag = NULL, by = NULL)
 
 \S4method{setVar}{StQList,DD}(object, newDD, Value, lag = NULL, by = NULL)
 }
@@ -18,6 +19,9 @@ setVar(object, newDD, Value, lag = NULL, by = NULL)
 
 \item{newDD}{\linkS4class{DD} object with the information of the new variable
 needed for the slot \code{DD} of the input object.}
+
+\item{DDslot}{Character vector of length 1 with the name of the slot of newDD
+in which the new variable is defined. Its default value is \code{MicroData}.}
 
 \item{Value}{Vector of length the number of statistical units in the input
 object with the values of the new variable for each of these units or
@@ -67,7 +71,8 @@ newDD <- new(Class = 'DD',
                                         Qual1 = 'NOrden',
                                         ValueRegExp = '')))
 NewQ <- setVar(object = Q,
-               newDD = newDD, 
+               newDD = newDD,
+               DDslot = 'Aggregates',
                Value = expression(log(1 + Turnover)))
 getVar(NewQ, 'lTurnover')
 

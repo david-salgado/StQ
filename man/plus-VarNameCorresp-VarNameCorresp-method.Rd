@@ -67,7 +67,7 @@ VarList2 <- list(
                                 IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
                                 NumIdEst = c('', rep('.', 4)),
                                 Unit1 = c('numidest', 'nombre', 'apellidos',
-                                          'direccion', 'telefono'))),
+                                        'direccion', 'telefono'))),
     MicroData = new(Class = 'VNCdt',
                     data.table(IDQual = c('NumIdEst', '', '', '', '', '', '', ''),
                                NonIDQual = c('', 'EsMercNac', 'EsMercEuro', 'EsMercRM',
