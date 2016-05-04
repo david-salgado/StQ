@@ -111,26 +111,8 @@ VarNamesToDT <- function(VarNames, DD){
     } else { # Ahora para varias variables de entrada
 
         out.list <- lapply(as.list(VarNames), VarNamesToDD, DD = DD)
+        out <- Reduce(function(x, y){x + y}, out.list, out.list[[1L]])
 
-        if (length(out.list) == 1){
-
-            out <- out.list[[1L]]
-
-        } else {
-
-            out <- Reduce(
-                function(x, y){merge(x, y,
-                                     all = TRUE,
-                                     by = intersect(names(x), names(y)))},
-                out.list)
-        }
-
-        # Pasamos NA a '' y eliminamos columnas vacías
-        Cols <- sort(names(out))
-        for (col in Cols){
-            out[, col := ifelse(is.na(get(col)), '', get(col)), with = F]
-            if(all(out[[col]] == '')) out[, col := NULL, with = F]
-        }
         return(out)
     }
 }
