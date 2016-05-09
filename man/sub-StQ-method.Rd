@@ -29,9 +29,9 @@ returns subsets of the slot \code{Data} from an object of class
  the same class \linkS4class{StQ} as the input parameter \code{x}.
 }
 \examples{
-data(ExampleQ)
-ExampleQ[IDDD == 'Turnover']
-ExampleQ[3:4]
+data(ExampleStQ)
+ExampleStQ[IDDD == 'Turnover']
+ExampleStQ[3:4]
 
 }
 

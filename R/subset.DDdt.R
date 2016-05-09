@@ -17,8 +17,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' data(ExampleQ)
-#' ExampleQ[IDDD == 'IASSCifraNeg']
+#' data(ExampleStQ)
+#' ExampleStQ[IDDD == 'IASSCifraNeg']
 #' }
 #'
 #' @include DDdt-class.R

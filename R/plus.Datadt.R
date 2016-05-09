@@ -38,8 +38,8 @@ setMethod(
     definition = function(e1, e2){
         
         #Incluimos las mismas columnas en ambos objetos
-        e1 <- DatadtTodata.table(e1)
-        e2 <- DatadtTodata.table(e2)
+        e1 <- DatadtToDT(e1)
+        e2 <- DatadtToDT(e2)
         ColNames.e1 <- copy(names(e1))
         ColNames.e2 <- copy(names(e2))
         NewCol.e2 <- setdiff(ColNames.e2, ColNames.e1)

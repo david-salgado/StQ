@@ -1,15 +1,15 @@
 Package: StQ
 Title: Construction of Standard Questionnaires
-Version: 0.5.2.9000
+Version: 0.1.0
 Author: David Salgado
 Maintainer: David Salgado <david.salgado.fernandez@gmail.com>
 Description: This package contains the definition of the class StBusQ for
     standard business-statistics questionnaires and the methods to manage them
     (show, subsetting, ...)
 Depends:
-    R (>= 3.2.0),
-    methods
+    R (>= 3.2.0)
 Imports:
+    methods,
     data.table (>= 1.9.4),
     formula.tools (>= 1.5.4),
     RepoTime (>= 0.1),
@@ -28,43 +28,41 @@ Collate:
     'StQList-class.R'
     'BuildStQList.R'
     'BuildVNC.R'
+    'DDdtToVNC.R'
+    'getVNC.R'
+    'setVNC.R'
+    'VarNamesToDD.R'
+    'DDslotWith.R'
     'rawKey-class.R'
     'DTToKey.R'
-    'DatadtTodata.table.R'
+    'DatadtToDT.R'
     'ExampleDD.R'
     'ExampleDDdt.R'
     'ExampleDM.R'
     'ExampleDatadt.R'
     'ExampleStQ.R'
     'ExampleVNC.R'
+    'ExamplerawKey.R'
     'getIDQual.R'
     'IDDDToUnitNames.R'
     'KeyToDT.R'
     'StQListToStQ.R'
     'getNonIDQual.R'
-    'VarNamesToDD.R'
-    'getSlotDD.R'
     'rawDatadt-class.R'
     'rawStQ-class.R'
     'getDD.R'
     'VarNamesToDT.R'
     'getData.R'
     'StQTorawStQ.R'
-    'getUnits.R'
-    'plus.StQ.R'
-    'VarNamesToFormula.R'
-    'dcast_StQ.R'
-    'setData.R'
-    'setDD.R'
-    'setVar.R'
-    'Substitute.R'
-    'getVNC.R'
     'UnitToIDDDNames.R'
+    'VarNamesToFormula.R'
     'plus.VNCdt.R'
     'plus.VarNameCorresp.R'
     'plus.DDdt.R'
     'plus.DD.R'
+    'getUnits.R'
     'dcast_Datadt.R'
+    'dcast_StQ.R'
     'getPeriods.StQList.R'
     'extract.StQList.R'
     'getAggWeights.R'
@@ -72,27 +70,31 @@ Collate:
     'getEditNames.R'
     'getID.R'
     'getIDDD.R'
-    'getMicroData.R'
     'getOtherDD.R'
     'getParaData.R'
     'getVar.R'
     'getVariables.R'
     'melt_StQ.R'
     'plus.Datadt.R'
+    'plus.StQ.R'
     'rawStQToStQ.R'
     'renVar.StQ.R'
+    'setData.R'
     'rmVar.R'
+    'setAggWeights.R'
     'setAggr.R'
-    'setAggrWeights.R'
+    'setDD.R'
     'setID.R'
     'setMicroData.R'
     'setOtherDD.R'
     'setParaData.R'
     'setUnits.R'
-    'setVNC.R'
+    'setVar.R'
     'show.DD.R'
+    'show.DDdt.R'
     'show.StQ.R'
     'show.StQList.R'
+    'show.VNCdt.R'
     'show.VarNameCorresp.R'
     'show.rawStQ.R'
     'subset.DD.R'

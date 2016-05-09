@@ -4,7 +4,7 @@
 #' object.  
 #' @param object Object whose IDDD identifiers are required.
 #' 
-#' @param Namesdt Character vector with the names of components or slots of the 
+#' @param CompNames Character vector with the names of components or slots of the 
 #' object from which the IDDD identifiers are requested.
 #'
 #' @return In the case of \linkS4class{VarNameCorresp} it returns a character
@@ -59,7 +59,7 @@ setGeneric("getIDDD", function(object, CompNames){standardGeneric("getIDDD")})
 setMethod(
     f = "getIDDD",
     signature = c("VNCdt"),
-    function(object){
+    function(object, CompNames){
         
         output <- unique(object[['IDDD']])
         output <- output[output != '']
@@ -105,7 +105,7 @@ setMethod(
 setMethod(
     f = "getIDDD",
     signature = c("DDdt"),
-    function(object){
+    function(object, CompNames){
         
         output <- unique(object[Sort == 'IDDD', Variable])
         output <- output[output != '']
@@ -150,7 +150,7 @@ setMethod(
 setMethod(
     f = "getIDDD",
     signature = c("Datadt"),
-    function(object){
+    function(object, CompNames){
         
         output <- unique(object[['IDDD']])
         return(output)
@@ -167,7 +167,7 @@ setMethod(
 setMethod(
     f = "getIDDD",
     signature = c("StQ"),
-    function(object){
+    function(object, CompNames){
         
         output <- getIDDD(object@Data)
         return(output)

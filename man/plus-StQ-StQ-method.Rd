@@ -48,10 +48,10 @@ MicroDD1 <- new(Class = 'DDdt', MicroDD1)
 DD1 <- new(Class = 'DD', VarNameCorresp = VNC1, MicroData = MicroDD1)
 
 # We build the StQ object, and join it with another previously created in a
-  single object:
-data(ExampleQ)  
+#  single object:
+data(ExampleStQ)  
 Q1 <- new(Class = 'StQ', Data = Data1, DD = DD1)
-Q2 <- ExampleQ
+Q2 <- ExampleStQ
 Q <- Q1 + Q2
 str(Q)
 

@@ -17,8 +17,8 @@
 #' variable names duly renamed in all slots.
 #'
 #' @examples
-#' data(ExampleQ)
-#' renVar(ExampleQ, 'Orders', 'RealOrders')
+#' data(ExampleStQ)
+#' renVar(ExampleStQ, 'Stocks', 'NewStocks')
 #'
 #' @export
 setGeneric("renVar",

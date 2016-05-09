@@ -20,29 +20,25 @@
 #' ID1 <- new(Class = "VNCdt", 
 #'           .Data = data.table(IDQual = c('NumIdEst', rep('', 4)),
 #'                              NonIDQual = rep('', 5),
-#'                              IDDD = c('', 'Name', 'Surname', 
-#'                                           'PostalAddr', 'PhoneNo'),
+#'                              IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
 #'                              NumIdEst = c('', rep('.', 4)),
-#'                              Unit1 = c('numidest', 'nombre', 'apellidos', 
-#'                                            'direccion', 'telefono')))
+#'                              Unit1 = c('numidest', 'nombre', 'apellidos', 'direccion', 
+#'                                        'telefono')))
 #'                                            
 #' ID2 <- new(Class = 'VNCdt',
 #'           .Data = data.table(IDQual = c('NumIdEst', rep('', 4)),
 #'                              NonIDQual = c(rep('', 5)),
-#'                              IDDD = c('', 'Name', 'Surname', 
-#'                                           'PostalAddr', 'PhoneNo'),
+#'                              IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
 #'                              NumIdEst = c('', rep('.', 4)),
-#'                              Unit1 = c('numidest', 'nombre', 'apellidos', 
-#'                                            'direccion', 'telefono')))
+#'                              Unit1 = c('numidest', 'nombre', 'apellidos', 'direccion', 
+#'                                        'telefono')))
 #'                                            
 #' ID1 + ID2                                            
 #'                                            
 #' MicroData1 <- new(Class = "VNCdt",
 #'                   .Data = data.table(IDQual = c('NumIdEst', rep('', 4)),
-#'                                      NonIDQual = c('', 'IsNatMarket', 
-#'                                                       'IsEuroMarket', 
-#'                                                       'IsRWMarket',
-#'                                                       ''),
+#'                                      NonIDQual = c('', 'IsNatMarket', 'IsEuroMarket', 
+#'                                                    'IsRWMarket', ''),
 #'                                      IDDD = c(rep('', 4), 'Turnover'),
 #'                                      NumIdEst = c(rep('', 4), '.'),
 #'                                      IsNatMarket = c(rep('', 4), '0'),
@@ -52,10 +48,8 @@
 #'                                      
 #' MicroData2 <- new(Class ='VNCdt',
 #'                   .Data = data.table(IDQual = c('NumIdEst', rep('', 4)),
-#'                                      NonIDQual = c('', 'IsNatMarket', 
-#'                                                       'IsEuroMarket', 
-#'                                                       'IsNew',
-#'                                                       ''),
+#'                                      NonIDQual = c('', 'IsNatMarket', 'IsEuroMarket', 'IsNew',
+#'                                                    ''),
 #'                                      IDDD = c(rep('', 4), 'NewOrders'),
 #'                                      NumIdEst = c(rep('', 4), '.'),
 #'                                      IsNatMarket = c(rep('', 4), '0'),
@@ -67,8 +61,7 @@
 #' MicroData1 + MicroData2                                      
 #'                                      
 #' Aggregates1 <- new(Class = "VNCdt",
-#'                    .Data = data.table(IDQual = c('Province', 'NACE', 
-#'                                                   'IsNatMarket', ''),
+#'                    .Data = data.table(IDQual = c('Province', 'NACE', 'IsNatMarket', ''),
 #'                                       NonIDQual = c(rep('', 4)),
 #'                                       IDDD = c('', '', '', 'Turnover'),
 #'                                       Province = c('', '', '', '.'),
@@ -78,8 +71,7 @@
 #' 
 #' 
 #' Aggregates2 <- new(Class = 'VNCdt',
-#'                   .Data = data.table(IDQual = c('Province', 'NACE', 
-#'                                                    'IsNatMarket', ''),
+#'                   .Data = data.table(IDQual = c('Province', 'NACE', 'IsNatMarket', ''),
 #'                                      NonIDQual = c('', '', '', ''),              
 #'                                      IDDD = c('', '', '', 'NewOrders'),
 #'                                      Province = c('', '', '', '.'),
@@ -103,8 +95,9 @@ setMethod(
         CommonCols <- intersect(names(e1), names(e2))
         VNCdt1 <- setkeyv(e1, CommonCols)
         VNCdt2 <- setkeyv(e2, CommonCols)
- 
+
         outVar <- rbindlist(list(VNCdt1, VNCdt2), fill = TRUE)
+        
             for (col in names(outVar)) {
                 
                     outVar[, col := ifelse(is.na(get(col)), '', get(col)), with = F]
@@ -118,7 +111,7 @@ setMethod(
         Unitn <- names(outVar)[grep('Unit', names(outVar))]
         IDQual <- outVar[which(IDQual != ""), IDQual]
         NonIDQual <- outVar[which(NonIDQual != ""), NonIDQual]
-        setcolorder(outVar, c('IDQual', 'NonIDQual', 'IDDD', IDQual, NonIDQual, Unitn))
+        setcolorder(outVar, intersect(names(outVar), c('IDQual', 'NonIDQual', 'IDDD', IDQual, NonIDQual, Unitn)))
         output <- new(Class = 'VNCdt', outVar) 
         
         return(output)

@@ -16,6 +16,7 @@
 #' show(new(Class = 'VarNameCorresp'))
 #'
 #' # A more elaborate example
+#' library(data.table)
 #' VarList <- list(
 #'   ID = new(Class = 'VNCdt', 
 #'            .Data = data.table(

@@ -65,20 +65,20 @@ data(ExampleDD)
 getData(ExampleDD)
 
 # From an StQ object 
-VarNames <- c('Orders_0')
-getData(ExampleQ, VarNames)
+VarNames <- c('Employees_0')
+getData(ExampleStQ, VarNames)
 
 VarNames <- c('Turnover')
-getData(ExampleQ, VarNames)
+getData(ExampleStQ, VarNames)
 
 # From an StQList object 
 mm <- c(paste0('0', 1:9), 10:12)
 TimePer <- paste0('MM', mm, '2015')
 QList <- vector('list', 12)
-QList <- lapply(QList, function(x) ExampleQ)
+QList <- lapply(QList, function(x) ExampleStQ)
 names(QList) <- TimePer
-QList <- new(Class = 'StQList', QList)
-VarNames <- c('IASSCifraNeg', 'IASSEmpleo')
+QList <- BuildStQList(QList)
+VarNames <- c('Turnover', 'Employees_1_1')
 getData(QList, VarNames)
 
 }

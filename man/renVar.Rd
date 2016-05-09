@@ -30,8 +30,8 @@ input parameter \code{VarNames} renamed with the names in the input parameter
 \code{NewVarNames}. Variables are renamed in all slots.
 }
 \examples{
-data(ExampleQ)
-renVar(ExampleQ, 'Orders', 'RealOrders')
+data(ExampleStQ)
+renVar(ExampleStQ, 'Stocks', 'NewStocks')
 
 }
 

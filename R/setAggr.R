@@ -1,4 +1,4 @@
-#' @title Set value of slot \code{Aggregates}
+#' @title Set value of slot \code{Aggregates}.
 #'
 #' @description \code{setAggr} assigns a \linkS4class{DDdt} to the slot
 #' \code{Aggregates} of the input object.
@@ -12,86 +12,33 @@
 #' @examples
 #' # An example:
 #' library(data.table)
-#' ### We build the VNC object
-#' VarList <- list(ID = new(Class = 'VNCdt',data.table(IDQual = c('NumIdEst', rep('', 4)),
-#'                                                     NonIDQual = c('','','','',''),
-#'                                                     IDDD = c('', 'Name', 'Surname', 'PostalAddr',
-#'                                                              'PhoneNo'),
-#'                                                     NumIdEst = c('', rep('.', 4)),
-#'                                                     Unit1 = c('numidest', 'nombre', 'apellidos', 
-#'                                                               'direccion', 'telefono')     
-#' )),
-#' MicroData =new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 4)),
-#'                                            NonIDQual = c('', 'IsNatMarket', 
-#'                                                          'IsEuroMarket', 
-#'                                                          'IsRWMarket',
-#'                                                          ''),
-#'                                            IDDD = c(rep('', 4), 'NewOrders'),
-#'                                            NumIdEst = c(rep('', 4), '.'),
-#'                                            IsNatMarket = c(rep('', 4), '0'),
-#'                                            IsEuroMarket = c(rep('', 4), '0'),
-#'                                            IsRWMarket = c(rep('', 4), '1'),
-#'                                            Unit1 = c('numidest', rep('', 3), 'cp09'))),
-#' ParaData = new(Class = 'VNCdt',data.table(IDQual = c('NumIdEst', rep('', 2)),
-#'                                           NonIDQual = c('', 'Action', ''),
-#'                                           IDDD = c(rep('', 2), 'Date'),
-#'                                           NumIdEst = c(rep('', 2), '.'),
-#'                                           Action = c(rep('', 2), 'Imputation'),
-#'                                           Unit1 = c('numidest', '', 'FechaImput'))))
-#' 
-#' VNC <- new(Class = 'VarNameCorresp', VarList)
-#' 
-#' ### We build the specification data.tables
-#' IDdt <- new( Class='DDdt',data.table(
-#'     Variable = c('NumIdEst', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
-#'     Sort = c('IDQual', rep('IDDD', 4)),
-#'     Class = rep('character', 5),
-#'     Qual1 = c('', rep('NumIdEst', 4)),
-#'     ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}')
-#' ))
-#' Microdt <- new( Class='DDdt',data.table(
-#'     Variable = c('NumIdEst', 'IsNatMarket', 'IsEuroMarket', 
-#'                  'IsRWMarket', 'NewOrders'),
-#'     Sort = c('IDQual', rep('NonIDQual', 3), 'IDDD'),
-#'     Class = c(rep('character', 4), 'numeric'),
-#'     Qual1 = c(rep('', 4), 'NumIdEst'),
-#'     ValueRegExp = c('[0-9]{9}PP', rep('(0|1| )', 3), '([0-9]{1, 10}| )')
-#' ))
-#' Paradt <-new( Class='DDdt', data.table(
-#'     Variable = c('NumIdEst', 'Action', 'Date'),
-#'     Sort = c('IDQual', 'NonIDQual', 'IDDD'),
-#'     Class = rep('character', 3),
-#'     Qual1 = c(rep('', 2), 'NumIdEst'),
-#'     Qual2 = c(rep('', 2), 'Action'),
-#'     ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 
-#'                     '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')
-#' ))
-#' Aggdt <- new( Class='DDdt',data.table(
-#'     Variable = c('Province', 'NACE09', 'Turnover'),
-#'     Sort = c(rep('IDQual', 2), 'IDDD'),
-#'     Class = c(rep('character', 2), 'numeric'),
-#'     Qual1 = c(rep('', 2), 'Province'),
-#'     Qual2 = c(rep('', 2), 'NACE09'),
-#'     ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])', '([0-9]{1, 15}| )')
-#' ))
-#' 
-#' DD <- new(Class = 'DD', 
-#'           VarNameCorresp = VNC, 
-#'           ID = IDdt, 
-#'           MicroData = Microdt, 
-#'           ParaData = Paradt,
-#'           Aggregates = Aggdt)
+#' MicroDataDD <- data.table(Variable = 'IEPEntradaPed', Sort = 'IDDD', Class = 'numeric',
+#'                           Qual1 = 'NumIdEst', Qual2 = 'EsMercNac', Qual3 = 'EsMercEuro',
+#'                           Qual4 = 'EsMercRM', ValueRegExp = '')
+#' MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
+#' VarList <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','','',''),
+#'                                                             NonIDQual = c('EsMercNac', 
+#'                                                                           'EsMercEuro', 
+#'                                                                           'EsMercRM', 'Cod', ''),
+#'                                                             IDDD = c('', '', '' ,'' ,
+#'                                                                      'IEPEntradaPed'),
+#'                                                             NumIdEst = c('', '', '', '', '.'),
+#'                                                             EsMercNac = c('', '', '', '', '0'),
+#'                                                             EsMercEuro = c('', '', '', '', '0'),
+#'                                                             EsMercRM = c('', '', '', '', '1'),
+#'                                                             Cod = rep('', 5),
+#'                                                             Unit1 = c('', '', '', '', 'cp02'))))
+#' VNC <- BuildVNC(VarList)
+#' DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = MicroDataDD)
 #'           
-#' newAggdt <- new( Class='DDdt',data.table(
-#'     Variable = c( 'NACE09', 'Turnover'),
-#'     Sort = c(rep('IDQual', 1), 'IDDD'),
-#'     Class = c(rep('character', 1), 'numeric'),
-#'     Qual1 = c(rep('', 1), 'Province'),
-#'     Qual2 = c(rep('', 1), 'NACE09'),
-#'     ValueRegExp = c('([0-4][0-9])|(5[0-2])', '([0-9]{1, 15}| )')
-#' ))      
-#'           
-#' setAggr(DD) <- newAggdt
+#' Aggdt <- data.table(Variable = c('NACE09', 'Turnover'),
+#'                     Sort = c('IDQual', 'IDDD'),
+#'                     Class = c('character', 'character'),
+#'                     Qual1 = c('', 'NACE09'),
+#'                     ValueRegExp = c('([0-4][0-9])|(5[0-2])', '([0-9]{1, 15}| )'))  
+#' Aggdt <- new(Class = 'DDdt', Aggdt)          
+#' setAggr(DD) <- Aggdt
+#' DD
 #'
 #' @rdname setAggr
 #'
@@ -112,7 +59,34 @@ setReplaceMethod(
     function(object, value){
         
         setkeyv(value, setdiff(names(value), 'Value'))
+        if (dim(object@Aggregates)[1] > 0){
+            
+            object@Aggregates <- new(Class = 'DDdt')
+            setVNC(object) <- DDdtToVNC(value, 'Aggregates')
+            
+        }else{
+            
+            setVNC(object) <- DDdtToVNC(value, 'Aggregates') + getVNC(object)
+        }
+        
         object@Aggregates <- value
+        validObject(object)
+        return(object)
+    }
+)
+#' @rdname setAggr
+#'
+#' @include StQ-class.R
+#'
+#' @import data.table
+#'
+#' @export
+setReplaceMethod(
+    f = "setAggr",
+    signature = c("StQ", "DDdt"),
+    function(object, value){
+        
+        setAggr(object@DD) <- value
         validObject(object)
         return(object)
     }

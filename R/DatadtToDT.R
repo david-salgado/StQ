@@ -1,13 +1,14 @@
-#' @title Returns a data.table with the data of the input Datadt object.
+#' @title Returns a \linkS4class{data.table} with the data of the input Datadt object.
 #'
-#' @description \code{DatadtTodata.table} returns a \linkS4class{data.table}
-#' with the data and values of the input \linkS4class{Datadt} object.
+#' @description \code{DatadtToDT} returns a \linkS4class{data.table} with the data and values of the
+#'  input \linkS4class{Datadt} object.
 #'
 #' @param object Datadt which is desired to transform into a data.table.
 #'
 #' @return \linkS4class{data.table} 
 #'
 #' @examples
+#' library(data.table)
 #' Ddt <- new(Class = 'Datadt', 
 #'             data.table(ID = c('001', '001', '001', '001'), 
 #'                        IsNatMarket = c('0', '1', '', ''),
@@ -16,12 +17,12 @@
 #'                        Value = c('625000', '23154', '04', '0512')))
 #'                         
 #'                         
-#' DatadtTodata.table(Ddt)                        
+#' DatadtToDT(Ddt)                        
 #'
 #' @import data.table
 #'
 #' @export
-DatadtTodata.table <-function(object){
+DatadtToDT <-function(object){
     ColNames.object <- copy(names(object))
     L <- length(ColNames.object)
     H <- length(object[[1]])

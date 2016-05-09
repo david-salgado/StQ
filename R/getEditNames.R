@@ -11,8 +11,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' data(ExampleQ)
-#' getEditNames(ExampleQ)
+#' data(ExampleStQ)
+#' getEditNames(ExampleStQ)
 #' }
 #' 
 #' @export

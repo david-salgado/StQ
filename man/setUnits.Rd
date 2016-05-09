@@ -4,7 +4,8 @@
 \name{setUnits<-}
 \alias{setUnits<-}
 \alias{setUnits<-,StQ,data.table-method}
-\title{Restrict slot \code{Data} of the input object to specified units}
+\title{Return an object as the input object but with slot \code{Data} restricted to the specified
+units.}
 \usage{
 setUnits(object) <- value
 
@@ -13,25 +14,25 @@ setUnits(object) <- value
 \arguments{
 \item{object}{Objeto whose slot \code{Data} is to be restricted.}
 
-\item{value}{\linkS4class{data.table} with the values of the unit qualifiers
-identifying the restricted units.}
+\item{value}{\linkS4class{data.table} with the values of the unit qualifiers identifying the 
+restricted units.}
 }
 \value{
-Object with the same class as the input object with slot Data
-restricted to the specified units.
+Object with the same class as the input object with slot Data restricted to the specified
+units.
 }
 \description{
-\code{setUnits} restricts slot \code{Data} to those units
-specified as input parameter.
+\code{setUnits} returns an object as the input object but with slot \code{Data}
+restricted to the specified units.
 }
 \examples{
 library(data.table)
 library(stringr)
-data(ExampleQ)
-NewExampleQ <- ExampleQ
-Units <- data.table(NOrden = str_pad(1:5, 11, 'left', '0'))
-setUnits(NewExampleQ) <- Units
-NewExampleQ
+data(ExampleStQ)
+NewExampleStQ <- ExampleStQ
+Units <- data.table(ID = str_pad(1:5, 5, 'left', '0'))
+setUnits(NewExampleStQ) <- Units
+NewExampleStQ
 
 }
 

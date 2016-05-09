@@ -27,60 +27,87 @@ Object with slot \code{VarNameCorresp} updated.
  slot \code{VarNameCorresp} of the input object.
 }
 \examples{
-# On an empty object of class VarNameCorresp:
-VNC <- new(Class = 'VarNameCorresp')
-VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','','',''),
-                                       NonIDQual = c('EsMercNac', 
-                                                     'EsMercEuro', 
-                                                     'EsMercRM',
-                                                     'Cod',
-                                                     ''),
-                                       IDDD = c('', '', '' ,'' ,
-                                                'IEPEntradaPed'),
-                                       Unit1 = c('', '', '', '', 'cp02')))
-VNC[['MicroData']] <- VarList
-str(VNC)
-
 # On an object of class DD:
-MicroDataDD <- data.table(Variable = 'IEPEntradaPed', 
-                          Sort = 'IDDD', 
-                          Class = 'numeric',
-                          Qual1 = 'NOrden')
-DD <- new(Class = 'DD', MicroData = MicroDataDD)
-VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','','',''),
-                                       NonIDQual = c('EsMercNac', 
-                                                     'EsMercEuro', 
-                                                     'EsMercRM',
-                                                     'Cod',
-                                                     ''),
-                                       IDDD = c('', '', '' ,'' ,
-                                                'IEPEntradaPed'),
-                                       Unit1 = c('', '', '', '', 'cp02')))
-setVNC(DD) <- VarList
+library(data.table)
+MicroDataDD <- data.table(Variable = 'IEPEntradaPed', Sort = 'IDDD', Class = 'numeric',
+                          Qual1 = 'NumIdEst', Qual2 = 'EsMercNac', Qual3 = 'EsMercEuro',
+                          Qual4 = 'EsMercRM', ValueRegExp = '')
+MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
+VarList <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','','',''),
+                                                            NonIDQual = c('EsMercNac', 
+                                                                          'EsMercEuro', 
+                                                                          'EsMercRM', 'Cod', ''),
+                                                            IDDD = c('', '', '' ,'' ,
+                                                                     'IEPEntradaPed'),
+                                                            NumIdEst = c('', '', '', '', '.'),
+                                                            EsMercNac = c('', '', '', '', '0'),
+                                                            EsMercEuro = c('', '', '', '', '0'),
+                                                            EsMercRM = c('', '', '', '', '1'),
+                                                            Cod = rep('', 5),
+                                                            Unit1 = c('', '', '', '', 'cp02'))))
+VNC <- BuildVNC(VarList)
+DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = MicroDataDD)
+
+VarListAdd <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','','',''),
+                                                               NonIDQual = c('EsMercNac', 
+                                                                             'EsMercEuro', 
+                                                                             'EsMercRM', 'Cod', ''),
+                                                               IDDD = c('', '', '' ,'' ,
+                                                                        'IEPEntradaPed'),
+                                                               NumIdEst = c('', '', '', '', '.'),
+                                                               EsMercNac = c('', '', '', '',
+                                                                            '1'),
+                                                               EsMercEuro = c('', '', '', '',
+                                                                              '1'),
+                                                               EsMercRM = c('', '', '', '', '1'),
+                                                               Cod = rep('', 5),
+                                                               Unit1 = c('', '', '', '',
+                                                                         'cp02'))))
+VNCAdd <- BuildVNC(VarListAdd)
+setVNC(DD) <- VNCAdd
 DD
-str(DD)
 
 # On an object of class StQ:
-MicroDataDD <- data.table(Variable = 'IEPEntradaPed', 
-                          Sort = 'IDDD', 
-                          Class = 'numeric',
-                          Qual1 = 'NOrden')
-DD <- new(Class = 'DD', MicroData = MicroDataDD)
-StQ <- new(Class = 'StQ', 
-           Data = data.table(IDDD = character(0), Value = character(0)), 
-           DD = DD)
-VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','','',''),
-                                       NonIDQual = c('EsMercNac', 
-                                                     'EsMercEuro', 
-                                                     'EsMercRM',
-                                                     'Cod',
-                                                     ''),
-                                       IDDD = c('', '', '' ,'' ,
-                                                'IEPEntradaPed'),
-                                       Unit1 = c('', '', '', '', 'cp02')))
-setVNC(StQ) <- VarList
-StQ
-str(StQ)
+library(data.table)
+MicroDataDD <- data.table(Variable = 'IEPEntradaPed', Sort = 'IDDD', Class = 'numeric',
+                          Qual1 = 'NOrden', ValueRegExp = '')
+MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
+VarList <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','','',''),
+                                                            NonIDQual = c('EsMercNac', 
+                                                                          'EsMercEuro', 
+                                                                          'EsMercRM', 'Cod', ''),
+                                                            IDDD = c('', '', '' ,'' ,
+                                                                     'IEPEntradaPed'),
+                                                            NumIdEst = c('', '', '', '', '.'),
+                                                            EsMercNac = c('', '', '', '', '0'),
+                                                            EsMercEuro = c('', '', '', '', '0'),
+                                                            EsMercRM = c('', '', '', '', '1'),
+                                                            Cod = rep('', 5),
+                                                            Unit1 = c('', '', '', '', 'cp02'))))
+VNC <- BuildVNC(VarList)
+DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = MicroDataDD)  
+StQ <- new(Class = 'StQ', Data = new(Class = 'Datadt',
+                                     data.table(IDDD = character(0), Value = character(0))),
+                          DD = DD)
+             
+VarListAdd <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','','',''),
+                                                               NonIDQual = c('EsMercNac', 
+                                                                             'EsMercEuro', 
+                                                                             'EsMercRM', 'Cod', ''),
+                                                               IDDD = c('', '', '' ,'' ,
+                                                                        'IEPEntradaPed'),
+                                                               NumIdEst = c('', '', '', '', '.'),
+                                                               EsMercNac = c('', '', '', '',
+                                                                            '1'),
+                                                               EsMercEuro = c('', '', '', '',
+                                                                              '1'),
+                                                               EsMercRM = c('', '', '', '', '1'),
+                                                               Cod = rep('', 5),
+                                                               Unit1 = c('', '', '', '',
+                                                                         'cp02'))))
+VNCAdd <- BuildVNC(VarListAdd)                                                    
+setVNC(StQ) <- VNCAdd
+getDD(StQ)
 
 }
 

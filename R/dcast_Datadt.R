@@ -9,7 +9,7 @@
 #'  statistical units by row and variables specified in the input parameter
 #'  \code{VarNames} by columns.
 #'
-#' @param object Objecto of class \linkS4class{Datadt}.  
+#' @param object Object of class \linkS4class{Datadt}.  
 #'
 #' @param VarNames Character vector with names of the output variables.
 #'
@@ -20,6 +20,7 @@
 #'  name is specified, all variables in the input object will be output.
 #'
 #' @examples
+#' library(data.table)
 #' Ddt <- new(Class = 'Datadt', 
 #'             data.table(ID = c('001', '001', '001', '001'), 
 #'                        IsNatMarket = c('0', '1', '', ''),
@@ -38,7 +39,7 @@
 setGeneric("dcast_Datadt",
            function(object,
                     VarNames){standardGeneric("dcast_Datadt")})
-#' @rdname dcast_StQ
+#' @rdname dcast_Datadt
 #'
 #' @importFrom formula.tools lhs.vars
 #'
@@ -54,15 +55,15 @@ setMethod(
 
         #Construimos todas las variables 
         TVar <- object$IDDD
-        nQual <- length(names(object))-3
-        if (nQual>0){
-            for (i in 1:nQual) {TVar <- data.table(TVar,object[[i+1]])}
+        nQual <- length(names(object)) - 3
+        if (nQual > 0){
+            for (i in 1:nQual) {TVar <- data.table(TVar, object[[i+1]])}
             TVarS <- TVar[[1]]
-            for (i in 1:nQual) {TVarS <- paste0(TVarS,'_',TVar[[i+1]])}
+            for (i in 1:nQual) {TVarS <- paste0(TVarS, '_', TVar[[i+1]])}
             # Limpiamos TVarS de los '_' que sobran
             for (i in 1:length(TVarS)){
-              while (substr(TVarS[i],nchar(TVarS[i]),nchar(TVarS[i]))=='_') {
-                  TVarS[i] <- substr(TVarS[i],1,nchar(TVarS[i])-1)}
+              while (substr(TVarS[i], nchar(TVarS[i]), nchar(TVarS[i])) == '_') {
+                  TVarS[i] <- substr(TVarS[i], 1, nchar(TVarS[i]) - 1)}
             
               while (regexpr('__', TVarS[i])!=-1) {
                   l1 <- regexpr('__', TVarS[i])[1]
@@ -83,7 +84,6 @@ setMethod(
             Rn <- sum(R>(-1))
             if (Rn>0) {
                     VarNamesAux <- c(VarNamesAux, TVarS[R>(-1)]) 
-                           
             }
         }
         
@@ -93,34 +93,41 @@ setMethod(
         
         Units <- getUnits(object)[[1]]
         output <- data.table(matrix(ncol=length(Vardt)+1,nrow=length(Units)))
-        names(output) <- c(names(Ddt)[1],Vardt)
+        names(output) <- c(names(object)[1], Vardt)
         output[[1]] <- Units
         
         # Colocamos los valores
-        List <- strsplit(Vardt,'_')
-        Vect <- unlist(lapply(List,length))
+        List <- strsplit(Vardt, '_')
+        Vect <- unlist(lapply(List, length))
         Max <- nQual + 1
 
-        for (i in 1:length(List)){if (Vect[i]<Max) {List[[i]][(Vect[i]+1):Max] <- '' }}
+        for (i in 1:length(List)){if (Vect[i] < Max) {List[[i]][(Vect[i] + 1):Max] <- '' }}
         
         ExNames <- ExtractNames(Vardt)
-        Obj <- object[ IDDD %in% ExNames]
+        Obj <- object[IDDD %in% ExNames]
         for (i in 1:length(Obj[[1]])){
+            
             IDQual <- Obj[[1]][i]
             VarUs <- list(Obj[[nQual+2]][i])
-            if (nQual>0){for (j in 1:nQual) {VarUs[j+1] <- Obj[[j+1]][i]}}
+            if (nQual > 0){for (j in 1:nQual) {VarUs[j+1] <- Obj[[j+1]][i]}}
             key <- 0
             cont <- 1
             for (j in 1:length(List)){
-                if (prod(List[[j]]==VarUs)==1) {
+                
+                if (prod(List[[j]] == VarUs) == 1) {
+                    
                     key <- 1 
-                    break}
-                else {cont <- cont +1}
+                    break
+                    
+                } else {
+                    cont <- cont +1
+                }
             }
-            if (key==1) {
-            Name <- names(output)[cont+1]
-            Index <- which(Units==IDQual)
+            if (key == 1) {
+            Name <- names(output)[cont + 1]
+            Index <- which(Units == IDQual)
             output[[Name]][Index] <- Obj[['Value']][i]}
+        
         }
         return(output)
     }

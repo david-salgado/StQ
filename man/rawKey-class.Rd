@@ -20,9 +20,9 @@ new(Class = 'rawKey', c('IDDD:IASSEmpleo_Norden:391092SS_EsRemuner:1_TipoRemuner
                         'IDDD:IASSCifraNeg_Norden:asd2SS',
                         'IDDD:IASSLPCifraNeg_Norden:1231_CCAA:01'))
                         
-new(Class = 'rawKey', c('IDDD:IASSEmpleo.Norden:391092SS.Turnover:9834.3_Province:09',
-                        'Norden:asd2SS',
-                        'IDDD:IASSLPCifraNeg Norden:1231 Employees:841 NACE:0502'))
+new(Class = 'rawKey', c('IDDD:IASSEmpleo_Norden:391092SS_Turnover:9834.3_Province:09',
+                        'IDDD:IASSCifraNeg_Norden:asd2SS',
+                        'IDDD:IASSLPCifraNeg_Norden:1231_Employees:841_NACE:0502'))
 
 }
 

@@ -106,7 +106,7 @@ setMethod(
         
         for (Name in CommonNames) {
             
-            outVarList[[Name]] <- e1[[Name]] + e1[[Name]]
+            outVarList[[Name]] <- e1[[Name]] + e2[[Name]]
 
         }
 
@@ -119,7 +119,6 @@ setMethod(
             
             outVarList[[Name]] <- e2[[Name]]
         }
-
 
         output <- new(Class = 'VarNameCorresp', outVarList)
         return(output)

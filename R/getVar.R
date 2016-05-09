@@ -18,17 +18,20 @@
 #'
 #' @examples
 #' library(data.table)
-#' getVar(ExampleQ, 'Orders_0')
-#' getVar(ExampleQ, 'Turnover')
+#' getVar(ExampleStQ, 'Employees_0')
+#' getVar(ExampleStQ, 'Turnover')
 #'
 #' @import data.table
 #'
 #' @export
-setGeneric("getVar", function(object, VarName, DDslot = 'MicroData', Units = getUnits(object, 'MicroData')){standardGeneric("getVar")})
+setGeneric("getVar", 
+           function(object, VarName, DDslot = 'MicroData', 
+                    Units = getUnits(object, 'MicroData')){
+               standardGeneric("getVar")})
 
 #' @rdname getVar
 #'
-#' @include StQ-class.R getData.R getDD.R getSlotDD.R getNonIDQual.R VarNamesToDD.R VarNamesToDT.R ExtractNames.R
+#' @include StQ-class.R getData.R getDD.R DDslotWith.R getNonIDQual.R VarNamesToDD.R VarNamesToDT.R ExtractNames.R
 #'
 #' @import data.table RepoTime
 #' 

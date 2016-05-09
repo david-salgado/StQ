@@ -31,8 +31,8 @@
 #'  name is specified, all variables in the input object will be output.
 #'
 #' @examples
-#' data(ExampleQ)
-#' Mat <- dcast_StQ(ExampleQ, c('Turnover'))
+#' data(ExampleStQ)
+#' Mat <- dcast_StQ(ExampleStQ, VarNames = c('Turnover'))
 #' str(Mat)
 #'
 #' @seealso \code{\link{melt_StQ}}, \code{\link[data.table]{dcast.data.table}},
@@ -51,7 +51,7 @@ setGeneric("dcast_StQ",
 #'
 #' @import data.table
 #'
-#' @include StQ-class.R getSlotDD.R getNonIDQual.R getDD.R getData.R getDD.R VarNamesToFormula.R
+#' @include StQ-class.R DDslotWith.R getNonIDQual.R getDD.R getData.R getDD.R VarNamesToFormula.R
 #'
 #' @export
 setMethod(
@@ -73,7 +73,8 @@ setMethod(
 
         for (VarName in VarNames){
             
-            Varslot <- getSlotDD(DD, VarName, DDslot)
+            Varslot <- DDslotWith(DD, VarName, DDslot)
+            
             Quals <- setdiff(names(Varslot),
                              c('Variable', 'Sort', 'Class', 'ValueRegExp'))
             
@@ -92,6 +93,10 @@ setMethod(
             }
         }
         
+        if (missing(VarNames)){
+            
+            Varslot <- slot(DD, DDslot)
+        }
 
         IDQual <- Varslot[Sort == 'IDQual', Variable]
         NonIDQual <- Varslot[Sort == 'NonIDQual', Variable]

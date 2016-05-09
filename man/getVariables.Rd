@@ -10,7 +10,7 @@
 \usage{
 getVariables(object, Sort, slots)
 
-\S4method{getVariables}{DDdt}(object, Sort)
+\S4method{getVariables}{DDdt}(object, Sort = c("IDDD", "IDQual", "NonIDQual"))
 
 \S4method{getVariables}{DD}(object, Sort, slots)
 
@@ -34,11 +34,9 @@ from each of its slots different from \code{VarNameCorresp} slot.
 object.
 }
 \examples{
-library(data.table)
-data(DD)
-
-getVariables(DD)
-getVariables(DD, Sort = 'IDDD', slots = 'MicroData')
+data(ExampleDD) 
+getVariables(ExampleDD)
+getVariables(ExampleDD, Sort = 'IDDD', slots = 'MicroData')
 
 
 }

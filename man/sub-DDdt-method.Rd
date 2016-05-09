@@ -27,8 +27,8 @@ It is indeed the method \code{[} for the class \linkS4class{DDdt}.
 }
 \examples{
 \dontrun{
-data(ExampleQ)
-ExampleQ[IDDD == 'IASSCifraNeg']
+data(ExampleStQ)
+ExampleStQ[IDDD == 'IASSCifraNeg']
 }
 
 }

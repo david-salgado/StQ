@@ -19,9 +19,9 @@
 #' @return Object of class \linkS4class{StQ} with the subsetted input object.
 #'
 #' @examples
-#' data(ExampleQ)
-#' ExampleQ[IDDD == 'Turnover']
-#' ExampleQ[3:4]
+#' data(ExampleStQ)
+#' ExampleStQ[IDDD == 'Turnover']
+#' ExampleStQ[3:4]
 #'
 #' @include StQ-class.R getData.R setData.R
 #'

@@ -26,7 +26,7 @@
 #' mm <- c(paste0('0', 1:9), 10:12)
 #' TimePer <- paste0('MM', mm, '2015')
 #' QList <- vector('list', 12)
-#' QList <- lapply(QList, function(x) ExampleQ)
+#' QList <- lapply(QList, function(x) ExampleStQ)
 #' names(QList) <- TimePer
 #' QList <- new(Class = 'StQList', Data = QList, Periods = newRepoTime(TimePer))
 #' QList[c('MM092015', 'MM102015')]

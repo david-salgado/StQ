@@ -22,6 +22,7 @@ columns:
 }
 }
 \examples{
+library(data.table)
 new(Class = 'DDdt', 
     data.table(Variable = 'NOrden', 
                Sort = 'IDQual', 

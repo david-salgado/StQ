@@ -14,9 +14,9 @@
 #' @examples
 #' # A trivial example
 #' show(new(Class = 'StQ'))
-#' data(ExampleQ)
-#' show(ExampleQ)
-#' ExampleQ
+#' data(ExampleStQ)
+#' show(ExampleStQ)
+#' ExampleStQ
 #'
 #' @include StQ-class.R
 #'

@@ -26,6 +26,7 @@ It is indeed the method \link[methods]{show} adapted to the class
 show(new(Class = 'VarNameCorresp'))
 
 # A more elaborate example
+library(data.table)
 VarList <- list(
   ID = new(Class = 'VNCdt', 
            .Data = data.table(

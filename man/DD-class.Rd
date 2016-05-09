@@ -67,20 +67,12 @@ Paradt <-new( Class='DDdt', data.table(
     Qual2 = c(rep('', 2), 'Action'),
     ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 
                     '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')))
-Aggdt <- new( Class='DDdt',data.table(
-    Variable = c('Province', 'NACE09', 'Turnover'),
-    Sort = c(rep('IDQual', 2), 'IDDD'),
-    Class = c(rep('character', 2), 'numeric'),
-    Qual1 = c(rep('', 2), 'Province'),
-    Qual2 = c(rep('', 2), 'NACE09'),
-    ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])', '([0-9]{1, 15}| )')))
 
 DD <- new(Class = 'DD', 
           VarNameCorresp = VNC, 
           ID = IDdt, 
           MicroData = Microdt, 
-          ParaData = Paradt,
-          Aggregates = Aggdt)
+          ParaData = Paradt)
 
 }
 

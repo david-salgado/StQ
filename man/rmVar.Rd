@@ -32,9 +32,9 @@ This method returns the same input object with those variables specified in
 the input parameter \code{VarNames} removed from the data set.
 }
 \examples{
-data(ExampleQ)
-rmVar(ExampleQ)
-rmVar(ExampleQ, 'IASSTame')
+data(ExampleStQ)
+rmVar(ExampleStQ)
+rmVar(ExampleStQ, 'IASSTame')
 
 }
 

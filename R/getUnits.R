@@ -2,20 +2,22 @@
 #'
 #' @description This method identifies the IDQual qualifiers in the input object
 #' and returns a \linkS4class{data.table} with the values of these qualifiers
-#' for each statistical unit.
+#' for each statistical unit for the slot of the attribute \linkS4class{DD} specified as input.
 #'
 #' @param object Object of class \linkS4class{StQ} or class 
 #' \linkS4class{data.table}.
-#'
+#' 
+#' @param DDslot Character vector of length 1 with the name of slot of the attribute \linkS4class{DD}
+#'              
 #' @return It returns a \code{data.table} with the statistical units in the
 #' input object.
 #'
 #' @examples
-#' data(ExampleQ)
-#' getUnits(ExampleQ)
+#' data(ExampleStQ)
+#' getUnits(ExampleStQ)
 #'
 #' @export
-setGeneric("getUnits", function(object) {standardGeneric("getUnits")})
+setGeneric("getUnits", function(object, DDslot = 'MicroData') {standardGeneric("getUnits")})
 
 #' @rdname getUnits
 #'
@@ -27,9 +29,9 @@ setGeneric("getUnits", function(object) {standardGeneric("getUnits")})
 setMethod(
   f = "getUnits",
   signature = c("StQ"),
-  function(object){
+  function(object, DDslot = 'MicroData'){
 
-    DDData <- slot(getDD(object), 'MicroData')
+    DDData <- slot(getDD(object), DDslot)
     IDQual <- DDData[Sort == 'IDQual', Variable]
     output <- getData(object)[, IDQual, with = F]
     setkeyv(output, IDQual)
@@ -52,7 +54,7 @@ setMethod(
 setMethod(
     f = "getUnits",
     signature = c("data.table"),
-    function(object){
+    function(object, DDslot = 'MicroData'){
         
         # For files FL; these files should be reformatted in the repo
         # In Spanish
@@ -97,7 +99,7 @@ setMethod(
 setMethod(
     f = "getUnits",
     signature = c("Datadt"),
-    function(object){
+    function(object, DDslot = 'MicroData'){
         ColNames.object <- copy(names(object))
         Units <- unique(object[[ColNames.object[1]]])
         Units <- data.table(Units)

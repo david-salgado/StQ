@@ -13,22 +13,22 @@
 \usage{
 getIDDD(object, CompNames)
 
-\S4method{getIDDD}{VNCdt}(object)
+\S4method{getIDDD}{VNCdt}(object, CompNames)
 
 \S4method{getIDDD}{VarNameCorresp}(object, CompNames)
 
-\S4method{getIDDD}{DDdt}(object)
+\S4method{getIDDD}{DDdt}(object, CompNames)
 
 \S4method{getIDDD}{DD}(object, CompNames)
 
-\S4method{getIDDD}{Datadt}(object)
+\S4method{getIDDD}{Datadt}(object, CompNames)
 
-\S4method{getIDDD}{StQ}(object)
+\S4method{getIDDD}{StQ}(object, CompNames)
 }
 \arguments{
 \item{object}{Object whose IDDD identifiers are required.}
 
-\item{Namesdt}{Character vector with the names of components or slots of the 
+\item{CompNames}{Character vector with the names of components or slots of the 
 object from which the IDDD identifiers are requested.}
 }
 \value{

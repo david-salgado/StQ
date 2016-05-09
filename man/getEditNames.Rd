@@ -24,8 +24,8 @@ for each statistical unit and their corresponding edit names.
 }
 \examples{
 \dontrun{
-data(ExampleQ)
-getEditNames(ExampleQ)
+data(ExampleStQ)
+getEditNames(ExampleStQ)
 }
 
 }

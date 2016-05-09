@@ -20,9 +20,9 @@
 #'  
 #' @examples
 #' data(ExampleDD)
-#' ExampleDD[Variable == 'IASSCifraNeg']
+#' ExampleDD[Variable == 'Turnover']
 #' 
-#' @include StQ-class.R getData.R setData.R getVNC.R
+#' @include StQ-class.R getData.R setData.R getVNC.R BuildVNC.R
 #' 
 #' @import data.table
 #' 
@@ -38,31 +38,36 @@ setMethod(
     for (DDslot in DDslotNames){
         output[[DDslot]] <- mc
         output[[DDslot]][['x']] <- slot(x, DDslot)
-        #output[[DDslot]] <- eval(output[[DDslot]], envir = parent.frame())
+        output[[DDslot]] <- eval(output[[DDslot]], envir = parent.frame())
     }
-    
     VNC <- getVNC(x)
-    VNCList <- lapply(VNC, function(x){
-        
-        CopyDT <- copy(x)
-        setnames(CopyDT, 'IDDD', 'Variable')
-        out <- mc
-        out[['x']] <- CopyDT
-        out <- eval(out)
-        setnames(out, 'Variable', 'IDDD')
-        return(out)
-    })
 
-    VNC <- new(Class = 'VarNameCorresp', VNCList)
-    
     output <- new(Class = 'DD',
                   VarNameCorresp = VNC,
-                  ID = output[['ID']],
-                  MicroData = output[['MicroData']],
-                  ParaData = output[['ParaData']],
-                  Aggregates = output[['Aggregates']],
-                  AggWeights = output[['AggWeights']],
-                  Other = output[['Other']])
+                  ID = if(is.null(output[['ID']])){
+                            new(Class = 'DDdt')
+                       } else {
+                            new(Class = 'DDdt', output[['ID']])},
+                  MicroData = if(is.null(output[['MicroData']])){
+                            new(Class = 'DDdt')
+                       } else {
+                           new(Class = 'DDdt', output[['MicroData']])},
+                  ParaData = if(is.null(output[['ParaData']])){
+                      new(Class = 'DDdt')
+                       } else {
+                           new(Class = 'DDdt', output[['ParaData']])},
+                  Aggregates = if(is.null(output[['Aggregates']])){
+                           new(Class = 'DDdt')
+                        } else {
+                            new(Class = 'DDdt', output[['Aggregates']])},
+                  AggWeights = if(is.null(output[['AggWeights']])){
+                           new(Class = 'DDdt')
+                         } else {
+                             new(Class = 'DDdt', output[['AggWeights']])},
+                  Other = if(is.null(output[['Other']])){
+                           new(Class = 'DDdt')
+                         } else {
+                             new(Class = 'DDdt', output[['Other']])})
     return(output)
     
   }

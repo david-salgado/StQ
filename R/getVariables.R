@@ -15,11 +15,9 @@
 #' from each of its slots different from \code{VarNameCorresp} slot.
 #'
 #' @examples
-#' library(data.table)
-#' data(DD)
-#' 
-#' getVariables(DD)
-#' getVariables(DD, Sort = 'IDDD', slots = 'MicroData')
+#' data(ExampleDD) 
+#' getVariables(ExampleDD)
+#' getVariables(ExampleDD, Sort = 'IDDD', slots = 'MicroData')
 #' 
 #' 
 #' @export
@@ -35,11 +33,9 @@ setGeneric("getVariables", function(object, Sort, slots){standardGeneric("getVar
 setMethod(
     f = "getVariables",
     signature = c("DDdt"),
-    function(object, Sort){
+    function(object, Sort = c('IDDD', 'IDQual', 'NonIDQual')){
         
-        if (missing(Sort)) Sort <- c('IDDD', 'IDQual', 'NonIDQual')
-        
-        rows <- which(dt[['Sort']] %in% Sort)
+        rows <- which(object[['Sort']] %in% Sort)
         output <- unique(object[rows, Variable])
         output <- output[output != '']
         

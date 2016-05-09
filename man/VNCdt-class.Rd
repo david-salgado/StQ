@@ -24,6 +24,7 @@ columns:
 }
 }
 \examples{
+library(data.table)
 new(Class = 'VNCdt', 
     data.table(IDQual = c('NOrden', '', '', ''), 
                NonIDQual = c('', 'IsNatMarket', '', ''), 

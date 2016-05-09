@@ -17,9 +17,9 @@
 #' from slot \code{Data}.
 #'
 #' @examples
-#' data(ExampleQ)
-#' rmVar(ExampleQ)
-#' rmVar(ExampleQ, 'IASSTame')
+#' data(ExampleStQ)
+#' rmVar(ExampleStQ)
+#' rmVar(ExampleStQ, 'IASSTame')
 #'
 #' @export
 setGeneric("rmVar",

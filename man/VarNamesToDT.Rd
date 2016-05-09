@@ -39,7 +39,7 @@ scripts.
 \examples{
 # We load RepoReadWrite to obtain the included example DD object
 data(ExampleDD)
-VarNamesToDT(c('Orders_0'), ExampleDD)
+VarNamesToDT(c('Employees_0'), ExampleDD)
 
 }
 

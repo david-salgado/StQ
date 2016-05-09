@@ -26,13 +26,13 @@ Object of class \linkS4class{Datadt} with the subsetted input object.
 It is indeed the method \code{[} for the class \linkS4class{Datadt}.
 }
 \examples{
-Ddt <- new(Class = 'Datadt', 
-       data.table(ID = c('001', '001', '001', '001'), 
-                  IsNatMarket = c('0', '1', '', ''),
-                  IDDD = c('Turnover', 'Turnover', 'Province', 'NACE09'),
-                  Value = c('625000', '23154', '04', '0512')))
+library(data.table)
+Ddt <- new(Class = 'Datadt', data.table(ID = c('001', '001', '001', '001'), 
+                                        IsNatMarket = c('0', '1', '', ''),
+                                        IDDD = c('Turnover', 'Turnover', 'Province', 'NACE09'),
+                                        Value = c('625000', '23154', '04', '0512')))
 
- Ddt[IDDD == 'Turnover']                       
+Ddt[IDDD == 'Turnover']                       
 
 }
 

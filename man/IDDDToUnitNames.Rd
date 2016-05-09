@@ -123,9 +123,9 @@ DD <- new(Class = 'DD',
           Aggregates = Aggdt)
 
 
-IDDDToUnitNames(VNC, IDDDNames = 'NewOrders_0_0_1')
+IDDDToUnitNames(VNC, IDDDNames = 'Employees_1_1')
 
-IDDDToUnitNames(DD, IDDDNames = 'NewOrders_0_0_1')
+IDDDToUnitNames(DD, IDDDNames = 'Employees_1_1')
 
 
 }

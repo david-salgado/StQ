@@ -19,6 +19,7 @@
 #' }
 #'
 #' @examples
+#' library(data.table)
 #' new(Class = 'VNCdt', 
 #'     data.table(IDQual = c('NOrden', '', '', ''), 
 #'                NonIDQual = c('', 'IsNatMarket', '', ''), 
@@ -56,11 +57,11 @@ setClass(Class = "VNCdt",
              IDQuals <- IDQuals[IDQuals != '']
              if (any(duplicated(IDQuals))) {
                  
-                 stop('[Validity VarNameCorresp] The column "IDQual" cannot have repeated values.')
+                 stop('[Validity VNCdt] The column "IDQual" cannot have repeated values.')
                  
              }
              IDQualCols <- intersect(ColNames, IDQuals)
-             if (!all(IDQualCols == IDQuals)) {
+             if (!all(IDQuals %in% IDQualCols)) {
                  
                  stop('[validity VNCdt] Every unit qualifier in column IDQual must appear also as a column in the same order.')
                  
@@ -70,11 +71,11 @@ setClass(Class = "VNCdt",
              NonIDQuals <- NonIDQuals[NonIDQuals != '']
              if (any(duplicated(NonIDQuals))) {
                  
-                 stop('[Validity VarNameCorresp] The column "NonIDQual" cannot have repeated values.')
+                 stop('[Validity VNCdt] The column "NonIDQual" cannot have repeated values.')
                  
              }
              NonIDQualCols <- intersect(ColNames, NonIDQuals)
-             if (!all(NonIDQualCols == NonIDQuals)) {
+             if (!all(NonIDQuals %in% NonIDQualCols)) {
                  
                  stop('[validity VNCdt] Every variable qualifier in column NonIDQual must appear also as a column in the same order.')
                  
@@ -82,12 +83,11 @@ setClass(Class = "VNCdt",
              
              Units <- ColNames[grep('Unit', ColNames)]
              
-             ReadColNames <- c('IDQual', 'NonIDQual', 'IDDD', IDQuals, 
-                               NonIDQuals, Units)
-            
-             if (!all(ColNames %in% ReadColNames)) {
+             UnitColNames <- setdiff(ColNames, c('IDQual', 'NonIDQual', 'IDDD', IDQuals, NonIDQuals))
+      
+             if (!all(UnitColNames %in% Units)) {
                  
-                 stop('[Validity VarNameCorresp] The names of the columns with production unit variable names must be "Unit1, Unit2, ...".')
+                 stop('[Validity VNCdt] The names of the columns with production unit variable names must be "Unit1, Unit2, ...".')
              }
              
              return(TRUE)

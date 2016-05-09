@@ -58,22 +58,23 @@ compute the values of the new variable in some circunstamces.
 }
 \examples{
 library(data.table)
+data(ExampleStQ)
 newVNCVar <- new(Class = 'VNCdt',
                  data.table(IDQual = '', NonIDQual = '', IDDD = 'lTurnover',
                             Unit1 = ''))
-newVNC <- BuildVNC(list(Aggregates = newVNCVar))
+newVNC <- BuildVNC(list(MicroData = newVNCVar))
 newDD <- new(Class = 'DD',
              VarNameCorresp = newVNC, 
-             Aggregates = new(Class = 'DDdt',
+             MicroData = new(Class = 'DDdt',
                              data.table(Variable = 'lTurnover',
                                         Sort = 'IDDD',
                                         Class = 'numeric',
-                                        Qual1 = 'NOrden',
+                                        Qual1 = 'ID',
                                         ValueRegExp = '')))
-NewQ <- setVar(object = Q,
+NewQ <- setVar(object = ExampleStQ,
                newDD = newDD,
-               DDslot = 'Aggregates',
-               Value = expression(log(1 + Turnover)))
+               DDslot = 'MicroData',
+               Value = expression(log(1 + as.numeric(Turnover))))
 getVar(NewQ, 'lTurnover')
 
 }

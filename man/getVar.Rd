@@ -37,8 +37,8 @@ parameter of an input object.
 }
 \examples{
 library(data.table)
-getVar(ExampleQ, 'Orders_0')
-getVar(ExampleQ, 'Turnover')
+getVar(ExampleStQ, 'Employees_0')
+getVar(ExampleStQ, 'Turnover')
 
 }
 

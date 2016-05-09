@@ -62,20 +62,12 @@
 #'     Qual2 = c(rep('', 2), 'Action'),
 #'     ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 
 #'                     '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')))
-#' Aggdt <- new( Class='DDdt',data.table(
-#'     Variable = c('Province', 'NACE09', 'Turnover'),
-#'     Sort = c(rep('IDQual', 2), 'IDDD'),
-#'     Class = c(rep('character', 2), 'numeric'),
-#'     Qual1 = c(rep('', 2), 'Province'),
-#'     Qual2 = c(rep('', 2), 'NACE09'),
-#'     ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])', '([0-9]{1, 15}| )')))
 #' 
 #' DD <- new(Class = 'DD', 
 #'           VarNameCorresp = VNC, 
 #'           ID = IDdt, 
 #'           MicroData = Microdt, 
-#'           ParaData = Paradt,
-#'           Aggregates = Aggdt)
+#'           ParaData = Paradt)
 #' 
 #' @include ExtractNames.R VarNameCorresp-class.R DDdt-class.R
 #' 
@@ -139,18 +131,19 @@ setClass(Class = "DD",
              
              variablesDD <- c()
              for (Slot in setdiff(slotNames(object), 'VarNameCorresp')) { 
-                 SlotNames <- slot(object, Slot) 
-                 variablesDD <- c(variablesDD,  SlotNames$Variable[ SlotNames$Sort == 'IDDD'])
+                 SlotNames <- slot(object, Slot)
+                 variablesDD <- c(variablesDD,  SlotNames$Variable[SlotNames$Sort == 'IDDD'])
                  variablesDD <- unique(variablesDD)
              }
+
              variablesVNC <- getIDDD(object@VarNameCorresp)
-             varVNCnotinDD <- setdiff(variablesVNC, variablesDD) 
-             
-             if (length(varVNCnotinDD) > 0) {
+             varVNCnotinVNC <- setdiff(variablesDD, variablesVNC) 
+            
+             if (length(varVNCnotinVNC) > 0) {
                  
-                 stop(paste0('[Validity DD] The following variables in the column "IDDD" of the slot VarNameCorresp must be variables ("Sort" = IDDD) in the other slots of the object DD:\n',
-                             paste0(varVNCnotinDD, collapse = ', '),
-                             '\n\n Check if file DD contains all variable names.'))
+                 stop(paste0('[Validity DD] The following variables in the column "IDDD" of the slot DD must be variables (IDDD) in the slot VNC:\n',
+                             paste0(varVNCnotinVNC, collapse = ', '),
+                             '\n\n Check if object VNC contains all variable names.'))
                  
              }
              

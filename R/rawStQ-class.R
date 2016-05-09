@@ -32,12 +32,13 @@
 #' new(Class = 'rawStQ')
 #'
 #'
+#' library(data.table)
 #' data(ExampleDD)
 #' key <- new(Class = 'rawKey', 
-#'            c('IDDD:Turnover_NumIdEst:001_IsNatMarket:0', 
-#'              'IDDD:Turnover_NumIdEst:001_IsNatMarket:1', 
-#'              'IDDD:Turnover_NumIdEst:001_Province:04', 
-#'              'IDDD:Turnover_NumIdEst:001_NACE09:0512'))
+#'            c('IDDD:Turnover_ID:001', 
+#'              'IDDD:Employees_ID:001_IsRemun:1_IsPartTime:0', 
+#'              'IDDD:Employees_ID:001_IsRemun:0', 
+#'              'IDDD:Employees_ID:001_IsRemun:1_IsPartTime:1'))
 #' rawData <- new(Class = 'rawDatadt', 
 #'                data.table(Key = key, Value = c('625000', '23154', '25004', '10512')))
 #' rawQ <- new(Class = 'rawStQ', Data = rawData, DD = ExampleDD)

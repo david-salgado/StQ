@@ -30,7 +30,7 @@ as the input parameter \code{x}.
 }
 \examples{
 data(ExampleDD)
-ExampleDD[Variable == 'IASSCifraNeg']
+ExampleDD[Variable == 'Turnover']
 
 }
 

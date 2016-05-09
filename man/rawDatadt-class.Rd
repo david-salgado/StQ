@@ -18,6 +18,7 @@ columns:
 }
 }
 \examples{
+library(data.table)
 key <- new(Class = 'rawKey', 
           c('IDDD:Turnover_NumIdEst:001_IsNatMarket:0', 
             'IDDD:Turnover_NumIdEst:001_IsNatMarket:1', 

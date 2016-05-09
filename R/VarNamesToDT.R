@@ -31,7 +31,7 @@
 #' @examples
 #' # We load RepoReadWrite to obtain the included example DD object
 #' data(ExampleDD)
-#' VarNamesToDT(c('Orders_0'), ExampleDD)
+#' VarNamesToDT(c('Employees_0'), ExampleDD)
 #'
 #' @include ExtractNames.R
 #'
@@ -110,9 +110,19 @@ VarNamesToDT <- function(VarNames, DD){
 
     } else { # Ahora para varias variables de entrada
 
-        out.list <- lapply(as.list(VarNames), VarNamesToDD, DD = DD)
-        out <- Reduce(function(x, y){x + y}, out.list, out.list[[1L]])
+        out.list <- lapply(as.list(VarNames), VarNamesToDT, DD = DD)
 
+        out <- Reduce(function(x, y){
+                            merge(x, y, all = TRUE, by = intersect(names(x), names(y)))}, 
+                      out.list, 
+                      out.list[[1L]])
+
+        # Pasamos NA a '' y eliminamos columnas vacías
+        Cols <- sort(names(out))
+        for (col in Cols){
+            out[, col := ifelse(is.na(get(col)), '', get(col)), with = F]
+            if(all(out[[col]] == '')) out[, col := NULL, with = F]
+        }
         return(out)
     }
 }

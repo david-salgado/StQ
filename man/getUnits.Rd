@@ -8,17 +8,19 @@
 \alias{getUnits,data.table-method}
 \title{Extract statistical units from an object}
 \usage{
-getUnits(object)
+getUnits(object, DDslot = "MicroData")
 
-\S4method{getUnits}{StQ}(object)
+\S4method{getUnits}{StQ}(object, DDslot = "MicroData")
 
-\S4method{getUnits}{data.table}(object)
+\S4method{getUnits}{data.table}(object, DDslot = "MicroData")
 
-\S4method{getUnits}{Datadt}(object)
+\S4method{getUnits}{Datadt}(object, DDslot = "MicroData")
 }
 \arguments{
 \item{object}{Object of class \linkS4class{StQ} or class 
 \linkS4class{data.table}.}
+
+\item{DDslot}{Character vector of length 1 with the name of slot of the attribute \linkS4class{DD}}
 }
 \value{
 It returns a \code{data.table} with the statistical units in the
@@ -27,11 +29,11 @@ input object.
 \description{
 This method identifies the IDQual qualifiers in the input object
 and returns a \linkS4class{data.table} with the values of these qualifiers
-for each statistical unit.
+for each statistical unit for the slot of the attribute \linkS4class{DD} specified as input.
 }
 \examples{
-data(ExampleQ)
-getUnits(ExampleQ)
+data(ExampleStQ)
+getUnits(ExampleStQ)
 
 }
 

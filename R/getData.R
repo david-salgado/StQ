@@ -43,20 +43,20 @@
 #' getData(ExampleDD)
 #' 
 #' # From an StQ object 
-#' VarNames <- c('Orders_0')
-#' getData(ExampleQ, VarNames)
+#' VarNames <- c('Employees_0')
+#' getData(ExampleStQ, VarNames)
 #' 
 #' VarNames <- c('Turnover')
-#' getData(ExampleQ, VarNames)
+#' getData(ExampleStQ, VarNames)
 #'
 #' # From an StQList object 
 #' mm <- c(paste0('0', 1:9), 10:12)
 #' TimePer <- paste0('MM', mm, '2015')
 #' QList <- vector('list', 12)
-#' QList <- lapply(QList, function(x) ExampleQ)
+#' QList <- lapply(QList, function(x) ExampleStQ)
 #' names(QList) <- TimePer
-#' QList <- new(Class = 'StQList', QList)
-#' VarNames <- c('IASSCifraNeg', 'IASSEmpleo')
+#' QList <- BuildStQList(QList)
+#' VarNames <- c('Turnover', 'Employees_1_1')
 #' getData(QList, VarNames)
 #' 
 #' @export
@@ -77,7 +77,7 @@ setMethod(
 )
 #' @rdname getData
 #' 
-#' @include Datadt-class.R StQ-class.R getDD.R getSlotDD.R getNonIDQual.R getData.R ExtractNames.R VarNamesToDT.R getDD.R
+#' @include Datadt-class.R StQ-class.R getDD.R DDslotWith.R getNonIDQual.R getData.R ExtractNames.R VarNamesToDT.R getDD.R
 #' 
 #' @import data.table
 #' 
@@ -89,6 +89,7 @@ setMethod(
     
     
     if (missing(VarNames)) return(copy(object@Data))
+    
       
 
     if (length(DDslot) > 1){
@@ -102,45 +103,46 @@ setMethod(
           
         stop('[StQ::getData] DDslot is not a component of the slot DD of the input object.')
     }
- 
+
     for (VarName in VarNames){
  
-        Varslot <- getSlotDD(DD, VarName, DDslot)
+        Varslot <- DDslotWith(DD, VarName, DDslot)
         Quals <- setdiff(names(Varslot),
                          c('Variable', 'Sort', 'Class', 'ValueRegExp'))
         
         NameQuals <- c()
         for (Qual in Quals){
             
-            NameQuals <- c(NameQuals,Varslot[Variable == ExtractNames(VarName)][[Qual]])
+            NameQuals <- c(NameQuals, Varslot[Variable == ExtractNames(VarName)][[Qual]])
         }
-        
+         
         nonIDQuals <- getNonIDQual(Varslot)
+     
         
-        
-        if (!all(NameQuals %in% nonIDQuals) & VarName != ExtractNames(VarName)){
+        if (!all(nonIDQuals %in% NameQuals) & VarName != ExtractNames(VarName)){
             
             stop('[StQ::getData] Variable ', ExtractNames(VarName), ' has not any non-identity qualifiers, so VarName cannot be ', VarName, '.')
         }
     }
-  
 
     VarNames.DT <- VarNamesToDT(VarNames, getDD(object))
-    for (col in names(VarNames.DT)){
-        
+    ColNames <- sort(names(VarNames.DT))
+
+    for (col in ColNames){
+
         if (all(VarNames.DT[[col]] == '')) VarNames.DT[, col := NULL, with = F]
         
     }
-    setkeyv(VarNames.DT, names(VarNames.DT))
-    DataNames <- names(object@Data)
-    setkeyv(getData(object), names(VarNames.DT))
-    output <- merge(getData(object), VarNames.DT)
+
+    
+    output <- merge(getData(object), VarNames.DT, by = names(VarNames.DT))
 
     if(dim(output)[1] == 0) {
       
       warning('[StQ::getData] No such variables in this data set.')
       return(output)
     }
+    DataNames <- names(object@Data)
     setcolorder(output, DataNames)
     Cols <- sort(names(output))
     for (col in Cols){
@@ -189,7 +191,7 @@ setMethod(
 )
 #' @rdname getData
 #' 
-#' @include rawStQ-class.R rawDatadt-class.R getDD.R getSlotDD.R getNonIDQual.R ExtractNames.R 
+#' @include rawStQ-class.R rawDatadt-class.R getDD.R DDslotWith.R getNonIDQual.R ExtractNames.R 
 #' 
 #' @import data.table
 #' 
@@ -206,7 +208,7 @@ setMethod(
         
         for (VarName in VarNames){
             
-            Varslot <- getSlotDD(DD, VarName, DDslot)
+            Varslot <- DDslotWith(DD, VarName, DDslot)
         }
         
         Quals <- setdiff(names(Varslot),
