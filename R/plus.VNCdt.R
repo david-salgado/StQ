@@ -108,10 +108,10 @@ setMethod(
         setkeyv(outVar, setdiff(names(outVar), UnitCol))
         outVar <- outVar[!duplicated(outVar)]
 
-        Unitn <- names(outVar)[grep('Unit', names(outVar))]
-        IDQual <- outVar[which(IDQual != ""), IDQual]
-        NonIDQual <- outVar[which(NonIDQual != ""), NonIDQual]
-        setcolorder(outVar, intersect(names(outVar), c('IDQual', 'NonIDQual', 'IDDD', IDQual, NonIDQual, Unitn)))
+        IDQual <- unique(outVar[which(IDQual != ""), IDQual])
+        NonIDQual <- unique(outVar[which(NonIDQual != ""), NonIDQual])
+        NonIDQual <- setdiff(NonIDQual, IDQual)
+        setcolorder(outVar, c('IDQual', 'NonIDQual', 'IDDD', IDQual, NonIDQual, UnitCol))
         output <- new(Class = 'VNCdt', outVar) 
         
         return(output)
