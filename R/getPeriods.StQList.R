@@ -1,13 +1,12 @@
-#' @title Return a vector with the names of the time intervals
+#' @title Return a vector with the names of the time intervals.
 #'
-#' @description \code{getPeriods} returns a vector with the names of the time
-#' periods from the slot \code{Periods} of the input \linkS4class{StQList}
-#' object.
+#' @description \code{getPeriods} returns a vector with the names of the time periods from the slot
+#' \code{Periods} of the input \linkS4class{StQList} object.
 #'
 #' @param object Object of class \linkS4class{StQList}.
 #'
-#' @return Character vector with the names of the time periods according to the
-#' notation of package \linkS4class{RepoTimeInt}.
+#' @return Character vector with the names of the time periods according to the notation of package
+#' \linkS4class{RepoTimeInt}.
 #'
 #' @examples
 #' library(RepoTime)

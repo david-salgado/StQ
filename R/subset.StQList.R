@@ -51,13 +51,8 @@ setMethod(
     DD <- x@Data[[1L]]
     DD <- DD@DD
 
-    output <- vector('list', length(DataList))
-    for (j in c(1:length(output))){
-      output[[j]] <- new(Class = 'StQ', Data = DataList[[j]], DD = DD)
-    }
-    
-    names(output) <- i
-    output <- new(Class = 'StQList', Data = output, Periods = newRepoTime(i))
+    names(DataList) <- i
+    output <- new(Class = 'StQList', Data = DataList, Periods = newRepoTime(i))
     
     return(output)
 

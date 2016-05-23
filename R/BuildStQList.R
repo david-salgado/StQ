@@ -1,7 +1,7 @@
-#' @title Constructor of objects of class \linkS4class{StQList}
+#' @title Constructor of objects of class \linkS4class{StQList}.
 #'
 #' @description This constructor returns objects of class \linkS4class{StQList}.
-#' THe input parameter is a \code{list} of objects of class \linkS4class{StQ}.
+#' The input parameter is a \code{list} of objects of class \linkS4class{StQ}.
 #'
 #' @param Data \code{List} of objects of class \linkS4class{StQ}.
 #'

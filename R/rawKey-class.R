@@ -26,10 +26,10 @@ setClass(Class = "rawKey",
          contains = 'character',
          validity = function(object){
              
-             IDDD <- str_detect(object, 'IDDD:')
-             if(length(object[IDDD]) != length(object@.Data)){
+             IniKey <- sub("^\\s+", "", substr(object, 1, 5))
+             if(any(!is.na(IniKey) && IniKey != 'IDDD:')){
                  
-                 stop('[Validity rawKey] In each element of the character vector there must be an element named "IDDD".')
+                 stop('[Validity rawKey] Each key must start with "IDDD:".')
              }
              
              numkeySyntax <- "^IDDD:[A-Za-z0-9]+(_[A-Za-z0-9]+:(-?[0-9\\.]+(e(\\+|-)[0-9]+)?))*$"
@@ -48,7 +48,7 @@ setClass(Class = "rawKey",
              if (!all(Validany)) {
                  
                  indexNotValid <- which(!Validany)
-                 InvalidKeys <- object[indexNotValid]
+                 InvalidKeys <- object@.Data[indexNotValid]
                  stop(paste0('[Validity rawKey] Not valid keys detected:\n ',
                              paste0(InvalidKeys, collapse = ',\n')),
                       call. = FALSE)

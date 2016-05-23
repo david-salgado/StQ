@@ -30,5 +30,8 @@ key <- new(Class = 'rawKey', c('IDDD:IASSEmpleo_Norden:391092SS_EsRemuner:1_Tipo
                                'IDDD:IASSLPCifraNeg_Norden:1231_CCAA:01'))
 KeyToDT(key)
 
+data(ExamplerawKey)
+KeyToDT(ExamplerawKey)
+
 }
 

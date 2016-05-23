@@ -40,7 +40,8 @@ DDdtToVNC <- function(DDdt, NameVNC){
         
         fin <- length(IDQualdt)
         IDQual[1:fin] <- IDQualdt
-    }else{
+    
+    } else {
         
         fin <- 0
     }

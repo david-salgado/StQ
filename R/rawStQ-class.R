@@ -55,7 +55,7 @@ setClass(Class = "rawStQ",
                           DD = new(Class = 'DD')),
          validity = function(object){
 
-             Data <- object@Data
+             Data <- getData(object)
 
              # Detección de filas duplicadas
              if (dim(Data)[[1]] != 0){

@@ -36,7 +36,6 @@ setMethod(
         value <- unlist(lapply(keyValue, function(x){x[2]}))
         key <- new(Class = 'rawKey', key)    
         Datadt <- new(Class = 'rawDatadt', data.table(Key = key, Value = value))
-return(Datadt)
         rawQ <- new(Class = 'rawStQ', Data = Datadt, DD = QDD)
 
         return(rawQ)

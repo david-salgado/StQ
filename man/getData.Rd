@@ -7,6 +7,7 @@
 \alias{getData,StQ-method}
 \alias{getData,StQList-method}
 \alias{getData,rawStQ-method}
+\alias{getData,rawStQList-method}
 \title{Return slot Data from an object}
 \usage{
 getData(object, VarNames, DDslot = "MicroData")
@@ -18,6 +19,8 @@ getData(object, VarNames, DDslot = "MicroData")
 \S4method{getData}{StQList}(object, VarNames, DDslot = "MicroData")
 
 \S4method{getData}{rawStQ}(object, VarNames, DDslot = "MicroData")
+
+\S4method{getData}{rawStQList}(object, VarNames, DDslot = "MicroData")
 }
 \arguments{
 \item{object}{Object whose (possibly subsetted) slot \code{Data} is queried.}

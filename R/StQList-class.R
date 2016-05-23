@@ -1,20 +1,17 @@
-#' @title S4 class to implement a named list of objects of class
-#' \linkS4class{StQ}
+#' @title S4 class to implement a named list of objects of class \linkS4class{StQ}.
 #'
-#' @description Definition of an S4 class of name \code{StQList} with a list of
-#' objects of class \linkS4class{StQ}. Instead of an atomic vector as a name, we
-#' associate with it an object of class \linkS4class{RepoTimeInt} containing
-#' the names of the time periods corresponding to eacj \linkS4class{StQ} object.
+#' @description Definition of an S4 class of name \code{StQList} with a list of objects of class
+#' \linkS4class{StQ}. Instead of an atomic vector as a name, we associate with it an object of class
+#' \linkS4class{RepoTimeInt} containingthe names of the time periods corresponding to each
+#' \linkS4class{StQ} object.
 #'
 #' The structure of this S4 class \code{StQList} comprises 2 attributes:
 #'
 #' \itemize{
 #'
-#' \item the attribute \code{Data}, which is a \code{list} of objects of class
-#' \linkS4class{StQ};
+#' \item the attribute \code{Data}, which is a \code{list} of objects of class \linkS4class{StQ};
 #'
-#' \item  the attribute \code{Periods}, which is an object of class
-#'  \linkS4class{RepoTimeInt}.
+#' \item  the attribute \code{Periods}, which is an object of class \linkS4class{RepoTimeInt}.
 #' }
 #'
 #' @slot Data \code{List} of objects of class \linkS4class{StQ};

@@ -177,16 +177,9 @@ setMethod(
   signature = c("StQList"),
   function(object, VarNames, DDslot = 'MicroData'){
     
-    if (missing(VarNames)){
-      
-      output <- lapply(object@Data, function(x) getData(x))
+      output <- copy(object@Data)
       
       return(output)
-    }
-    
-    output <- lapply(object@Data, function(x) getData(x, VarNames))  
-    
-    return(output)
   }
 )
 #' @rdname getData
@@ -259,6 +252,23 @@ setMethod(
         value <- object@Data[['Value']][VarNames.DT]
         output <- new(Class = 'rawDatadt', data.table(Key = key, Value = value))
         
+        
+        return(output)
+    }
+)
+#' @rdname getData
+#' 
+#' @include rawStQList-class.R
+#' 
+#' @import data.table
+#' 
+#' @export
+setMethod(
+    f = "getData",
+    signature = c("rawStQList"),
+    function(object, VarNames, DDslot = 'MicroData'){
+        
+        output <- copy(object@Data)
         
         return(output)
     }

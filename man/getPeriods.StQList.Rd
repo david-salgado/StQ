@@ -4,7 +4,7 @@
 \name{getPeriods.StQList}
 \alias{getPeriods.StQList}
 \alias{getPeriods.StQList,StQList-method}
-\title{Return a vector with the names of the time intervals}
+\title{Return a vector with the names of the time intervals.}
 \usage{
 getPeriods.StQList(object)
 
@@ -14,13 +14,12 @@ getPeriods.StQList(object)
 \item{object}{Object of class \linkS4class{StQList}.}
 }
 \value{
-Character vector with the names of the time periods according to the
-notation of package \linkS4class{RepoTimeInt}.
+Character vector with the names of the time periods according to the notation of package
+\linkS4class{RepoTimeInt}.
 }
 \description{
-\code{getPeriods} returns a vector with the names of the time
-periods from the slot \code{Periods} of the input \linkS4class{StQList}
-object.
+\code{getPeriods} returns a vector with the names of the time periods from the slot
+\code{Periods} of the input \linkS4class{StQList} object.
 }
 \examples{
 library(RepoTime)

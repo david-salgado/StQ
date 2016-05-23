@@ -2,7 +2,7 @@
 % Please edit documentation in R/BuildStQList.R
 \name{BuildStQList}
 \alias{BuildStQList}
-\title{Constructor of objects of class \linkS4class{StQList}}
+\title{Constructor of objects of class \linkS4class{StQList}.}
 \usage{
 BuildStQList(Data)
 }
@@ -14,7 +14,7 @@ An object of class \linkS4class{StQList}.
 }
 \description{
 This constructor returns objects of class \linkS4class{StQList}.
-THe input parameter is a \code{list} of objects of class \linkS4class{StQ}.
+The input parameter is a \code{list} of objects of class \linkS4class{StQ}.
 }
 \examples{
 mm <- c(paste0('0', 1:9), 10:12)
