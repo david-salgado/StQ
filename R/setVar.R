@@ -126,7 +126,7 @@ setMethod(
             out <- ifelse(is.na(y) | y == '', paste0(x, ''), paste(x, y, sep ="_"))
             return(out)
         }
-        
+
         newVNC <- copy(getVNC(newDD)[[DDslot]])
         newVNC <- newVNC[, 'IDQual' := NULL, with = F]
         newVNC <- newVNC[, 'NonIDQual' := NULL, with = F]
@@ -210,11 +210,12 @@ setMethod(
     signature = c("StQList", "DD"),
     function(object,
              newDD,
+             DDslot = 'MicroData',
              Value,
              lag = NULL,
              by = NULL){
         
-        output <- lapply(object@Data, setVar, newDD, Value, lag, by)
+        output <- lapply(object@Data, setVar, newDD, DDslot, Value, lag, by)
         output <- BuildStQList(output)
         
         return(output)
