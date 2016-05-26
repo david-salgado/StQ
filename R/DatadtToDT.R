@@ -25,13 +25,15 @@
 DatadtToDT <-function(object){
     
     n <- dim(object)[1]
-    output <- data.table(IDDD = character(n), Value = character(n))
+    output <- data.table(aux = character(n))
     ColNames <- names(object)
     for (col in ColNames){
         
         output[, col := object[[col]], with = F]
         
     }
+    output[, aux := NULL]
+    
     setcolorder(output, names(object))
     
     return(output)
