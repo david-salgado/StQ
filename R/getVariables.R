@@ -25,7 +25,7 @@ setGeneric("getVariables", function(object, Sort, slots){standardGeneric("getVar
 
 #' @rdname getVariables
 #' 
-#' @include DDdt-class.R
+#' @include DDdt-class.R DatadtToDT.R
 #' 
 #' @import data.table
 #' 
@@ -35,10 +35,8 @@ setMethod(
     signature = c("DDdt"),
     function(object, Sort = c('IDDD', 'IDQual', 'NonIDQual')){
         
-        rows <- which(object[['Sort']] %in% Sort)
-        output <- unique(object[rows, Variable])
-        output <- output[output != '']
-        
+        objectDT <- DatadtToDT(object)
+        output <- objectDT[Sort %in% Sort][['Variable']]
         return(output)
     }
 )
@@ -62,7 +60,7 @@ setMethod(
         output <- c()
         for (DDdt in slots) {
             
-            IDDD <- getVariables(slot(object,DDdt), Sort)
+            IDDD <- getVariables(slot(object, DDdt), Sort)
             output <- c(output, IDDD)
         }
         

@@ -14,7 +14,6 @@
 #' @include VarNameCorresp-class.R DD-class.R StQ-class.R
 #'
 #' @examples 
-#' # An example:
 #' library(data.table)
 #' ### We build the VNC object
 #' VarList <- list(ID = new(Class = 'VNCdt',
@@ -96,7 +95,7 @@ setGeneric("getVNC", function(object) {standardGeneric("getVNC")})
 
 #' @rdname getVNC
 #'
-#' @include DD-class.R
+#' @include DD-class.R VarNameCorresp-class.R
 #'
 #' @import data.table
 #'

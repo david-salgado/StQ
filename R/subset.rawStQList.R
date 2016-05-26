@@ -33,9 +33,7 @@
 #'
 #' @include rawStQList-class.R getData.R
 #'
-#' @import data.table
-#'
-#' @import RepoTime
+#' @import data.table RepoTime
 #'
 #' @export
 setMethod(

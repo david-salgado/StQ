@@ -13,8 +13,7 @@
 #' @return a list of objects of class \linkS4class{StQ}.
 #' 
 #' @export
-setGeneric("StQListToStQ",
-           function(object){standardGeneric("StQListToStQ")})
+setGeneric("StQListToStQ", function(object){standardGeneric("StQListToStQ")})
 
 #' @rdname StQListToStQ
 #'
