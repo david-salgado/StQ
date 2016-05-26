@@ -101,9 +101,9 @@
 #'           Aggregates = Aggdt)
 #' 
 #' 
-#' IDDDToUnitNames(VNC, IDDDNames = 'Employees_1_1')
+#' IDDDToUnitNames(VNC, IDDDNames = 'NewOrders_0_0_1')
 #' 
-#' IDDDToUnitNames(DD, IDDDNames = 'Employees_1_1')
+#' IDDDToUnitNames(DD, IDDDNames = 'Date_Imputation')
 #'
 #'
 #' @export
@@ -195,7 +195,7 @@ setMethod(
 
 #' @rdname IDDDToUnitNames
 #'
-#' @include DD-class.R 
+#' @include DD-class.R VarNameCorresp-class.R
 #'
 #' @import data.table
 #' 
@@ -217,7 +217,7 @@ setMethod(
 
 #' @rdname IDDDToUnitNames
 #'
-#' @include StQ-class.R 
+#' @include StQ-class.R DD-class.R
 #'
 #' @import data.table
 #' 

@@ -28,7 +28,6 @@ object of class \linkS4class{DD} or \linkS4class{StQ} specified as input
 argument.
 }
 \examples{
-# An example:
 library(data.table)
 ### We build the VNC object
 VarList <- list(ID = new(Class = 'VNCdt',
