@@ -45,7 +45,7 @@ setMethod(
     signature = c("StQList"),
     function(object){
         
-        output <- lapply(object, function(x) getDD(x))  
+        output <- lapply(getData(object), function(x) getDD(x))  
         
         return(output)
     }

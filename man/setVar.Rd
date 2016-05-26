@@ -12,7 +12,8 @@ setVar(object, newDD, DDslot = "MicroData", Value, lag = NULL, by = NULL)
 \S4method{setVar}{StQ,DD}(object, newDD, DDslot = "MicroData", Value,
   lag = NULL, by = NULL)
 
-\S4method{setVar}{StQList,DD}(object, newDD, Value, lag = NULL, by = NULL)
+\S4method{setVar}{StQList,DD}(object, newDD, DDslot = "MicroData", Value,
+  lag = NULL, by = NULL)
 }
 \arguments{
 \item{object}{Object in which to include the new variable.}

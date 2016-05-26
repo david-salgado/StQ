@@ -23,15 +23,16 @@
 #'
 #' @export
 DatadtToDT <-function(object){
-    ColNames.object <- copy(names(object))
-    L <- length(ColNames.object)
-    H <- length(object[[1]])
-    output <- as.data.table(matrix(nrow=H,ncol=L))
-    names(output) = ColNames.object
-    for (i in 1:L){
-      output[[i]] <- object[[i]]
+    
+    n <- dim(object)[1]
+    output <- data.table(IDDD = character(n), Value = character(n))
+    ColNames <- names(object)
+    for (col in ColNames){
+        
+        output[, col := object[[col]], with = F]
         
     }
+    setcolorder(output, names(object))
     
     return(output)
     

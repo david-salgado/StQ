@@ -19,7 +19,7 @@ setGeneric("StQListToStQ",
 #' @rdname StQListToStQ
 #'
 #' 
-#' @include StQList-class.R StQ-class.R
+#' @include StQList-class.R StQ-class.R getData.R getDD.R DatadtToDT.R BuildVNC.R
 #'
 #' @import data.table
 #'
@@ -29,47 +29,43 @@ setMethod(
     signature = c("StQList"),
     function(object){
         
-        DataList <- getData(object)
+
+        DD <- Reduce('+', getDD(object))
+        
+        VNCPer <- BuildVNC(list(MicroData = new(Class = 'VNCdt', 
+                                                .Data = data.table(IDQual = c('Period'),
+                                                                   NonIDQual = '',
+                                                                   IDDD = '',
+                                                                   Period = '.',
+                                                                   Unit1 = '')))) 
+        Microdt <- new( Class = 'DDdt',data.table(Variable = c('Period'),  
+                                                  Sort = c('IDQual'),
+                                                  Class = c('character'),
+                                                  Qual1 = '',
+                                                  ValueRegExp = '.+'))
+        
+        DDPer <- new(Class = 'DD', VarNameCorresp = VNCPer, ID = new(Class = 'DDdt'), MicroData = Microdt, ParaData = new(Class = 'DDdt'))
+        
+        DD <- DD + DDPer
+        
+        IDQual <- getIDQual(DD)
+        NonIDQual <- getNonIDQual(DD)
+        DatadtList <- lapply(getData(object), getData)
+        DataList <- lapply(DatadtList, DatadtToDT)
         Periods <- names(DataList)
-        output <- lapply(Periods, function(Per){
-            
-        DataList[[Per]][, Period := Per]
-        setcolorder(DataList[[Per]], c(setdiff(names(DataList[[Per]]), c('IDDD', 'Value')), c('IDDD', 'Value')))
-        
-        DDList <- getDD(object)
-            
-        slots <- setdiff(slotNames(DDList[[Per]]), 'VarNameCorresp')
-        slotData <- list()
-        slotData[['VarNameCorresp']] <- slot(DDList[[Per]], 'VarNameCorresp')
-        
-        for (slot in slots){
-            
-            Data <- slot(DDList[[Per]], slot)
-            VarNames <- setdiff(names(DataList[[Per]]), c('Period', 'IDDD', 'Value'))
-            
-            if(length(VarNames[VarNames %in% Data[['Variable']]]) == length(VarNames)){
-                
-                row <- data.table(Variable = 'Period', Sort = 'NonIDQual', Class = 'character')
-                list <- list(Data, row)
-                Data <- rbindlist(list, use.names = TRUE, fill = TRUE)
-                Data[nrow(Data)] <- ifelse(is.na(Data[nrow(Data)]), '', Data[nrow(Data)])
-            }
-            
-            slotData[[slot]] <- Data
+
+        for (Per in Periods) {
+            print(Per)
+            set(DataList[[Per]], NULL, 'Period', Per)
+            setcolorder(DataList[[Per]], c(intersect(IDQual,names(DataList[[Per]])), 
+                                           intersect(NonIDQual,names(DataList[[Per]])),
+                                           c('IDDD', 'Value')))
         }
         
-        DDList[[Per]] <- new(Class = 'DD', VarNameCorresp = slotData[['VarNameCorresp']],
-                                MicroData = slotData[['MicroData']],
-                                Aggregates = slotData[['Aggregates']],
-                                AggWeights = slotData[['AggWeights']],
-                                Other = slotData[['Other']])
 
-        new(Class = 'StQ', Data = DataList[[Per]], DD = DDList[[Per]])
-           
-        })
-
-        names(output) <- Periods
-        return(output)
+        Datadt <- new(Class = 'Datadt', .Data = rbindlist(DataList))
+        out <- new(Class = 'StQ', Data = Datadt, DD = DD)
         
+        return(out)
     }
 )
