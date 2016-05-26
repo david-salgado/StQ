@@ -79,7 +79,6 @@ Collate:
     'getParaData.R'
     'getVar.R'
     'getVariables.R'
-    ''
     'melt_StQ.R'
     'plus.Datadt.R'
     'plus.StQ.R'
