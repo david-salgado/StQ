@@ -49,8 +49,11 @@ VarNamesToDD <- function(VarNames, DD){
                     }
                     
                 }
-            }
+                nQual <- dim(Names.DT)[2] - 4
+                setnames(Names.DT, c('Variable', 'Sort', 'Class', paste0('Qual', 1:nQual), 'ValueRegExp'))
                 
+            }
+
             #Construimos el objecto DD por Slots
             if (DDslot=='ID'){
                 

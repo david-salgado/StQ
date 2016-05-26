@@ -41,8 +41,9 @@ setMethod(
             stop('[StQ::DDslotWith] Only one variable can be specifed as input.')
             
         }
-        
+
         DDVar <- VarNamesToDD(VarName, object)
+
         Varslot <- c()
         for (DDvarslot in setdiff(slotNames(DDVar), 'VarNameCorresp')){
             
