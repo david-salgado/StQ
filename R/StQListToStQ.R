@@ -57,8 +57,8 @@ setMethod(
         for (Per in Periods) {
             print(Per)
             set(DataList[[Per]], NULL, 'Period', Per)
-            setcolorder(DataList[[Per]], c(intersect(IDQual,names(DataList[[Per]])), 
-                                           intersect(NonIDQual,names(DataList[[Per]])),
+            setcolorder(DataList[[Per]], c(intersect(IDQual, names(DataList[[Per]])), 
+                                           intersect(NonIDQual, names(DataList[[Per]])),
                                            c('IDDD', 'Value')))
         }
         

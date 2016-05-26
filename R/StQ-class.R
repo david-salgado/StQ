@@ -53,17 +53,18 @@ setClass(Class = "StQ",
                           DD = new(Class = 'DD')),
          validity = function(object){
 
-             Data <- object@Data
+             Datadt <- object@Data
              
-             # Si un identificador de variable está idénticamente en blanco, esta columna se elimina
-             colData <- names(Data)
+             # Si un identificador de unidad o variable está idénticamente en blanco, esta columna se elimina
+             colData <- names(Datadt)
              colsData <- c('IDDD', 'Value')
+             Data <- DatadtToDT(Datadt)
              for (col in setdiff(colData, colsData)){
                  
                  if (all(Data[[col]] == '')) Data[, col := NULL, with = F]
              }
              
-             object@Data <- Data
+             object@Data <- new(Class = 'Datadt', Data)
              colData <- names(Data)
             
              

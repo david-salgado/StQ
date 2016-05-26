@@ -49,7 +49,8 @@ setClass(Class = "Datadt",
                  
                  stop('[validity Datadt] The last second column of Datadt must be IDDD.')
              }
-
+             
+             
              return(TRUE)
          }
 )
