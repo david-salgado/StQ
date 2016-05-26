@@ -126,11 +126,11 @@ setMethod(
         
         if (missing(Namesdt)) Namesdt <- slotNames(object)
         
-        #Namesdt <- setdiff(Namesdt, 'VarNameCorresp')
+        Namesdt <- setdiff(Namesdt, 'VarNameCorresp')
         output <- c()
         for (DDdt in Namesdt) {
             
-            IDQual <- getIDQual(slot(object,DDdt))
+            IDQual <- getIDQual(slot(object, DDdt))
             output <- c(output, IDQual)
         }
         
