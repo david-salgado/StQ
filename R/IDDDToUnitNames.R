@@ -148,6 +148,9 @@ setMethod(
         
         }
         
+        order <- match(output[[1]], IDDDNames)
+        output[, order := order]
+        setorder(output, order)
         
         return(output)
         
