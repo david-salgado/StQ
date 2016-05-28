@@ -3,8 +3,8 @@ Title: Construction of Standard Questionnaires
 Version: 0.1.0
 Author: David Salgado
 Maintainer: David Salgado <david.salgado.fernandez@gmail.com>
-Description: This package contains the definition of the class StQ for
-    standard business-statistics questionnaires and the methods to manage them
+Description: This package contains the definition of the class StQ to implement a
+    standardized questionnaire and the methods to manage them
     (show, subsetting, ...)
 Depends:
     R (>= 3.2.0)
