@@ -11,6 +11,7 @@
 #' @return Invisible object of class \code{\link{NULL}}.
 #'
 #' @examples
+#' library(data.table)
 #' # A trivial example
 #' show(new(Class = 'Datadt'))
 #' 

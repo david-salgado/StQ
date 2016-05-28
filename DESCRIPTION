@@ -3,16 +3,16 @@ Title: Construction of Standard Questionnaires
 Version: 0.1.0
 Author: David Salgado
 Maintainer: David Salgado <david.salgado.fernandez@gmail.com>
-Description: This package contains the definition of the class StBusQ for
+Description: This package contains the definition of the class StQ for
     standard business-statistics questionnaires and the methods to manage them
     (show, subsetting, ...)
 Depends:
     R (>= 3.2.0)
 Imports:
-    methods,
+    methods (>= 3.3.0),
     data.table (>= 1.9.4),
     formula.tools (>= 1.5.4),
-    RepoTime (>= 0.1),
+    RepoTime (>= 0.1.0),
     stringr (>= 1.0.0)
 License: file LICENSE
 LazyData: true
