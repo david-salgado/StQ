@@ -49,7 +49,7 @@ VarNamesToDD <- function(VarNames, DD){
                     }
                     
                 }
-                nQual <- dim(Names.DT)[2] - 4
+                nQual <- length(grep('Qual', Names.DT))
                 setnames(Names.DT, c('Variable', 'Sort', 'Class', paste0('Qual', 1:nQual), 'ValueRegExp'))
                 
             }
