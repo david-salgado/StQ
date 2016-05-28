@@ -4,7 +4,7 @@
 \name{KeyToDT}
 \alias{KeyToDT}
 \alias{KeyToDT,rawKey-method}
-\title{Return \linkS4class{data.table} out of a set of parsed keys}
+\title{Return a \linkS4class{data.table} out of a set of parsed keys}
 \usage{
 KeyToDT(key)
 
