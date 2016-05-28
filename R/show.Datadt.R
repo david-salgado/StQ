@@ -1,26 +1,21 @@
-#' @title Show an object of class \linkS4class{DDdt}
+#' @title Show an object of class \linkS4class{Datadt}
 #'
 #' @description The method \code{show} shows the slots of an object
-#' \linkS4class{DDdt} limiting the number of columns on screen up to 8.
+#' \linkS4class{Datadt} limiting the number of columns on screen up to 8.
 #'
 #' It is indeed the method \link[methods]{show} adapted to the class
-#' \linkS4class{DDdt}.
+#' \linkS4class{Datadt}.
 #'
-#' @param object Object of class \linkS4class{DDdt}.
+#' @param object Object of class \linkS4class{Datadt}.
 #'
 #' @return Invisible object of class \code{\link{NULL}}.
 #'
 #' @examples
 #' # A trivial example
-#' library(data.table)
-#' show(new(Class = 'DDdt'))
+#' show(new(Class = 'Datadt'))
 #' 
-#' DDdt1 <- new(Class = 'DDdt', data.table(Variable = 'NOrden', 
-#'                                         Sort = 'IDQual', 
-#'                                         Class = 'character', 
-#'                                         Qual1 = 'NOrden',
-#'                                         ValueRegExp = '[0-9]{9}SS'))
-#' show(DDdt1)
+#' data(ExampleStQ)
+#' show(getData(ExampleStQ))
 #'                         
 #' DDdt2 <- new(Class = 'DDdt', data.table(Variable = 'NOrden', 
 #'                                         Sort = 'IDQual', 
@@ -34,16 +29,16 @@
 #'                                         ValueRegExp = '[0-9]{9}SS'))
 #' show(DDdt2)
 #' 
-#' @include DDdt-class.R
+#' @include Datadt-class.R
 #'
 #' @import data.table
 #'
 #' @export
 setMethod(
     f = "show",
-    signature = c("DDdt"),
+    signature = c("Datadt"),
     function(object){
-
+        
         ColMax <- 8 
         NamesCol <- names(object)
         
@@ -54,12 +49,10 @@ setMethod(
             names(New.object) <- object@names
             New.object <- setDT(New.object)
             mc[['object']] <- New.object
-            output <- eval(mc, envir = parent.frame())
-            return(output)
-            
+            eval(mc, envir = parent.frame())
             
         } else {
-
+            
             
             NumCols <- min(length(NamesCol), ColMax)
             NamesShowCol <- NamesCol[1:NumCols]
