@@ -49,7 +49,9 @@ setGeneric("dcast_StQ",
 #'
 #' @importFrom formula.tools lhs.vars
 #'
-#' @import data.table
+#' @importFrom stats as.formula
+#'
+#' @import data.table methods
 #'
 #' @include StQ-class.R DDslotWith.R getNonIDQual.R getDD.R getData.R getDD.R VarNamesToFormula.R
 #'

@@ -1,4 +1,4 @@
-#' @title Return \linkS4class{data.table} out of a set of parsed keys.
+#' @title Return a \linkS4class{data.table} out of a set of parsed keys
 #'
 #' @description \code{KeyToDT} returns a \linkS4class{data.table} whose columns
 #' are the different qualifiers parsed in the input key with as many raws as

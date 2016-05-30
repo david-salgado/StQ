@@ -21,7 +21,7 @@
 #' 
 #' @include DDdt-class.R 
 #'
-#' @import data.table
+#' @import data.table methods
 #'
 #' @export
 DDdtToVNC <- function(DDdt, NameVNC){
