@@ -32,10 +32,10 @@
 #' @export
 setClass(Class = "VNCdt",
          contains = c('data.table'),
-         prototype = data.table(IDQual = character(0),
-                                NonIDQual = character(0),
-                                IDDD = character(0),
-                                Unit1 = character(0)),    
+         prototype = prototype(data.table(IDQual = character(0),
+                                          NonIDQual = character(0),
+                                          IDDD = character(0),
+                                          Unit1 = character(0))),    
          validity = function(object){
              
              NCol <- dim(object)[2]
