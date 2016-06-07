@@ -36,7 +36,6 @@ setMethod(
             
             if (index.col == 1) { 
                 
-                #key <- paste0(paste0(ColNames[index.col], ':'), DT[[ColNames[index.col]]])
                 key <- DT[[ColNames[index.col]]]
             
             } else {
