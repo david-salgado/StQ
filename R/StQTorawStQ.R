@@ -31,9 +31,10 @@ setMethod(
         
         QData <- getData(Q)
         QData <- DTToKey(QData)
-        keyValue <- strsplit(QData, '_Value:')
-        key <- unlist(lapply(keyValue, function(x){x[1]}))
-        value <- unlist(lapply(keyValue, function(x){x[2]}))
+        value <- unlist(lapply(strsplit(QData, '@@'), function(x){x[length(x)]}))
+        key <-  lapply(strsplit(QData, '@@'), function(x){x[1:(length(x) - 1)]})
+        key <- lapply(key, paste0, '@@')
+        key <- unlist(lapply(key, function(x){Reduce(paste0, x)}))
         key <- new(Class = 'rawKey', key)    
         Datadt <- new(Class = 'rawDatadt', data.table(Key = key, Value = value))
         rawQ <- new(Class = 'rawStQ', Data = Datadt, DD = QDD)
