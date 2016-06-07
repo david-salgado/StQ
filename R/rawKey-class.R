@@ -11,13 +11,13 @@
 #' # An empty key
 #' new(Class = 'rawKey')
 #' 
-#' new(Class = 'rawKey', c('IASSEmpleo@$391092SS@$@$1@$1',
-#'                         'IASSCifraNeg@$asd2SS@$@$@$',
-#'                         'IASSLPCifraNeg@$1231@$01@$@$'))
+#' new(Class = 'rawKey', c('IASSEmpleo@@391092SS@@@@1@@1',
+#'                         'IASSCifraNeg@@asd2SS@@@@@@',
+#'                         'IASSLPCifraNeg@@1231@@01@@@@'))
 #'                         
-#' new(Class = 'rawKey', c('IASSEmpleo@$391092SS@$9834.3@$09@$@$',
-#'                         'IASSCifraNeg@$asd2SS@$@$@$@$',
-#'                         'IASSLPCifraNeg@$:1231@$@$@$841@$0502'))
+#' new(Class = 'rawKey', c('IASSEmpleo@@391092SS@@9834.3@@09@@@@',
+#'                         'IASSCifraNeg@@asd2SS@@@@@@@@',
+#'                         'IASSLPCifraNeg@@1231@@@@@@841@@0502'))
 #'
 #' @import data.table stringr
 #'
@@ -25,19 +25,13 @@
 setClass(Class = "rawKey",
          contains = 'character',
          validity = function(object){
-             
-             IniKey <- sub("^\\s+", "", substr(object, 1, 5))
-             if(any(!is.na(IniKey) && IniKey != 'IDDD:')){
-                 
-                 stop('[Validity rawKey] Each key must start with "IDDD:".')
-             }
-             
-             numkeySyntax <- "^IDDD:[A-Za-z0-9]+(@$[A-Za-z0-9]+:(-?[0-9\\.]+(e(\\+|-)[0-9]+)?))*$"
+
+             numkeySyntax <- "^IDDD:[A-Za-z0-9]+(@@[A-Za-z0-9]+:(-?[0-9\\.]+(e(\\+|-)[0-9]+)?))*$"
              Validnum <- regexpr(numkeySyntax, object)
              #ExactLength <- (attributes(Validnum)$match.length == nchar(object))
              Validnum <- unlist(Validnum)# & ExactLength
              
-             charkeySyntax <- "^IDDD:[A-Za-z0-9]+(@$[A-Za-z0-9]+:[A-Za-z0-9]+)*$"
+             charkeySyntax <- "^IDDD:[A-Za-z0-9]+(@@[A-Za-z0-9]+:[A-Za-z0-9]+)*$"
              Validchar <- regexpr(charkeySyntax, object)
              #ExactLength <- (attributes(Validchar)$match.length == nchar(object))
              Validchar <- unlist(Validchar)# & ExactLength
