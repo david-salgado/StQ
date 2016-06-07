@@ -9,9 +9,11 @@
 #' @return Object of class \linkS4class{rawKey} with the keys of the input
 #'
 #' @examples
-#' key <- new(Class = 'rawKey', c('IDDD:IASSEmpleo_Norden:391092SS_EsRemuner:1_TipoRemuner:1',
-#'                                'IDDD:IASSCifraNeg_Norden:asd2SS',
-#'                                'IDDD:IASSLPCifraNeg_Norden:1231_CCAA:01'))
+#' key <- new(Class = 'rawKey', 
+#'            c('Turnover@@001@@@@', 
+#'              'Employees@@001@@1@@0', 
+#'              'Employees@@001@@0@@', 
+#'              'Employees@@001@@1@@1'))
 #' keyDT <- DTToKey(KeyToDT(key))
 #' 
 #' @export
@@ -34,15 +36,16 @@ setMethod(
             
             if (index.col == 1) { 
                 
-                key <- paste0(paste0(ColNames[index.col], ':'), DT[[ColNames[index.col]]])
+                #key <- paste0(paste0(ColNames[index.col], ':'), DT[[ColNames[index.col]]])
+                key <- DT[[ColNames[index.col]]]
             
             } else {
                 
                     key <- ifelse(!is.na(DT[[ColNames[index.col]]]),
                                   ifelse(DT[[ColNames[index.col]]] == '', 
-                                         key,
-                                         paste0(key, '_', ColNames[index.col], ':', DT[[ColNames[index.col]]])),
-                                  paste0(key, '_', ColNames[index.col], ':', ' '))
+                                         paste0(key, '@@'),
+                                         paste0(key, '@@', DT[[ColNames[index.col]]])),
+                                  paste0(key, '@@', ' '))
             }
         }
 
