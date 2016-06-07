@@ -16,13 +16,13 @@ components follow precisely defined syntax rules given by the regexp
 # An empty key
 new(Class = 'rawKey')
 
-new(Class = 'rawKey', c('IDDD:IASSEmpleo_Norden:391092SS_EsRemuner:1_TipoRemuner:1',
-                        'IDDD:IASSCifraNeg_Norden:asd2SS',
-                        'IDDD:IASSLPCifraNeg_Norden:1231_CCAA:01'))
+new(Class = 'rawKey', c('IASSEmpleo@391092SS@@1@1',
+                        'IASSCifraNeg@asd2SS@@@',
+                        'IASSLPCifraNeg@1231@01@@'))
                         
-new(Class = 'rawKey', c('IDDD:IASSEmpleo_Norden:391092SS_Turnover:9834.3_Province:09',
-                        'IDDD:IASSCifraNeg_Norden:asd2SS',
-                        'IDDD:IASSLPCifraNeg_Norden:1231_Employees:841_NACE:0502'))
+new(Class = 'rawKey', c('IASSEmpleo@391092SS@9834.3@09@@',
+                        'IASSCifraNeg@asd2SS@@@@',
+                        'IASSLPCifraNeg@1231@@@841@0502'))
 
 }
 

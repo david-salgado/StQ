@@ -25,9 +25,11 @@ are the different qualifiers parsed in the input key with as many raws as
 components (length) of this input key.
 }
 \examples{
-key <- new(Class = 'rawKey', c('IDDD:IASSEmpleo_Norden:391092SS_EsRemuner:1_TipoRemuner:1',
-                               'IDDD:IASSCifraNeg_Norden:asd2SS',
-                               'IDDD:IASSLPCifraNeg_Norden:1231_CCAA:01'))
+key <- new(Class = 'rawKey', 
+           c('Turnover@001@@', 
+             'Employees@001@1@0', 
+             'Employees@001@0@', 
+             'Employees@001@1@1'))
 KeyToDT(key)
 
 data(ExamplerawKey)
