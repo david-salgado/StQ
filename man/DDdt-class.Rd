@@ -27,6 +27,7 @@ new(Class = 'DDdt',
     data.table(Variable = 'NOrden', 
                Sort = 'IDQual', 
                Class = 'character',
+               QualOrder = '1', 
                Qual1 = 'NOrden', 
                ValueRegExp = '[0-9]{9}SS'))
 }

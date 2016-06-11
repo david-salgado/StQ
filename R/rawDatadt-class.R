@@ -15,11 +15,11 @@
 #' @examples
 #' library(data.table)
 #' key <- new(Class = 'rawKey', 
-#'           c('IDDD:Turnover_NumIdEst:001_IsNatMarket:0', 
-#'             'IDDD:Turnover_NumIdEst:001_IsNatMarket:1', 
-#'             'IDDD:Turnover_NumIdEst:001_Province:04', 
-#'             'IDDD:Turnover_NumIdEst:001_NACE09:0512'))
-#' Data <- new(Class = 'rawDatadt', 
+#'           c('Turnover@@001@@0@@@@', 
+#'             'Turnover@@001@@1@@@@', 
+#'             'Turnover@@001@@@@04@@', 
+#'             'Turnover@@001@@@@@@0512'))
+#' rawData <- new(Class = 'rawDatadt', 
 #'             data.table(Key = key, Value = c('625000', '23154', '25004', '10512')))
 #'                
 #' @include rawKey-class.R

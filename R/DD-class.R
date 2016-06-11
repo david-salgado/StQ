@@ -45,6 +45,7 @@
 #'     Variable = c('NumIdEst', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
 #'     Sort = c('IDQual', rep('IDDD', 4)),
 #'     Class = rep('character', 5),
+#'     QualOrder = c('1', rep('', 4)),
 #'     Qual1 = c('', rep('NumIdEst', 4)),
 #'     ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}')))
 #' Microdt <- new( Class='DDdt',data.table(
@@ -52,12 +53,14 @@
 #'                  'IsRWMarket', 'NewOrders'),
 #'     Sort = c('IDQual', rep('NonIDQual', 3), 'IDDD'),
 #'     Class = c(rep('character', 4), 'numeric'),
+#'     QualOrder = c('2', '3', '4', '5', ''),
 #'     Qual1 = c(rep('', 4), 'NumIdEst'),
 #'     ValueRegExp = c('[0-9]{9}PP', rep('(0|1| )', 3), '([0-9]{1, 10}| )')))
 #' Paradt <-new( Class='DDdt', data.table(
 #'     Variable = c('NumIdEst', 'Action', 'Date'),
 #'     Sort = c('IDQual', 'NonIDQual', 'IDDD'),
 #'     Class = rep('character', 3),
+#'     QualOrder = c('6', rep('', 2)),
 #'     Qual1 = c(rep('', 2), 'NumIdEst'),
 #'     Qual2 = c(rep('', 2), 'Action'),
 #'     ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 
@@ -147,6 +150,21 @@ setClass(Class = "DD",
                  
              }
              
+             QualNames <- c()
+             for (sl in setdiff(slotNames(object), 'VarNameCorresp')){
+                 
+                 if (dim(slot(object, sl))[1] == 0) next
+                 QualNames <- c(QualNames, slot(object, sl)[['QualOrder']])
+                 QualNames <- QualNames[QualNames != '']
+                 
+             }
+             
+             if (length(QualNames) != length(unique(QualNames))){
+                 
+                 stop('[Validity DD] The order of the qualifiers in all slots of the DD object must be unique.')
+             }
+             
+
              return(TRUE)
          }
 )

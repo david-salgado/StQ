@@ -29,6 +29,7 @@ VarNamesToDD <- function(VarNames, DD){
     
     outputDD <- new(Class = 'DD')
     setVNC(outputDD) <- getVNC(DD) 
+
     # Para una sola variable
     if (is.character(VarNames) & length(VarNames) == 1){
         
@@ -41,7 +42,7 @@ VarNamesToDD <- function(VarNames, DD){
 
             if (dim(Names.DT)[1] != 0) {
                 QualNames <- setdiff(names(Names.DT), 
-                                    c('Variable', 'Sort', 'Class', 'Qual1', 'ValueRegExp'))
+                                    c('Variable', 'Sort', 'Class', 'QualOrder', 'Qual1', 'ValueRegExp'))
                 for (col in QualNames){
                     
                     if (all(Names.DT[[col]] == '')) {
@@ -50,8 +51,9 @@ VarNamesToDD <- function(VarNames, DD){
                     
                 }
                 ColNames.DT <- names(Names.DT)
-                nQual <- length(grep('Qual', ColNames.DT))
-                setnames(Names.DT, c('Variable', 'Sort', 'Class', paste0('Qual', 1:nQual), 'ValueRegExp'))
+                nQual <- length(grep('Qual', ColNames.DT)) - 1
+
+                setnames(Names.DT, c('Variable', 'Sort', 'Class', 'QualOrder', paste0('Qual', 1:nQual), 'ValueRegExp'))
                 
             }
 
@@ -59,7 +61,7 @@ VarNamesToDD <- function(VarNames, DD){
             if (DDslot=='ID'){
                 
                 outputDD@ID <- new(Class = 'DDdt', Names.DT)
-                
+
             } else if (DDslot=='MicroData'){
                 
                 outputDD@MicroData <- new(Class = 'DDdt', Names.DT)
