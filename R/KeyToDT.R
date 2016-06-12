@@ -87,9 +87,10 @@ setMethod(
         }
         
         QualNames <- rbindlist(QualNames)
+        setkeyv(QualNames, names(QualNames))
+        QualNames <- QualNames[!duplicated(QualNames)]
         setkeyv(QualNames, 'QualOrder')
         QualNames <- c('IDDD', QualNames[['Variable']])
-        
 
         if (length(QualNames) != dim(output)[2]) {
             

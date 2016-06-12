@@ -27,14 +27,16 @@ show(new(Class = 'DDdt'))
 
 DDdt1 <- new(Class = 'DDdt', data.table(Variable = 'NOrden', 
                                         Sort = 'IDQual', 
-                                        Class = 'character', 
+                                        Class = 'character',
+                                        QualOrder = '1',
                                         Qual1 = 'NOrden',
                                         ValueRegExp = '[0-9]{9}SS'))
 show(DDdt1)
                         
 DDdt2 <- new(Class = 'DDdt', data.table(Variable = 'NOrden', 
                                         Sort = 'IDQual', 
-                                        Class = 'character', 
+                                        Class = 'character',
+                                        QualOrder = '1',
                                         Qual1 = 'NOrden',
                                         Qual2 = 'Cal2',
                                         Qual3 = 'Cal4',

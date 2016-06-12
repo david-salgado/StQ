@@ -69,34 +69,36 @@ setClass(Class = "rawStQ",
                  }
              }
              
+             ## LAS SIGUIENTES COMPROBACIONES LAS DEJAMOS PARA StQ PORQUE ES PRECISO
+             ## PARSEAR LAS CLAVES PARA HACERLAS, LO QUE REQUIERE CONSUMO DE RECURSOS
              
              # Comparamos los calificadores en los slots Data y DD: Todos los calificadores en Data deben estar definidos en algún slot de DD
-             QualinDD <- c()
-             IDDDinDD <- c()
+             #QualinDD <- c()
+             #IDDDinDD <- c()
              
-             DDslotNames <- setdiff(slotNames(object@DD), 'VarNameCorresp')
-             for (DDslot in DDslotNames){
+             #DDslotNames <- setdiff(slotNames(object@DD), 'VarNameCorresp')
+             #for (DDslot in DDslotNames){
 
-                 DDlocal <- slot(object@DD, DDslot)
-                 QualinDD <- unique(c(QualinDD, DDlocal[Sort != 'IDDD'][['Variable']]))
-                 IDDDinDD <- unique(c(IDDDinDD, DDlocal[Sort == 'IDDD'][['Variable']]))
-             }
+             #   DDlocal <- slot(object@DD, DDslot)
+             #    QualinDD <- unique(c(QualinDD, DDlocal[Sort != 'IDDD'][['Variable']]))
+             #    IDDDinDD <- unique(c(IDDDinDD, DDlocal[Sort == 'IDDD'][['Variable']]))
+             #}
             
-             QualinDD <- length(QualinDD)
-             QualinData <- lapply(strsplit(Data@.Data[[1]], '@@'), length)
-             QualinData <- Reduce(max, QualinData) - 1
-             if (QualinData > QualinDD){
+             #QualinDD <- length(QualinDD)
+             #QualinData <- lapply(strsplit(Data@.Data[[1]], '@@'), length)
+             #QualinData <- Reduce(max, QualinData) - 1
+             #if (QualinData > QualinDD){
                  
-                 stop('[Validity rawStQ] Length in some element in column key of slot Data is not correct.')
-             }
+             #    stop('[Validity rawStQ] Length in some element in column key of slot Data is not correct.')
+             #}
              
              # Comparamos las variables en los slots Data y DD: Todas las variables en Data deben estar definidas en algún slot de DD
-             IDDDinData <- unlist(lapply(strsplit(Data@.Data[[1]], '@@'), function(x){x[1]}))
-             NotinDD <- setdiff(IDDDinData, IDDDinDD)
-             if (length(NotinDD) > 0) {
-                 stop(paste0('\n[Validity rawStQ] The following variables included in column Key of slot Data are not defined in slot DD: \n',
-                             paste0(NotinDD, collapse = ', '), '.\n'))
-             }
+             #IDDDinData <- unlist(lapply(strsplit(Data@.Data[[1]], '@@'), function(x){x[1]}))
+             #NotinDD <- setdiff(IDDDinData, IDDDinDD)
+             #if (length(NotinDD) > 0) {
+             #    stop(paste0('\n[Validity rawStQ] The following variables included in column Key of slot Data are not defined in slot DD: \n',
+             #                paste0(NotinDD, collapse = ', '), '.\n'))
+             #}
              
              return(TRUE)
          }

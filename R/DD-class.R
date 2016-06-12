@@ -32,12 +32,12 @@
 #'                                            IsEuroMarket = c(rep('', 4), '0'),
 #'                                            IsRWMarket = c(rep('', 4), '1'),
 #'                                            Unit1 = c('numidest', rep('', 3), 'cp09'))),
-#' ParaData = new(Class = 'VNCdt',data.table(IDQual = c('NumIdEst', rep('', 2)),
-#'                                           NonIDQual = c('', 'Action', ''),
-#'                                           IDDD = c(rep('', 2), 'Date'),
-#'                                           NumIdEst = c(rep('', 2), '.'),
-#'                                           Action = c(rep('', 2), 'Imputation'),
-#'                                           Unit1 = c('numidest', '', 'FechaImput'))))
+#' ParaData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
+#'                                            NonIDQual = c('', 'Action', ''),
+#'                                            IDDD = c(rep('', 2), 'Date'),
+#'                                            NumIdEst = c(rep('', 2), '.'),
+#'                                            Action = c(rep('', 2), 'Imputation'),
+#'                                            Unit1 = c('numidest', '', 'FechaImput'))))
 #' 
 #' VNC <- new(Class = 'VarNameCorresp', VarList)
 #' 
@@ -53,14 +53,14 @@
 #'                  'IsRWMarket', 'NewOrders'),
 #'     Sort = c('IDQual', rep('NonIDQual', 3), 'IDDD'),
 #'     Class = c(rep('character', 4), 'numeric'),
-#'     QualOrder = c('2', '3', '4', '5', ''),
+#'     QualOrder = c('1', '2', '3', '4', ''),
 #'     Qual1 = c(rep('', 4), 'NumIdEst'),
 #'     ValueRegExp = c('[0-9]{9}PP', rep('(0|1| )', 3), '([0-9]{1, 10}| )')))
 #' Paradt <-new( Class='DDdt', data.table(
 #'     Variable = c('NumIdEst', 'Action', 'Date'),
 #'     Sort = c('IDQual', 'NonIDQual', 'IDDD'),
 #'     Class = rep('character', 3),
-#'     QualOrder = c('6', rep('', 2)),
+#'     QualOrder = c('1', '5', ''),
 #'     Qual1 = c(rep('', 2), 'NumIdEst'),
 #'     Qual2 = c(rep('', 2), 'Action'),
 #'     ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 
@@ -150,20 +150,41 @@ setClass(Class = "DD",
                  
              }
              
-             QualNames <- c()
+             QualNames <- list()
              for (sl in setdiff(slotNames(object), 'VarNameCorresp')){
                  
                  if (dim(slot(object, sl))[1] == 0) next
-                 QualNames <- c(QualNames, slot(object, sl)[['QualOrder']])
-                 QualNames <- QualNames[QualNames != '']
+                 QualNames[[sl]] <- slot(object, sl)[Sort != 'IDDD'][, list(Variable, QualOrder)]
                  
              }
              
-             if (length(QualNames) != length(unique(QualNames))){
-                 
-                 stop('[Validity DD] The order of the qualifiers in all slots of the DD object must be unique.')
-             }
+             QualNames <- rbindlist(QualNames)
              
+             if (!all(dim(QualNames) == c(0, 0))) {
+                 setkeyv(QualNames, names(QualNames))
+                 QualNames <- QualNames[!duplicated(QualNames)]
+    
+                 if (length(QualNames[['Variable']]) != length(unique(QualNames[['Variable']]))){
+                     
+                     stop('[Validity DD] Some qualifiers are assigned at least two different orders in the DD object.')
+                 }
+
+                 setkeyv(QualNames, 'Variable')
+                 QualNames <- QualNames[!duplicated(QualNames)]
+    
+                 setkeyv(QualNames, 'QualOrder')
+                 if (!all(QualNames[['QualOrder']] == seq(along = QualNames[['QualOrder']]))) {
+                     
+                     stop('[Validity DD] The order of qualifiers must be a sequence of correlative numbers.')
+                 }
+                 
+                 QualNames <- QualNames[['Variable']]
+                 
+                 if (length(QualNames) != length(unique(QualNames))){
+                     
+                     stop('[Validity DD] The order of the qualifiers in all slots of the DD object must be unique.')
+                 }
+             }             
 
              return(TRUE)
          }

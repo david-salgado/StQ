@@ -53,9 +53,17 @@ setClass(Class = "DDdt",
                  stop(paste0('[Validity DDdt] All columns of the object must be character vectors.'))
                  
              }
-             
+
+             setkeyv(object, 'Variable')
+             if (sum(duplicated(object)) > 0) {
+                 
+                 stop('[Validity DDdt] No duplicate variable is allowed.')
+                 
+             }
              QualOrder <- object[['QualOrder']]
              QualOrder <- QualOrder[QualOrder != '']
+
+             
              if (length(QualOrder) != length(unique(QualOrder))) {
                  
                  stop('[Validity DDdt] Orders of qualifiers repeated in the column QualOrder.')
@@ -75,7 +83,7 @@ setClass(Class = "DDdt",
             
              if (!all(names(object) %in% ColNames)) {
                  
-                 stop('[Validity DDdt] The names of a DDdt object must be: Variable, Sort, "Class, Qual1-Qualj, ValueRegExp.')
+                 stop('[Validity DDdt] The names of a DDdt object must be: Variable, Sort, Class, QualOrder, Qual1-Qualj, ValueRegExp.')
                  
              }
              
