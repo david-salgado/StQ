@@ -3,16 +3,26 @@
 \docType{methods}
 \name{KeyToDT}
 \alias{KeyToDT}
+<<<<<<< HEAD
 \alias{KeyToDT,rawKey-method}
 \title{Return data.table out of a set of parsed keys.}
+||||||| merged common ancestors
+\alias{KeyToDT,rawKey-method}
+\title{Return a \linkS4class{data.table} out of a set of parsed keys}
+=======
+\alias{KeyToDT,rawKey,DD-method}
+\title{Return a \linkS4class{data.table} out of a set of parsed keys}
+>>>>>>> ff277f6cdd5fddd61ed2d53b488ca2b0d15d8b1f
 \usage{
-KeyToDT(key)
+KeyToDT(key, DD)
 
-\S4method{KeyToDT}{rawKey}(key)
+\S4method{KeyToDT}{rawKey,DD}(key, DD)
 }
 \arguments{
 \item{key}{key implemented either through the class \linkS4class{rawKey} or 
 other.}
+
+\item{DD}{object DD containing the definition and order of the qualifiers.}
 }
 \value{
 \linkS4class{data.table} with one column per each different qualifier
@@ -24,13 +34,9 @@ key.
 qualifiers parsed in the input key with as many raws as components (length) of this input key.
 }
 \examples{
-key <- new(Class = 'rawKey', c('IDDD:IASSEmpleo_Norden:391092SS_EsRemuner:1_TipoRemuner:1',
-                               'IDDD:IASSCifraNeg_Norden:asd2SS',
-                               'IDDD:IASSLPCifraNeg_Norden:1231_CCAA:01'))
-KeyToDT(key)
-
 data(ExamplerawKey)
-KeyToDT(ExamplerawKey)
+data(ExampleDD)
+KeyToDT(ExamplerawKey, ExampleDD)
 
 }
 

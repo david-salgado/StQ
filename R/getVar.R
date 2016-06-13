@@ -100,6 +100,9 @@ setMethod(
             Data <- merge(Data, Var, by = names(Var))
         }
         Data <- Data[, c(names(Units), 'Value'), with = F]
+        
+        DDslot <- slot(getDD(object), DDslot)
+        NewVarClass <- DDslot[Variable == ExtractNames(VarName)][['Class']]
 
         if (dim(Data)[1] == 0) {
             
@@ -108,11 +111,16 @@ setMethod(
             for (col in names(Units)){
                 newUnits[, Unit := ifelse(Unit == '', get(col), paste0(Unit, '_', get(col)))]
             }
-            output <- matrix(rep(NA, dim(newUnits)[1]), ncol = 1, dimnames = list(newUnits[['Unit']], VarName))
+            
+            output <- rep(NA, dim(newUnits)[1])
+            output <- as(output, NewVarClass)
+            output <- matrix(output, ncol = 1, dimnames = list(newUnits[['Unit']], VarName))
+            
             
         } else {
         
             output <- Data[['Value']]
+            output <- as(output, NewVarClass)
             Data[, Unit := '']
             for (col in setdiff(names(Data), c('Unit', 'Value'))){
                 Data[, Unit := ifelse(Unit == '', get(col), paste0(Unit, '_', get(col)))]

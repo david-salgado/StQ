@@ -11,18 +11,10 @@
 #' columns \code{IDDD} and \code{Value}.
 #'
 #' @examples
-#' library(data.table)
-#' data(ExampleDD)
-#' key <- new(Class = 'rawKey', 
-#'            c('IDDD:Turnover_ID:001', 
-#'              'IDDD:Employees_ID:001_IsRemun:1_IsPartTime:0', 
-#'              'IDDD:Employees_ID:001_IsRemun:0', 
-#'              'IDDD:Employees_ID:001_IsRemun:1_IsPartTime:1'))
-#' rawData <- new(Class = 'rawDatadt', 
-#'                data.table(Key = key, Value = c('625000', '23154', '25004', '10512')))
-#' rawQ <- new(Class = 'rawStQ', Data = rawData, DD = ExampleDD)
+#' data(ExamplerawStQ)
+#' StQ <- rawStQToStQ(ExamplerawStQ)
+#' str(StQ)
 #' 
-#' newQ <- rawStQToStQ(rawQ)
 #' @export
 setGeneric("rawStQToStQ", function(rawQ){standardGeneric("rawStQToStQ")})
 #' @rdname rawStQToStQ
@@ -37,7 +29,7 @@ setMethod(
         
         rawDD <- getDD(rawQ)
         
-        rawDT <- KeyToDT(getData(rawQ)[['Key']])
+        rawDT <- KeyToDT(getData(rawQ)[['Key']], getDD(rawQ))
         rawDT <- rawDT[, Value := getData(rawQ)[['Value']]]
         setcolorder(rawDT, c(setdiff(names(rawDT), c('IDDD', 'Value')), c('IDDD', 'Value')))
         

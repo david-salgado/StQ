@@ -70,6 +70,7 @@ newDD <- new(Class = 'DD',
                              data.table(Variable = 'lTurnover',
                                         Sort = 'IDDD',
                                         Class = 'numeric',
+                                        QualOrder = '',
                                         Qual1 = 'ID',
                                         ValueRegExp = '')))
 NewQ <- setVar(object = ExampleStQ,

@@ -21,6 +21,7 @@
 #' DDdt2 <- new(Class = 'DDdt', data.table(Variable = 'NOrden', 
 #'                                         Sort = 'IDQual', 
 #'                                         Class = 'character', 
+#'                                         QualOrder = '1',
 #'                                         Qual1 = 'NOrden',
 #'                                         Qual2 = 'Cal2',
 #'                                         Qual3 = 'Cal4',

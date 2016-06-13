@@ -11,10 +11,13 @@
 #' # An empty key
 #' new(Class = 'rawKey')
 #' 
-#' new(Class = 'rawKey', c('IASS@@9644947400S@@@@@@@@@@@@@@@@@@@@@@@@IASSCifraNeg',
-#'                         'IASS@@9644947400S@@@@1@@1@@@@@@@@@@@@@@@@@@IASSEmpleo',
-#'                         'IASS@@9644947400S@@03@@@@@@@@@@@@@@@@@@@@@@IASSLPCifraNeg'))
+#' new(Class = 'rawKey', c('IASSEmpleo@@391092SS@@@@1@@1',
+#'                         'IASSCifraNeg@@asd2SS@@@@@@',
+#'                         'IASSLPCifraNeg@@1231@@01@@@@'))
 #'                         
+#' new(Class = 'rawKey', c('IASSEmpleo@@391092SS@@9834.3@@09@@@@',
+#'                         'IASSCifraNeg@@asd2SS@@@@@@@@',
+#'                         'IASSLPCifraNeg@@1231@@@@@@841@@0502'))
 #'
 #' @import data.table stringr
 #'
@@ -22,18 +25,15 @@
 setClass(Class = "rawKey",
          contains = 'character',
          validity = function(object){
-             
-             #numkeySyntax <- "^IDDD:[A-Za-z0-9]+(_[A-Za-z0-9]+:(-?[0-9\\.]+(e(\\+|-)[0-9]+)?))*$"
-             keySyntax <- "[A-Za-z]+@@[A-Za-z0-9]*"
-             
-             Validnum <- regexpr(keySyntax, object)
+             numkeySyntax <- "^IDDD:[A-Za-z0-9]+(@@[A-Za-z0-9]+:(-?[0-9\\.]+(e(\\+|-)[0-9]+)?))*$"
+             Validnum <- regexpr(numkeySyntax, object)
              #ExactLength <- (attributes(Validnum)$match.length == nchar(object))
              Validnum <- unlist(Validnum)# & ExactLength
              
-             # charkeySyntax <- "[A-Za-z]+@@[A-Za-z0-9]"
-             # Validchar <- regexpr(charkeySyntax, object)
-             # #ExactLength <- (attributes(Validchar)$match.length == nchar(object))
-             # Validchar <- unlist(Validchar)# & ExactLength
+             charkeySyntax <- "^IDDD:[A-Za-z0-9]+(@@[A-Za-z0-9]+:[A-Za-z0-9]+)*$"
+             Validchar <- regexpr(charkeySyntax, object)
+             #ExactLength <- (attributes(Validchar)$match.length == nchar(object))
+             Validchar <- unlist(Validchar)# & ExactLength
 
              # Validany <- as.logical(Validnum * Validchar)
              Validany <- as.logical(Validnum)

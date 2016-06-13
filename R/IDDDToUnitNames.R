@@ -62,6 +62,7 @@
 #'                      Variable = c('NumIdEst', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
 #'                      Sort = c('IDQual', rep('IDDD', 4)),
 #'                      Class = rep('character', 5),
+#'                      QualOrder = c('1', rep('', 4)),
 #'                      Qual1 = c('', rep('NumIdEst', 4)),
 #'                      ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}')))
 #' Microdt <- new(Class = "DDdt", 
@@ -70,6 +71,7 @@
 #'                       'IsRWMarket', 'NewOrders'),
 #'                      Sort = c('IDQual', rep('NonIDQual', 3), 'IDDD'),
 #'                      Class = c(rep('character', 4), 'numeric'),
+#'                      QualOrder = c('1', '2', '3', '4', ''),
 #'                      Qual1 = c(rep('', 4), 'NumIdEst'),
 #'                      ValueRegExp = c('[0-9]{9}PP', rep('(0|1| )', 3), '([0-9]{1, 10}| )')
 #' ))
@@ -78,6 +80,7 @@
 #'                      Variable = c('NumIdEst', 'Action', 'Date'),
 #'                      Sort = c('IDQual', 'NonIDQual', 'IDDD'),
 #'                      Class = rep('character', 3),
+#'                      QualOrder = c('1', '5', ''),
 #'                      Qual1 = c(rep('', 2), 'NumIdEst'),
 #'                      Qual2 = c(rep('', 2), 'Action'),
 #'                      ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 
@@ -88,6 +91,7 @@
 #'                      Variable = c('Province', 'NACE09', 'Turnover'),
 #'                      Sort = c(rep('IDQual', 2), 'IDDD'),
 #'                      Class = c(rep('character', 2), 'numeric'),
+#'                      QualOrder = c('6', '7', ''),
 #'                      Qual1 = c(rep('', 2), 'Province'),
 #'                      Qual2 = c(rep('', 2), 'NACE09'),
 #'                      ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])', '([0-9]{1, 15}| )')

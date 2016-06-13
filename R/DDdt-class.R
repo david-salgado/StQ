@@ -22,6 +22,7 @@
 #'     data.table(Variable = 'NOrden', 
 #'                Sort = 'IDQual', 
 #'                Class = 'character',
+#'                QualOrder = '1', 
 #'                Qual1 = 'NOrden', 
 #'                ValueRegExp = '[0-9]{9}SS'))
 #' @import data.table
@@ -29,19 +30,20 @@
 #' @export
 setClass(Class = "DDdt",
          contains = c('data.table'),
-         prototype = prototype(data.table(Variable = character(0),
-                                          Sort = character(0),
-                                          Class = character(0),
-                                          Qual1 = character(0),
-                                          ValueRegExp = character(0))),    
+         prototype = data.table(Variable = character(0),
+                                Sort = character(0),
+                                Class = character(0),
+                                QualOrder = character(0),
+                                Qual1 = character(0),
+                                ValueRegExp = character(0)),    
          validity = function(object){
              
              NCol <- dim(object)[2]
              
-             if (NCol < 5) {
-                 stop(paste0('[Validity DDdt] The object must be a data table with 
+             if (NCol < 6) {
+                 stop(paste0('[Validity DDdt] The object must be a data.table with 
                                 at least five columns named "Variable", "Sort", "Class", 
-                                "Qual1" and "ValueRegExp"'))   
+                                "QualOrder", "Qual1" and "ValueRegExp"'))   
              } 
              
              
@@ -51,23 +53,37 @@ setClass(Class = "DDdt",
                  stop(paste0('[Validity DDdt] All columns of the object must be character vectors.'))
                  
              }
+
+             setkeyv(object, 'Variable')
+             if (sum(duplicated(object)) > 0) {
+                 
+                 stop('[Validity DDdt] No duplicate variable is allowed.')
+                 
+             }
+             QualOrder <- object[['QualOrder']]
+             QualOrder <- QualOrder[QualOrder != '']
+
              
+             if (length(QualOrder) != length(unique(QualOrder))) {
+                 
+                 stop('[Validity DDdt] Orders of qualifiers repeated in the column QualOrder.')
+             }
              
-             NQual <- max(0, NCol - 5)
+             NQual <- max(0, NCol - 6)
              if (NQual > 0) {
                  
-                 Quals <- paste0('Qual', 1:(NQual+1))
+                 Quals <- paste0('Qual', 1:(NQual + 1))
                  
              } else {
                  
                  Quals <- 'Qual1'
              
              }
-             ColNames <- c('Variable', 'Sort', 'Class', 'ValueRegExp', Quals)
+             ColNames <- c('Variable', 'Sort', 'Class', 'QualOrder', 'ValueRegExp', Quals)
             
              if (!all(names(object) %in% ColNames)) {
                  
-                 stop('[Validity DDdt] The names of a DDdt object must be: Variable, Sort, "Class, Qual1-Qualj, ValueRegExp.')
+                 stop('[Validity DDdt] The names of a DDdt object must be: Variable, Sort, Class, QualOrder, Qual1-Qualj, ValueRegExp.')
                  
              }
              
@@ -92,15 +108,20 @@ setClass(Class = "DDdt",
                  stop(paste0('[Validity DDdt] The third column of the object must be named "Class".'))
              }
              
-             if (ColNames[4] != 'Qual1') {
-                 stop(paste0('[Validity DDdt] The fourth column of of the object must be named "Qual1".'))
+             if (ColNames[4] != 'QualOrder') {
+                 stop(paste0('[Validity DDdt] The fourth column of the object must be named "QualOrder".'))
+                 
+             }
+             
+             if (ColNames[5] != 'Qual1') {
+                 stop(paste0('[Validity DDdt] The fifth column of of the object must be named "Qual1".'))
              }
              
              
              if (length(Quals) == 1 ) {
                  
-                if (ColNames[5] != 'ValueRegExp') {
-                    stop(paste0('[Validity DDdt] The fifth column of of the object must be named "ValueRegExp".'))
+                if (ColNames[6] != 'ValueRegExp') {
+                    stop(paste0('[Validity DDdt] The sixth column of of the object must be named "ValueRegExp".'))
                 }
             }
              

@@ -1,11 +1,11 @@
 Package: StQ
 Title: Construction of Standard Questionnaires
-Version: 0.2.0.9000
+Version: 0.2.0
 Author: David Salgado
 Maintainer: David Salgado <david.salgado.fernandez@gmail.com>
-Description: This package contains the definition of the class StQ to implement a
-    standardized questionnaire and the methods to manage them
-    (show, subsetting, ...)
+Description: This package contains the definition of the class StQ to
+    implement a standardized questionnaire and the methods to manage them (show,
+    subsetting, ...)
 Depends:
     R (>= 3.3.0)
 Imports:
@@ -13,7 +13,8 @@ Imports:
     data.table (>= 1.9.4),
     formula.tools (>= 1.5.4),
     RepoTime (>= 0.1.0),
-    stringr (>= 1.0.0)
+    stringr (>= 1.0.0),
+    stringi (>= 1.1.1)
 License: file LICENSE
 LazyData: true
 Encoding: UTF-8
@@ -43,6 +44,7 @@ Collate:
     'ExampleDD.R'
     'ExampleDDdt.R'
     'ExampleDM.R'
+    'ExampleDTkey.R'
     'ExampleDatadt.R'
     'ExampleStQ.R'
     'ExampleVNC.R'

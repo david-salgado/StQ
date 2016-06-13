@@ -14,20 +14,20 @@
 #' @examples
 #' library(data.table)
 #' VarList1 <- list(ID = new(Class = "VNCdt",
-#'                           .Data = data.table(IDQual = c('NumIdEst', rep('', 4)),
+#'                           .Data = data.table(IDQual = c('ID', rep('', 4)),
 #'                                              NonIDQual = c(rep('', 5)),
 #'                                              IDDD = c('', 'Name', 'Surname', 'PostalAddr', 
 #'                                                       'PhoneNo'),
-#'                                              NumIdEst = c('', rep('.', 4)),
+#'                                              ID = c('', rep('.', 4)),
 #'                                              Unit1 = c('numidest', 'nombre', 'apellidos', 
 #'                                                 'direccion', 'telefono'))),
 #'                  MicroData = new(Class = "VNCdt",
-#'                                  .Data = data.table(IDQual = c('NumIdEst', rep('', 4)),
+#'                                  .Data = data.table(IDQual = c('ID', rep('', 4)),
 #'                                                     NonIDQual = c('', 'IsNatMarket', 
 #'                                                                   'IsEuroMarket', 
 #'                                                                   'IsRWMarket', ''),
 #'                                                    IDDD = c(rep('', 4), 'Turnover'),
-#'                                                    NumIdEst = c(rep('', 4), '.'),
+#'                                                    ID = c(rep('', 4), '.'),
 #'                                                    IsNatMarket = c(rep('', 4), '0'),
 #'                                                    IsEuroMarket = c(rep('', 4), '0'),
 #'                                                    IsRWMarket = c(rep('', 4), '1'),
@@ -45,25 +45,28 @@
 #' VNC1 <- BuildVNC(VarList1)
 #' 
 #' ID1dt <- new(Class = 'DDdt', 
-#'              .Data = data.table(Variable = c('NumIdEst', 'Name', 'Surname', 'PostalAddr', 
+#'              .Data = data.table(Variable = c('ID', 'Name', 'Surname', 'PostalAddr', 
 #'                                              'PhoneNo'),
 #'                                 Sort = c('IDQual', rep('IDDD', 4)),
 #'                                 Class = rep('character', 5),
-#'                                 Qual1 = c('', rep('NumIdEst', 4)),
+#'                                 QualOrder = c('1', '', '', '', ''),
+#'                                 Qual1 = c('', rep('ID', 4)),
 #'                                 ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', 
 #'                                                 '(6|9)[0-9]{8}')))
 #' Micro1dt <- new(Class = 'DDdt',
-#'                 .Data = data.table(Variable = c('NumIdEst', 'IsNatMarket', 'IsEuroMarket', 
+#'                 .Data = data.table(Variable = c('ID', 'IsNatMarket', 'IsEuroMarket', 
 #'                                                 'IsRWMarket', 'Turnover'),
 #'                                    Sort = c('IDQual', rep('NonIDQual', 3), 'IDDD'),
 #'                                    Class = c(rep('character', 4), 'numeric'),
-#'                                    Qual1 = c(rep('', 4), 'NumIdEst'),
+#'                                    QualOrder = c('1', '2', '3', '4', ''),
+#'                                    Qual1 = c(rep('', 4), 'ID'),
 #'                                    ValueRegExp = c('[0-9]{9}PP', rep('(0|1| )', 3), 
 #'                                                    '([0-9]{1, 10}| )')))
 #' Agg1dt <- new(Class = 'DDdt',
 #'               .Data = data.table(Variable = c('Province', 'NACE09', 'Turnover'),
 #'                                  Sort = c(rep('IDQual', 2), 'IDDD'),
 #'                                  Class = c(rep('character', 2), 'numeric'),
+#'                                  QualOrder = c('5', '6', ''),
 #'                                  Qual1 = c(rep('', 2), 'Province'),
 #'                                  Qual2 = c(rep('', 2), 'NACE09'),
 #'                                  ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])',
@@ -73,20 +76,20 @@
 #'            Aggregates = Agg1dt)
 #' 
 #' VarList2 <- list(ID = new(Class = "VNCdt",
-#'                           .Data = data.table(IDQual = c('NumIdEst', rep('', 4)),
+#'                           .Data = data.table(IDQual = c('ID', rep('', 4)),
 #'                                              NonIDQual = c(rep('', 5)),
 #'                                              IDDD = c('', 'Name', 'Surname', 'PostalAddr', 
 #'                                                       'PhoneNo'),
-#'                                              NumIdEst = c('', rep('.', 4)),
+#'                                              ID = c('', rep('.', 4)),
 #'                                              Unit1 = c('numidest', 'nombre', 'apellidos', 
 #'                                                    'direccion', 'telefono'))),     
 #'                  MicroData = new(Class = "VNCdt",
-#'                                  .Data =data.table(IDQual = c('NumIdEst', rep('', 4)),
+#'                                  .Data =data.table(IDQual = c('ID', rep('', 4)),
 #'                                                    NonIDQual = c('', 'IsNatMarket', 
 #'                                                                  'IsEuroMarket', 
 #'                                                          'IsRWMarket', ''),
 #'                                                    IDDD = c(rep('', 4), 'NewOrders'),
-#'                                                    NumIdEst = c(rep('', 4), '.'),
+#'                                                    ID = c(rep('', 4), '.'),
 #'                                                    IsNatMarket = c(rep('', 4), '0'),
 #'                                                    IsEuroMarket = c(rep('', 4), '0'),
 #'                                                    IsRWMarket = c(rep('', 4), '1'),
@@ -104,18 +107,20 @@
 #' VNC2 <- BuildVNC(VarList2)
 #' 
 #' ID2dt <- new(Class = 'DDdt',
-#'              .Data = data.table(Variable = c('NumIdEst', 'Name', 'Surname', 'PostalAddr', 
+#'              .Data = data.table(Variable = c('ID', 'Name', 'Surname', 'PostalAddr', 
 #'                                              'PhoneNo'),
 #'                                 Sort = c('IDQual', rep('IDDD', 4)),
 #'                                 Class = rep('character', 5),
-#'                                 Qual1 = c('', rep('NumIdEst', 4)),
+#'                                 QualOrder = c('1', rep('', 4)),
+#'                                 Qual1 = c('', rep('ID', 4)),
 #'                                 ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', 
 #'                                                 '(6|9)[0-9]{8}')))
 #' Micro2dt <- new(Class = 'DDdt',
-#'                 .Data = data.table(Variable = c('NumIdEst', 'IsNatMarket', 'IsEuroMarket', 
+#'                 .Data = data.table(Variable = c('ID', 'IsNatMarket', 'IsEuroMarket', 
 #'                                                 'IsRWMarket', 'NewOrders'),
 #'                                    Sort = c('IDQual', rep('NonIDQual', 3), 'IDDD'),
 #'                                    Class = c(rep('character', 4), 'numeric'),
+#'                                    QualOrder = c('1', '2', '3', '4', ''),
 #'                                    Qual1 = c(rep('', 4), 'NumIdEst'),
 #'                                    ValueRegExp = c('[0-9]{9}PP', rep('(0|1| )', 3), 
 #'                                                '([0-9]{1, 10}| )')))
@@ -123,6 +128,7 @@
 #'               .Data = data.table(Variable = c('Province', 'NACE09', 'NewOrders'),
 #'                                  Sort = c(rep('IDQual', 2), 'IDDD'),
 #'                                  Class = c(rep('character', 2), 'numeric'),
+#'                                  QualOrder = c('5', '6', ''),
 #'                                  Qual1 = c(rep('', 2), 'Province'),
 #'                                  Qual2 = c(rep('', 2), 'NACE09'),
 #'                                  ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])',
@@ -150,13 +156,13 @@ setMethod(
         In2Not1Names <- setdiff(DD2slots, DD1slots)
         
         outVarList <- list()
-        
+
         for (Name in CommonSlots) {
-          
+
             outVarList[[Name]] <- slot(e1, Name) + slot(e2, Name)
             
         }
-        
+
         for (Name in In1Not2Names) {
             
             outVarList[[Name]] <- slot(e1, Name)
@@ -166,7 +172,7 @@ setMethod(
             
             outVarList[[Name]] <- slot(e2, Name)
         }
-      
+
         output <- new(Class = 'DD',
                       VarNameCorresp = outVarList[['VarNameCorresp']],
                       ID = outVarList[['ID']],

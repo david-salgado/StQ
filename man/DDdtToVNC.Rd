@@ -23,6 +23,7 @@ the corresponding object of class \linkS4class{VarNameCorresp}.
 library(data.table)
 AggWeights <- data.table(Variable = c('ID', 'Pond1'), Sort = c('IDQual', 'IDDD'),
                          Class = c('character', 'character'),
+                         QualOrder = c('1', '2'),
                          Qual1 = c('', 'ID'), ValueRegExp = c('', ''))
 AggWeights <- new(Class = 'DDdt', AggWeights)
 

@@ -14,14 +14,13 @@
 #'
 #' @examples
 #' library(data.table)
-#' key <- new(Class = 'rawKey', key = c('NOrden', 'CCAA', 'EsRemuner', 'TipoRem', 'RamaCNAE09', 
-#'                               'IDRefPond1', 'VarPonder', 'DivisionCNAE09', 'IDRefPond2', 
-#'                               'SectorCNAE09', 'GeneralOtrosCNAE09', 'IDRefPond3', 'IDDD'),   
-#'                       Data = c('IASS@@9644947400S@@@@@@@@@@@@@@@@@@@@@@@@IASSCifraNeg',
-#'                                'IASS@@9644947400S@@@@1@@1@@@@@@@@@@@@@@@@@@IASSEmpleo',
-#'                                'IASS@@9644947400S@@03@@@@@@@@@@@@@@@@@@@@@@IASSLPCifraNeg'))
-#' Data <- new(Class = 'rawDatadt', 
-#'             data.table(Key = key, Value = c('2034120', '414', '0')))
+#' key <- new(Class = 'rawKey', 
+#'           c('Turnover@@001@@0@@@@', 
+#'             'Turnover@@001@@1@@@@', 
+#'             'Turnover@@001@@@@04@@', 
+#'             'Turnover@@001@@@@@@0512'))
+#' rawData <- new(Class = 'rawDatadt', 
+#'             data.table(Key = key, Value = c('625000', '23154', '25004', '10512')))
 #'                
 #' @include rawKey-class.R
 #' 

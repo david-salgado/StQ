@@ -47,7 +47,7 @@ VarNamesToDT <- function(VarNames, DD){
 
         output <- list()
         for (DDslot in DDSlotNames){
-            
+
             DDlocal <- slot(DD, DDslot)
 
             Names.DT <- DDlocal[Variable == ExtractNames(VarNames)]
@@ -61,6 +61,7 @@ VarNamesToDT <- function(VarNames, DD){
                 setnames(Names.DT, 'Variable', 'IDDD')
                 Names.DT[, Sort := NULL]
                 Names.DT[, Class := NULL]
+                Names.DT[, QualOrder := NULL]
                 Names.DT[, ValueRegExp := NULL]
                 
                 ParsedNames <- strsplit(VarNames, '_')[[1]]

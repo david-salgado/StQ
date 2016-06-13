@@ -9,10 +9,8 @@
 #' @return Object of class \linkS4class{rawKey} with the keys of the input
 #'
 #' @examples
-#' key <- new(Class = 'rawKey', c('IDDD:IASSEmpleo_Norden:391092SS_EsRemuner:1_TipoRemuner:1',
-#'                                'IDDD:IASSCifraNeg_Norden:asd2SS',
-#'                                'IDDD:IASSLPCifraNeg_Norden:1231_CCAA:01'))
-#' keyDT <- DTToKey(KeyToDT(key))
+#' data(ExampleDTkey)
+#' keyDT <- DTToKey(ExampleDTkey)
 #' 
 #' @export
 setGeneric("DTToKey", function(DT){standardGeneric("DTToKey")})
@@ -34,15 +32,21 @@ setMethod(
             
             if (index.col == 1) { 
                 
-                key <- paste0(paste0(ColNames[index.col], ':'), DT[[ColNames[index.col]]])
+                key <- DT[[ColNames[index.col]]]
             
             } else {
                 
-                    key <- ifelse(!is.na(DT[[ColNames[index.col]]]),
-                                  ifelse(DT[[ColNames[index.col]]] == '', 
-                                         key,
-                                         paste0(key, '_', ColNames[index.col], ':', DT[[ColNames[index.col]]])),
-                                  paste0(key, '_', ColNames[index.col], ':', ' '))
+                CondMissing <- is.na(DT[[ColNames[index.col]]]) | DT[[ColNames[index.col]]] == ''
+                key[CondMissing] <- paste0(key[CondMissing], '@@')
+                
+                CondNotMissing <- !is.na(DT[[ColNames[index.col]]]) & DT[[ColNames[index.col]]] != ''
+                key[CondNotMissing] <- paste0(key[CondNotMissing], '@@', DT[[ColNames[index.col]]][CondNotMissing])
+                    
+#                key <- ifelse(!is.na(DT[[ColNames[index.col]]]),
+#                                  ifelse(DT[[ColNames[index.col]]] == '', 
+#                                         paste0(key, '@@'),
+#                                         paste0(key, '@@', DT[[ColNames[index.col]]])),
+#                                  paste0(key, '@@', ' '))
             }
         }
 

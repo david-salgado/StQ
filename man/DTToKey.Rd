@@ -22,10 +22,8 @@ Object of class \linkS4class{rawKey} with the keys of the input
 many rows as components (length) of this input key.
 }
 \examples{
-key <- new(Class = 'rawKey', c('IDDD:IASSEmpleo_Norden:391092SS_EsRemuner:1_TipoRemuner:1',
-                               'IDDD:IASSCifraNeg_Norden:asd2SS',
-                               'IDDD:IASSLPCifraNeg_Norden:1231_CCAA:01'))
-keyDT <- DTToKey(KeyToDT(key))
+data(ExampleDTkey)
+keyDT <- DTToKey(ExampleDTkey)
 
 }
 

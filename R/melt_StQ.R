@@ -51,10 +51,11 @@
     #Construimos un objeto DD auxiliar
     slots <- setdiff(slotNames(DD), 'VarNameCorresp')
     DDdtlocal <- new(Class = 'DDdt')
-    for (slot in slots) {DDdtlocal <- DDdtlocal + slot(DD, slot) }
+
+    for (slot in slots) {DDdtlocal <- DDdtlocal + slot(DD, slot)}
+
     
-    
-    nQual <- length(setdiff(names(DDdtlocal), c('Variable', 'Sort', 'Class', 'ValueRegExp')))
+    nQual <- length(setdiff(names(DDdtlocal), c('Variable', 'Sort', 'Class', 'QualOrder', 'ValueRegExp')))
     if (nQual == 0) stop('[StQ::melt_StQ] DD has no qualifiers.')
 
     auxDDdt <- copy(DDdtlocal)[, c('Variable', paste0('Qual', 1:nQual)), with = F]
