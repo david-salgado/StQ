@@ -4,7 +4,7 @@
 \name{KeyToDT}
 \alias{KeyToDT}
 \alias{KeyToDT,rawKey-method}
-\title{Return a \linkS4class{data.table} out of a set of parsed keys}
+\title{Return data.table out of a set of parsed keys.}
 \usage{
 KeyToDT(key)
 
@@ -20,9 +20,8 @@ found in the input key and as many rows as components (length) of this input
 key.
 }
 \description{
-\code{KeyToDT} returns a \linkS4class{data.table} whose columns
-are the different qualifiers parsed in the input key with as many raws as
-components (length) of this input key.
+\code{KeyToDT} returns a \linkS4class{data.table} whose columns are the different
+qualifiers parsed in the input key with as many raws as components (length) of this input key.
 }
 \examples{
 key <- new(Class = 'rawKey', c('IDDD:IASSEmpleo_Norden:391092SS_EsRemuner:1_TipoRemuner:1',

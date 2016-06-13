@@ -11,13 +11,10 @@
 #' # An empty key
 #' new(Class = 'rawKey')
 #' 
-#' new(Class = 'rawKey', c('IDDD:IASSEmpleo_Norden:391092SS_EsRemuner:1_TipoRemuner:1',
-#'                         'IDDD:IASSCifraNeg_Norden:asd2SS',
-#'                         'IDDD:IASSLPCifraNeg_Norden:1231_CCAA:01'))
+#' new(Class = 'rawKey', c('IASS@@9644947400S@@@@@@@@@@@@@@@@@@@@@@@@IASSCifraNeg',
+#'                         'IASS@@9644947400S@@@@1@@1@@@@@@@@@@@@@@@@@@IASSEmpleo',
+#'                         'IASS@@9644947400S@@03@@@@@@@@@@@@@@@@@@@@@@IASSLPCifraNeg'))
 #'                         
-#' new(Class = 'rawKey', c('IDDD:IASSEmpleo_Norden:391092SS_Turnover:9834.3_Province:09',
-#'                         'IDDD:IASSCifraNeg_Norden:asd2SS',
-#'                         'IDDD:IASSLPCifraNeg_Norden:1231_Employees:841_NACE:0502'))
 #'
 #' @import data.table stringr
 #'
@@ -26,23 +23,20 @@ setClass(Class = "rawKey",
          contains = 'character',
          validity = function(object){
              
-             IniKey <- sub("^\\s+", "", substr(object, 1, 5))
-             if(any(!is.na(IniKey) && IniKey != 'IDDD:')){
-                 
-                 stop('[Validity rawKey] Each key must start with "IDDD:".')
-             }
+             #numkeySyntax <- "^IDDD:[A-Za-z0-9]+(_[A-Za-z0-9]+:(-?[0-9\\.]+(e(\\+|-)[0-9]+)?))*$"
+             keySyntax <- "[A-Za-z]+@@[A-Za-z0-9]*"
              
-             numkeySyntax <- "^IDDD:[A-Za-z0-9]+(_[A-Za-z0-9]+:(-?[0-9\\.]+(e(\\+|-)[0-9]+)?))*$"
-             Validnum <- regexpr(numkeySyntax, object)
+             Validnum <- regexpr(keySyntax, object)
              #ExactLength <- (attributes(Validnum)$match.length == nchar(object))
              Validnum <- unlist(Validnum)# & ExactLength
              
-             charkeySyntax <- "^IDDD:[A-Za-z0-9]+(_[A-Za-z0-9]+:[A-Za-z0-9]+)*$"
-             Validchar <- regexpr(charkeySyntax, object)
-             #ExactLength <- (attributes(Validchar)$match.length == nchar(object))
-             Validchar <- unlist(Validchar)# & ExactLength
+             # charkeySyntax <- "[A-Za-z]+@@[A-Za-z0-9]"
+             # Validchar <- regexpr(charkeySyntax, object)
+             # #ExactLength <- (attributes(Validchar)$match.length == nchar(object))
+             # Validchar <- unlist(Validchar)# & ExactLength
 
-             Validany <- as.logical(Validnum * Validchar)
+             # Validany <- as.logical(Validnum * Validchar)
+             Validany <- as.logical(Validnum)
              Validany[is.na(Validany)] <- TRUE
 
              if (!all(Validany)) {

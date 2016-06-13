@@ -1,8 +1,7 @@
 #' @title Return data.table out of a set of parsed keys.
-#'
-#' @description \code{KeyToDT} returns a \linkS4class{data.table} whose columns
-#' are the different qualifiers parsed in the input key with as many raws as
-#' components (length) of this input key. 
+#' 
+#' @description \code{KeyToDT} returns a \linkS4class{data.table} whose columns are the different
+#' qualifiers parsed in the input key with as many raws as components (length) of this input key.
 #' 
 #' @param key key implemented either through the class \linkS4class{rawKey} or 
 #' other.
@@ -12,16 +11,24 @@
 #' key.
 #'
 #' @examples
-#' key <- new(Class = 'rawKey', c('IDDD:IASSEmpleo_Norden:391092SS_EsRemuner:1_TipoRemuner:1',
-#'                                'IDDD:IASSCifraNeg_Norden:asd2SS',
-#'                                'IDDD:IASSLPCifraNeg_Norden:1231_CCAA:01'))
-#' KeyToDT(key)
+#' key <- new(Class = 'rawKey', c('IASS@@9644947400S@@@@@@@@@@@@@@@@@@@@@@@@IASSCifraNeg',
+#'                                'IASS@@9644947400S@@@@1@@1@@@@@@@@@@@@@@@@@@IASSEmpleo',
+#'                                'IASS@@9644947400S@@03@@@@@@@@@@@@@@@@@@@@@@IASSLPCifraNeg'))
+#'                         
+#' key <- new(Class = 'rawKey', c('IASS@@9644947400S@@@@@@@@@@@@IASSCifraNeg',
+#'                                'IASS@@9644947400S@@@@1@@1@@@@@@IASSEmpleo',
+#'                                'IASS@@9644947400S@@03@@@@@@@@@@IASSLPCifraNeg'))
+#'                         
+#' names <- c('NOrden', 'CCAA', 'EsRemuner', 'TipoRem', 'RamaCNAE09', 'IDRefPond1', 'VarPonder',
+#'             'DivisionCNAE09', 'IDRefPond2', 'SectorCNAE09', 'GeneralOtrosCNAE09', 'IDRefPond3',
+#'             'IDDD')                        
+#' KeyToDT(key, names)
 #' 
 #' data(ExamplerawKey)
 #' KeyToDT(ExamplerawKey)
 #' 
 #' @export
-setGeneric("KeyToDT", function(key){standardGeneric("KeyToDT")})
+setGeneric("KeyToDT", function(key, names){standardGeneric("KeyToDT")})
 #'
 #' @rdname KeyToDT
 #' 
@@ -31,134 +38,55 @@ setGeneric("KeyToDT", function(key){standardGeneric("KeyToDT")})
 setMethod(
     f = "KeyToDT",
     signature = c("rawKey"),
-    function(key){
+    function(key, names){
+        # 
+        # StrSplit <- function(x, n, sep){
+        # 
+        #     if (sep == '@@') {
+        # 
+        #         KeyRegExp <- paste0(c('([A-Za-z]+)',
+        #                              paste0(rep('([A-Za-z0-9]*|[:blank])', n - 1), collapse = '@@')) ,
+        #                              collapse = '@@')
+        # 
+        #     } else {
+        # 
+        #         KeyRegExp <- '(^[A-Za-z0-9]+):([A-Za-z0-9]+$)'
+        #     }
+        # 
+        #     output <- lapply(seq(along = x), function(i){
+        # 
+        #         out <- unlist(lapply(1:n, function(j){
+        # 
+        #             gsub(KeyRegExp, paste0("\\", j), x[i])
+        #         }))
+        # 
+        #         return(out)
+        #     })
+        # 
+        #     #names(output) <- as.character(1:(n - 1))
+        #     return(output)
+        # }
         
-        StrSplit <- function(x, n, sep){
-            
-            n <- unique(n) + 1
-            output <- vector('list', n)
-            if (sep == '_') {
-                
-                KeyRegExp <- paste0(rep('([A-Za-z0-9]+:[A-Za-z0-9]+)', n), collapse = '_')
-                
-            } else {
-                
-                KeyRegExp <- '(^[A-Za-z0-9]+):([A-Za-z0-9]+$)'
-            }
-            
-            for (i in 1:n) {
-                
-                output[[i]] <- gsub(KeyRegExp, paste0("\\", i), x)
-                
-            }
-            names(output) <- as.character(1:n)
-            return(output)
-        }
         
+        NCol <- unique(stringr::str_count(key, '@@')) + 1
+        KeyRegExp <- paste0(c('([A-Za-z]+)',
+                                  paste0(rep('([A-Za-z0-9]*|[:blank])', NCol - 1), collapse = '@@')) ,
+                                collapse = '@@')
+
         
-        keyDT <- data.table(OrigKey = key)
-        keyDT[, NCol := stringr::str_count(OrigKey, '_')]
-        keyDTList <- split(keyDT, keyDT[['NCol']])
-        ColNames <- names(keyDTList)
-       
-        ParsedRawKeyList <- lapply(as.list(ColNames), function(NCol){
-            
-            NCol <- as.integer(NCol)
-            KeyValuePair_ <- StrSplit(keyDTList[[as.character(NCol)]][['OrigKey']], NCol, '_')
-            KeyValuePairList <- lapply(KeyValuePair_, StrSplit, n = 1, ':')
-            return(KeyValuePairList)
-            
-        })
+        #ParsedRawKeyList <- StrSplit(keyDT[['OrigKey']], NCol, '@@')
 
-       
-        QualsDT <- lapply(ParsedRawKeyList, function(ListRawKey){
-            
-            DT <- lapply(ListRawKey, as.data.table)
-            DT <- lapply(DT, function(table){
-                
-                for (col in 1:dim(table)[2]){
-                    
-                    table[[col]] <- table[[col]]@.Data
-                }
-                
-                return(table)
-            })
-            DT <- Reduce(cbind, DT)
-            
-            DTQual <- DT
-            ncol <- seq(3, dim(DTQual)[2], 2)
-            for (col in ncol){
-                
-                quals <- unique(DTQual[[col]])
-                if(length(quals) > 1){
-                    
-                    DT <- lapply(quals, function(qual){
-                        
-                                out <- DTQual[DTQual[[col]] == qual]
-                                return(out)
-                          })
-                }
-            }
-            
-            
-            if (class(DT)[1] == 'list')
-            {
-                
-                DT <- lapply(DT, function(List){
-                    colNames <- vector('character', dim(List)[2])
-                    ncol <- seq(1, length(colNames), 2)
-                    for (col in ncol){
-                        
-                        colNames[col] <- 'Qual'
-                        colNames[col + 1] <- unique(List[[col]])
-                    }
-                    setnames(List, colNames)
-                    for (col in 1:length(ncol)){
-                        
-                        List[, Qual := NULL]
-                    }
-                    
-                    return(List)
-                })
-                
-                #qualNames <- unlist(lapply(DT, function(x){names(x)[dim(x)[2]]}))
-                #for(i in 1:length(DT)){
-                    
-                #    namesDT <- copy(names(DT[[i]]))
-                #    nameAdd <- setdiff(qualNames, namesDT)
-                #    DT[[i]][, v:= NA]
-                #    setnames(DT[[i]], c(namesDT, nameAdd))
-                #}
-                
-                DT <- rbindlist(DT, fill = TRUE)
-            }else{
-                
-                colNames <- vector('character', dim(DT)[2])
-                ncol <- seq(1, length(colNames), 2)
-                for (col in ncol){
-                    
-                    colNames[col] <- 'Qual'
-                    colNames[col + 1] <- unique(DT[[col]])
-                }
-                setnames(DT, colNames)
-                for (col in 1:length(ncol)){
-                    
-                    DT[, Qual := NULL]
-                }
-            }
-
-
-            return(DT)
-        })
+        ParsedRawKeyList <- stringr::str_match(key, KeyRegExp)[, 2:(NCol + 1)]
+        output <- as.data.table(ParsedRawKeyList)[, V1 := NULL]
+        names(output) <- names
         
-
-        output <- rbindlist(QualsDT, fill = TRUE)
-        ColNames <- names(output)
-        for (col in ColNames){
-            
-            output[is.na(get(col)), col := '', with = F]
-        }
-        setcolorder(output, c(setdiff(ColNames, 'IDDD'), 'IDDD'))
+        # RepoDD[NOMID != "", NOMID] -> NOMID
+        # RepoDD[NOMCALIFICADOR != "", NOMCALIFICADOR] -> NOMCALIFICADOR
+        # names <- c(NOMID, NOMCALIFICADOR, 'IDDD')
+        # names(QualsDT) <- names
+        
         return(output)
     }
 )
+
+   
