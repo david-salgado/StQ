@@ -27,10 +27,10 @@ from the input\linkS4class{rawStQ} object.
 library(data.table)
 data(ExampleDD)
 key <- new(Class = 'rawKey', 
-           c('IDDD:Turnover_ID:001', 
-             'IDDD:Employees_ID:001_IsRemun:1_IsPartTime:0', 
-             'IDDD:Employees_ID:001_IsRemun:0', 
-             'IDDD:Employees_ID:001_IsRemun:1_IsPartTime:1'))
+           c('Turnover@001@@', 
+             'Employees@001@1@0', 
+             'Employees@001@0@', 
+             'Employees@001@1@1'))
 rawData <- new(Class = 'rawDatadt', 
                data.table(Key = key, Value = c('625000', '23154', '25004', '10512')))
 rawQ <- new(Class = 'rawStQ', Data = rawData, DD = ExampleDD)
