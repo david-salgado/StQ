@@ -14,6 +14,7 @@
 #' # On an object of class DD:
 #' library(data.table)
 #' MicroDataDD <- data.table(Variable = 'IEPEntradaPed', Sort = 'IDDD', Class = 'numeric',
+#'                           QualOrder = '',
 #'                           Qual1 = 'NumIdEst', Qual2 = 'EsMercNac', Qual3 = 'EsMercEuro',
 #'                           Qual4 = 'EsMercRM', ValueRegExp = '')
 #' MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
@@ -54,7 +55,7 @@
 #' # On an object of class StQ:
 #' library(data.table)
 #' MicroDataDD <- data.table(Variable = 'IEPEntradaPed', Sort = 'IDDD', Class = 'numeric',
-#'                           Qual1 = 'NOrden', ValueRegExp = '')
+#'                           QualOrder = '', Qual1 = 'NOrden', ValueRegExp = '')
 #' MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
 #' VarList <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','','',''),
 #'                                                             NonIDQual = c('EsMercNac', 

@@ -19,6 +19,7 @@
 #'                                            'PostalAddr', 'PhoneNo'),
 #'                                 Sort = c('IDQual', rep('IDDD', 4)),
 #'                                 Class = rep('character', 5),
+#'                                 QualOrder = c('1', '', '', '', ''),
 #'                                 Qual1 = c('', rep('NumIdEst', 4)),
 #'                                 ValueRegExp = c('[0-9]{9}PP', '.+', '.+', 
 #'                                           '.+', '(6|9)[0-9]{8}')))
@@ -28,6 +29,7 @@
 #'                                            'PostalAddr', 'PhoneNo'),
 #'                                 Sort = c('IDQual', rep('IDDD', 4)),
 #'                                 Class = rep('character', 5),
+#'                                 QualOrder = c('1', '', '', '', ''),
 #'                                 Qual1 = c('', rep('NumIdEst', 4)),
 #'                                 ValueRegExp = c('[0-9]{9}PP', '.+', '.+', 
 #'                                               '.+', '(6|9)[0-9]{8}')))
@@ -40,6 +42,7 @@
 #'                                              'Turnover'),
 #'                                    Sort = c('IDQual', rep('NonIDQual', 3), 'IDDD'),
 #'                                    Class = c(rep('character', 4), 'numeric'),
+#'                                    QualOrder = c('1', '2', '3', '4', ''),
 #'                                    Qual1 = c(rep('', 4), 'NumIdEst'),
 #'                                    ValueRegExp = c('[0-9]{9}PP', rep('(0|1| )', 3), 
 #'                                              '([0-9]{1, 10}| )')))
@@ -49,6 +52,7 @@
 #'                                                 'IsRWMarket', 'NewOrders'),
 #'                                    Sort = c('IDQual', rep('NonIDQual', 3), 'IDDD'),
 #'                                    Class = c(rep('character', 4), 'numeric'),
+#'                                    QualOrder = c('1', '2', '3', '4', ''),
 #'                                    Qual1 = c(rep('', 4), 'NumIdEst'),
 #'                                    ValueRegExp = c('[0-9]{9}PP', rep('(0|1| )', 3), 
 #'                                                '([0-9]{1, 10}| )')))
@@ -60,6 +64,7 @@
 #'               .Data = data.table(Variable = c('Province', 'NACE09', 'Turnover'),
 #'                                  Sort = c(rep('IDQual', 2), 'IDDD'),
 #'                                  Class = c(rep('character', 2), 'numeric'),
+#'                                  QualOrder = c('1', '2', ''),
 #'                                  Qual1 = c(rep('', 2), 'Province'),
 #'                                  Qual2 = c(rep('', 2), 'NACE09'),
 #'                                  ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])',
@@ -69,6 +74,7 @@
 #'               .Data = data.table(Variable = c('Province', 'NACE09', 'NewOrders'),
 #'                                  Sort = c(rep('IDQual', 2), 'IDDD'),
 #'                                  Class = c(rep('character', 2), 'numeric'),
+#'                                  QualOrder = c('1', '2', '''),
 #'                                  Qual1 = c(rep('', 2), 'Province'),
 #'                                  Qual2 = c(rep('', 2), 'NACE09'),
 #'                                  ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])',
@@ -86,19 +92,21 @@ setMethod(
     f = "+",
     signature = c("DDdt", "DDdt"),
     definition = function(e1, e2){
-        
+
         CommonCols <- intersect(names(e1), names(e2))
         DDdt1 <- setkeyv(e1, CommonCols)
         DDdt2 <- setkeyv(e2, CommonCols)
-        
+
         outVar <- rbindlist(list(DDdt1, DDdt2), fill = TRUE)
         for (col in names(outVar)) {
             
             outVar[, col := ifelse(is.na(get(col)), '', get(col)), with = F]
             
         }
-        
-        
+        setkeyv(outVar, setdiff(names(outVar), 'ValueRegExp'))
+        outVar <- outVar[!duplicated(outVar)]
+        setkeyv(outVar, 'Variable')
+        if (sum(duplicated(outVar)) > 0) stop('[StQ::+.DDdt] No duplicate variable allowed.')
         if (dim(outVar)[1] == 0) {
             
             output <- new(Class = 'DDdt')

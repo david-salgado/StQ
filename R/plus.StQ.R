@@ -17,22 +17,23 @@
 #' # We build a trivial data set:
 #' library(data.table)
 #'
-#' Data1 <- data.table(NumIdEst = c('002', '003', '004'),
+#' Data1 <- data.table(ID = c('002', '003', '004'),
 #'                     IDDD = c('NewOrders', 'NewOrders', 'NewOrders'),
 #'                     Value = c(32150, 12574, 23896))
 #' Data1 <- new(Class = 'Datadt', Data1)
-#' VNC1 <- data.table(IDQual = c('NumIdEst', ''),
+#' VNC1 <- data.table(IDQual = c('ID', ''),
 #'                    NonIDQual = c('', ''),
 #'                    IDDD = c('', 'NewOrders'),
-#'                    NumIdEst = c('', '.'),
+#'                    ID = c('', '.'),
 #'                    Unit1 = c('numidest', 'cp01'))
 #' VNC1 <- new(Class = 'VNCdt', VNC1)
 #' VNC1 <- BuildVNC(list(MicroData = VNC1))
 #'
-#' MicroDD1 <- data.table(Variable = c('NumIdEst', 'NewOrders'),
+#' MicroDD1 <- data.table(Variable = c('ID', 'NewOrders'),
 #'                        Sort = c('IDQual', 'IDDD'),
 #'                        Class = c('character', 'numeric'),
-#'                        Qual1 = c('', 'NumIdEst'),
+#'                        QualOrder = c('1', ''),
+#'                        Qual1 = c('', 'ID'),
 #'                        ValueRegExp = c('[0-9]{9}PP', '([0-9]{1, 10}| )'))
 #' MicroDD1 <- new(Class = 'DDdt', MicroDD1)
 #' DD1 <- new(Class = 'DD', VarNameCorresp = VNC1, MicroData = MicroDD1)

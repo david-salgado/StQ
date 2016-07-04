@@ -29,6 +29,7 @@ setMethod(
         
         QDD <- getDD(Q)
         
+<<<<<<< HEAD
         QData <- getData(Q)
         #nsep <- length(names(QData))
         QData <- DTToKey(QData)
@@ -38,10 +39,22 @@ setMethod(
         #key <-  lapply(StrSplit(QData@.Data, nsep, '@@'), function(y){y[1:(length(y) - 1)]})
         key <- lapply(key, paste0, '@@')
         key <- unlist(lapply(key, function(x){Reduce(paste0, x)}))
+||||||| merged common ancestors
+        QData <- getData(Q)
+        QData <- DTToKey(QData)
+        value <- unlist(lapply(strsplit(QData, '@@'), function(x){x[length(x)]}))
+        key <-  lapply(strsplit(QData, '@@'), function(x){x[1:(length(x) - 1)]})
+        key <- lapply(key, paste0, '@@')
+        key <- unlist(lapply(key, function(x){Reduce(paste0, x)}))
+=======
+        QData <- DatadtToDT(getData(Q))
+        Value <- QData[['Value']]
+        QData[, Value := NULL]
+        key <- DTToKey(QData)
+>>>>>>> ff277f6cdd5fddd61ed2d53b488ca2b0d15d8b1f
         key <- new(Class = 'rawKey', key)    
-        Datadt <- new(Class = 'rawDatadt', data.table(Key = key, Value = value))
-        rawQ <- new(Class = 'rawStQ', Data = Datadt, DD = QDD)
-
+        rawDatadt <- new(Class = 'rawDatadt', data.table(Key = key, Value = Value))
+        rawQ <- new(Class = 'rawStQ', Data = rawDatadt, DD = QDD)
         return(rawQ)
     }
 )

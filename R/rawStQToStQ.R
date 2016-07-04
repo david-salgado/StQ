@@ -11,6 +11,7 @@
 #' columns \code{IDDD} and \code{Value}.
 #'
 #' @examples
+<<<<<<< HEAD
 #' library(data.table)
 #' data(ExampleDD)
 #' key <- new(Class = 'rawKey', 
@@ -21,8 +22,23 @@
 #' rawData <- new(Class = 'rawDatadt', 
 #'                data.table(Key = key, Value = c('625000', '23154', '25004', '10512')))
 #' rawQ <- new(Class = 'rawStQ', Data = rawData, DD = ExampleDD)
+||||||| merged common ancestors
+#' library(data.table)
+#' data(ExampleDD)
+#' key <- new(Class = 'rawKey', 
+#'            c('IDDD:Turnover_ID:001', 
+#'              'IDDD:Employees_ID:001_IsRemun:1_IsPartTime:0', 
+#'              'IDDD:Employees_ID:001_IsRemun:0', 
+#'              'IDDD:Employees_ID:001_IsRemun:1_IsPartTime:1'))
+#' rawData <- new(Class = 'rawDatadt', 
+#'                data.table(Key = key, Value = c('625000', '23154', '25004', '10512')))
+#' rawQ <- new(Class = 'rawStQ', Data = rawData, DD = ExampleDD)
+=======
+#' data(ExamplerawStQ)
+#' StQ <- rawStQToStQ(ExamplerawStQ)
+#' str(StQ)
+>>>>>>> ff277f6cdd5fddd61ed2d53b488ca2b0d15d8b1f
 #' 
-#' newQ <- rawStQToStQ(rawQ)
 #' @export
 setGeneric("rawStQToStQ", function(rawQ){standardGeneric("rawStQToStQ")})
 #' @rdname rawStQToStQ
@@ -37,7 +53,7 @@ setMethod(
         
         rawDD <- getDD(rawQ)
         
-        rawDT <- KeyToDT(getData(rawQ)[['Key']])
+        rawDT <- KeyToDT(getData(rawQ)[['Key']], getDD(rawQ))
         rawDT <- rawDT[, Value := getData(rawQ)[['Value']]]
         
         DDslotNames <- setdiff(slotNames(object@DD), 'VarNameCorresp')

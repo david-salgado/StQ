@@ -29,6 +29,7 @@ Object \linkS4class{DD} with slot \code{ID} updated.
 # An example:
 library(data.table)
 MicroDataDD <- data.table(Variable = 'IEPEntradaPed', Sort = 'IDDD', Class = 'numeric',
+                          QualOrder = c(''),
                           Qual1 = 'NumIdEst', Qual2 = 'EsMercNac', Qual3 = 'EsMercEuro',
                           Qual4 = 'EsMercRM', ValueRegExp = '')
 MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
@@ -50,6 +51,7 @@ DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = MicroDataDD)
 Microdt <- data.table(Variable = c('NumIdEst', 'NewOrders'),
                       Sort = c('IDQual', 'IDDD'),
                       Class = c('character', 'character'),
+                      QualOrder = c('1', ''),
                       Qual1 = c('', 'NumIdEst'),
                       ValueRegExp = c('[0-9]{9}PP', '([0-9]{1, 10}| )'))
 Microdt <- new(Class = 'DDdt', Microdt)

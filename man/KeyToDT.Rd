@@ -3,16 +3,18 @@
 \docType{methods}
 \name{KeyToDT}
 \alias{KeyToDT}
-\alias{KeyToDT,rawKey-method}
+\alias{KeyToDT,rawKey,DD-method}
 \title{Return a \linkS4class{data.table} out of a set of parsed keys}
 \usage{
-KeyToDT(key)
+KeyToDT(key, DD)
 
-\S4method{KeyToDT}{rawKey}(key)
+\S4method{KeyToDT}{rawKey,DD}(key, DD)
 }
 \arguments{
 \item{key}{key implemented either through the class \linkS4class{rawKey} or 
 other.}
+
+\item{DD}{object DD containing the definition and order of the qualifiers.}
 }
 \value{
 \linkS4class{data.table} with one column per each different qualifier
@@ -25,15 +27,9 @@ are the different qualifiers parsed in the input key with as many raws as
 components (length) of this input key.
 }
 \examples{
-key <- new(Class = 'rawKey', 
-           c('Turnover@001@@', 
-             'Employees@001@1@0', 
-             'Employees@001@0@', 
-             'Employees@001@1@1'))
-KeyToDT(key)
-
 data(ExamplerawKey)
-KeyToDT(ExamplerawKey)
+data(ExampleDD)
+KeyToDT(ExamplerawKey, ExampleDD)
 
 }
 

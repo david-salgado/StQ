@@ -13,6 +13,7 @@
 #' # An example:
 #' library(data.table)
 #' MicroDataDD <- data.table(Variable = 'IEPEntradaPed', Sort = 'IDDD', Class = 'numeric',
+#'                           QualOrder = '',
 #'                           Qual1 = 'NumIdEst', Qual2 = 'EsMercNac', Qual3 = 'EsMercEuro',
 #'                           Qual4 = 'EsMercRM', ValueRegExp = '')
 #' MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
@@ -34,6 +35,7 @@
 #' IDdt <- data.table(Variable = c('NumIdEst', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
 #'                    Sort = c('IDQual', rep('IDDD', 4)),
 #'                    Class = rep('character', 5),
+#'                    QualOrder = c('1', rep('', 4)),
 #'                    Qual1 = c('', rep('NumIdEst', 4)),
 #'                    ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}'))
 #' IDdt <- new(Class = 'DDdt', IDdt)

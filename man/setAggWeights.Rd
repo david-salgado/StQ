@@ -28,6 +28,7 @@ Object with slot AggWeights updated.
 \examples{
 library(data.table)
 MicroDataDD <- data.table(Variable = 'IEPEntradaPed', Sort = 'IDDD', Class = 'numeric',
+                          QualOrder = c(''),
                           Qual1 = 'NumIdEst', Qual2 = 'EsMercNac', Qual3 = 'EsMercEuro',
                           Qual4 = 'EsMercRM', ValueRegExp = '')
 MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
@@ -48,6 +49,7 @@ DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = MicroDataDD)
 
 AggWeights <- data.table(Variable = c('ID', 'Pond1'), Sort = c('IDQual', 'IDDD'),
                          Class = c('character', 'character'),
+                         QualOrder = c('1', ''),
                          Qual1 = c('', 'ID'), ValueRegExp = c('', ''))
 AggWeights <- new(Class = 'DDdt', AggWeights)
 

@@ -14,6 +14,7 @@
 #' @include VarNameCorresp-class.R DD-class.R StQ-class.R
 #'
 #' @examples 
+#' # An example:
 #' library(data.table)
 #' ### We build the VNC object
 #' VarList <- list(ID = new(Class = 'VNCdt',
@@ -40,11 +41,11 @@
 #'                                          NumIdEst = c(rep('', 2), '.'),
 #'                                          Action = c(rep('', 2), 'Imputation'),
 #'                                          Unit1 = c('numidest', '', 'FechaImput'))),
-#'                Aggregates = new(Class = 'VNCdt',
-#'                                 data.table(IDQual = c('Province', 'NACE09', ''),
+#'                AggWeights = new(Class = 'VNCdt',
+#'                                 data.table(IDQual = c('CCAA', 'NACE09', ''),
 #'                                            NonIDQual = rep('', 3),
-#'                                            IDDD = c('', '', 'Turnover'),
-#'                                            Province = c('', '', '.'),
+#'                                            IDDD = c('', '', 'Ponderacion'),
+#'                                            CCAA = c('', '', '.'),
 #'                                            NACE09 = c('', '', '.'),
 #'                                            Unit1 = c('Provincia', '', ''))))
 #' 
@@ -55,6 +56,7 @@
 #'             data.table(Variable = c('NumIdEst', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
 #'                        Sort = c('IDQual', rep('IDDD', 4)),
 #'                        Class = rep('character', 5),
+#'                        QualOrder = c('1', rep('', 4)),
 #'                        Qual1 = c('', rep('NumIdEst', 4)),
 #'                        ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}')))
 #' Microdt <- new(Class='DDdt',
@@ -62,21 +64,24 @@
 #'                                        'NewOrders'),
 #'                           Sort = c('IDQual', rep('NonIDQual', 3), 'IDDD'),
 #'                           Class = c(rep('character', 4), 'numeric'),
+#'                           QualOrder = c('1', '2', '3', '4', ''),
 #'                           Qual1 = c(rep('', 4), 'NumIdEst'),
 #'                           ValueRegExp = c('[0-9]{9}PP', rep('(0|1| )', 3), '([0-9]{1, 10}| )')))
 #' Paradt <- new(Class='DDdt', 
 #'               data.table(Variable = c('NumIdEst', 'Action', 'Date'),
 #'                          Sort = c('IDQual', 'NonIDQual', 'IDDD'),
 #'                          Class = rep('character', 3),
+#'                          QualOrder = c('1', '5', ''),
 #'                          Qual1 = c(rep('', 2), 'NumIdEst'),
 #'                          Qual2 = c(rep('', 2), 'Action'),
 #'                          ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 
 #'                                          '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')))
 #' Aggdt <- new(Class='DDdt',
-#'              data.table(Variable = c('Province', 'NACE09', 'Turnover'),
+#'              data.table(Variable = c('CCAA', 'NACE09', 'Ponderacion'),
 #'                         Sort = c(rep('IDQual', 2), 'IDDD'),
 #'                         Class = c(rep('character', 2), 'numeric'),
-#'                         Qual1 = c(rep('', 2), 'Province'),
+#'                         QualOrder = c('6', '7', ''),
+#'                         Qual1 = c(rep('', 2), 'CCAA'),
 #'                         Qual2 = c(rep('', 2), 'NACE09'),
 #'                         ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])', 
 #'                                         '([0-9]{1, 15}| )')))
@@ -86,7 +91,7 @@
 #'           ID = IDdt, 
 #'           MicroData = Microdt, 
 #'           ParaData = Paradt,
-#'           Aggregates = Aggdt)
+#'           AggWeights = Aggdt)
 #'          
 #' getVNC(DD)         
 #' 
