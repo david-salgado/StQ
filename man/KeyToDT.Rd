@@ -3,16 +3,8 @@
 \docType{methods}
 \name{KeyToDT}
 \alias{KeyToDT}
-<<<<<<< HEAD
-\alias{KeyToDT,rawKey-method}
-\title{Return data.table out of a set of parsed keys.}
-||||||| merged common ancestors
-\alias{KeyToDT,rawKey-method}
-\title{Return a \linkS4class{data.table} out of a set of parsed keys}
-=======
 \alias{KeyToDT,rawKey,DD-method}
-\title{Return a \linkS4class{data.table} out of a set of parsed keys}
->>>>>>> ff277f6cdd5fddd61ed2d53b488ca2b0d15d8b1f
+\title{Return data.table out of a set of parsed keys.}
 \usage{
 KeyToDT(key, DD)
 

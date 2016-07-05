@@ -4,12 +4,15 @@
 \name{StQTorawStQ}
 \alias{StQTorawStQ}
 \alias{StQTorawStQ,StQ-method}
+\alias{StQTorawStQ,StQList-method}
 \title{Generates an object of class \linkS4class{rawStQ} from the input
 \linkS4class{StQ} object.}
 \usage{
 StQTorawStQ(Q)
 
 \S4method{StQTorawStQ}{StQ}(Q)
+
+\S4method{StQTorawStQ}{StQList}(Q)
 }
 \arguments{
 \item{Q}{Object of class \linkS4class{StQ} whose slot Data has at least the 

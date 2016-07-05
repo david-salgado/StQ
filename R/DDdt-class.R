@@ -30,12 +30,12 @@
 #' @export
 setClass(Class = "DDdt",
          contains = c('data.table'),
-         prototype = data.table(Variable = character(0),
-                                Sort = character(0),
-                                Class = character(0),
-                                QualOrder = character(0),
-                                Qual1 = character(0),
-                                ValueRegExp = character(0)),    
+         prototype = prototype(data.table(Variable = character(0),
+                                          Sort = character(0),
+                                          Class = character(0),
+                                          QualOrder = character(0),
+                                          Qual1 = character(0),
+                                          ValueRegExp = character(0))),    
          validity = function(object){
              
              NCol <- dim(object)[2]

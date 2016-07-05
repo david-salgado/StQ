@@ -39,3 +39,21 @@ setMethod(
         return(rawQ)
     }
 )
+#' @rdname StQTorawStQ
+#' 
+#' @include StQList-class.R rawKey-class.R rawDatadt-class.R rawStQ-class.R getDD.R getData.R DTToKey.R
+#' 
+#' @export
+setMethod(
+    f = "StQTorawStQ",
+    signature = c("StQList"),
+    function(Q){
+        
+        
+        QList <- getData(Q)
+        Periods <- getRepo(Q)
+        rawQData <- lapply(QList, StQTorawStQ)
+        rawQList <- new(Class = 'rawStQList', Data = rawQData, Periods = Periods)
+        return(rawQList)
+    }
+)
