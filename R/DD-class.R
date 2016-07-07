@@ -171,10 +171,11 @@ setClass(Class = "DD",
 
                  setkeyv(QualNames, 'Variable')
                  QualNames <- QualNames[!duplicated(QualNames)]
-    
+                 QualNames[, QualOrder := as.integer(QualOrder)]
                  setkeyv(QualNames, 'QualOrder')
+                 QualNames[, QualOrder := as.character(QualOrder)]
                  if (!all(QualNames[['QualOrder']] == seq(along = QualNames[['QualOrder']]))) {
-                     
+
                      stop('[Validity DD] The order of qualifiers must be a sequence of correlative numbers.')
                  }
                  

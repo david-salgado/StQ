@@ -25,7 +25,6 @@
 setClass(Class = "rawKey",
          contains = 'character',
          validity = function(object){
-
              numkeySyntax <- "^IDDD:[A-Za-z0-9]+(@@[A-Za-z0-9]+:(-?[0-9\\.]+(e(\\+|-)[0-9]+)?))*$"
              Validnum <- regexpr(numkeySyntax, object)
              #ExactLength <- (attributes(Validnum)$match.length == nchar(object))
@@ -36,7 +35,8 @@ setClass(Class = "rawKey",
              #ExactLength <- (attributes(Validchar)$match.length == nchar(object))
              Validchar <- unlist(Validchar)# & ExactLength
 
-             Validany <- as.logical(Validnum * Validchar)
+             # Validany <- as.logical(Validnum * Validchar)
+             Validany <- as.logical(Validnum)
              Validany[is.na(Validany)] <- TRUE
 
              if (!all(Validany)) {

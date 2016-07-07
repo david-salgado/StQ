@@ -35,8 +35,8 @@
 #' @export
 setClass(Class = "Datadt",
          contains = 'data.table',
-         prototype = data.table(IDDD = character(0),
-                                Value = character(0)),    
+         prototype = prototype(data.table(IDDD = character(0),
+                                          Value = character(0))),    
          validity = function(object){
              
              NCol <- dim(object)[2]

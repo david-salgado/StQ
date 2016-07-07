@@ -48,7 +48,8 @@ key <- new(Class = 'rawKey',
              'Employees@001@0@', 
              'Employees@001@1@1'))
 rawData <- new(Class = 'rawDatadt', 
-               data.table(Key = key, Value = c('625000', '23154', '25004', '10512')))
+               data.table(Key = key, Value = c('2034120', '414', '0')))
+
 rawQ <- new(Class = 'rawStQ', Data = rawData, DD = ExampleDD)
 
 }

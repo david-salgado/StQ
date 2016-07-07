@@ -6,7 +6,7 @@
 \alias{getDD,StQ-method}
 \alias{getDD,StQList-method}
 \alias{getDD,rawStQ-method}
-\title{Return slot \code{DD} from the input object}
+\title{Return slot DD from the input object}
 \usage{
 getDD(object)
 

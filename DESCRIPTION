@@ -7,7 +7,7 @@ Description: This package contains the definition of the class StQ to
     implement a standardized questionnaire and the methods to manage them (show,
     subsetting, ...)
 Depends:
-    R (>= 3.2.0)
+    R (>= 3.3.0)
 Imports:
     methods (>= 3.3.0),
     data.table (>= 1.9.4),

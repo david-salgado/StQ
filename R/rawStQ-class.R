@@ -40,7 +40,8 @@
 #'              'Employees@@001@@0@@', 
 #'              'Employees@@001@@1@@1'))
 #' rawData <- new(Class = 'rawDatadt', 
-#'                data.table(Key = key, Value = c('625000', '23154', '25004', '10512')))
+#'                data.table(Key = key, Value = c('2034120', '414', '0')))
+#' 
 #' rawQ <- new(Class = 'rawStQ', Data = rawData, DD = ExampleDD)
 #' 
 #' @include DD-class.R rawDatadt-class.R
@@ -58,7 +59,7 @@ setClass(Class = "rawStQ",
              Data <- getData(object)
 
              # Detección de filas duplicadas
-             if (dim(Data)[[1]] != 0){
+             if (dim(Data)[[1]] != 0) {
                  
                  setkeyv(Data, 'Key')
                  DupRows <- duplicated(Data)
@@ -91,7 +92,7 @@ setClass(Class = "rawStQ",
                  
              #    stop('[Validity rawStQ] Length in some element in column key of slot Data is not correct.')
              #}
-             
+
              # Comparamos las variables en los slots Data y DD: Todas las variables en Data deben estar definidas en algún slot de DD
              #IDDDinData <- unlist(lapply(strsplit(Data@.Data[[1]], '@@'), function(x){x[1]}))
              #NotinDD <- setdiff(IDDDinData, IDDDinDD)
@@ -99,7 +100,7 @@ setClass(Class = "rawStQ",
              #    stop(paste0('\n[Validity rawStQ] The following variables included in column Key of slot Data are not defined in slot DD: \n',
              #                paste0(NotinDD, collapse = ', '), '.\n'))
              #}
-             
+
              return(TRUE)
          }
 )
