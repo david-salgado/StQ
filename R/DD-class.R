@@ -21,17 +21,12 @@
 #'                            NumIdEst = c('', rep('.', 4)),
 #'                            Unit1 = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'))
 #'  ),
-#' MicroData =new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 4)),
-#'                                            NonIDQual = c('', 'IsNatMarket', 
-#'                                                          'IsEuroMarket', 
-#'                                                          'IsRWMarket',
-#'                                                          ''),
-#'                                            IDDD = c(rep('', 4), 'NewOrders'),
-#'                                            NumIdEst = c(rep('', 4), '.'),
-#'                                            IsNatMarket = c(rep('', 4), '0'),
-#'                                            IsEuroMarket = c(rep('', 4), '0'),
-#'                                            IsRWMarket = c(rep('', 4), '1'),
-#'                                            Unit1 = c('numidest', rep('', 3), 'cp09'))),
+#' MicroData =new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
+#'                                            NonIDQual = c('', 'Market', ''),
+#'                                            IDDD = c(rep('', 2), 'NewOrders'),
+#'                                            NumIdEst = c(rep('', 2), '.'),
+#'                                            Market = c(rep('', 2), '1'),
+#'                                            Unit1 = c('numidest', '', 'cp09'))),
 #' ParaData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
 #'                                            NonIDQual = c('', 'Action', ''),
 #'                                            IDDD = c(rep('', 2), 'Date'),
@@ -45,22 +40,21 @@
 #'     Variable = c('NumIdEst', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
 #'     Sort = c('IDQual', rep('IDDD', 4)),
 #'     Class = rep('character', 5),
-#'     QualOrder = c('1', rep('', 4)),
+#'     Length = c('11', '15', '15', '20','9'),
 #'     Qual1 = c('', rep('NumIdEst', 4)),
 #'     ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}')))
 #' Microdt <- new( Class='DDdt',data.table(
-#'     Variable = c('NumIdEst', 'IsNatMarket', 'IsEuroMarket', 
-#'                  'IsRWMarket', 'NewOrders'),
-#'     Sort = c('IDQual', rep('NonIDQual', 3), 'IDDD'),
-#'     Class = c(rep('character', 4), 'numeric'),
-#'     QualOrder = c('1', '2', '3', '4', ''),
-#'     Qual1 = c(rep('', 4), 'NumIdEst'),
-#'     ValueRegExp = c('[0-9]{9}PP', rep('(0|1| )', 3), '([0-9]{1, 10}| )')))
+#'     Variable = c('NumIdEst', 'Market', 'NewOrders'),
+#'     Sort = c('IDQual', 'NonIDQual', 'IDDD'),
+#'     Class = c(rep('character', 2), 'numeric'),
+#'     Length = c('11', '2', '7'),
+#'     Qual1 = c(rep('', 2), 'NumIdEst'),
+#'     ValueRegExp = c('[0-9]{9}PP', '.+', '([0-9]{1, 10}| )')))
 #' Paradt <-new( Class='DDdt', data.table(
 #'     Variable = c('NumIdEst', 'Action', 'Date'),
 #'     Sort = c('IDQual', 'NonIDQual', 'IDDD'),
 #'     Class = rep('character', 3),
-#'     QualOrder = c('1', '5', ''),
+#'     Length = c('1', '10', '10'),
 #'     Qual1 = c(rep('', 2), 'NumIdEst'),
 #'     Qual2 = c(rep('', 2), 'Action'),
 #'     ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 
@@ -150,43 +144,6 @@ setClass(Class = "DD",
                  
              }
              
-             QualNames <- list()
-             for (sl in setdiff(slotNames(object), 'VarNameCorresp')){
-                 
-                 if (dim(slot(object, sl))[1] == 0) next
-                 QualNames[[sl]] <- slot(object, sl)[Sort != 'IDDD'][, list(Variable, QualOrder)]
-                 
-             }
-             
-             QualNames <- rbindlist(QualNames)
-             
-             if (!all(dim(QualNames) == c(0, 0))) {
-                 setkeyv(QualNames, names(QualNames))
-                 QualNames <- QualNames[!duplicated(QualNames)]
-    
-                 if (length(QualNames[['Variable']]) != length(unique(QualNames[['Variable']]))){
-                     
-                     stop('[Validity DD] Some qualifiers are assigned at least two different orders in the DD object.')
-                 }
-
-                 setkeyv(QualNames, 'Variable')
-                 QualNames <- QualNames[!duplicated(QualNames)]
-                 QualNames[, QualOrder := as.integer(QualOrder)]
-                 setkeyv(QualNames, 'QualOrder')
-                 QualNames[, QualOrder := as.character(QualOrder)]
-                 if (!all(QualNames[['QualOrder']] == seq(along = QualNames[['QualOrder']]))) {
-
-                     stop('[Validity DD] The order of qualifiers must be a sequence of correlative numbers.')
-                 }
-                 
-                 QualNames <- QualNames[['Variable']]
-                 
-                 if (length(QualNames) != length(unique(QualNames))){
-                     
-                     stop('[Validity DD] The order of the qualifiers in all slots of the DD object must be unique.')
-                 }
-             }             
-
              return(TRUE)
          }
 )

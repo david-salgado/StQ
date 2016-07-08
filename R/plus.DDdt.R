@@ -116,7 +116,7 @@ setMethod(
             QualCol <- names(outVar)[grep('Qual', names(outVar))]
             setkeyv(outVar, setdiff(names(outVar), QualCol))
             outVar <- outVar[!duplicated(outVar)]
-            setcolorder(outVar, c('Variable', 'Sort', 'Class', QualCol, 'ValueRegExp'))
+            setcolorder(outVar, c('Variable', 'Sort', 'Class', 'Length', QualCol, 'ValueRegExp'))
             output <- new(Class = 'DDdt', outVar) 
         } 
         

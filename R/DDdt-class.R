@@ -34,7 +34,7 @@ setClass(Class = "DDdt",
          prototype = prototype(data.table(Variable = character(0),
                                           Sort = character(0),
                                           Class = character(0),
-                                          QualOrder = character(0),
+                                          Length = character(0),
                                           Qual1 = character(0),
                                           ValueRegExp = character(0))),    
          validity = function(object){
