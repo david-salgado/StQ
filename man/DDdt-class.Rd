@@ -16,6 +16,7 @@ columns:
  \item \code{Variable}: name of each variable.
  \item \code{Sort}: role of each variable (IDQual, NonIDQual, IDDD).
  \item \code{Class}: class of each variable (character, numeric, ...).
+ \item \code{Length}: highest length for each variable.
  \item One column of name \emph{"Qual"}\code{j} per each name of the 
  qualifiers needed for each variable.
  \item \code{ValueRegExp}: regexp for the value of each variable.
@@ -27,7 +28,7 @@ new(Class = 'DDdt',
     data.table(Variable = 'NOrden', 
                Sort = 'IDQual', 
                Class = 'character',
-               QualOrder = '1', 
+               Length = '11', 
                Qual1 = 'NOrden', 
                ValueRegExp = '[0-9]{9}SS'))
 }
