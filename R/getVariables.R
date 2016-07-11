@@ -1,18 +1,15 @@
 #' @title Return the set of Variable Names from an object
 #'
-#' @description \code{getVariables} returns all Variable names from the input 
-#' object.  
+#' @description \code{getVariables} returns all Variable names from the input object.  
 #' 
 #' @param object Object whose Variable names are queried.
 #' 
-#' @param Sort Character vector with the Sort of Variables ('IDDD', 'IDQual', 
-#' 'NonIDQual').
+#' @param Sort Character vector with the Sort of Variables ('IDDD', 'IDQual', 'NonIDQual').
 #' 
-#' @param slots Character vector with the slots names if object class is 
-#' \linkS4class{DD}.
+#' @param slots Character vector with the slots names if object class is \linkS4class{DD}.
 #'
-#' @return In the case of \linkS4class{DD} it returns the Variable columns
-#' from each of its slots different from \code{VarNameCorresp} slot.
+#' @return In the case of \linkS4class{DD} it returns the Variable columns from each of its slots
+#' different from \code{VarNameCorresp} slot.
 #'
 #' @examples
 #' data(ExampleDD) 

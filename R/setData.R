@@ -1,7 +1,7 @@
 #' @title Set value of slot \code{Data}.
 #'
-#' @description \code{setData} assigns a \linkS4class{Datadt} to the slot
-#' \code{Data} of the input object.
+#' @description \code{setData} assigns a \linkS4class{Datadt} to the slot \code{Data} of the input
+#' object.
 #'
 #' @param object Object whose slot \code{Data} is to be assigned.
 #'

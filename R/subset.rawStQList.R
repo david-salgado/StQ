@@ -1,25 +1,22 @@
 #' @title Extract parts of an object of class \linkS4class{rawStQList}
 #'
-#' @description \code{[} extracts parts of an object of class
-#' \linkS4class{rawStQList}.
+#' @description \code{[} extracts parts of an object of class \linkS4class{rawStQList}.
 #'
-#' It is indeed the method \code{[} for the class \linkS4class{rawStQList}. This
-#' method returns a subset of an input object of class \linkS4class{rawStQList}.
-#' Thus it returns an object of class \linkS4class{rawStQList}.
+#' It is indeed the method \code{[} for the class \linkS4class{rawStQList}. This method returns a
+#' subset of an input object of class \linkS4class{rawStQList}. Thus it returns an object of class
+#' \linkS4class{rawStQList}.
 #'
 #' @param x object of class \linkS4class{rawStQList}.
 #'
-#' @param i,j,... Indices corresponding to the elements to be extracted. These
-#' indices are numeric vector or character vector or \link{missing} or
-#' \link{NULL}. Numeric values are coerced internally to \code{integer} through
-#' \code{\link{as.integer}} (and thus truncated to zero). Character vector
-#'  correspond to names of the respective time period of each component object
-#' of class \linkS4class{StQ}.
+#' @param i,j,... Indices corresponding to the elements to be extracted. These indices are numeric
+#' vector or character vector or \link{missing} or \link{NULL}. Numeric values are coerced
+#' internally to \code{integer} through \code{\link{as.integer}} (and thus truncated to zero).
+#' Character vector correspond to names of the respective time period of each component object of
+#' class \linkS4class{StQ}.
 #'
 #' @param drop Included by coherence.
 #'
-#' @return Object of class \linkS4class{rawStQList} with the corresponding data
-#' subset.
+#' @return Object of class \linkS4class{rawStQList} with the corresponding data subset.
 #'
 #' @examples
 #' library(RepoTime)
