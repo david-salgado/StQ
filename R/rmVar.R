@@ -1,10 +1,10 @@
 #' Remove variables from an object
 #'
-#' \code{rmVar} removes from the input object those values for variable names in
-#' the input parameter \code{VarNames}.
+#' \code{rmVar} removes from the input object those values for variable names in the input parameter
+#' \code{VarNames}.
 #'
-#' This method returns the same input object with those variables specified in
-#' the input parameter \code{VarNames} removed from the data set.
+#' This method returns the same input object with those variables specified in the input parameter
+#' \code{VarNames} removed from the data set.
 #'
 #' @param object Input object to remove the variables from.
 #'
@@ -12,9 +12,8 @@
 #'
 #' @include StQ-class.R
 #'
-#' @return Object with the same class as the input object but where the
-#' variables in \code{VarNames} have been removed. Variables are removed only
-#' from slot \code{Data}.
+#' @return Object with the same class as the input object but where the variables in \code{VarNames}
+#' have been removed. Variables are removed only from slot \code{Data}.
 #'
 #' @examples
 #' data(ExampleStQ)

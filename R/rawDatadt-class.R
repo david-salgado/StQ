@@ -1,11 +1,9 @@
-#' @title S4 class for \linkS4class{data.table}s as components of 
-#' \linkS4class{rawStQ} objects
+#' @title S4 class for \linkS4class{data.table}s as components of \linkS4class{rawStQ} objects
 #'
-#' @description Definition of an S4 class named \code{rawDatadt} as a subclass 
-#' of class \linkS4class{data.table}.
+#' @description Definition of an S4 class named \code{rawDatadt} as a subclass of class
+#' \linkS4class{data.table}.
 #'
-#' The class \code{rawDatadt} is a \linkS4class{data.table} with the following 
-#' columns:
+#' The class \code{rawDatadt} is a \linkS4class{data.table} with the following columns:
 #'
 #' \itemize{
 #'  \item \code{Key}: compund key of class \linkS4class{rawKey} per each value.
@@ -15,10 +13,10 @@
 #' @examples
 #' library(data.table)
 #' key <- new(Class = 'rawKey', 
-#'           c('Turnover@@001@@0@@@@', 
-#'             'Turnover@@001@@1@@@@', 
-#'             'Turnover@@001@@@@04@@', 
-#'             'Turnover@@001@@@@@@0512'))
+#'           c('Turnover@@2.@@0.', 
+#'             'Turnover@@1.@@1.', 
+#'             'Turnover@@1.@@2.', 
+#'             'Turnover@@3.@@2.'))
 #' rawData <- new(Class = 'rawDatadt', 
 #'             data.table(Key = key, Value = c('625000', '23154', '25004', '10512')))
 #'                

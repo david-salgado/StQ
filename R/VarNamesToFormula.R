@@ -1,36 +1,32 @@
 #' @title Return a list of formulas for dcasting long data sets.
 #'
-#' @description \code{VarNamesToFormula} returns a list of formulas (in the
-#' sense of functions \code{\link[data.table]{dcast}} and
-#' \code{\link[data.table]{melt}} from the package \link{data.table}) for each
-#' compound variable name included in the input vector \code{VarNames}.
+#' @description \code{VarNamesToFormula} returns a list of formulas (in the sense of functions
+#' \code{\link[data.table]{dcast}} and \code{\link[data.table]{melt}} from the package
+#' \link{data.table}) for each compound variable name included in the input vector \code{VarNames}.
 #'
-#' This function returns a \linkS4class{data.table} with two colums: the column
-#' \code{Variable} with the root names of each compound variable name, and the
-#' column \code{Form} with the corresponding formula having IDQual qualifiers
-#' and the sort of variable (\code{IDDD}, \code{IDQual} or \code{NonIDQual}) in
-#' its lhs and the variable qualifiers whose values appear as suffixes in the
-#' compound variable names in the rhs. Duplicate entries in the resulting
-#' \linkS4class{data.table} drop out.
+#' This function returns a \linkS4class{data.table} with two colums: the column \code{Variable} with
+#' the root names of each compound variable name, and the column \code{Form} with the corresponding
+#' formula having IDQual qualifiers and the sort of variable (\code{IDDD}, \code{IDQual} or
+#' \code{NonIDQual}) in its lhs and the variable qualifiers whose values appear as suffixes in the
+#' compound variable names in the rhs. Duplicate entries in the resulting \linkS4class{data.table}
+#' drop out.
 #'
-#' \code{VarNamesToFormula} is designed to be applied on compound variable names
-#' including suffixes with qualifier values. It is fundamentally designed for
-#' the internal use in the construction of editing strategies, but it can also
-#' be of utility in some scripts.
+#' \code{VarNamesToFormula} is designed to be applied on compound variable names including suffixes
+#' with qualifier values. It is fundamentally designed for the internal use in the construction of
+#' editing strategies, but it can also be of utility in some scripts.
 #'
 #' @param VarNames Character vector with compound variable names.
 #'
-#' @param DD Object of class \linkS4class{DD} with the definition and properties
-#' of the variables.
+#' @param DD Object of class \linkS4class{DD} with the definition and properties of the variables.
 #'
-#' @return \linkS4class{data.table} with columns \code{Variable} and
-#' \code{Form}. The column \code{Variable} indicates the root name of each input
-#' variable name and the column \code{Form} presents the corresponding formula.
+#' @return \linkS4class{data.table} with columns \code{Variable} and \code{Form}. The column
+#' \code{Variable} indicates the root name of each input variable name and the column \code{Form}
+#' presents the corresponding formula.
 #'
 #' @examples
 #' # We build a DD object to be used as the second input parameter:
 #' data(ExampleDD)
-#' VarNamesToFormula(c('IASSEmpleo_1_1', 'IASSEmpleo_0', 'IASSEmpleo'), ExampleDD)
+#' VarNamesToFormula(c('IASSEmpleo_1.', 'IASSEmpleo_2.2', 'IASSEmpleo'), ExampleDD)
 #'
 #' @export
 setGeneric("VarNamesToFormula",

@@ -1,11 +1,10 @@
 #' @title Rename variables in an object
 #'
-#' @description \code{renVar} rename variables in a object keeping the rest of
-#' the object intact.
+#' @description \code{renVar} rename variables in a object keeping the rest of the object intact.
 #'
-#' This method returns the input object with the specified variable names in the
-#' input parameter \code{VarNames} renamed with the names in the input parameter
-#' \code{NewVarNames}. Variables are renamed in all slots.
+#' This method returns the input object with the specified variable names in the input parameter
+#' \code{VarNames} renamed with the names in the input parameter \code{NewVarNames}. Variables are
+#' renamed in all slots.
 #'
 #' @param object Input object.
 #'
@@ -13,8 +12,8 @@
 #'
 #' @param NewVarNames Character vector with the new variable names.
 #'
-#' @return Object with the same class as the input object and all specified
-#' variable names duly renamed in all slots.
+#' @return Object with the same class as the input object and all specified variable names duly
+#' renamed in all slots.
 #'
 #' @examples
 #' data(ExampleStQ)

@@ -1,34 +1,31 @@
 #' @title Convert an \linkS4class{StQ} object into a dcasted data.table.
 #'
-#' @description \code{dcast_StQ} returns a \linkS4class{data.table} in dcasted
-#' form (observations by row and variables by columns) with data from the input
-#' \linkS4class{StQ} object.
+#' @description \code{dcast_StQ} returns a \linkS4class{data.table} in dcasted form (observations by
+#' row and variables by columns) with data from the input \linkS4class{StQ} object.
 #'
-#' This methods converts the slot \code{Data} from the input \code{StQ} object
-#'  into a \linkS4class{data.table} with statistical units by row and variables 
-#'  specified in the input parameter \code{VarNames} by columns.
+#' This methods converts the slot \code{Data} from the input \code{StQ} object into a
+#' \linkS4class{data.table} with statistical units by row and variables specified in the input
+#' parameter \code{VarNames} by columns.
 #'
-#' To distinguish between variables and qualifiers this function makes use of
-#' the slot \code{DD} of input \linkS4class{StQ} variable.
+#' To distinguish between variables and qualifiers this function makes use of the slot \code{DD} of
+#' input \linkS4class{StQ} variable.
 #'
 #' This method is indeed a wrapper for the function
 #' \code{\link[data.table]{dcast.data.table}} of the package
 #' \linkS4class{data.table}, adapted to the structure of objecto
 #' \linkS4class{StQ}.
 #'
-#' @param object Object of class \linkS4class{StQ} whose slot \code{Data} will
-#' be converted.
+#' @param object Object of class \linkS4class{StQ} whose slot \code{Data} will be converted.
 #'
 #' @param VarNames Character vector with names of the output variables.
 #'
-#' @param DDslot Character vector of length 1 with the name of DD slot used
-#' to make the transformation of the input object. Its default value is
-#' \code{MicroData}.
+#' @param DDslot Character vector of length 1 with the name of DD slot used to make the
+#' transformation of the input object. Its default value is \code{MicroData}.
 #'
-#' @return \linkS4class{data.table} with data from slot \code{Data} of the input
-#' \linkS4class{StQ} object with statistical units by rows and variables by
-#'  columns. Only variables in \code{VarNames} will be output. If no variable
-#'  name is specified, all variables in the input object will be output.
+#' @return \linkS4class{data.table} with data from slot \code{Data} of the input \linkS4class{StQ}
+#' object with statistical units by rows and variables by columns. Only variables in \code{VarNames}
+#' will be output. If no variable name is specified, all variables in the input object will be
+#' output.
 #'
 #' @examples
 #' data(ExampleStQ)
@@ -78,7 +75,7 @@ setMethod(
             Varslot <- DDslotWith(DD, VarName, DDslot)
             
             Quals <- setdiff(names(Varslot),
-                             c('Variable', 'Sort', 'Class', 'ValueRegExp'))
+                             c('Variable', 'Sort', 'Class', 'Length', 'ValueRegExp'))
             
             NameQuals <- c()
             for (Qual in Quals){

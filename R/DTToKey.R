@@ -1,8 +1,8 @@
 #' @title Return a character vector of keys out of a \linkS4class{data.table}.
 #'
 #' @description \code{DTToKey} returns a character vector of keys from the input
-#' \linkS4class{data.table} whose columns are the different qualifiers with as 
-#' many rows as components (length) of this input key. 
+#' \linkS4class{data.table} whose columns are the different qualifiers with as many rows as
+#' components (length) of this input key. 
 #' 
 #' @param DT \linkS4class{data.table} with the key components.
 #'
