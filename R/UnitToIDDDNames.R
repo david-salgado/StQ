@@ -18,7 +18,7 @@
 #' library(data.table)
 #' VNCdt <- new(Class = 'VNCdt',
 #'                 .Data =data.table(IDQual = c('NumIdEst', rep('', 2)),
-#'                                   NonIDQual = c('', 'Market', '', ''),
+#'                                   NonIDQual = c('', 'Market', ''),
 #'                                   IDDD = c(rep('', 2), 'NewOrders'),
 #'                                   NumIdEst = c(rep('', 2), '.'),
 #'                                   Market = c(rep('', 2), '1.'),
@@ -82,7 +82,7 @@
 #'                      Class = c(rep('character', 2), 'numeric'),
 #'                      Length = c('11', '2', '7'),
 #'                      Qual1 = c(rep('', 2), 'NumIdEst'),
-#'                      Qual2 = c(rep('', 4), 'Market'),
+#'                      Qual2 = c(rep('', 2), 'Market'),
 #'                      ValueRegExp = c('[0-9]{9}PP', '(0|1| )', '([0-9]{1, 10}| )')))
 #' Paradt <- new(Class = "DDdt",
 #'             .Data = data.table(

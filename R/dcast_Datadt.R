@@ -28,7 +28,7 @@
 #'                        IDDD = c('Turnover', 'Turnover', 'Province', 'NACE09'),
 #'                        Value = c('625000', '23154', '04', '0512')))
 #'                        
-#' VarNames <- c('Turnover_0_1')
+#' VarNames <- c('Turnover_0._2.2')
 #' dcast_Datadt(Ddt,VarNames)
 #' 
 #' VarNames <- c('Turnover')

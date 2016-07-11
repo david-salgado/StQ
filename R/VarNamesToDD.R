@@ -31,11 +31,11 @@ VarNamesToDD <- function(VarNames, DD){
     setVNC(outputDD) <- getVNC(DD) 
 
     # Para una sola variable
-    if (is.character(VarNames) & length(VarNames) == 1){
+    if (is.character(VarNames) & length(VarNames) == 1) {
         
         DDSlotNames <- setdiff(slotNames(DD), 'VarNameCorresp')
 
-        for (DDslot in DDSlotNames){
+        for (DDslot in DDSlotNames) {
             
             DDdtlocal <- slot(DD, DDslot)
             Names.DT <- DDdtlocal[Variable == ExtractNames(VarNames)]
@@ -43,7 +43,7 @@ VarNamesToDD <- function(VarNames, DD){
             if (dim(Names.DT)[1] != 0) {
                 QualNames <- setdiff(names(Names.DT), 
                                     c('Variable', 'Sort', 'Class', 'Length', 'Qual1', 'ValueRegExp'))
-                for (col in QualNames){
+                for (col in QualNames) {
                     
                     if (all(Names.DT[[col]] == '')) {
                         Names.DT[, col := NULL, with = F]
@@ -51,37 +51,40 @@ VarNamesToDD <- function(VarNames, DD){
                     
                 }
                 ColNames.DT <- names(Names.DT)
-                nQual <- length(grep('Qual', ColNames.DT)) - 1
-
-                setnames(Names.DT, c('Variable', 'Sort', 'Class', 'Length', paste0('Qual', 1:nQual), 'ValueRegExp'))
+                nQual <- length(grep('Qual', ColNames.DT)) 
                 
+                if (nQual >1) {
+                    setnames(Names.DT, c('Variable', 'Sort', 'Class', 'Length', paste0('Qual', 1:nQual), 'ValueRegExp'))
+                }else {
+                    setnames(Names.DT, c('Variable', 'Sort', 'Class', 'Length', 'Qual1', 'ValueRegExp'))
+                }
             }
 
             #Construimos el objecto DD por Slots
-            if (DDslot=='ID'){
+            if (DDslot == 'ID') {
                 
                 outputDD@ID <- new(Class = 'DDdt', Names.DT)
 
-            } else if (DDslot=='MicroData'){
+            } else if (DDslot == 'MicroData') {
                 
                 outputDD@MicroData <- new(Class = 'DDdt', Names.DT)
                 
                 
-            } else if (DDslot=='ParaData'){
+            } else if (DDslot == 'ParaData') {
                 
-                outputDD@ParaData <- new(Class='DDdt', Names.DT)
+                outputDD@ParaData <- new(Class = 'DDdt', Names.DT)
                 
-            } else if (DDslot=='Aggregates'){
+            } else if (DDslot == 'Aggregates') {
                 
-                outputDD@Aggregates <- new(Class='DDdt', Names.DT)
+                outputDD@Aggregates <- new(Class = 'DDdt', Names.DT)
                 
-            } else if (DDslot=='AggWeights'){
+            } else if (DDslot == 'AggWeights') {
                 
-                outputDD@AggWeights <- new(Class='DDdt', Names.DT)
+                outputDD@AggWeights <- new(Class = 'DDdt', Names.DT)
                 
             } else {
                 
-                outputDD@Other <- new(Class='DDdt', Names.DT)
+                outputDD@Other <- new(Class = 'DDdt', Names.DT)
                 
             }
             
@@ -89,7 +92,7 @@ VarNamesToDD <- function(VarNames, DD){
      
         return(outputDD)
         
-    } else { # Ahora para varias variables de entrada
+    } else {# Ahora para varias variables de entrada
         
         out.list <- lapply(as.list(VarNames), VarNamesToDD, DD = DD)
         
