@@ -44,7 +44,7 @@
     
     # Función para construir nombres de variables
     pasteNA <- function(x, y){
-        out <- ifelse(is.na(y) | y == '', paste0(x, ''), paste(x, y, sep ="_"))
+        out <- ifelse(is.na(y) | y == '', paste0(x, ''), paste(x, y, sep = "_"))
         return(out)
     }
 
@@ -55,7 +55,7 @@
     for (slot in slots) {DDdtlocal <- DDdtlocal + slot(DD, slot)}
 
     
-    nQual <- length(setdiff(names(DDdtlocal), c('Variable', 'Sort', 'Class', 'QualOrder', 'ValueRegExp')))
+    nQual <- length(setdiff(names(DDdtlocal), c('Variable', 'Sort', 'Class', 'Length', 'ValueRegExp')))
     if (nQual == 0) stop('[StQ::melt_StQ] DD has no qualifiers.')
 
     auxDDdt <- copy(DDdtlocal)[, c('Variable', paste0('Qual', 1:nQual)), with = F]
