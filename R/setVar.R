@@ -56,7 +56,7 @@
 #'                              data.table(Variable = 'lTurnover',
 #'                                         Sort = 'IDDD',
 #'                                         Class = 'numeric',
-#'                                         QualOrder = '',
+#'                                         Length = '10',
 #'                                         Qual1 = 'ID',
 #'                                         ValueRegExp = '')))
 #' NewQ <- setVar(object = ExampleStQ,

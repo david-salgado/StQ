@@ -54,7 +54,7 @@
 #'     Variable = c('NumIdEst', 'Action', 'Date'),
 #'     Sort = c('IDQual', 'NonIDQual', 'IDDD'),
 #'     Class = rep('character', 3),
-#'     Length = c('1', '10', '10'),
+#'     Length = c('11', '10', '10'),
 #'     Qual1 = c(rep('', 2), 'NumIdEst'),
 #'     Qual2 = c(rep('', 2), 'Action'),
 #'     ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 

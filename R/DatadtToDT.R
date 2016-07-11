@@ -11,8 +11,8 @@
 #' library(data.table)
 #' Ddt <- new(Class = 'Datadt', 
 #'             data.table(ID = c('001', '001', '001', '001'), 
-#'                        IsNatMarket = c('0', '1', '', ''),
-#'                        EsRemuner = c('1','0','',''),
+#'                        Market = c('0.', '1.', '', ''),
+#'                        EsRemuner = c('2.2.','2.1.','',''),
 #'                        IDDD = c('Turnover', 'Turnover', 'Province', 'NACE09'),
 #'                        Value = c('625000', '23154', '04', '0512')))
 #'                         
@@ -22,12 +22,12 @@
 #' @import data.table
 #'
 #' @export
-DatadtToDT <-function(object){
+DatadtToDT <- function(object){
     
     n <- dim(object)[1]
     output <- data.table(aux = character(n))
     ColNames <- names(object)
-    for (col in ColNames){
+    for (col in ColNames) {
         
         output[, col := object[[col]], with = F]
         

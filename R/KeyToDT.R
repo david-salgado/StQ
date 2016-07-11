@@ -81,14 +81,15 @@ setMethod(
         for (sl in setdiff(slotNames(DD), 'VarNameCorresp')){
             
             if (dim(slot(DD, sl))[1] == 0) next
-            QualNames[[sl]] <- slot(DD, sl)[Sort != 'IDDD'][, list(Variable, QualOrder)]
+            #QualNames[[sl]] <- slot(DD, sl)[Sort != 'IDDD'][, list(Variable, QualOrder)]
+            QualNames[[sl]] <- slot(DD, sl)[Sort != 'IDDD'][, list(Variable)]
             
         }
 
         QualNames <- rbindlist(QualNames)
         setkeyv(QualNames, names(QualNames))
         QualNames <- QualNames[!duplicated(QualNames)]
-        setkeyv(QualNames, 'QualOrder')
+        #setkeyv(QualNames, 'QualOrder')
         QualNames <- c('IDDD', QualNames[['Variable']])
         if (length(QualNames) != dim(output)[2]) {
             
