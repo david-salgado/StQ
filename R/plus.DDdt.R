@@ -19,7 +19,7 @@
 #'                                            'PostalAddr', 'PhoneNo'),
 #'                                 Sort = c('IDQual', rep('IDDD', 4)),
 #'                                 Class = rep('character', 5),
-#'                                 QualOrder = c('1', '', '', '', ''),
+#'                                 Length = c('11', '25', '25', '50', '9'),
 #'                                 Qual1 = c('', rep('NumIdEst', 4)),
 #'                                 ValueRegExp = c('[0-9]{9}PP', '.+', '.+', 
 #'                                           '.+', '(6|9)[0-9]{8}')))
@@ -29,7 +29,7 @@
 #'                                            'PostalAddr', 'PhoneNo'),
 #'                                 Sort = c('IDQual', rep('IDDD', 4)),
 #'                                 Class = rep('character', 5),
-#'                                 QualOrder = c('1', '', '', '', ''),
+#'                                 Length = c('11', '25', '25', '50', '9'),
 #'                                 Qual1 = c('', rep('NumIdEst', 4)),
 #'                                 ValueRegExp = c('[0-9]{9}PP', '.+', '.+', 
 #'                                               '.+', '(6|9)[0-9]{8}')))
@@ -37,25 +37,20 @@
 #' 
 #' 
 #' Micro1dt <- new(Class = 'DDdt',
-#'                 .Data = data.table(Variable = c('NumIdEst', 'IsNatMarket',
-#'                                             'IsEuroMarket', 'IsRWMarket',
-#'                                              'Turnover'),
+#'                 .Data = data.table(Variable = c('NumIdEst', 'Market', 'Turnover'),
 #'                                    Sort = c('IDQual', rep('NonIDQual', 3), 'IDDD'),
-#'                                    Class = c(rep('character', 4), 'numeric'),
-#'                                    QualOrder = c('1', '2', '3', '4', ''),
-#'                                    Qual1 = c(rep('', 4), 'NumIdEst'),
-#'                                    ValueRegExp = c('[0-9]{9}PP', rep('(0|1| )', 3), 
-#'                                              '([0-9]{1, 10}| )')))
+#'                                    Class = c(rep('character', 2), 'numeric'),
+#'                                    Length = c('11', '2', '12'),
+#'                                    Qual1 = c(rep('', 2), 'NumIdEst'),
+#'                                    ValueRegExp = c('[0-9]{9}PP', '(0|1| )', '([0-9]{1, 10}| )')))
 #' 
 #' Micro2dt <- new(Class = 'DDdt',
-#'                 .Data = data.table(Variable = c('NumIdEst', 'IsNatMarket', 'IsEuroMarket', 
-#'                                                 'IsRWMarket', 'NewOrders'),
-#'                                    Sort = c('IDQual', rep('NonIDQual', 3), 'IDDD'),
-#'                                    Class = c(rep('character', 4), 'numeric'),
-#'                                    QualOrder = c('1', '2', '3', '4', ''),
-#'                                    Qual1 = c(rep('', 4), 'NumIdEst'),
-#'                                    ValueRegExp = c('[0-9]{9}PP', rep('(0|1| )', 3), 
-#'                                                '([0-9]{1, 10}| )')))
+#'                 .Data = data.table(Variable = c('NumIdEst', 'Market', 'NewOrders'),
+#'                                    Sort = c('IDQual', 'NonIDQual', 'IDDD'),
+#'                                    Class = c(rep('character', 2), 'numeric'),
+#'                                    Length = c('11', '2', '7'),
+#'                                    Qual1 = c(rep('', 2), 'NumIdEst'),
+#'                                    ValueRegExp = c('[0-9]{9}PP', '(0|1| )', '([0-9]{1, 10}| )')))
 #' 
 #' Micro1dt + Micro2dt
 #' 
@@ -64,7 +59,7 @@
 #'               .Data = data.table(Variable = c('Province', 'NACE09', 'Turnover'),
 #'                                  Sort = c(rep('IDQual', 2), 'IDDD'),
 #'                                  Class = c(rep('character', 2), 'numeric'),
-#'                                  QualOrder = c('1', '2', ''),
+#'                                  Length = c('15', '4', '12'),
 #'                                  Qual1 = c(rep('', 2), 'Province'),
 #'                                  Qual2 = c(rep('', 2), 'NACE09'),
 #'                                  ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])',
@@ -74,7 +69,7 @@
 #'               .Data = data.table(Variable = c('Province', 'NACE09', 'NewOrders'),
 #'                                  Sort = c(rep('IDQual', 2), 'IDDD'),
 #'                                  Class = c(rep('character', 2), 'numeric'),
-#'                                  QualOrder = c('1', '2', '''),
+#'                                  Length = c('15', '4', '7'),
 #'                                  Qual1 = c(rep('', 2), 'Province'),
 #'                                  Qual2 = c(rep('', 2), 'NACE09'),
 #'                                  ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])',

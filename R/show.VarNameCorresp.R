@@ -1,11 +1,9 @@
 #' @title Show an object of class \linkS4class{VarNameCorresp}
 #'
-#' @description The method \code{show} shows the slots of an object
-#' \linkS4class{VarNameCorresp} limiting the number of columns on screen up to 
-#' 10.
+#' @description The method \code{show} shows the slots of an object \linkS4class{VarNameCorresp}
+#' limiting the number of columns on screen up to 10.
 #'
-#' It is indeed the method \link[methods]{show} adapted to the class
-#' \linkS4class{VarNameCorresp}.
+#' It is indeed the method \link[methods]{show} adapted to the class \linkS4class{VarNameCorresp}.
 #'
 #' @param object Object of class \linkS4class{VarNameCorresp}.
 #'
@@ -27,23 +25,21 @@
 #'                  Unit1 = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'))),
 #'   MicroData = new(Class = 'VNCdt', 
 #'                   .Data = data.table(
-#'                       IDQual = c('NumIdEst', rep('', 4)),
-#'                       NonIDQual = c('', 'IsNatMarket', 'IsEuroMarket', 'IsRWMarket', ''),
-#'                       IDDD = c(rep('', 4), 'NewOrders'),
-#'                       NumIdEst = c(rep('', 4), '.'),
-#'                       IsNatMarket = c(rep('', 4), '0'),
-#'                       IsEuroMarket = c(rep('', 4), '0'),
-#'                       IsRWMarket = c(rep('', 4), '1'),
-#'                       Unit1 = c('numidest', rep('', 3), 'cp09'))),
+#'                       IDQual = c('NumIdEst', rep('', 2)),
+#'                       NonIDQual = c('', 'Market', ''),
+#'                       IDDD = c(rep('', 2), 'NewOrders'),
+#'                       NumIdEst = c(rep('', 2), '.'),
+#'                       Market = c(rep('', 2), '1.'),
+#'                       Unit1 = c('numidest', '', 'cp09'))),
 #'  ParaData = new(Class = 'VNCdt'),
 #'  Aggregates = new(Class = 'VNCdt', 
 #'                   .Data = data.table(
-#'                      IDQual = c('Province', 'NACE', 'IsNatMarket', ''),
+#'                      IDQual = c('Province', 'NACE', 'Market', ''),
 #'                      NonIDQual = rep('', 4),
 #'                      IDDD = c('', '', '', 'TotalTurnover'),
 #'                      Province = c('', '', '', '.'),
 #'                      NACE = c('', '', '', '.'),
-#'                      IsNatMarket = c('', '', '', '1'),
+#'                      Market = c('', '', '', '2.'),
 #'                      Unit1 = c('provincia', 'actividad', '', 'cn01'))))
 #' VNC <- new(Class = 'VarNameCorresp', .Data= VarList)
 #' show(VNC)

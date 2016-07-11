@@ -42,7 +42,7 @@ VarNamesToDD <- function(VarNames, DD){
 
             if (dim(Names.DT)[1] != 0) {
                 QualNames <- setdiff(names(Names.DT), 
-                                    c('Variable', 'Sort', 'Class', 'QualOrder', 'Qual1', 'ValueRegExp'))
+                                    c('Variable', 'Sort', 'Class', 'Length', 'Qual1', 'ValueRegExp'))
                 for (col in QualNames){
                     
                     if (all(Names.DT[[col]] == '')) {
@@ -53,7 +53,7 @@ VarNamesToDD <- function(VarNames, DD){
                 ColNames.DT <- names(Names.DT)
                 nQual <- length(grep('Qual', ColNames.DT)) - 1
 
-                setnames(Names.DT, c('Variable', 'Sort', 'Class', 'QualOrder', paste0('Qual', 1:nQual), 'ValueRegExp'))
+                setnames(Names.DT, c('Variable', 'Sort', 'Class', 'Length', paste0('Qual', 1:nQual), 'ValueRegExp'))
                 
             }
 
