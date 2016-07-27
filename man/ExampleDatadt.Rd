@@ -4,15 +4,14 @@
 \name{ExampleDatadt}
 \alias{ExampleDatadt}
 \title{Object of class \linkS4class{Datadt}}
-\format{Object of class \linkS4class{Datadt} with 354456 rows and 5 columns.}
+\format{Object of class \linkS4class{Datadt} with 383994 rows and 5 columns.}
 \usage{
 data(ExampleDatadt)
 }
 \description{
-\code{ExampleDatadt} is an object of class \linkS4class{Datadt} 
-with key-value pair structure for the included severely perturbed anonymised 
-data from a real statistical operation. The class \linkS4class{Datadt} is a
-subclass of \linkS4class{data.table}.
+\code{ExampleDatadt} is an object of class \linkS4class{Datadt} with key-value pair
+structure for the included severely perturbed anonymised data from a real statistical operation.
+The class \linkS4class{Datadt} is a subclass of \linkS4class{data.table}.
 
 The columns this object are:
 \itemize{

@@ -10,10 +10,9 @@
 \arguments{
 \item{x}{Object of class \linkS4class{DDdt}.}
 
-\item{i, j, ...}{Indices corresponding to elements to be extracted. The
-indices are numeric or character vectors, \code{\link{missing}} or
-\code{\link{NULL}}. Numeric values are coerced to \code{integer} with
-\code{\link{as.integer}} (thus truncated to zero).}
+\item{i, j, ...}{Indices corresponding to elements to be extracted. The indices are numeric or
+character vectors, \code{\link{missing}} or \code{\link{NULL}}. Numeric values are coerced to
+\code{integer} with \code{\link{as.integer}} (thus truncated to zero).}
 
 \item{drop}{Included by coherence.}
 }

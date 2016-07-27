@@ -14,12 +14,10 @@
 Object of class \link{NULL}.
 }
 \description{
-\code{show} displays the slot \code{Data} of the input
-\linkS4class{StQList} object with the names of time periods from the slot
-\code{Periods}.
+\code{show} displays the slot \code{Data} of the input \linkS4class{StQList} object
+with the names of time periods from the slot \code{Periods}.
 
-It is indeed the method \link[methods]{show} adapted to the class
-\linkS4class{StQList}.
+It is indeed the method \link[methods]{show} adapted to the class \linkS4class{StQList}.
 }
 \examples{
 library(RepoTime)

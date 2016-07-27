@@ -4,24 +4,23 @@
 \name{rawStQToStQ}
 \alias{rawStQToStQ}
 \alias{rawStQToStQ,rawStQ-method}
-\title{Generates an object of class \linkS4class{StQ} from the input
-\linkS4class{rawStQ} object.}
+\title{Generates an object of class \linkS4class{StQ} from the input \linkS4class{rawStQ} object.}
 \usage{
 rawStQToStQ(rawQ)
 
 \S4method{rawStQToStQ}{rawStQ}(rawQ)
 }
 \arguments{
-\item{rawQ}{Object of class \linkS4class{rawStQ} whose slot Data has the
-key-value pair structure.}
+\item{rawQ}{Object of class \linkS4class{rawStQ} whose slot Data has the  key-value pair
+structure.}
 }
 \value{
-Object of class \linkS4class{StQ} whose slot Data has at least the 
-columns \code{IDDD} and \code{Value}.
+Object of class \linkS4class{StQ} whose slot Data has at least the columns \code{IDDD}
+and \code{Value}.
 }
 \description{
-\code{rawStQToStQ} returns an object of class \linkS4class{StQ}
-from the input\linkS4class{rawStQ} object.
+\code{rawStQToStQ} returns an object of class \linkS4class{StQ} from the input
+\linkS4class{rawStQ} object.
 }
 \examples{
 data(ExamplerawStQ)
