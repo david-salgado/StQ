@@ -14,12 +14,10 @@
 Invisible object of class \code{\link{NULL}}.
 }
 \description{
-The method \code{show} shows the slots of an object
-\linkS4class{VNCdt} limiting the number of columns on screen up to 
-10.
+The method \code{show} shows the slots of an object \linkS4class{VNCdt} limiting the
+number of columns on screen up to 8.
 
-It is indeed the method \link[methods]{show} adapted to the class
-\linkS4class{VNCdt}.
+It is indeed the method \link[methods]{show} adapted to the class \linkS4class{VNCdt}.
 }
 \examples{
 # A trivial example
@@ -27,27 +25,22 @@ show(new(Class = 'VNCdt'))
 
 library(data.table)
 VNCdt1 <- new(Class = 'VNCdt',
-              data.table(IDQual = c('NumIdEst', '', '', '', '', '', '', ''),
-                         NonIDQual = c('', 'EsMercNac', 'EsMercEuro', 'EsMercRM',
-                                                     'Cod','Var1', 'Var2', ''),
-                         IDDD = c('', '', '', '', '', '', '','IEPEntradaPed'),
-                         NumIdEst = c('', '', '', '', '', '', '', '.'),
-                         EsMercNac = c('', '', '', '', '', '', '','0'),
-                         EsMercEuro = c('', '', '', '', '', '', '','0'),
-                         EsMercRM = c('', '', '', '', '', '', '','1'),
-                         Cod = c('', '', '', '', '', '', '', ''),
-                         Var1 = c('', '', '', '', '', '', '', ''),
-                         Var2 = c('', '', '', '', '', '', '', ''),
-                         Unit1 = c('', '', '', '', '', '', '','cp09')))
+              data.table(IDQual = c('NumIdEst', '', '', ''),
+                         NonIDQual = c('', 'Market', 'Cod', ''),
+                         IDDD = c('', '', '','IEPEntradaPed'),
+                         NumIdEst = c('', '', '', '.'),
+                         Market = c( '', '', '','0'),
+                         Cod = c('', '', '', ''),
+                         Unit1 = c( '', '', '','cp09')))
 
 
 VNCdt2 <- new(Class = 'VNCdt', 
-              data.table(IDQual = c('NOrden', '', '', ''), 
-                         NonIDQual = c('', 'IsNatMarket', '', ''), 
-                         IDDD = c('', '', 'Turnover', 'Turnover'),
-                         NOrden = c('', '', '.', '.'),
-                         IsNatMarket = c('', '', '0', '1'),
-                         Unit1 = c('', '', 'cn01', 'cn02')))
+              data.table(IDQual = c('NOrden', '', ''), 
+                         NonIDQual = c('', 'Market', ''), 
+                         IDDD = c('', '', 'Turnover'),
+                         NOrden = c('', '', '.'),
+                         Market = c('', '', '1.'),
+                         Unit1 = c('', '', 'cn01')))
 
 
 }

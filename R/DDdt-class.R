@@ -11,6 +11,7 @@
 #'  \item \code{Variable}: name of each variable.
 #'  \item \code{Sort}: role of each variable (IDQual, NonIDQual, IDDD).
 #'  \item \code{Class}: class of each variable (character, numeric, ...).
+#'  \item \code{Length}: highest length for each variable.
 #'  \item One column of name \emph{"Qual"}\code{j} per each name of the 
 #'  qualifiers needed for each variable.
 #'  \item \code{ValueRegExp}: regexp for the value of each variable.
@@ -22,7 +23,7 @@
 #'     data.table(Variable = 'NOrden', 
 #'                Sort = 'IDQual', 
 #'                Class = 'character',
-#'                QualOrder = '1', 
+#'                Length = '11', 
 #'                Qual1 = 'NOrden', 
 #'                ValueRegExp = '[0-9]{9}SS'))
 #' @import data.table
@@ -30,19 +31,23 @@
 #' @export
 setClass(Class = "DDdt",
          contains = c('data.table'),
-         prototype = data.table(Variable = character(0),
-                                Sort = character(0),
-                                Class = character(0),
-                                QualOrder = character(0),
-                                Qual1 = character(0),
-                                ValueRegExp = character(0)),    
+         prototype = prototype(data.table(Variable = character(0),
+                                          Sort = character(0),
+                                          Class = character(0),
+                                          Length = character(0),
+                                          Qual1 = character(0),
+                                          ValueRegExp = character(0))),    
          validity = function(object){
              
              NCol <- dim(object)[2]
              
              if (NCol < 6) {
                  
+<<<<<<< HEAD
                  stop(paste0('[Validity DDdt] The object must be a data.table with at least five columns named "Variable", "Sort", "Class", "QualOrder", "Qual1" and "ValueRegExp"'))   
+=======
+                 stop(paste0('[Validity DDdt] The object must be a data.table with at least five columns named "Variable", "Sort", "Class", "Length", "Qual1" and "ValueRegExp"'))   
+>>>>>>> 5d007d94a821d1015f4737046578bb01ab45b243
              
             } 
              
@@ -60,14 +65,6 @@ setClass(Class = "DDdt",
                  stop('[Validity DDdt] No duplicate variable is allowed.')
                  
              }
-             QualOrder <- object[['QualOrder']]
-             QualOrder <- QualOrder[QualOrder != '']
-
-             
-             if (length(QualOrder) != length(unique(QualOrder))) {
-                 
-                 stop('[Validity DDdt] Orders of qualifiers repeated in the column QualOrder.')
-             }
              
              NQual <- max(0, NCol - 6)
              if (NQual > 0) {
@@ -79,11 +76,11 @@ setClass(Class = "DDdt",
                  Quals <- 'Qual1'
              
              }
-             ColNames <- c('Variable', 'Sort', 'Class', 'QualOrder', 'ValueRegExp', Quals)
+             ColNames <- c('Variable', 'Sort', 'Class', 'Length', 'ValueRegExp', Quals)
             
              if (!all(names(object) %in% ColNames)) {
                  
-                 stop('[Validity DDdt] The names of a DDdt object must be: Variable, Sort, Class, QualOrder, Qual1-Qualj, ValueRegExp.')
+                 stop('[Validity DDdt] The names of a DDdt object must be: Variable, Sort, Class, Length, Qual1-Qualj, ValueRegExp.')
                  
              }
              
@@ -108,8 +105,8 @@ setClass(Class = "DDdt",
                  stop(paste0('[Validity DDdt] The third column of the object must be named "Class".'))
              }
              
-             if (ColNames[4] != 'QualOrder') {
-                 stop(paste0('[Validity DDdt] The fourth column of the object must be named "QualOrder".'))
+             if (ColNames[4] != 'Length') {
+                 stop(paste0('[Validity DDdt] The fourth column of the object must be named "Length".'))
                  
              }
              

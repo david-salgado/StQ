@@ -14,13 +14,13 @@ getEditNames(object)
 \item{object}{Object of class \linkS4class{StQ}.}
 }
 \value{
-It returns a \code{data.table} with the statistical units in the
-input object with their corresponding edit names.
+It returns a \code{data.table} with the statistical units in the input object with their
+corresponding edit names.
 }
 \description{
-This method identifies the IDQual qualifiers in the input object
-and returns a \linkS4class{data.table} with the values of these qualifiers
-for each statistical unit and their corresponding edit names.
+This method identifies the IDQual qualifiers in the input object and returns a
+\linkS4class{data.table} with the values of these qualifiers for each statistical unit and their
+corresponding edit names.
 }
 \examples{
 \dontrun{

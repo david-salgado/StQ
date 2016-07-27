@@ -9,8 +9,7 @@
 data(ExampleDM)
 }
 \description{
-\code{ExampleDM} is a \linkS4class{data.table} with data matrix
-structure and severely perturbed data by different methods from a real data 
-set.
+\code{ExampleDM} is a \linkS4class{data.table} with data matrix structure and
+severely perturbed data by different methods from a real data set.
 }
 

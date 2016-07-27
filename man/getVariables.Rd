@@ -19,19 +19,16 @@ getVariables(object, Sort, slots)
 \arguments{
 \item{object}{Object whose Variable names are queried.}
 
-\item{Sort}{Character vector with the Sort of Variables ('IDDD', 'IDQual', 
-'NonIDQual').}
+\item{Sort}{Character vector with the Sort of Variables ('IDDD', 'IDQual', 'NonIDQual').}
 
-\item{slots}{Character vector with the slots names if object class is 
-\linkS4class{DD}.}
+\item{slots}{Character vector with the slots names if object class is \linkS4class{DD}.}
 }
 \value{
-In the case of \linkS4class{DD} it returns the Variable columns
-from each of its slots different from \code{VarNameCorresp} slot.
+In the case of \linkS4class{DD} it returns the Variable columns from each of its slots
+different from \code{VarNameCorresp} slot.
 }
 \description{
-\code{getVariables} returns all Variable names from the input 
-object.
+\code{getVariables} returns all Variable names from the input object.
 }
 \examples{
 data(ExampleDD) 

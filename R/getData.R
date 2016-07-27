@@ -2,40 +2,37 @@
 #'
 #' @description \code{getData} returns slot \code{Data} from the input object.  
 #' 
-#' In the case of objects of class \linkS4class{DD}, it returns the slot
-#' \code{MicroData} of the input object.
+#' In the case of objects of class \linkS4class{DD}, it returns the slot \code{MicroData} of the
+#' input object.
 #' 
-#' In the case of objects of class \linkS4class{StQ}, it returns a data set 
-#' restricted to those root variable names in the column \code{IDDD} of slot
-#' \code{Data} specified in the input parameter \code{VarNames}.
+#' In the case of objects of class \linkS4class{StQ}, it returns a data set restricted to those root
+#' variable names in the column \code{IDDD} of slot \code{Data} specified in the input parameter
+#' \code{VarNames}.
 #' 
 #' Input objects can be of class: 
 #' \itemize{
 #' \item \code{StQ}: The input parameters are an object of class 
-#' \linkS4class{StQ} and a character vector, \code{VarNames}, with variable 
-#' names. It returns the \code{data.table} corresponding to slot \code{Data} of 
-#' such an object, but only with variables included in \code{VarNames}.
+#' \linkS4class{StQ} and a character vector, \code{VarNames}, with variable names. It returns the
+#' \code{data.table} corresponding to slot \code{Data} of such an object, but only with variables
+#' included in \code{VarNames}.
 #'
-#' If no variable name is specified in \code{VarNames}, it returns the complete  
-#' slot \code{Data}. 
+#' If no variable name is specified in \code{VarNames}, it returns the complete slot \code{Data}. 
 #' 
-#' \item \code{DD}: The input parameter is an object of class \linkS4class{DD}. 
-#' The parameter \code{VarNames} has no effect. 
+#' \item \code{DD}: The input parameter is an object of class \linkS4class{DD}. The parameter
+#' \code{VarNames} has no effect. 
 #' }
 #' 
 #' @param object Object whose (possibly subsetted) slot \code{Data} is queried.
 #'
-#' @param VarNames Character vector with the variable names subsetting the data 
-#' set. 
+#' @param VarNames Character vector with the variable names subsetting the data set. 
 #'
-#' @param DDslot Character vector of length 1 with the name of DD slot in which
-#' variables in VarNames are defined. Its default value is \code{MicroData} and
-#' has no efect if the input object is a \linkS4class{DD} object.
+#' @param DDslot Character vector of length 1 with the name of DD slot in which variables in
+#' VarNames are defined. Its default value is \code{MicroData} andmhas no efect if the input object
+#' is a \linkS4class{DD} object.
 #' 
-#' @return In the case of \linkS4class{StQ} objects, it returns a 
-#' \linkS4class{data.table} with key-value pair structure corresponding to slot
-#' \code{Data} from the input object with the values of the column \code{IDDD} 
-#' restriCted to variable names specified in \code{VarNames}. 
+#' @return In the case of \linkS4class{StQ} objects, it returns a \linkS4class{data.table} with
+#' key-value pair structure corresponding to slot \code{Data} from the input object with the values
+#' of the column \code{IDDD} restriCted to variable names specified in \code{VarNames}. 
 #'
 #' @examples
 #' # From DD objects 
@@ -43,7 +40,7 @@
 #' getData(ExampleDD)
 #' 
 #' # From an StQ object 
-#' VarNames <- c('Employees_0')
+#' VarNames <- c('Employees_1.')
 #' getData(ExampleStQ, VarNames)
 #' 
 #' VarNames <- c('Turnover')
@@ -56,7 +53,7 @@
 #' QList <- lapply(QList, function(x) ExampleStQ)
 #' names(QList) <- TimePer
 #' QList <- BuildStQList(QList)
-#' VarNames <- c('Turnover', 'Employees_1_1')
+#' VarNames <- c('Turnover', 'Employees_2.1')
 #' getData(QList, VarNames)
 #' 
 #' @export
@@ -108,7 +105,7 @@ setMethod(
  
         Varslot <- DDslotWith(DD, VarName, DDslot)
         Quals <- setdiff(names(Varslot),
-                         c('Variable', 'Sort', 'Class', 'ValueRegExp'))
+                         c('Variable', 'Sort', 'Class', 'Length', 'ValueRegExp'))
         
         NameQuals <- c()
         for (Qual in Quals){
@@ -205,7 +202,7 @@ setMethod(
         }
         
         Quals <- setdiff(names(Varslot),
-                         c('Variable', 'Sort', 'Class', 'ValueRegExp'))
+                         c('Variable', 'Sort', 'Class', 'Length', 'ValueRegExp'))
         for (VarName in VarNames){
             
             NameQuals <- c()

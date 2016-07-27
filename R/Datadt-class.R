@@ -20,8 +20,8 @@
 #' new(Class = 'Datadt', 
 #'     data.table(ID = c('001', '001', '001', '001', 
 #'                       '002', '002', '002', '002'), 
-#'                IsNatMarket = c('0', '1', '', '',
-#'                                '0', '1', '', ''),
+#'                Market = c('0.', '1.', '', '',
+#'                                '0.', '1.', '', ''),
 #'                IDDD = c('Turnover', 'Turnover', 'Province', 'NACE09',
 #'                         'Turnover', 'Turnover', 'Province', 'NACE09'),
 #'                Value = c('625000', '23154', '04', '0512',
@@ -35,8 +35,8 @@
 #' @export
 setClass(Class = "Datadt",
          contains = 'data.table',
-         prototype = data.table(IDDD = character(0),
-                                Value = character(0)),    
+         prototype = prototype(data.table(IDDD = character(0),
+                                          Value = character(0))),    
          validity = function(object){
              
              NCol <- dim(object)[2]

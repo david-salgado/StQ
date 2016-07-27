@@ -1,8 +1,7 @@
-#' @title Return a \linkS4class{data.table} out of a set of parsed keys
-#'
-#' @description \code{KeyToDT} returns a \linkS4class{data.table} whose columns
-#' are the different qualifiers parsed in the input key with as many raws as
-#' components (length) of this input key. 
+#' @title Return data.table out of a set of parsed keys.
+#' 
+#' @description \code{KeyToDT} returns a \linkS4class{data.table} whose columns are the different
+#' qualifiers parsed in the input key with as many raws as components (length) of this input key.
 #' 
 #' @param key key implemented either through the class \linkS4class{rawKey} or 
 #' other.
@@ -32,7 +31,7 @@ setMethod(
     f = "KeyToDT",
     signature = c("rawKey", "DD"),
     function(key, DD){
-        
+
         StrSplit <- function(x, n, sep){
             
             n <- unique(n)
@@ -67,8 +66,7 @@ setMethod(
             
             return(output)
         }
-        
-        
+
         keyDT <- data.table(OrigKey = key)
         keyDT[, NCol := stringr::str_count(OrigKey, '@@') + 1]
 
@@ -79,19 +77,20 @@ setMethod(
         output <- Reduce(cbind, ParsedRawKeyList)
         
         QualNames <- list()
+        
         for (sl in setdiff(slotNames(DD), 'VarNameCorresp')){
             
             if (dim(slot(DD, sl))[1] == 0) next
-            QualNames[[sl]] <- slot(DD, sl)[Sort != 'IDDD'][, list(Variable, QualOrder)]
+            #QualNames[[sl]] <- slot(DD, sl)[Sort != 'IDDD'][, list(Variable, QualOrder)]
+            QualNames[[sl]] <- slot(DD, sl)[Sort != 'IDDD'][, list(Variable)]
             
         }
-        
+
         QualNames <- rbindlist(QualNames)
         setkeyv(QualNames, names(QualNames))
         QualNames <- QualNames[!duplicated(QualNames)]
-        setkeyv(QualNames, 'QualOrder')
+        #setkeyv(QualNames, 'QualOrder')
         QualNames <- c('IDDD', QualNames[['Variable']])
-
         if (length(QualNames) != dim(output)[2]) {
             
             stop('[StQ::KeyToDT] The number of qualifiers in the key and in the DD object are not the same.')
@@ -101,3 +100,5 @@ setMethod(
         return(output)
     }
 )
+
+   

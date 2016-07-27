@@ -16,10 +16,10 @@
 #' \code{NamesVector} with the corresponding root names of each variable name.
 #'
 #' @examples
-#' ExtractNames(c('ICMCifraNeg', 'ICMEmpleo_0', 'ICMEmpleo_1_1', 'ICMEmpleo_1_2'))
+#' ExtractNames(c('ICMCifraNeg', 'ICMEmpleo_1.', 'ICMEmpleo_2.1', 'ICMEmpleo_2.2'))
 #' ExtractNames(c('IASSCifraNeg.x', 'IASSCifraNeg.y'))
-#' ExtractNames(c('ICMCifraNeg.x', 'ICMEmpleo_0.x', 'ICMEmpleo_1_1.x', 'ICMEmpleo_1_2.x',
-#'                'ICMCifraNeg.y', 'ICMEmpleo_0.y', 'ICMEmpleo_1_1.y', 'ICMEmpleo_1_2.y'))
+#' ExtractNames(c('ICMCifraNeg.x', 'ICMEmpleo_1..x', 'ICMEmpleo_2.1.x', 'ICMEmpleo_2.2.x',
+#'                'ICMCifraNeg.y', 'ICMEmpleo_1..y', 'ICMEmpleo_2.1.y', 'ICMEmpleo_2.2.y'))
 #' @export
 ExtractNames <- function(NamesVector){
 

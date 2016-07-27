@@ -1,26 +1,20 @@
-#' @title S4 class for \linkS4class{data.table}s as components of 
-#' \linkS4class{rawStQ} objects
+#' @title S4 class for \linkS4class{data.table}s as components of \linkS4class{rawStQ} objects
 #'
-#' @description Definition of an S4 class named \code{rawDatadt} as a subclass 
-#' of class \linkS4class{data.table}.
+#' @description Definition of an S4 class named \code{rawDatadt} as a subclass of class
+#' \linkS4class{data.table}.
 #'
-#' The class \code{rawDatadt} is a \linkS4class{data.table} with the following 
-#' columns:
+#' The class \code{rawDatadt} is a \linkS4class{data.table} with the following columns:
 #'
 #' \itemize{
-#'  \item \code{Key}: compund key of class \linkS4class{rawKey} per each value.
+#'  \item \code{IDDDKey}: compund key of class \linkS4class{rawKey} per each value.
 #'  \item \code{Value}: value.
 #' }
 #'
 #' @examples
+#' 
+#' # An empty rawDatadt object:
 #' library(data.table)
-#' key <- new(Class = 'rawKey', 
-#'           c('Turnover@@001@@0@@@@', 
-#'             'Turnover@@001@@1@@@@', 
-#'             'Turnover@@001@@@@04@@', 
-#'             'Turnover@@001@@@@@@0512'))
-#' rawData <- new(Class = 'rawDatadt', 
-#'             data.table(Key = key, Value = c('625000', '23154', '25004', '10512')))
+#' new(Class = 'rawDatadt')
 #'                
 #' @include rawKey-class.R
 #' 
@@ -29,25 +23,32 @@
 #' @export
 setClass(Class = "rawDatadt",
          contains = 'data.table',
-         prototype = prototype(data.table(Key = new(Class = 'rawKey'),
-                                          Value = character(0))),    
+         prototype = prototype(data.table(IDDDKey = character(0),
+                                          QualKey = character(0),
+                                          Value = character(0))),
          validity = function(object){
              
+
              ColNames <- names(object)
-             if (ColNames[1] != 'Key') {
+             if (ColNames[1] != 'IDDDKey') {
                  
-                 stop('[validity rawDatadt] The first column of rawDatadt must be Key.')
+                 stop('[validity rawDatadt] The first column of rawDatadt must be IDDDKey.')
              }
              
-             if (ColNames[2] != 'Value') {
+             if (ColNames[2] != 'QualKey') {
                  
-                 stop('[validity rawDatadt] The second column of rawDatadt must be Value.')
+                 stop('[validity rawDatadt] The second column of rawDatadt must be QualKey.')
+             }
+             
+             if (ColNames[3] != 'Value') {
+                 
+                 stop('[validity rawDatadt] The third column of rawDatadt must be Value.')
              }
              
              Ncol <- length(ColNames)
-             if (Ncol != 2) {
+             if (Ncol != 3) {
                 
-                 stop('[validity rawDatadt] Only two columns are allowed in a rawDatadt object.')    
+                 stop('[validity rawDatadt] Only three columns are allowed in a rawDatadt object.')    
                  
              }
              

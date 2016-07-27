@@ -36,47 +36,41 @@
 #' ID1 + ID2                                            
 #'                                            
 #' MicroData1 <- new(Class = "VNCdt",
-#'                   .Data = data.table(IDQual = c('NumIdEst', rep('', 4)),
-#'                                      NonIDQual = c('', 'IsNatMarket', 'IsEuroMarket', 
-#'                                                    'IsRWMarket', ''),
-#'                                      IDDD = c(rep('', 4), 'Turnover'),
-#'                                      NumIdEst = c(rep('', 4), '.'),
-#'                                      IsNatMarket = c(rep('', 4), '0'),
-#'                                      IsEuroMarket = c(rep('', 4), '0'),
-#'                                      IsRWMarket = c(rep('', 4), '1'),
-#'                                      Unit1 = c('numidest', rep('', 3), 'cn05')))
+#'                   .Data = data.table(IDQual = c('NumIdEst', rep('', 2)),
+#'                                      NonIDQual = c('', 'Market', ''),
+#'                                      IDDD = c(rep('', 2), 'Turnover'),
+#'                                      NumIdEst = c(rep('', 2), '.'),
+#'                                      Market = c(rep('', 2), '1.'),
+#'                                      Unit1 = c('numidest', '', 'cn05')))
 #'                                      
 #' MicroData2 <- new(Class ='VNCdt',
-#'                   .Data = data.table(IDQual = c('NumIdEst', rep('', 4)),
-#'                                      NonIDQual = c('', 'IsNatMarket', 'IsEuroMarket', 'IsNew',
-#'                                                    ''),
-#'                                      IDDD = c(rep('', 4), 'NewOrders'),
-#'                                      NumIdEst = c(rep('', 4), '.'),
-#'                                      IsNatMarket = c(rep('', 4), '0'),
-#'                                      IsEuroMarket = c(rep('', 4), '0'),
-#'                                      IsNew = c(rep('', 4), '1'),
-#'                                      Unit1 = c('numidest', rep('', 3), 'cp09'),
-#'                                      Unit2 = c('norden', rep('', 4))))
+#'                   .Data = data.table(IDQual = c('NumIdEst', rep('', 2)),
+#'                                      NonIDQual = c('', 'Market', ''),
+#'                                      IDDD = c(rep('', 2), 'NewOrders'),
+#'                                      NumIdEst = c(rep('', 2), '.'),
+#'                                      Market = c(rep('', 2), '3.'),
+#'                                      Unit1 = c('numidest', '', 'cp09'),
+#'                                      Unit2 = c('norden', rep('', 2))))
 #'                                      
 #' MicroData1 + MicroData2                                      
 #'                                      
 #' Aggregates1 <- new(Class = "VNCdt",
-#'                    .Data = data.table(IDQual = c('Province', 'NACE', 'IsNatMarket', ''),
+#'                    .Data = data.table(IDQual = c('Province', 'NACE', 'Market', ''),
 #'                                       NonIDQual = c(rep('', 4)),
 #'                                       IDDD = c('', '', '', 'Turnover'),
 #'                                       Province = c('', '', '', '.'),
 #'                                       NACE = c('', '', '', '.'),
-#'                                       IsNatMarket = c('', '', '', '1'),
+#'                                       Market = c('', '', '', '2.'),
 #'                                       Unit1 = c('provincia', 'actividad', '', 'cn01')))
 #' 
 #' 
 #' Aggregates2 <- new(Class = 'VNCdt',
-#'                   .Data = data.table(IDQual = c('Province', 'NACE', 'IsNatMarket', ''),
+#'                   .Data = data.table(IDQual = c('Province', 'NACE', 'Market', ''),
 #'                                      NonIDQual = c('', '', '', ''),              
 #'                                      IDDD = c('', '', '', 'NewOrders'),
 #'                                      Province = c('', '', '', '.'),
 #'                                      NACE = c('', '', '', '.'),
-#'                                      IsNatMarket = c('', '', '', '1'),
+#'                                      Market = c('', '', '', '1.'),
 #'                                      Unit1 = c('provincia', 'actividad', '', 'cp02'))) 
 #'
 #' Aggregates1 + Aggregates2                                                   

@@ -1,11 +1,9 @@
 #' @title Show an object of class \linkS4class{StQList}
 #'
-#' @description \code{show} displays the slot \code{Data} of the input
-#' \linkS4class{StQList} object with the names of time periods from the slot
-#' \code{Periods}.
+#' @description \code{show} displays the slot \code{Data} of the input \linkS4class{StQList} object
+#' with the names of time periods from the slot \code{Periods}.
 #'
-#' It is indeed the method \link[methods]{show} adapted to the class
-#' \linkS4class{StQList}.
+#' It is indeed the method \link[methods]{show} adapted to the class \linkS4class{StQList}.
 #'
 #' @param object Object of class \linkS4class{StQList}.
 #'

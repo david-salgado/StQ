@@ -49,8 +49,8 @@
 setClass(Class = "StQ",
          slots = c(Data = 'Datadt',
                    DD = 'DD'),
-         prototype = list(Data = new(Class = 'Datadt'),
-                          DD = new(Class = 'DD')),
+         prototype = prototype(list(Data = new(Class = 'Datadt'),
+                          DD = new(Class = 'DD'))),
          validity = function(object){
 
              Datadt <- object@Data

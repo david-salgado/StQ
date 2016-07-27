@@ -1,37 +1,33 @@
-#' @title Return root names and NonID-qualifier values of compound variable
-#' names
+#' @title Return root names and NonID-qualifier values of compound variable names
 #'
-#' @description \code{VarNamesToDT} returns a \linkS4class{data.table}
-#' identifying those qualifiers corresponding to the values appearing in the
-#' compound variable names specified in the input parameter \code{VarNames}.
+#' @description \code{VarNamesToDT} returns a \linkS4class{data.table} identifying those qualifiers
+#' corresponding to the values appearing in the compound variable names specified in the input
+#' parameter \code{VarNames}.
 #'
-#' This function is designed for variable names with suffixes appending
-#' qualifier values with underscores _.
+#' This function is designed for variable names with suffixes appending qualifier values with
+#' underscores _.
 #'
-#' The function determines the correspondind qualifier names for the values
-#' contained in the compound variable names using the information from the
-#' \linkS4class{DD} object specified as the second input parameter.
+#' The function determines the correspondind qualifier names for the values contained in the
+#' compound variable names using the information from the \linkS4class{DD} object specified as the
+#' second input parameter.
 #'
-#' \code{VarNamesToDD} has been designed fundamentally for internal use in the
-#' construction of editing strategies, but it can also be of utility in some
-#' scripts.
+#' \code{VarNamesToDD} has been designed fundamentally for internal use in the construction of
+#' editing strategies, but it can also be of utility in some scripts.
 #'
 #' @param VarNames Character vector with the compound variable names.
 #'
-#' @param DD Object of class \linkS4class{DD} with the definition and properties
-#' of the variables.
+#' @param DD Object of class \linkS4class{DD} with the definition and properties of the variables.
 #'
-#' @return \linkS4class{data.table} with as many rows as the length of
-#' \code{VarNames}, with the column \code{IDDD} containing the root name and
-#' one more column for each suffix in the compound input name under the
-#' corresponding qualifier name. The resulting \linkS4class{data.table} contains
-#' the values of each qualifier for each input variable name.
+#' @return \linkS4class{data.table} with as many rows as the length of \code{VarNames}, with the
+#' column \code{IDDD} containing the root name and one more column for each suffix in the compound
+#' input name under the corresponding qualifier name. The resulting \linkS4class{data.table}
+#' contains the values of each qualifier for each input variable name.
 #'
 #'
 #' @examples
 #' # We load RepoReadWrite to obtain the included example DD object
 #' data(ExampleDD)
-#' VarNamesToDT(c('Employees_0'), ExampleDD)
+#' VarNamesToDT(c('Employees_1.'), ExampleDD)
 #'
 #' @include ExtractNames.R
 #'
@@ -61,7 +57,7 @@ VarNamesToDT <- function(VarNames, DD){
                 setnames(Names.DT, 'Variable', 'IDDD')
                 Names.DT[, Sort := NULL]
                 Names.DT[, Class := NULL]
-                Names.DT[, QualOrder := NULL]
+                Names.DT[, Length := NULL]
                 Names.DT[, ValueRegExp := NULL]
                 
                 ParsedNames <- strsplit(VarNames, '_')[[1]]

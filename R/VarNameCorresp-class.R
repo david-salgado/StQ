@@ -59,9 +59,9 @@
 #' @export
 setClass(Class = "VarNameCorresp",
          contains = 'list',
-         prototype = list(ID = new(Class = 'VNCdt'),
-                          MicroData = new(Class = 'VNCdt'),
-                          ParaData = new(Class = 'VNCdt')),    
+         prototype = prototype(list(ID = new(Class = 'VNCdt'),
+                                    MicroData = new(Class = 'VNCdt'),
+                                    ParaData = new(Class = 'VNCdt'))),    
          
          validity = function(object){
          

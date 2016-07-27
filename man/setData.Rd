@@ -19,8 +19,8 @@ setData(object) <- value
 Object with slot Data updated.
 }
 \description{
-\code{setData} assigns a \linkS4class{Datadt} to the slot
-\code{Data} of the input object.
+\code{setData} assigns a \linkS4class{Datadt} to the slot \code{Data} of the input
+object.
 }
 \examples{
 # We build an empty data.table:

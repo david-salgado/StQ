@@ -9,48 +9,42 @@
 \alias{UnitToIDDDNames,VarNameCorresp-method}
 \title{Convert unit\emph{j} names into their corresponding IDDD variable names.}
 \usage{
-UnitToIDDDNames(object, Unit, UnitNames)
+UnitToIDDDNames(object, UnitNames)
 
-\S4method{UnitToIDDDNames}{VNCdt}(object, Unit, UnitNames)
+\S4method{UnitToIDDDNames}{VNCdt}(object, UnitNames)
 
-\S4method{UnitToIDDDNames}{VarNameCorresp}(object, Unit, UnitNames)
+\S4method{UnitToIDDDNames}{VarNameCorresp}(object, UnitNames)
 
-\S4method{UnitToIDDDNames}{DD}(object, Unit, UnitNames)
+\S4method{UnitToIDDDNames}{DD}(object, UnitNames)
 
-\S4method{UnitToIDDDNames}{StQ}(object, Unit, UnitNames)
+\S4method{UnitToIDDDNames}{StQ}(object, UnitNames)
 }
 \arguments{
 \item{object}{Object with the IDDD variable identifiers.}
 
-\item{Unit}{character vector with the Unit name ('Unit1', 'Unit2', ...).}
-
-\item{UnitNames}{character vector with the name of variable corresponding to 
-the specified Unit.}
+\item{UnitNames}{character vector with the name of variable corresponding to the specified Unit.}
 }
 \value{
-Data table with all the corresponding IDDD variable names. For objects
-the classes \linkS4class{DD} and \linkS4class{StQ} it returns the IDDD the
-slot VarNameCorresp of the corresponding DD object.
+Data table with all the corresponding IDDD variable names. For objects the classes
+\linkS4class{DD} and \linkS4class{StQ} it returns the IDDD the slot VarNameCorresp of the
+corresponding DD object.
 }
 \description{
-\code{UnitToIDDDNames} returns a data table with the IDDD variable
-name corresponding to the Unit\emph{j} variable name specified .
+\code{UnitToIDDDNames} returns a data table with the IDDD variable name
+corresponding to the Unit\emph{j} variable name specified .
 }
 \examples{
 # An example for VNCdt:
 library(data.table)
 VNCdt <- new(Class = 'VNCdt',
-                .Data =data.table(IDQual = c('NumIdEst', rep('', 4), ''),
-                                  NonIDQual = c('', 'IsNatMarket', 
-                                    'IsEuroMarket', 'IsRWMarket', '', ''),
-                                  IDDD = c(rep('', 4), 'NewOrders', 'NewOrders'),
-                                  NumIdEst = c(rep('', 4), '.', '.'),
-                                  IsNatMarket = c(rep('', 4), '0', '0'),
-                                  IsEuroMarket = c(rep('', 4), '0', '1'),
-                                  IsRWMarket = c(rep('', 4), '1', '0'),
-                                  Unit1 = c('numidest', rep('', 3), 'cp09', 'cp10')))
+                .Data =data.table(IDQual = c('NumIdEst', rep('', 2)),
+                                  NonIDQual = c('', 'Market', ''),
+                                  IDDD = c(rep('', 2), 'NewOrders'),
+                                  NumIdEst = c(rep('', 2), '.'),
+                                  Market = c(rep('', 2), '1.'),
+                                  UnitName = c('numidest', '', 'cp09')))
  
- UnitToIDDDNames(VNCdt, Unit = 'Unit1', UnitNames = c('cp09', 'cp10'))
+ UnitToIDDDNames(VNCdt, UnitNames = c('cp09'))
 
 # An example for VNC and DD objects:
 library(data.table)
@@ -59,41 +53,36 @@ VarList <- list(ID = new(Class = 'VNCdt',
                          .Data = data.table(IDQual = c('NumIdEst', rep('', 4)),
                                             NonIDQual = c(rep('',5)),
                                             IDDD = c('', 'Name', 'Surname', 'PostalAddr',
-                                                 'PhoneNo'),
+                                                     'PhoneNo'),
                                             NumIdEst = c('', rep('.', 4)),
-                                            Unit1 = c('numidest', 'nombre', 'apellidos', 
-                                               'direccion', 'telefono')     
+                                            UnitName = c('numidest', 'nombre', 'apellidos', 
+                                                      'direccion', 'telefono')     
                                 )),
                 MicroData = new(Class = 'VNCdt',
-                                .Data =data.table(
-                                       IDQual = c('NumIdEst', rep('', 4)),
-                                       NonIDQual = c('', 'IsNatMarket', 
-                                                     'IsEuroMarket', 
-                                                     'IsRWMarket',
-                                                     ''),
-                                       IDDD = c(rep('', 4), 'NewOrders'),
-                                       NumIdEst = c(rep('', 4), '.'),
-                                       IsNatMarket = c(rep('', 4), '0'),
-                                       IsEuroMarket = c(rep('', 4), '0'),
-                                       IsRWMarket = c(rep('', 4), '1'),
-                                       Unit1 = c('numidest', rep('', 3), 'cp09'))),
+                                .Data = data.table(
+                                        IDQual = c('NumIdEst', rep('', 2)),
+                                        NonIDQual = c('', 'Market', ''),
+                                        IDDD = c(rep('', 2), 'NewOrders'),
+                                        NumIdEst = c(rep('', 2), '.'),
+                                        Market = c(rep('', 2), '2.'),
+                                        UnitName = c('numidest', '', 'cp09'))),
                 ParaData = new(Class = 'VNCdt',
                                 .Data = data.table(
-                                       IDQual = c('NumIdEst', rep('', 2)),
-                                       NonIDQual = c('', 'Action', ''),
-                                       IDDD = c(rep('', 2), 'Date'),
-                                       NumIdEst = c(rep('', 2), '.'),
-                                       Action = c(rep('', 2), 'Imputation'),
-                                       Unit1 = c('numidest', '', 'FechaImput'))),
+                                        IDQual = c('NumIdEst', rep('', 2)),
+                                        NonIDQual = c('', 'Action', ''),
+                                        IDDD = c(rep('', 2), 'Date'),
+                                        NumIdEst = c(rep('', 2), '.'),
+                                        Action = c(rep('', 2), 'Imputation'),
+                                        UnitName = c('numidest', '', 'FechaImput'))),
                 Aggregates = new(Class = 'VNCdt',
                                  .Data = data.table(
-                                        IDQual = c('Province', 'NACE09', '', ''),
-                                        NonIDQual = c(rep('', 2), 'IsNatMarket', ''),
-                                        IDDD = c('', '', '', 'Turnover'),
-                                        Province = c('', '', '', '.'),
-                                        NACE09 = c('', '', '', '.'),
-                                        IsNatMarket = c('', '', '', '1'),
-                                        Unit1 = c('provincia', 'actividad', '', 'cn01'))))
+                                         IDQual = c('Province', 'NACE09', '', ''),
+                                         NonIDQual = c(rep('', 2), 'Market', ''),
+                                         IDDD = c('', '', '', 'Turnover'),
+                                         Province = c('', '', '', '.'),
+                                         NACE09 = c('', '', '', '.'),
+                                         Market = c('', '', '', '3.'),
+                                         UnitName = c('provincia', 'actividad', '', 'cn01'))))
 
 VNC <- new(Class = 'VarNameCorresp', .Data = VarList)
 
@@ -103,27 +92,24 @@ IDdt <- new(Class = "DDdt",
                      Variable = c('NumIdEst', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
                      Sort = c('IDQual', rep('IDDD', 4)),
                      Class = rep('character', 5),
-                     QualOrder = c('1', rep('', 4)),
+                     Length = c('11', '25', '25', '50', '9'),
                      Qual1 = c('', rep('NumIdEst', 4)),
                      ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}')))
 Microdt <- new(Class = "DDdt", 
             .Data = data.table(
-                     Variable = c('NumIdEst', 'IsNatMarket', 'IsEuroMarket', 
-                      'IsRWMarket', 'NewOrders'),
-                     Sort = c('IDQual', rep('NonIDQual', 3), 'IDDD'),
-                     Class = c(rep('character', 4), 'numeric'),
-                     QualOrder = c('1', '2', '3', '4', ''),
-                     Qual1 = c(rep('', 4), 'NumIdEst'),
-                     Qual2 = c(rep('', 4), 'IsNatMarket'),
-                     Qual3 = c(rep('', 4), 'IsEuroMarket'),
-                     Qual4 = c(rep('', 4), 'IsRWMarket'),
-                     ValueRegExp = c('[0-9]{9}PP', rep('(0|1| )', 3), '([0-9]{1, 10}| )')))
+                     Variable = c('NumIdEst', 'Market', 'NewOrders'),
+                     Sort = c('IDQual', 'NonIDQual', 'IDDD'),
+                     Class = c(rep('character', 2), 'numeric'),
+                     Length = c('11', '2', '7'),
+                     Qual1 = c(rep('', 2), 'NumIdEst'),
+                     Qual2 = c(rep('', 2), 'Market'),
+                     ValueRegExp = c('[0-9]{9}PP', '(0|1| )', '([0-9]{1, 10}| )')))
 Paradt <- new(Class = "DDdt",
             .Data = data.table(
                      Variable = c('NumIdEst', 'Action', 'Date'),
                      Sort = c('IDQual', 'NonIDQual', 'IDDD'),
                      Class = rep('character', 3),
-                     QualOrder = c('1', '7', ''),
+                     Length = c('11', '4', '10'),
                      Qual1 = c(rep('', 2), 'NumIdEst'),
                      Qual2 = c(rep('', 2), 'Action'),
                      ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 
@@ -134,7 +120,7 @@ Aggdt <- new(Class = "DDdt",
                      Variable = c('Province', 'NACE09', 'Turnover'),
                      Sort = c(rep('IDQual', 2), 'IDDD'),
                      Class = c(rep('character', 2), 'numeric'),
-                     QualOrder = c('5', '6', ''),
+                     Length = c('25', '4', '12'),
                      Qual1 = c(rep('', 2), 'Province'),
                      Qual2 = c(rep('', 2), 'NACE09'),
                      ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])', '([0-9]{1, 15}| )')))
@@ -147,9 +133,9 @@ DD <- new(Class = 'DD',
           Aggregates = Aggdt)
 
 
-UnitToIDDDNames(VNC, Unit = 'Unit1', UnitNames = 'cp09')
+UnitToIDDDNames(VNC, UnitNames = 'cp09')
 
-UnitToIDDDNames(DD, Unit = 'Unit1', UnitNames = 'cp09')
+UnitToIDDDNames(DD, UnitNames = 'cp09')
 
 
 }

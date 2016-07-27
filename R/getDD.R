@@ -1,4 +1,4 @@
-#' @title Return slot \code{DD} from the input object
+#' @title Return slot DD from the input object
 #'
 #' @description \code{getDD} extracts the slot \code{DD} of the input object.
 #'

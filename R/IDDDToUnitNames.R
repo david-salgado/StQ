@@ -16,86 +16,66 @@
 #' library(data.table)
 #' ### We build the VNC object
 #' VarList <- list(ID = new(Class = 'VNCdt',
-#'                          .Data = data.table(IDQual = c('NumIdEst', rep('', 4)),
-#'                                             NonIDQual = c(rep('',5)),
-#'                                             IDDD = c('', 'Name', 'Surname', 'PostalAddr',
-#'                                                  'PhoneNo'),
-#'                                             NumIdEst = c('', rep('.', 4)),
-#'                                             Unit1 = c('numidest', 'nombre', 'apellidos', 
-#'                                                'direccion', 'telefono'))),
-#'                 MicroData = new(Class = 'VNCdt',
-#'                                 .Data =data.table(
-#'                                        IDQual = c('NumIdEst', rep('', 4)),
-#'                                        NonIDQual = c('', 'IsNatMarket', 
-#'                                                      'IsEuroMarket', 
-#'                                                      'IsRWMarket',
-#'                                                      ''),
-#'                                        IDDD = c(rep('', 4), 'NewOrders'),
-#'                                        NumIdEst = c(rep('', 4), '.'),
-#'                                        IsNatMarket = c(rep('', 4), '0'),
-#'                                        IsEuroMarket = c(rep('', 4), '0'),
-#'                                        IsRWMarket = c(rep('', 4), '1'),
-#'                                        Unit1 = c('numidest', rep('', 3), 'cp09'))),
-#'                 ParaData = new(Class = 'VNCdt',
-#'                                 .Data = data.table(
-#'                                        IDQual = c('NumIdEst', rep('', 2)),
-#'                                        NonIDQual = c('', 'Action', ''),
-#'                                        IDDD = c(rep('', 2), 'Date'),
-#'                                        NumIdEst = c(rep('', 2), '.'),
-#'                                        Action = c(rep('', 2), 'Imputation'),
-#'                                        Unit1 = c('numidest', '', 'FechaImput'))),
-#'                 Aggregates = new(Class = 'VNCdt',
-#'                                  .Data = data.table(
-#'                                         IDQual = c('Province', 'NACE09', '', ''),
-#'                                         NonIDQual = c(rep('', 2), 'IsNatMarket', ''),
-#'                                         IDDD = c('', '', '', 'Turnover'),
-#'                                         Province = c('', '', '', '.'),
-#'                                         NACE09 = c('', '', '', '.'),
-#'                                         IsNatMarket = c('', '', '', '1'),
-#'                                         Unit1 = c('provincia', 'actividad', '', 'cn01'))))
-#'
-#' VNC <- new(Class = 'VarNameCorresp', .Data = VarList)
+#'                 data.table(IDQual = c('NumIdEst', rep('', 4)),
+#'                            NonIDQual = c('','','','',''),
+#'                            IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
+#'                            NumIdEst = c('', rep('.', 4)),
+#'                            UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'))
+#'  ),
+#' MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
+#'                                            NonIDQual = c('', 'Market', ''),
+#'                                            IDDD = c(rep('', 2), 'NewOrders'),
+#'                                            NumIdEst = c(rep('', 2), '.'),
+#'                                            Market = c(rep('', 2), '1.'),
+#'                                            UnitName = c('numidest', '', 'cp09'))),
+#' ParaData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
+#'                                            NonIDQual = c('', 'Action', ''),
+#'                                            IDDD = c(rep('', 2), 'Date'),
+#'                                            NumIdEst = c(rep('', 2), '.'),
+#'                                            Action = c(rep('', 2), 'Imputation'),
+#'                                            UnitName = c('numidest', '', 'FechaImput'))),
+#' AggWeights = new(Class = 'VNCdt', data.table(IDQual = c('CCAA', 'NACE09', ''),
+#'                                            NonIDQual = rep('', 3),
+#'                                            IDDD = c('', '', 'Ponderacion'),
+#'                                            CCAA = c('', '', '.'),
+#'                                            NACE09 = c('', '', '.'),
+#'                                            UnitName = c('Provincia', '', ''))))
+#' 
+#' VNC <- new(Class = 'VarNameCorresp', VarList)
 #' 
 #' ### We build the specification data.tables
-#' IDdt <- new(Class = "DDdt", 
-#'             .Data = data.table(
-#'                      Variable = c('NumIdEst', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
-#'                      Sort = c('IDQual', rep('IDDD', 4)),
-#'                      Class = rep('character', 5),
-#'                      QualOrder = c('1', rep('', 4)),
-#'                      Qual1 = c('', rep('NumIdEst', 4)),
-#'                      ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}')))
-#' Microdt <- new(Class = "DDdt", 
-#'             .Data = data.table(
-#'                      Variable = c('NumIdEst', 'IsNatMarket', 'IsEuroMarket', 
-#'                       'IsRWMarket', 'NewOrders'),
-#'                      Sort = c('IDQual', rep('NonIDQual', 3), 'IDDD'),
-#'                      Class = c(rep('character', 4), 'numeric'),
-#'                      QualOrder = c('1', '2', '3', '4', ''),
-#'                      Qual1 = c(rep('', 4), 'NumIdEst'),
-#'                      ValueRegExp = c('[0-9]{9}PP', rep('(0|1| )', 3), '([0-9]{1, 10}| )')
-#' ))
-#' Paradt <- new(Class = "DDdt",
-#'             .Data = data.table(
-#'                      Variable = c('NumIdEst', 'Action', 'Date'),
-#'                      Sort = c('IDQual', 'NonIDQual', 'IDDD'),
-#'                      Class = rep('character', 3),
-#'                      QualOrder = c('1', '5', ''),
-#'                      Qual1 = c(rep('', 2), 'NumIdEst'),
-#'                      Qual2 = c(rep('', 2), 'Action'),
-#'                      ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 
-#'                      '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')
-#' ))
-#' Aggdt <- new(Class = "DDdt", 
-#'             .Data = data.table(
-#'                      Variable = c('Province', 'NACE09', 'Turnover'),
-#'                      Sort = c(rep('IDQual', 2), 'IDDD'),
-#'                      Class = c(rep('character', 2), 'numeric'),
-#'                      QualOrder = c('6', '7', ''),
-#'                      Qual1 = c(rep('', 2), 'Province'),
-#'                      Qual2 = c(rep('', 2), 'NACE09'),
-#'                      ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])', '([0-9]{1, 15}| )')
-#' ))
+#' IDdt <- new( Class='DDdt',data.table(
+#'     Variable = c('NumIdEst', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
+#'     Sort = c('IDQual', rep('IDDD', 4)),
+#'     Class = rep('character', 5),
+#'     Length = c('11', '15', '15', '20','9'),
+#'     Qual1 = c('', rep('NumIdEst', 4)),
+#'     ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}')))
+#' Microdt <- new( Class='DDdt',data.table(
+#'     Variable = c('NumIdEst', 'Market', 'NewOrders'),
+#'     Sort = c('IDQual', 'NonIDQual', 'IDDD'),
+#'     Class = c(rep('character', 2), 'numeric'),
+#'     Length = c('11', '2', '7'),
+#'     Qual1 = c(rep('', 2), 'NumIdEst'),
+#'     ValueRegExp = c('[0-9]{9}PP', '.+', '([0-9]{1, 10}| )')))
+#' Paradt <-new( Class='DDdt', data.table(
+#'     Variable = c('NumIdEst', 'Action', 'Date'),
+#'     Sort = c('IDQual', 'NonIDQual', 'IDDD'),
+#'     Class = rep('character', 3),
+#'     Length = c('11', '10', '10'),
+#'     Qual1 = c(rep('', 2), 'NumIdEst'),
+#'     Qual2 = c(rep('', 2), 'Action'),
+#'     ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 
+#'                     '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')))
+#' Aggdt <- new(Class='DDdt',
+#'              data.table(Variable = c('CCAA', 'NACE09', 'Ponderacion'),
+#'                         Sort = c(rep('IDQual', 2), 'IDDD'),
+#'                         Class = c(rep('character', 2), 'numeric'),
+#'                         Length = c('2', '4', '7'),
+#'                         Qual1 = c(rep('', 2), 'CCAA'),
+#'                         Qual2 = c(rep('', 2), 'NACE09'),
+#'                         ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])', 
+#'                                         '([0-9]{1, 15}| )')))
 #' 
 #' DD <- new(Class = 'DD', 
 #'           VarNameCorresp = VNC, 
@@ -105,7 +85,7 @@
 #'           Aggregates = Aggdt)
 #' 
 #' 
-#' IDDDToUnitNames(VNC, IDDDNames = 'NewOrders_0_0_1')
+#' IDDDToUnitNames(VNC, IDDDNames = 'NewOrders_1.')
 #' 
 #' IDDDToUnitNames(DD, IDDDNames = 'Date_Imputation')
 #'
@@ -123,17 +103,15 @@ setGeneric("IDDDToUnitNames", function(object, IDDDNames, Unit){standardGeneric(
 setMethod(
     f = "IDDDToUnitNames",
     signature = c("VNCdt"),
-    function(object, IDDDNames, Unit){
+    function(object, IDDDNames){
         
         if (missing(IDDDNames)) IDDDNames <- NULL
-        if (missing(Unit)) Unit <- 'Unit1'
         
         XLS <- slot(object, '.Data')
         names(XLS) <- names(object)
         setDT(XLS)
-        
-        ColsUnit <- names(XLS)[grep('Unit', names(XLS))]
-        ColsNotUnit <- setdiff(names(XLS), c(ColsUnit, getIDQual(object)))
+
+        ColsNotUnit <- setdiff(names(XLS), c('UnitName', getIDQual(object)))
         XLS[, IDDDName := '']
         
         for (col in ColsNotUnit) {
@@ -143,20 +121,23 @@ setMethod(
             XLS[, IDDDName := gsub('_+$', '', IDDDName)]
             
         }
-        
-        if (is.null(IDDDNames)) {output <- XLS[which(XLS[[Unit]] != ""), 
-                                               c('IDDDName', Unit), 
+
+        if (is.null(IDDDNames)) {output <- XLS[which(XLS[['UnitName']] != ""), 
+                                               c('IDDDName', 'UnitName'), 
                                                with = F]
         
-        } else {output <- XLS[IDDDName %in% IDDDNames,c('IDDDName', Unit), with = F]
+        } else {
+            
+            output <- XLS[IDDDName %in% IDDDNames, c('IDDDName', 'UnitName'), with = F]
         
         }
-        
+
         order <- match(output[[1]], IDDDNames)
         output[, order := order]
         setorder(output, order)
+        output[, order := NULL]
         
-        return(output)
+        return(output[])
         
     }
     
@@ -191,9 +172,13 @@ setMethod(
             }
         }
         
-        output <- rbindlist(output)
+        output <- rbindlist(output, fill = TRUE)
         output <- output[!duplicated(output)] 
-        
+        order <- match(output[[1]], IDDDNames)
+        output[, order := order]
+        setorder(output, order)
+        output[, order := NULL]
+
         return(output)
         
     }

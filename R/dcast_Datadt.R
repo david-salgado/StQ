@@ -23,12 +23,12 @@
 #' library(data.table)
 #' Ddt <- new(Class = 'Datadt', 
 #'             data.table(ID = c('001', '001', '001', '001'), 
-#'                        IsNatMarket = c('0', '1', '', ''),
-#'                        EsRemuner = c('1','0','',''),
+#'                        Market = c('0.', '1.', '', ''),
+#'                        EsRemuner = c('2.2.','2.1.','',''),
 #'                        IDDD = c('Turnover', 'Turnover', 'Province', 'NACE09'),
 #'                        Value = c('625000', '23154', '04', '0512')))
 #'                        
-#' VarNames <- c('Turnover_0_1')
+#' VarNames <- c('Turnover_0._2.2')
 #' dcast_Datadt(Ddt,VarNames)
 #' 
 #' VarNames <- c('Turnover')

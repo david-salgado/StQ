@@ -1,10 +1,9 @@
 #' @title Show an object of class \linkS4class{DD}
 #'
-#' @description The method \code{show} shows the slots of an object
-#' \linkS4class{DD} limiting the number of columns on screen up to 8.
+#' @description The method \code{show} shows the slots of an object \linkS4class{DD} limiting the
+#' number of columns on screen up to 8.
 #'
-#' It is indeed the method \link[methods]{show} adapted to the class
-#' \linkS4class{DD}.
+#' It is indeed the method \link[methods]{show} adapted to the class \linkS4class{DD}.
 #'
 #' @param object Object of class \linkS4class{DD}.
 #'
@@ -24,17 +23,12 @@
 #'                                                      NumIdEst = c('', rep('.', 4)),
 #'                                                      Unit1 = c('numidest', 'nombre', 'apellidos', 
 #'                                                                'direccion', 'telefono'))),
-#'                 MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 4)),
-#'                                                             NonIDQual = c('', 'IsNatMarket', 
-#'                                                                           'IsEuroMarket', 
-#'                                                                           'IsRWMarket', ''),
-#'                                                             IDDD = c(rep('', 4), 'NewOrders'),
-#'                                                             NumIdEst = c(rep('', 4), '.'),
-#'                                                             IsNatMarket = c(rep('', 4), '0'),
-#'                                                             IsEuroMarket = c(rep('', 4), '0'),
-#'                                                             IsRWMarket = c(rep('', 4), '1'),
-#'                                                             Unit1 = c('numidest', rep('', 3), 
-#'                                                                       'cp09'))),
+#'                 MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
+#'                                                             NonIDQual = c('', 'Market', ''),
+#'                                                             IDDD = c(rep('', 2), 'NewOrders'),
+#'                                                             NumIdEst = c(rep('', 2), '.'),
+#'                                                             Market = c(rep('', 2), '1.'),
+#'                                                             Unit1 = c('numidest', '', 'cp09'))),
 #'                 ParaData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
 #'                                                            NonIDQual = c('', 'Action', ''),
 #'                                                            IDDD = c(rep('', 2), 'Date'),
@@ -57,22 +51,21 @@
 #'                                                   'PhoneNo'),
 #'                                      Sort = c('IDQual', rep('IDDD', 4)),
 #'                                      Class = rep('character', 5),
-#'                                      QualOrder = c('1', rep('', 4)),
+#'                                      Length = c('11', '25', '25', '50', '9'),
 #'                                      Qual1 = c('', rep('NumIdEst', 4)),
 #'                                      ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', 
 #'                                                      '(6|9)[0-9]{8}')))
-#' Microdt <- new(Class='DDdt', data.table(Variable = c('NumIdEst', 'IsNatMarket', 'IsEuroMarket', 
-#'                                                      'IsRWMarket', 'NewOrders'),
-#'                                         Sort = c('IDQual', rep('NonIDQual', 3), 'IDDD'),
-#'                                         Class = c(rep('character', 5)),
-#'                                         QualOrder = c('1', '2', '3', '4', ''),
-#'                                         Qual1 = c(rep('', 4), 'NumIdEst'),
-#'                                         ValueRegExp = c('[0-9]{9}PP', rep('(0|1| )', 3), 
+#' Microdt <- new(Class='DDdt', data.table(Variable = c('NumIdEst', 'Market', 'NewOrders'),
+#'                                         Sort = c('IDQual', 'NonIDQual', 'IDDD'),
+#'                                         Class = c(rep('character', 3)),
+#'                                         Length = c('11', '4', '7'),
+#'                                         Qual1 = c(rep('', 2), 'NumIdEst'),
+#'                                         ValueRegExp = c('[0-9]{9}PP', '(0|1| )', 
 #'                                                         '([0-9]{1, 10}| )')))
 #' Paradt <- new(Class='DDdt', data.table(Variable = c('NumIdEst', 'Action', 'Date'),
 #'                                        Sort = c('IDQual', 'NonIDQual', 'IDDD'),
 #'                                        Class = rep('character', 3),
-#'                                        QualOrder = c('1', '5', ''),
+#'                                        Length = c('11', '2', '10'),
 #'                                        Qual1 = c(rep('', 2), 'NumIdEst'),
 #'                                        Qual2 = c(rep('', 2), 'Action'),
 #'                                        ValueRegExp = c('[0-9]{9}PP', 
@@ -82,7 +75,7 @@
 #' Aggdt <- new(Class='DDdt', data.table(Variable = c('Province', 'NACE09', 'Turnover'),
 #'                                       Sort = c(rep('IDQual', 2), 'IDDD'),
 #'                                       Class = c(rep('character', 3)),
-#'                                       QualOrder = c('6', '7', ''),
+#'                                       Length = c('25', '4', '12'),
 #'                                       Qual1 = c(rep('', 2), 'Province'),
 #'                                       Qual2 = c(rep('', 2), 'NACE09'),
 #'                                       ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])', 

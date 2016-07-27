@@ -14,15 +14,15 @@ components follow precisely defined syntax rules given by the regexp
 }
 \examples{
 # An empty key
+library(data.table)
 new(Class = 'rawKey')
 
-new(Class = 'rawKey', c('IASSEmpleo@391092SS@@1@1',
-                        'IASSCifraNeg@asd2SS@@@',
-                        'IASSLPCifraNeg@1231@01@@'))
-                        
-new(Class = 'rawKey', c('IASSEmpleo@391092SS@9834.3@09@@',
-                        'IASSCifraNeg@asd2SS@@@@',
-                        'IASSLPCifraNeg@1231@@@841@0502'))
-
+# An example:
+library(data.table)
+key <- new(Class = 'rawKey', 
+           data.table(IDDDKey = c('Employees', 'Employees', 'RemEmployees', 'Turnover'),
+                      QualKey = c('25641378SS2.1.1.', '25641378SS1.    ', '25641378SS    1.', 
+                                  '25641378SS')))
+                                  
 }
 

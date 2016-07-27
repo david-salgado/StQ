@@ -1,8 +1,7 @@
 #' @title \linkS4class{data.table} with a rectangular data set
 #'
-#' @description \code{ExampleDM} is a \linkS4class{data.table} with data matrix
-#' structure and severely perturbed data by different methods from a real data 
-#' set.
+#' @description \code{ExampleDM} is a \linkS4class{data.table} with data matrix structure and
+#' severely perturbed data by different methods from a real data set.
 #'
 #' @docType data
 #'

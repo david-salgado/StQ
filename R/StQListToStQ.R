@@ -1,12 +1,10 @@
 #' @title Method to transform an StQList object into a list of StQ's objects.
 #'
-#' @description \code{StQListToStQ} transform an StQList object into a list of
-#' StQ's objects with a new variable "Period" to take in account the interval
-#' times related to StQList object.
+#' @description \code{StQListToStQ} transform an StQList object into a list of StQ's objects with a
+#' new variable "Period" to take in account the interval times related to StQList object.
 #'
-#' This method creates a variable with the name \code{Period} in Data slots with
-#' the period related to each Data and adds this variable to each DD slot of the
-#' new StQ's objects.
+#' This method creates a variable with the name \code{Period} in Data slots with the period related
+#' to each Data and adds this variable to each DD slot of the new StQ's objects.
 #'
 #' @param object Object of class \linkS4class{StQList} to be transformed.
 #'
@@ -37,11 +35,12 @@ setMethod(
                                                                    IDDD = '',
                                                                    Period = '.',
                                                                    Unit1 = '')))) 
-        Microdt <- new( Class = 'DDdt',data.table(Variable = c('Period'),  
-                                                  Sort = c('IDQual'),
-                                                  Class = c('character'),
-                                                  Qual1 = '',
-                                                  ValueRegExp = '.+'))
+        Microdt <- new(Class = 'DDdt',data.table(Variable = c('Period'),  
+                                                 Sort = c('IDQual'),
+                                                 Class = c('character'),
+                                                 Length = c('8'),
+                                                 Qual1 = '',
+                                                 ValueRegExp = '.+'))
         
         DDPer <- new(Class = 'DD', VarNameCorresp = VNCPer, ID = new(Class = 'DDdt'), MicroData = Microdt, ParaData = new(Class = 'DDdt'))
         
@@ -53,7 +52,7 @@ setMethod(
         
         nQual <- length(grep('Qual', ColnewMD.DT)) + 1
         newMD.DT[Sort == 'IDDD', paste0('Qual', nQual) := 'Period', with = F]
-        setcolorder(newMD.DT, c('Variable', 'Sort', 'Class', paste0('Qual', 1:nQual), 'ValueRegExp'))
+        setcolorder(newMD.DT, c('Variable', 'Sort', 'Class', 'Length', paste0('Qual', 1:nQual), 'ValueRegExp'))
         setMicroData(DD) <- new(Class = 'DDdt', newMD.DT)
         
         

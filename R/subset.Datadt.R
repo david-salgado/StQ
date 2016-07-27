@@ -6,10 +6,9 @@
 #'
 #' @param x Object of class \linkS4class{Datadt}.
 #'
-#' @param i,j,... Indices corresponding to elements to be extracted. The
-#' indices are numeric or character vectors, \code{\link{missing}} or
-#' \code{\link{NULL}}. Numeric values are coerced to \code{integer} with
-#' \code{\link{as.integer}} (thus truncated to zero).
+#' @param i,j,... Indices corresponding to elements to be extracted. The indices are numeric or
+#' character vectors, \code{\link{missing}} or \code{\link{NULL}}. Numeric values are coerced to
+#' \code{integer} with \code{\link{as.integer}} (thus truncated to zero).
 #'
 #' @param drop Included by coherence.
 #'
@@ -18,7 +17,7 @@
 #' @examples
 #' library(data.table)
 #' Ddt <- new(Class = 'Datadt', data.table(ID = c('001', '001', '001', '001'), 
-#'                                         IsNatMarket = c('0', '1', '', ''),
+#'                                         Market = c('2.', '1.', '', ''),
 #'                                         IDDD = c('Turnover', 'Turnover', 'Province', 'NACE09'),
 #'                                         Value = c('625000', '23154', '04', '0512')))
 #' 

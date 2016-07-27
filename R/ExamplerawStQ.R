@@ -9,6 +9,5 @@
 #'
 #' @usage data(ExamplerawStQ)
 #'
-#' @format Object of class \code{rawStQ}. Its slot \code{Data} has 354458 rows and
-#'  2 columns.
+#' @format Object of class \code{rawStQ}. Its slot \code{Data} has 383994 rows and 2 columns.
 NULL

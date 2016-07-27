@@ -43,34 +43,32 @@ object.
 }
 \examples{
 library(data.table)
-VarList <- list(
-  ID = new(Class = 'VNCdt', 
-           .Data = data.table(
-                 IDQual = c('NumIdEst', rep('', 4)),
-                 NonIDQual = rep('', 5),
-                 IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
-                 NumIdEst = c('', rep('.', 4)),
-                 Unit1 = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'))),
-  MicroData = new(Class = 'VNCdt', 
-                  .Data = data.table(
-                      IDQual = c('NumIdEst', rep('', 4)),
-                      NonIDQual = c('', 'IsNatMarket', 'IsEuroMarket', 'IsRWMarket', ''),
-                      IDDD = c(rep('', 4), 'NewOrders'),
-                      NumIdEst = c(rep('', 4), '.'),
-                      IsNatMarket = c(rep('', 4), '0'),
-                      IsEuroMarket = c(rep('', 4), '0'),
-                      IsRWMarket = c(rep('', 4), '1'),
-                      Unit1 = c('numidest', rep('', 3), 'cp09'))),
-  ParaData = new(Class = 'VNCdt'),
-  Aggregates = new(Class = 'VNCdt', 
-                   .Data = data.table(
-                      IDQual = c('Province', 'NACE', 'IsNatMarket', ''),
-                      NonIDQual = rep('', 4),
-                      IDDD = c('', '', '', 'TotalTurnover'),
-                      Province = c('', '', '', '.'),
-                      NACE = c('', '', '', '.'),
-                      IsNatMarket = c('', '', '', '1'),
-                      Unit1 = c('provincia', 'actividad', '', 'cn01'))))
+VarList <- list(ID = new(Class = 'VNCdt',
+                data.table(IDQual = c('NumIdEst', rep('', 4)),
+                           NonIDQual = c('','','','',''),
+                           IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
+                           NumIdEst = c('', rep('.', 4)),
+                           Unit1 = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'))
+ ),
+MicroData =new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
+                                           NonIDQual = c('', 'Market', ''),
+                                           IDDD = c(rep('', 2), 'NewOrders'),
+                                           NumIdEst = c(rep('', 2), '.'),
+                                           Market = c(rep('', 2), '1.'),
+                                           Unit1 = c('numidest', '', 'cp09'))),
+ParaData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
+                                           NonIDQual = c('', 'Action', ''),
+                                           IDDD = c(rep('', 2), 'Date'),
+                                           NumIdEst = c(rep('', 2), '.'),
+                                           Action = c(rep('', 2), 'Imputation'),
+                                           Unit1 = c('numidest', '', 'FechaImput'))),
+AggWeights = new(Class = 'VNCdt', data.table(IDQual = c('CCAA', 'NACE09', ''),
+                                           NonIDQual = rep('', 3),
+                                           IDDD = c('', '', 'Ponderacion'),
+                                           CCAA = c('', '', '.'),
+                                           NACE09 = c('', '', '.'),
+                                           Unit1 = c('Provincia', '', ''))))
+
 VNC <- new(Class = 'VarNameCorresp', .Data = VarList)
 getIDDD(VNC)
 
