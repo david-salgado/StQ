@@ -19,9 +19,6 @@
 #'
 #' @param VarNames Character vector with names of the output variables.
 #'
-#' @param DDslot Character vector of length 1 with the name of DD slot used to make the
-#' transformation of the input object. Its default value is \code{MicroData}.
-#'
 #' @return \linkS4class{data.table} with data from slot \code{Data} of the input \linkS4class{StQ}
 #' object with statistical units by rows and variables by columns. Only variables in \code{VarNames}
 #' will be output. If no variable name is specified, all variables in the input object will be
@@ -39,8 +36,7 @@
 #' @export
 setGeneric("dcast_StQ",
            function(object,
-                    VarNames = NULL,
-                    DDslot = 'MicroData'){standardGeneric("dcast_StQ")})
+                    VarNames = NULL){standardGeneric("dcast_StQ")})
 
 #' @rdname dcast_StQ
 #'
@@ -147,15 +143,6 @@ setMethod(
             for (col in outNames){
               if (all(is.na(out[[col]]))) out[, col := NULL, with = F]
             }
-            #outNames <- names(out)
-            #outNewNames <- ifelse(substr(outNames,
-            #                             nchar(outNames),
-            #                             nchar(outNames)) == '_',
-            #                      substr(outNames,
-            #                             1,
-            #                             nchar(outNames) - 1),
-            #                      outNames)
-            #setnames(out, outNewNames)
             return(out)
         })
         names(dcastData) <- names(auxData)
@@ -165,15 +152,6 @@ setMethod(
           if (is.null(dcastData[[i]])) dcastData[[i]] <- NULL
           next
         }
-
-#        IDQual <- unique(unlist(lapply(as.list(names(dcastData)), function(x){formula.tools::lhs.vars(as.formula(x))})))
-#        IDQual <- unique(unlist(lapply(names(dcastData), function(x){gsub("^\\s+|\\s+$", "", strsplit(x, "~")[[1]][1])})))
-
-#        output <- Reduce(function(x, y){merge(x, y,
-#                                              by = intersect(intersect(IDQual,
-#                                                                       names(x)),
-#                                                             names(y)))},
-#                         dcastData)
 
         output <- Reduce(
             function(x, y){ merge(x, y, by = intersect(names(x), names(y)))}, 
