@@ -47,7 +47,7 @@
         out <- ifelse(is.na(y) | y == '', paste0(x, ''), paste(x, y, sep = "_"))
         return(out)
     }
-
+    
     #Construimos un objeto DD auxiliar
     slots <- setdiff(slotNames(DD), 'VarNameCorresp')
     DDdtlocal <- new(Class = 'DDdt')
@@ -73,17 +73,16 @@
 
     DM.IDDD <- setdiff(ExtractNames(names(DataMatrix)), c(DM.IDQual, DM.NonIDQual))
 
-    # Comprobamos que el slot de DD indicado es el que corresponde a la matriz de datos del input
+    # Comprobamos que el DD es el que corresponde a la matriz de datos del input
     if (length(DM.IDQual) == 0 && length(DM.NonIDQual) == 0){
         
-        stop(paste0('[StQ::melt_StQ] There is not consistency between the data.table and the slot ', DDslot, ' of the input object.'))
+        stop(paste0('[StQ::melt_StQ] There is not consistency between the data.table and DD.'))
     }
     
     lapply(DM.IDDD, function(var){
         
         if (!var %in% IDDD){
-            stop(paste0('[StQ::melt_StQ] Variable ', var, ' is not a variable in the slot ', DDslot, ' of the input object.
-                         There is not consistency between the data.table and that slot.'))
+            stop(paste0('[StQ::melt_StQ] Variable ', var, ' is not a variable in DD.'))
         }
     })
     
@@ -97,7 +96,7 @@
                                             ExtractNames(names(DataMatrix)))]
 
     }
-    
+   
     auxDDdt <- auxDDdt[Variable %in% DM.IDDD]
 
     auxDDdt[, Qual := '']
@@ -156,18 +155,32 @@
             Excel <- DD@VarNameCorresp[[VNCcomp]]
             qualnotinDMinExcel <- intersect(qualnotinDM, names(Excel))
             varExcel <- Excel[IDDD %in% var]
-            if (dim(varExcel)[1] > 0 && 
-                length(qualnotinDMinExcel) > 0){
+            if (dim(varExcel)[1] > 0 && length(qualnotinDMinExcel) > 0){
+                
                 varExcel <- varExcel[, c('IDDD', qualnotinDMinExcel), with = FALSE]
-                for (suffix in setdiff(names(varExcel), 'IDDD')){
-                    varExcel[, 'IDDD' := pasteNA(varExcel$IDDD, varExcel[[suffix]]), with = FALSE]
+                for (col in setdiff(names(varExcel), 'IDDD')){
+                    varExcel[get(col) == '.', col := '', with = F]
                 }
+                ColNames <- names(varExcel)
+                NotEmptyCols <- c()
+                for (col in ColNames){
+                    
+                    if (!all(is.na(varExcel[[col]]) | varExcel[[col]] == '')) NotEmptyCols <- c(NotEmptyCols, col)
+                    
+                }
+                varExcel <- varExcel[, NotEmptyCols, with = F]
+                ColsNotUnit <- setdiff(names(varExcel), c('IDDD'))
+                for (col in ColsNotUnit) {
+                    
+                    varExcel[, IDDD := paste(IDDD, get(col), sep = '_')]
+                    
+                } 
+                
                 if (length(intersect(out[['IDDD']], varExcel[['IDDD']])) == 0) next
                 out <- merge(out, varExcel, by = 'IDDD')
                 out[, IDDD := ExtractNames(IDDD)]
             }
         }
-        
         
     setcolorder(out, c(qualinDM, intersect(names(out),qualnotinDM), 'IDDD', 'Value'))
     return(out)
