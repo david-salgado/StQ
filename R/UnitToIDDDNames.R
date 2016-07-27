@@ -5,8 +5,6 @@
 #'
 #' @param object Object with the IDDD variable identifiers.
 #' 
-#' @param Unit character vector with the Unit name ('Unit1', 'Unit2', ...).
-#' 
 #' @param UnitNames character vector with the name of variable corresponding to the specified Unit.
 #'
 #' @return Data table with all the corresponding IDDD variable names. For objects the classes
@@ -22,9 +20,9 @@
 #'                                   IDDD = c(rep('', 2), 'NewOrders'),
 #'                                   NumIdEst = c(rep('', 2), '.'),
 #'                                   Market = c(rep('', 2), '1.'),
-#'                                   Unit1 = c('numidest', '', 'cp09')))
+#'                                   UnitName = c('numidest', '', 'cp09')))
 #'  
-#'  UnitToIDDDNames(VNCdt, Unit = 'Unit1', UnitNames = c('cp09'))
+#'  UnitToIDDDNames(VNCdt, UnitNames = c('cp09'))
 #'
 #' # An example for VNC and DD objects:
 #' library(data.table)
@@ -35,7 +33,7 @@
 #'                                             IDDD = c('', 'Name', 'Surname', 'PostalAddr',
 #'                                                      'PhoneNo'),
 #'                                             NumIdEst = c('', rep('.', 4)),
-#'                                             Unit1 = c('numidest', 'nombre', 'apellidos', 
+#'                                             UnitName = c('numidest', 'nombre', 'apellidos', 
 #'                                                       'direccion', 'telefono')     
 #'                                 )),
 #'                 MicroData = new(Class = 'VNCdt',
@@ -45,7 +43,7 @@
 #'                                         IDDD = c(rep('', 2), 'NewOrders'),
 #'                                         NumIdEst = c(rep('', 2), '.'),
 #'                                         Market = c(rep('', 2), '2.'),
-#'                                         Unit1 = c('numidest', '', 'cp09'))),
+#'                                         UnitName = c('numidest', '', 'cp09'))),
 #'                 ParaData = new(Class = 'VNCdt',
 #'                                 .Data = data.table(
 #'                                         IDQual = c('NumIdEst', rep('', 2)),
@@ -53,7 +51,7 @@
 #'                                         IDDD = c(rep('', 2), 'Date'),
 #'                                         NumIdEst = c(rep('', 2), '.'),
 #'                                         Action = c(rep('', 2), 'Imputation'),
-#'                                         Unit1 = c('numidest', '', 'FechaImput'))),
+#'                                         UnitName = c('numidest', '', 'FechaImput'))),
 #'                 Aggregates = new(Class = 'VNCdt',
 #'                                  .Data = data.table(
 #'                                          IDQual = c('Province', 'NACE09', '', ''),
@@ -62,7 +60,7 @@
 #'                                          Province = c('', '', '', '.'),
 #'                                          NACE09 = c('', '', '', '.'),
 #'                                          Market = c('', '', '', '3.'),
-#'                                          Unit1 = c('provincia', 'actividad', '', 'cn01'))))
+#'                                          UnitName = c('provincia', 'actividad', '', 'cn01'))))
 #'
 #' VNC <- new(Class = 'VarNameCorresp', .Data = VarList)
 #' 
@@ -113,13 +111,13 @@
 #'           Aggregates = Aggdt)
 #' 
 #' 
-#' UnitToIDDDNames(VNC, Unit = 'Unit1', UnitNames = 'cp09')
+#' UnitToIDDDNames(VNC, UnitNames = 'cp09')
 #' 
-#' UnitToIDDDNames(DD, Unit = 'Unit1', UnitNames = 'cp09')
+#' UnitToIDDDNames(DD, UnitNames = 'cp09')
 #'
 #'
 #' @export
-setGeneric("UnitToIDDDNames", function(object, Unit, UnitNames){standardGeneric("UnitToIDDDNames")})
+setGeneric("UnitToIDDDNames", function(object, UnitNames){standardGeneric("UnitToIDDDNames")})
 
 #' @rdname UnitToIDDDNames
 #'
@@ -131,25 +129,46 @@ setGeneric("UnitToIDDDNames", function(object, Unit, UnitNames){standardGeneric(
 setMethod(
     f = "UnitToIDDDNames",
     signature = c("VNCdt"),
-    function(object, Unit, UnitNames){
+    function(object, UnitNames){
         
         XLS <- slot(object, '.Data')
         names(XLS) <- names(object)
         setDT(XLS)
         
-        ColsUnit <- names(XLS)[grep('Unit', names(XLS))]
-        ColsNotUnit <- setdiff(names(XLS), c(ColsUnit, getIDQual(object)))
-        XLS[, IDDDName := '']
-        
-        for (col in ColsNotUnit) {
+        XLS[, IDDDName := IDDD]
+        XLS.Quals <- XLS[IDDD == '']
+        XLS.Quals[IDQual != '', IDDDName := IDQual]
+        XLS.Quals[NonIDQual != '', IDDDName := NonIDQual]
+        XLS.Quals <- XLS.Quals[, c('IDQual', 'NonIDQual', 'UnitName', 'IDDDName'), with = F]
+        XLS <- XLS[IDDD != '']
+
+        XLS.list <- split(XLS, XLS[['IDDD']])
+        XLS.list <- lapply(XLS.list, function(xls){
             
-            XLS[, IDDDName := paste(IDDDName, get(col), sep = '_')]
-            XLS[, IDDDName := gsub('^_+', '', IDDDName)]
-            XLS[, IDDDName := gsub('_+$', '', IDDDName)]
+            ColNames <- names(xls)
+            NotEmptyCols <- c()
+            for (col in ColNames){
+                
+                if (!all(is.na(xls[[col]]) | xls[[col]] == '')) NotEmptyCols <- c(NotEmptyCols, col)
+                
+            }
+            xls <- xls[, NotEmptyCols, with = F]
+            ColsNotUnit <- setdiff(names(xls), c('IDDD', 'UnitName', 'IDDDName'))
+            for (col in ColsNotUnit) {
+                
+                xls[, IDDDName := paste(IDDDName, get(col), sep = '_')]
+                
+            }    
             
-        }
+            
+            return(xls)
+            
+        })
         
-        output <- XLS[which(XLS[[Unit]] == UnitNames), c(Unit,'IDDDName'), with = F]
+        output <- rbindlist(XLS.list, fill = TRUE)
+        output <- rbindlist(list(output, XLS.Quals), fill = TRUE)
+        
+        output <- output[which(output[['UnitName']] %in% UnitNames), c('UnitName','IDDDName'), with = F]
         
         
         return(output)
@@ -168,14 +187,14 @@ setMethod(
 setMethod(
     f = "UnitToIDDDNames",
     signature = c("VarNameCorresp"),
-    function(object, Unit, UnitNames){
+    function(object, UnitNames){
         
         VNCdtNames <- names(object)
         
         output <- list()
         for (Name in VNCdtNames) {
             
-            out <- UnitToIDDDNames(object[[Name]], Unit, UnitNames)
+            out <- UnitToIDDDNames(object[[Name]], UnitNames)
             
             if (length(out) > 0) {
                 
@@ -187,7 +206,7 @@ setMethod(
             }
         }
         
-        output <- rbindlist(output)
+        output <- rbindlist(output, fill = TRUE)
         output <- output[!duplicated(output)] 
         return(output)
         
@@ -205,12 +224,12 @@ setMethod(
 setMethod(
     f = "UnitToIDDDNames",
     signature = c("DD"),
-    function(object, Unit, UnitNames){
+    function(object, UnitNames){
         
         
         VNC <- getVNC(object)
         
-        output <- UnitToIDDDNames(VNC, Unit, UnitNames)
+        output <- UnitToIDDDNames(VNC, UnitNames)
 
         #aux <- VarNamesToDD(output[['IDDDName']], DD)
         #output <- cbind(output, aux)
@@ -230,12 +249,12 @@ setMethod(
 setMethod(
     f = "UnitToIDDDNames",
     signature = c("StQ"),
-    function(object, Unit, UnitNames){
+    function(object, UnitNames){
         
         
         DD <- object@DD
         
-        output <- UnitToIDDDNames(DD, Unit, UnitNames)
+        output <- UnitToIDDDNames(DD, UnitNames)
         
         return(output)
         
