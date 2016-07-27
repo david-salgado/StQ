@@ -16,10 +16,10 @@
 #' }
 #'
 #' @slot Data Object of class \linkS4class{rawDatadt} with key-value pair
-#' structure. It must have exactly two columns: \code{Key} and \code{Value}.
+#' structure. It must have exactly three columns: \code{IDDDKey},  \code{QualKey} and \code{Value}.
 #' It contains all statistical variables (including some metadata) together with
 #' their corresponding values. If \code{Data} is not specified as an input
-#' parameter, an empty \linkS4class{rawDatadt} object with columns \code{Key} 
+#' parameter, an empty \linkS4class{rawDatadt} object with columns \code{IDDDKey}, \code{QualKey} 
 #' and \code{Value} will be initiated.
 #'
 #' @slot DD Object of class \linkS4class{DD} with the definition and properties
@@ -35,12 +35,11 @@
 #' library(data.table)
 #' data(ExampleDD)
 #' key <- new(Class = 'rawKey', 
-#'            c('Turnover@@001@@@@', 
-#'              'Employees@@001@@1@@0', 
-#'              'Employees@@001@@0@@', 
-#'              'Employees@@001@@1@@1'))
-#' rawData <- new(Class = 'rawDatadt', 
-#'                data.table(Key = key, Value = c('2034120', '414', '0')))
+#'           data.table(IDDDKey = c('Employees', 'Employees', 'RemEmployees', 'Turnover'),
+#'                      QualKey = c('25641378SS2.1.1.', '25641378SS1.    ', '25641378SS    1.', 
+#'                                  '25641378SS')))
+#' value = c('625', '954', '122', '105124')
+#' rawData <- BuildrawDatadt(key, value)
 #' 
 #' rawQ <- new(Class = 'rawStQ', Data = rawData, DD = ExampleDD)
 #' 
@@ -61,7 +60,7 @@ setClass(Class = "rawStQ",
              # Detección de filas duplicadas
              if (dim(Data)[[1]] != 0) {
                  
-                 setkeyv(Data, 'Key')
+                 setkeyv(Data, c('IDDDKey', 'QualKey'))
                  DupRows <- duplicated(Data)
                  if (sum(DupRows) > 0) {
                      warning('[Validity rawStQ] The following rows are duplicated:\n\n')
