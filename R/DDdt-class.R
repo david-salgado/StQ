@@ -43,12 +43,7 @@ setClass(Class = "DDdt",
              
              if (NCol < 6) {
                  
-<<<<<<< HEAD
-                 stop(paste0('[Validity DDdt] The object must be a data.table with at least five columns named "Variable", "Sort", "Class", "QualOrder", "Qual1" and "ValueRegExp"'))   
-=======
                  stop(paste0('[Validity DDdt] The object must be a data.table with at least five columns named "Variable", "Sort", "Class", "Length", "Qual1" and "ValueRegExp"'))   
->>>>>>> 5d007d94a821d1015f4737046578bb01ab45b243
-             
             } 
              
              
