@@ -9,22 +9,31 @@
 \alias{UnitToIDDDNames,VarNameCorresp-method}
 \title{Convert unit\emph{j} names into their corresponding IDDD variable names.}
 \usage{
-UnitToIDDDNames(object, Unit, UnitNames)
+UnitToIDDDNames(object, UnitNames)
 
-\S4method{UnitToIDDDNames}{VNCdt}(object, Unit, UnitNames)
+\S4method{UnitToIDDDNames}{VNCdt}(object, UnitNames)
 
-\S4method{UnitToIDDDNames}{VarNameCorresp}(object, Unit, UnitNames)
+\S4method{UnitToIDDDNames}{VarNameCorresp}(object, UnitNames)
 
-\S4method{UnitToIDDDNames}{DD}(object, Unit, UnitNames)
+\S4method{UnitToIDDDNames}{DD}(object, UnitNames)
 
-\S4method{UnitToIDDDNames}{StQ}(object, Unit, UnitNames)
+\S4method{UnitToIDDDNames}{StQ}(object, UnitNames)
 }
 \arguments{
 \item{object}{Object with the IDDD variable identifiers.}
 
+<<<<<<< HEAD
 \item{Unit}{character vector with the Unit name ('Unit1', 'Unit2', ...).}
 
 \item{UnitNames}{character vector with the name of variable corresponding to the specified Unit.}
+||||||| merged common ancestors
+\item{Unit}{character vector with the Unit name ('Unit1', 'Unit2', ...).}
+
+\item{UnitNames}{character vector with the name of variable corresponding to 
+the specified Unit.}
+=======
+\item{UnitNames}{character vector with the name of variable corresponding to the specified Unit.}
+>>>>>>> dd5b9b2bd7b111f94c123cf9619690800f3602b6
 }
 \value{
 Data table with all the corresponding IDDD variable names. For objects the classes
@@ -39,14 +48,39 @@ corresponding to the Unit\emph{j} variable name specified .
 # An example for VNCdt:
 library(data.table)
 VNCdt <- new(Class = 'VNCdt',
+<<<<<<< HEAD
                 .Data =data.table(IDQual = c('NumIdEst', rep('', 2)),
                                   NonIDQual = c('', 'Market', ''),
                                   IDDD = c(rep('', 2), 'NewOrders'),
                                   NumIdEst = c(rep('', 2), '.'),
                                   Market = c(rep('', 2), '1.'),
                                   Unit1 = c('numidest', '', 'cp09')))
+||||||| merged common ancestors
+                .Data =data.table(IDQual = c('NumIdEst', rep('', 4), ''),
+                                  NonIDQual = c('', 'IsNatMarket', 
+                                    'IsEuroMarket', 'IsRWMarket', '', ''),
+                                  IDDD = c(rep('', 4), 'NewOrders', 'NewOrders'),
+                                  NumIdEst = c(rep('', 4), '.', '.'),
+                                  IsNatMarket = c(rep('', 4), '0', '0'),
+                                  IsEuroMarket = c(rep('', 4), '0', '1'),
+                                  IsRWMarket = c(rep('', 4), '1', '0'),
+                                  Unit1 = c('numidest', rep('', 3), 'cp09', 'cp10')))
+=======
+                .Data =data.table(IDQual = c('NumIdEst', rep('', 2)),
+                                  NonIDQual = c('', 'Market', ''),
+                                  IDDD = c(rep('', 2), 'NewOrders'),
+                                  NumIdEst = c(rep('', 2), '.'),
+                                  Market = c(rep('', 2), '1.'),
+                                  UnitName = c('numidest', '', 'cp09')))
+>>>>>>> dd5b9b2bd7b111f94c123cf9619690800f3602b6
  
+<<<<<<< HEAD
  UnitToIDDDNames(VNCdt, Unit = 'Unit1', UnitNames = c('cp09'))
+||||||| merged common ancestors
+ UnitToIDDDNames(VNCdt, Unit = 'Unit1', UnitNames = c('cp09', 'cp10'))
+=======
+ UnitToIDDDNames(VNCdt, UnitNames = c('cp09'))
+>>>>>>> dd5b9b2bd7b111f94c123cf9619690800f3602b6
 
 # An example for VNC and DD objects:
 library(data.table)
@@ -57,10 +91,19 @@ VarList <- list(ID = new(Class = 'VNCdt',
                                             IDDD = c('', 'Name', 'Surname', 'PostalAddr',
                                                      'PhoneNo'),
                                             NumIdEst = c('', rep('.', 4)),
+<<<<<<< HEAD
                                             Unit1 = c('numidest', 'nombre', 'apellidos', 
                                                       'direccion', 'telefono')     
+||||||| merged common ancestors
+                                            Unit1 = c('numidest', 'nombre', 'apellidos', 
+                                               'direccion', 'telefono')     
+=======
+                                            UnitName = c('numidest', 'nombre', 'apellidos', 
+                                                      'direccion', 'telefono')     
+>>>>>>> dd5b9b2bd7b111f94c123cf9619690800f3602b6
                                 )),
                 MicroData = new(Class = 'VNCdt',
+<<<<<<< HEAD
                                 .Data = data.table(
                                         IDQual = c('NumIdEst', rep('', 2)),
                                         NonIDQual = c('', 'Market', ''),
@@ -68,16 +111,55 @@ VarList <- list(ID = new(Class = 'VNCdt',
                                         NumIdEst = c(rep('', 2), '.'),
                                         Market = c(rep('', 2), '2.'),
                                         Unit1 = c('numidest', '', 'cp09'))),
+||||||| merged common ancestors
+                                .Data =data.table(
+                                       IDQual = c('NumIdEst', rep('', 4)),
+                                       NonIDQual = c('', 'IsNatMarket', 
+                                                     'IsEuroMarket', 
+                                                     'IsRWMarket',
+                                                     ''),
+                                       IDDD = c(rep('', 4), 'NewOrders'),
+                                       NumIdEst = c(rep('', 4), '.'),
+                                       IsNatMarket = c(rep('', 4), '0'),
+                                       IsEuroMarket = c(rep('', 4), '0'),
+                                       IsRWMarket = c(rep('', 4), '1'),
+                                       Unit1 = c('numidest', rep('', 3), 'cp09'))),
+=======
+                                .Data = data.table(
+                                        IDQual = c('NumIdEst', rep('', 2)),
+                                        NonIDQual = c('', 'Market', ''),
+                                        IDDD = c(rep('', 2), 'NewOrders'),
+                                        NumIdEst = c(rep('', 2), '.'),
+                                        Market = c(rep('', 2), '2.'),
+                                        UnitName = c('numidest', '', 'cp09'))),
+>>>>>>> dd5b9b2bd7b111f94c123cf9619690800f3602b6
                 ParaData = new(Class = 'VNCdt',
                                 .Data = data.table(
+<<<<<<< HEAD
                                         IDQual = c('NumIdEst', rep('', 2)),
                                         NonIDQual = c('', 'Action', ''),
                                         IDDD = c(rep('', 2), 'Date'),
                                         NumIdEst = c(rep('', 2), '.'),
                                         Action = c(rep('', 2), 'Imputation'),
                                         Unit1 = c('numidest', '', 'FechaImput'))),
+||||||| merged common ancestors
+                                       IDQual = c('NumIdEst', rep('', 2)),
+                                       NonIDQual = c('', 'Action', ''),
+                                       IDDD = c(rep('', 2), 'Date'),
+                                       NumIdEst = c(rep('', 2), '.'),
+                                       Action = c(rep('', 2), 'Imputation'),
+                                       Unit1 = c('numidest', '', 'FechaImput'))),
+=======
+                                        IDQual = c('NumIdEst', rep('', 2)),
+                                        NonIDQual = c('', 'Action', ''),
+                                        IDDD = c(rep('', 2), 'Date'),
+                                        NumIdEst = c(rep('', 2), '.'),
+                                        Action = c(rep('', 2), 'Imputation'),
+                                        UnitName = c('numidest', '', 'FechaImput'))),
+>>>>>>> dd5b9b2bd7b111f94c123cf9619690800f3602b6
                 Aggregates = new(Class = 'VNCdt',
                                  .Data = data.table(
+<<<<<<< HEAD
                                          IDQual = c('Province', 'NACE09', '', ''),
                                          NonIDQual = c(rep('', 2), 'Market', ''),
                                          IDDD = c('', '', '', 'Turnover'),
@@ -85,6 +167,23 @@ VarList <- list(ID = new(Class = 'VNCdt',
                                          NACE09 = c('', '', '', '.'),
                                          Market = c('', '', '', '3.'),
                                          Unit1 = c('provincia', 'actividad', '', 'cn01'))))
+||||||| merged common ancestors
+                                        IDQual = c('Province', 'NACE09', '', ''),
+                                        NonIDQual = c(rep('', 2), 'IsNatMarket', ''),
+                                        IDDD = c('', '', '', 'Turnover'),
+                                        Province = c('', '', '', '.'),
+                                        NACE09 = c('', '', '', '.'),
+                                        IsNatMarket = c('', '', '', '1'),
+                                        Unit1 = c('provincia', 'actividad', '', 'cn01'))))
+=======
+                                         IDQual = c('Province', 'NACE09', '', ''),
+                                         NonIDQual = c(rep('', 2), 'Market', ''),
+                                         IDDD = c('', '', '', 'Turnover'),
+                                         Province = c('', '', '', '.'),
+                                         NACE09 = c('', '', '', '.'),
+                                         Market = c('', '', '', '3.'),
+                                         UnitName = c('provincia', 'actividad', '', 'cn01'))))
+>>>>>>> dd5b9b2bd7b111f94c123cf9619690800f3602b6
 
 VNC <- new(Class = 'VarNameCorresp', .Data = VarList)
 
@@ -135,9 +234,9 @@ DD <- new(Class = 'DD',
           Aggregates = Aggdt)
 
 
-UnitToIDDDNames(VNC, Unit = 'Unit1', UnitNames = 'cp09')
+UnitToIDDDNames(VNC, UnitNames = 'cp09')
 
-UnitToIDDDNames(DD, Unit = 'Unit1', UnitNames = 'cp09')
+UnitToIDDDNames(DD, UnitNames = 'cp09')
 
 
 }

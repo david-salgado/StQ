@@ -30,6 +30,7 @@ Collate:
     'BuildStQList.R'
     'BuildVNC.R'
     'rawKey-class.R'
+    'BuildrawDatadt.R'
     'rawDatadt-class.R'
     'rawStQ-class.R'
     'rawStQList-class.R'

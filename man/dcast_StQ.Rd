@@ -8,7 +8,7 @@
 \usage{
 dcast_StQ(object, VarNames = NULL, DDslot = "MicroData")
 
-\S4method{dcast_StQ}{StQ}(object, VarNames = NULL, DDslot = "MicroData")
+\S4method{dcast_StQ}{StQ}(object, VarNames = NULL)
 }
 \arguments{
 \item{object}{Object of class \linkS4class{StQ} whose slot \code{Data} will be converted.}

@@ -34,6 +34,7 @@
 #'
 #' library(data.table)
 #' data(ExampleDD)
+<<<<<<< HEAD
 #' key <- new(Class = 'rawKey', data.table(IDDDKey = c('Turnover', 'Employees', 'Employees', 
 #'                                                     'Employees'),
 #'                                         QualKey = c('25648544SS001  ', 
@@ -42,6 +43,22 @@
 #'                                                     '25648544SS00111')))
 #' rawData <- new(Class = 'rawDatadt', 
 #'                data.table(Key = key, Value = c('2034120', '414', '0')))
+||||||| merged common ancestors
+#' key <- new(Class = 'rawKey', 
+#'            c('Turnover@@001@@@@', 
+#'              'Employees@@001@@1@@0', 
+#'              'Employees@@001@@0@@', 
+#'              'Employees@@001@@1@@1'))
+#' rawData <- new(Class = 'rawDatadt', 
+#'                data.table(Key = key, Value = c('2034120', '414', '0')))
+=======
+#' key <- new(Class = 'rawKey', 
+#'           data.table(IDDDKey = c('Employees', 'Employees', 'RemEmployees', 'Turnover'),
+#'                      QualKey = c('25641378SS2.1.1.', '25641378SS1.    ', '25641378SS    1.', 
+#'                                  '25641378SS')))
+#' value = c('625', '954', '122', '105124')
+#' rawData <- BuildrawDatadt(key, value)
+>>>>>>> dd5b9b2bd7b111f94c123cf9619690800f3602b6
 #' 
 #' rawQ <- new(Class = 'rawStQ', Data = rawData, DD = ExampleDD)
 #' 
@@ -62,7 +79,7 @@ setClass(Class = "rawStQ",
              # Detección de filas duplicadas
              if (dim(Data)[[1]] != 0) {
                  
-                 setkeyv(Data, 'Key')
+                 setkeyv(Data, c('IDDDKey', 'QualKey'))
                  DupRows <- duplicated(Data)
                  if (sum(DupRows) > 0) {
                      warning('[Validity rawStQ] The following rows are duplicated:\n\n')
