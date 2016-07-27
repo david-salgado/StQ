@@ -33,7 +33,8 @@ setMethod(
         DDdt.list <- setdiff(slotNames(DD), 'VarNameCorresp')
         DDdt.list <- lapply(DDdt.list, function(Name){slot(DD, Name)})
         DDdt <- Reduce('+', DDdt.list, init = DDdt.list[[1]])
-
+        IDDDNames <- DDdt[Sort == 'IDDD'][['Variable']]
+        
         QData <- DatadtToDT(getData(Q))
         setnames(QData, 'IDDD', 'IDDDKey')
         ColNames <- setdiff(names(QData), c('IDDDKey', 'Value'))
@@ -44,7 +45,7 @@ setMethod(
             
         }
         
-        QData.list <- split(QData, QData[['IDDDKey']])
+        QData.list <- split(QData, QData[['IDDDKey']])[IDDDNames]
         QData.list <- lapply(names(QData.list), function(VarName){
             
             QualsDT <- DDdt[Variable == VarName, names(DDdt)[grep('Qual', names(DDdt))], with = F]
@@ -69,7 +70,7 @@ setMethod(
             return(out)        
             
         })
-        
+
         QData <- rbindlist(QData.list)
 
         Value <- QData[['Value']]

@@ -20,26 +20,26 @@
 #'                            NonIDQual = c('','','','',''),
 #'                            IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
 #'                            NumIdEst = c('', rep('.', 4)),
-#'                            Unit1 = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'))
+#'                            UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'))
 #'  ),
-#' MicroData =new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
+#' MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
 #'                                            NonIDQual = c('', 'Market', ''),
 #'                                            IDDD = c(rep('', 2), 'NewOrders'),
 #'                                            NumIdEst = c(rep('', 2), '.'),
 #'                                            Market = c(rep('', 2), '1.'),
-#'                                            Unit1 = c('numidest', '', 'cp09'))),
+#'                                            UnitName = c('numidest', '', 'cp09'))),
 #' ParaData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
 #'                                            NonIDQual = c('', 'Action', ''),
 #'                                            IDDD = c(rep('', 2), 'Date'),
 #'                                            NumIdEst = c(rep('', 2), '.'),
 #'                                            Action = c(rep('', 2), 'Imputation'),
-#'                                            Unit1 = c('numidest', '', 'FechaImput'))),
+#'                                            UnitName = c('numidest', '', 'FechaImput'))),
 #' AggWeights = new(Class = 'VNCdt', data.table(IDQual = c('CCAA', 'NACE09', ''),
 #'                                            NonIDQual = rep('', 3),
 #'                                            IDDD = c('', '', 'Ponderacion'),
 #'                                            CCAA = c('', '', '.'),
 #'                                            NACE09 = c('', '', '.'),
-#'                                            Unit1 = c('Provincia', '', ''))))
+#'                                            UnitName = c('Provincia', '', ''))))
 #' 
 #' VNC <- new(Class = 'VarNameCorresp', VarList)
 #' 
@@ -103,17 +103,15 @@ setGeneric("IDDDToUnitNames", function(object, IDDDNames, Unit){standardGeneric(
 setMethod(
     f = "IDDDToUnitNames",
     signature = c("VNCdt"),
-    function(object, IDDDNames, Unit){
+    function(object, IDDDNames){
         
         if (missing(IDDDNames)) IDDDNames <- NULL
-        if (missing(Unit)) Unit <- 'Unit1'
         
         XLS <- slot(object, '.Data')
         names(XLS) <- names(object)
         setDT(XLS)
-        
-        ColsUnit <- names(XLS)[grep('Unit', names(XLS))]
-        ColsNotUnit <- setdiff(names(XLS), c(ColsUnit, getIDQual(object)))
+
+        ColsNotUnit <- setdiff(names(XLS), c('UnitName', getIDQual(object)))
         XLS[, IDDDName := '']
         
         for (col in ColsNotUnit) {
@@ -123,21 +121,23 @@ setMethod(
             XLS[, IDDDName := gsub('_+$', '', IDDDName)]
             
         }
-        
-        if (is.null(IDDDNames)) {output <- XLS[which(XLS[[Unit]] != ""), 
-                                               c('IDDDName', Unit), 
+
+        if (is.null(IDDDNames)) {output <- XLS[which(XLS[['UnitName']] != ""), 
+                                               c('IDDDName', 'UnitName'), 
                                                with = F]
         
-        } else {output <- XLS[IDDDName %in% IDDDNames,c('IDDDName', Unit), with = F]
+        } else {
+            
+            output <- XLS[IDDDName %in% IDDDNames, c('IDDDName', 'UnitName'), with = F]
         
         }
-        
+
         order <- match(output[[1]], IDDDNames)
         output[, order := order]
         setorder(output, order)
         output[, order := NULL]
         
-        return(output)
+        return(output[])
         
     }
     
@@ -172,7 +172,7 @@ setMethod(
             }
         }
         
-        output <- rbindlist(output)
+        output <- rbindlist(output, fill = TRUE)
         output <- output[!duplicated(output)] 
         order <- match(output[[1]], IDDDNames)
         output[, order := order]
