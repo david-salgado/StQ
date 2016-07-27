@@ -10,26 +10,23 @@
 \arguments{
 \item{x}{object of class \linkS4class{rawStQList}.}
 
-\item{i, j, ...}{Indices corresponding to the elements to be extracted. These
-indices are numeric vector or character vector or \link{missing} or
-\link{NULL}. Numeric values are coerced internally to \code{integer} through
-\code{\link{as.integer}} (and thus truncated to zero). Character vector
- correspond to names of the respective time period of each component object
-of class \linkS4class{StQ}.}
+\item{i, j, ...}{Indices corresponding to the elements to be extracted. These indices are numeric
+vector or character vector or \link{missing} or \link{NULL}. Numeric values are coerced
+internally to \code{integer} through \code{\link{as.integer}} (and thus truncated to zero).
+Character vector correspond to names of the respective time period of each component object of
+class \linkS4class{StQ}.}
 
 \item{drop}{Included by coherence.}
 }
 \value{
-Object of class \linkS4class{rawStQList} with the corresponding data
-subset.
+Object of class \linkS4class{rawStQList} with the corresponding data subset.
 }
 \description{
-\code{[} extracts parts of an object of class
-\linkS4class{rawStQList}.
+\code{[} extracts parts of an object of class \linkS4class{rawStQList}.
 
-It is indeed the method \code{[} for the class \linkS4class{rawStQList}. This
-method returns a subset of an input object of class \linkS4class{rawStQList}.
-Thus it returns an object of class \linkS4class{rawStQList}.
+It is indeed the method \code{[} for the class \linkS4class{rawStQList}. This method returns a
+subset of an input object of class \linkS4class{rawStQList}. Thus it returns an object of class
+\linkS4class{rawStQList}.
 }
 \examples{
 library(RepoTime)

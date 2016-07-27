@@ -6,19 +6,19 @@
 #' The class \code{rawDatadt} is a \linkS4class{data.table} with the following columns:
 #'
 #' \itemize{
-#'  \item \code{Key}: compund key of class \linkS4class{rawKey} per each value.
+#'  \item \code{IDDDKey}: compund key of class \linkS4class{rawKey} per each value.
 #'  \item \code{Value}: value.
 #' }
 #'
 #' @examples
 #' library(data.table)
 #' key <- new(Class = 'rawKey', 
-#'           c('Turnover@@2.@@0.', 
-#'             'Turnover@@1.@@1.', 
-#'             'Turnover@@1.@@2.', 
-#'             'Turnover@@3.@@2.'))
+#'           data.table(IDDDKey = c('Turnover', 'Turnover', 'Turnover', 'Turnover'),
+#'                      QualKey = c('25641378SS2.0.', '25641378SS1.1.', '25641378SS1.2.', 
+#'                                  '25641378SS3.2.')))
+#' key <- as(key, 'data.table')
 #' rawData <- new(Class = 'rawDatadt', 
-#'             data.table(Key = key, Value = c('625000', '23154', '25004', '10512')))
+#'                cbind(key, Value = c('625000', '23154', '25004', '10512')))
 #'                
 #' @include rawKey-class.R
 #' 
@@ -27,25 +27,32 @@
 #' @export
 setClass(Class = "rawDatadt",
          contains = 'data.table',
-         prototype = prototype(data.table(Key = new(Class = 'rawKey'),
+         prototype = prototype(data.table(IDDDKey = character(0),
+                                          QualKey = character(0),
                                           Value = character(0))),    
          validity = function(object){
              
+
              ColNames <- names(object)
-             if (ColNames[1] != 'Key') {
+             if (ColNames[1] != 'IDDDKey') {
                  
-                 stop('[validity rawDatadt] The first column of rawDatadt must be Key.')
+                 stop('[validity rawDatadt] The first column of rawDatadt must be IDDDKey.')
              }
              
-             if (ColNames[2] != 'Value') {
+             if (ColNames[2] != 'QualKey') {
                  
-                 stop('[validity rawDatadt] The second column of rawDatadt must be Value.')
+                 stop('[validity rawDatadt] The second column of rawDatadt must be QualKey.')
+             }
+             
+             if (ColNames[3] != 'Value') {
+                 
+                 stop('[validity rawDatadt] The third column of rawDatadt must be Value.')
              }
              
              Ncol <- length(ColNames)
-             if (Ncol != 2) {
+             if (Ncol != 3) {
                 
-                 stop('[validity rawDatadt] Only two columns are allowed in a rawDatadt object.')    
+                 stop('[validity rawDatadt] Only three columns are allowed in a rawDatadt object.')    
                  
              }
              

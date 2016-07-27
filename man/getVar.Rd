@@ -21,23 +21,22 @@ getVar(object, VarName, DDslot = "MicroData", Units = getUnits(object,
 
 \item{VarName}{Character vector with the name of the variable.}
 
-\item{DDslot}{Character vector of length 1 with the name of DD slot in which
-variable in VarName is defined. Its default value is \code{MicroData}.}
+\item{DDslot}{Character vector of length 1 with the name of DD slot in which variable in VarName
+is defined. Its default value is \code{MicroData}.}
 
-\item{Units}{\linkS4class{data.table} with the qualifier values identifying
-each statistical unit in the input object.}
+\item{Units}{\linkS4class{data.table} with the qualifier values identifying each statistical unit
+in the input object.}
 }
 \value{
 Matrix with the queried values.
 }
 \description{
-\code{getVar} returns the values of the variable specified as
-input parameter of those statistical units also specified as an input
-parameter of an input object.
+\code{getVar} returns the values of the variable specified as input parameter of
+those statistical units also specified as an input parameter of an input object.
 }
 \examples{
 library(data.table)
-getVar(ExampleStQ, 'Employees_0')
+getVar(ExampleStQ, 'Employees_1.')
 getVar(ExampleStQ, 'Turnover')
 
 }

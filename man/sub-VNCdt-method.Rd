@@ -10,10 +10,9 @@
 \arguments{
 \item{x}{Object of class \linkS4class{VNCdt}.}
 
-\item{i, j, ...}{Indices corresponding to elements to be extracted. The
-indices are numeric or character vectors, \code{\link{missing}} or
-\code{\link{NULL}}. Numeric values are coerced to \code{integer} with
-\code{\link{as.integer}} (thus truncated to zero).}
+\item{i, j, ...}{Indices corresponding to elements to be extracted. The indices are numeric or
+character vectors, \code{\link{missing}} or \code{\link{NULL}}. Numeric values are coerced to
+\code{integer} with \code{\link{as.integer}} (thus truncated to zero).}
 
 \item{drop}{Included by coherence.}
 }
@@ -27,15 +26,12 @@ It is indeed the method \code{[} for the class \linkS4class{VNCdt}.
 }
 \examples{
 library(data.table)
-MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 4)),
-                                            NonIDQual = c('', 'IsNatMarket', 
-                                                          'IsEuroMarket', 'IsRWMarket', ''),
-                                            IDDD = c(rep('', 4), 'NewOrders'),
-                                            NumIdEst = c(rep('', 4), '.'),
-                                            IsNatMarket = c(rep('', 4), '0'),
-                                            IsEuroMarket = c(rep('', 4), '0'),
-                                            IsRWMarket = c(rep('', 4), '1'),
-                                            Unit1 = c('numidest', rep('', 3), 'cp09')))
+MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
+                                            NonIDQual = c('', 'Market', ''),
+                                            IDDD = c(rep('', 2), 'NewOrders'),
+                                            NumIdEst = c(rep('', 2), '.'),
+                                            Market = c(rep('', 2), '1.'),
+                                            Unit1 = c('numidest', '', 'cp09')))
 MicroData[IDDD == 'NewOrders']
 
 

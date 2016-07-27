@@ -3,29 +3,27 @@
 \docType{class}
 \name{rawDatadt-class}
 \alias{rawDatadt-class}
-\title{S4 class for \linkS4class{data.table}s as components of 
-\linkS4class{rawStQ} objects}
+\title{S4 class for \linkS4class{data.table}s as components of \linkS4class{rawStQ} objects}
 \description{
-Definition of an S4 class named \code{rawDatadt} as a subclass 
-of class \linkS4class{data.table}.
+Definition of an S4 class named \code{rawDatadt} as a subclass of class
+\linkS4class{data.table}.
 
-The class \code{rawDatadt} is a \linkS4class{data.table} with the following 
-columns:
+The class \code{rawDatadt} is a \linkS4class{data.table} with the following columns:
 
 \itemize{
- \item \code{Key}: compund key of class \linkS4class{rawKey} per each value.
+ \item \code{IDDDKey}: compund key of class \linkS4class{rawKey} per each value.
  \item \code{Value}: value.
 }
 }
 \examples{
 library(data.table)
 key <- new(Class = 'rawKey', 
-          c('Turnover@001@0@@', 
-            'Turnover@001@1@@', 
-            'Turnover@001@@04@', 
-            'Turnover@001@@@0512'))
+          data.table(IDDDKey = c('Turnover', 'Turnover', 'Turnover', 'Turnover'),
+                     QualKey = c('25641378SS2.0.', '25641378SS1.1.', '25641378SS1.2.', 
+                                 '25641378SS3.2.')))
+key <- as(key, 'data.table')
 rawData <- new(Class = 'rawDatadt', 
-            data.table(Key = key, Value = c('625000', '23154', '25004', '10512')))
+               cbind(key, Value = c('625000', '23154', '25004', '10512')))
                
 }
 

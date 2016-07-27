@@ -21,4 +21,72 @@ Object of class \linkS4class{DDdt} resulting from integrating both
 overloads the operator \link{+} and returns a new object of class
 \linkS4class{DDdt}.
 }
+\examples{
+library(data.table)
+
+ID1dt <- new(Class = 'DDdt', 
+             .Data = data.table(Variable = c('NumIdEst', 'Name', 'Surname', 
+                                           'PostalAddr', 'PhoneNo'),
+                                Sort = c('IDQual', rep('IDDD', 4)),
+                                Class = rep('character', 5),
+                                Length = c('11', '25', '25', '50', '9'),
+                                Qual1 = c('', rep('NumIdEst', 4)),
+                                ValueRegExp = c('[0-9]{9}PP', '.+', '.+', 
+                                          '.+', '(6|9)[0-9]{8}')))
+
+ID2dt <- new(Class = 'DDdt',
+             .Data = data.table(Variable = c('NumIdEst', 'Name', 'Surname',
+                                           'PostalAddr', 'PhoneNo'),
+                                Sort = c('IDQual', rep('IDDD', 4)),
+                                Class = rep('character', 5),
+                                Length = c('11', '25', '25', '50', '9'),
+                                Qual1 = c('', rep('NumIdEst', 4)),
+                                ValueRegExp = c('[0-9]{9}PP', '.+', '.+', 
+                                              '.+', '(6|9)[0-9]{8}')))
+ID1dt +ID2dt
+
+
+Micro1dt <- new(Class = 'DDdt',
+                .Data = data.table(Variable = c('NumIdEst', 'Market', 'Turnover'),
+                                   Sort = c('IDQual', rep('NonIDQual', 3), 'IDDD'),
+                                   Class = c(rep('character', 2), 'numeric'),
+                                   Length = c('11', '2', '12'),
+                                   Qual1 = c(rep('', 2), 'NumIdEst'),
+                                   ValueRegExp = c('[0-9]{9}PP', '(0|1| )', '([0-9]{1, 10}| )')))
+
+Micro2dt <- new(Class = 'DDdt',
+                .Data = data.table(Variable = c('NumIdEst', 'Market', 'NewOrders'),
+                                   Sort = c('IDQual', 'NonIDQual', 'IDDD'),
+                                   Class = c(rep('character', 2), 'numeric'),
+                                   Length = c('11', '2', '7'),
+                                   Qual1 = c(rep('', 2), 'NumIdEst'),
+                                   ValueRegExp = c('[0-9]{9}PP', '(0|1| )', '([0-9]{1, 10}| )')))
+
+Micro1dt + Micro2dt
+
+
+Agg1dt <- new(Class = 'DDdt',
+              .Data = data.table(Variable = c('Province', 'NACE09', 'Turnover'),
+                                 Sort = c(rep('IDQual', 2), 'IDDD'),
+                                 Class = c(rep('character', 2), 'numeric'),
+                                 Length = c('15', '4', '12'),
+                                 Qual1 = c(rep('', 2), 'Province'),
+                                 Qual2 = c(rep('', 2), 'NACE09'),
+                                 ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])',
+                                          '([0-9]{1, 15}| )')))  
+
+Agg2dt <- new(Class = 'DDdt',
+              .Data = data.table(Variable = c('Province', 'NACE09', 'NewOrders'),
+                                 Sort = c(rep('IDQual', 2), 'IDDD'),
+                                 Class = c(rep('character', 2), 'numeric'),
+                                 Length = c('15', '4', '7'),
+                                 Qual1 = c(rep('', 2), 'Province'),
+                                 Qual2 = c(rep('', 2), 'NACE09'),
+                                 ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])',
+                                             '([0-9]{1, 15}| )'))) 
+Agg1dt + Agg2dt
+
+
+
+}
 

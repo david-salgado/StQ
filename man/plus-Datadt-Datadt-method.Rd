@@ -27,7 +27,7 @@ This method overloads the operator \code{\link{+}} and builds a new
 library(data.table)
 Ddt1 <- new(Class = 'Datadt', 
         data.table(ID = c('001', '001', '001', '001'), 
-                   IsNatMarket = c('0', '1', '', ''),
+                   Market = c('1.', '2.', '', ''),
                    IDDD = c('Turnover', 'Turnover', 'Province', 'NACE09'),
                    Value = c('625000', '23154', '04', '0512')))
 

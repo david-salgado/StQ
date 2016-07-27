@@ -16,13 +16,11 @@ components follow precisely defined syntax rules given by the regexp
 # An empty key
 new(Class = 'rawKey')
 
-new(Class = 'rawKey', c('IASSEmpleo@391092SS@@1@1',
-                        'IASSCifraNeg@asd2SS@@@',
-                        'IASSLPCifraNeg@1231@01@@'))
+# An example:
+library(data.table)
+new(Class = 'rawKey', data.table(IDDDKey = c('IASSEmpleo', 'IASSCifraNeg', 'IASSLPCifraNeg'),
+                                 QualKey = c('391092SS  11','583436SS    ','12314512SS0121')))
                         
-new(Class = 'rawKey', c('IASSEmpleo@391092SS@9834.3@09@@',
-                        'IASSCifraNeg@asd2SS@@@@',
-                        'IASSLPCifraNeg@1231@@@841@0502'))
 
 }
 
