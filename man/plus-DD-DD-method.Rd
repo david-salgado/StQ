@@ -119,7 +119,7 @@ Micro2dt <- new(Class = 'DDdt',
                                    Length = c('11', '2', '7'),
                                    Qual1 = c(rep('', 2), 'NumIdEst'),
                                    ValueRegExp = c('[0-9]{9}PP', '(0|1| )'), 
-                                                   '([0-9]{1, 10}| )')))
+                                                   '([0-9]{1, 10}| )'))
 Agg2dt <- new(Class = 'DDdt',
               .Data = data.table(Variable = c('Province', 'NACE09', 'NewOrders'),
                                  Sort = c(rep('IDQual', 2), 'IDDD'),
