@@ -6,7 +6,7 @@
 \alias{dcast_StQ,StQ-method}
 \title{Convert an \linkS4class{StQ} object into a dcasted data.table.}
 \usage{
-dcast_StQ(object, VarNames = NULL, DDslot = "MicroData")
+dcast_StQ(object, VarNames = NULL)
 
 \S4method{dcast_StQ}{StQ}(object, VarNames = NULL)
 }
@@ -14,9 +14,6 @@ dcast_StQ(object, VarNames = NULL, DDslot = "MicroData")
 \item{object}{Object of class \linkS4class{StQ} whose slot \code{Data} will be converted.}
 
 \item{VarNames}{Character vector with names of the output variables.}
-
-\item{DDslot}{Character vector of length 1 with the name of DD slot used to make the
-transformation of the input object. Its default value is \code{MicroData}.}
 }
 \value{
 \linkS4class{data.table} with data from slot \code{Data} of the input \linkS4class{StQ}

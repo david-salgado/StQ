@@ -4,11 +4,14 @@
 \name{rawStQToStQ}
 \alias{rawStQToStQ}
 \alias{rawStQToStQ,rawStQ-method}
+\alias{rawStQToStQ,rawStQList-method}
 \title{Generates an object of class \linkS4class{StQ} from the input \linkS4class{rawStQ} object.}
 \usage{
 rawStQToStQ(rawQ)
 
 \S4method{rawStQToStQ}{rawStQ}(rawQ)
+
+\S4method{rawStQToStQ}{rawStQList}(rawQ)
 }
 \arguments{
 \item{rawQ}{Object of class \linkS4class{rawStQ} whose slot Data has the  key-value pair

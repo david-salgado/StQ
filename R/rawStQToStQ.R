@@ -20,7 +20,7 @@ setGeneric("rawStQToStQ", function(rawQ){standardGeneric("rawStQToStQ")})
 #' 
 #' @include rawStQ-class.R Datadt-class.R StQ-class.R getDD.R getData.R
 #' 
-#' @importFrom stringi str_sub
+#' @importFrom stringi stri_sub
 #' 
 #' @export
 setMethod(
@@ -85,7 +85,7 @@ setMethod(
 #' 
 #' @include rawStQList-class.R Datadt-class.R StQ-class.R StQList-class.R getDD.R getData.R
 #' 
-#' @importFrom stringr str_sub
+#' @importFrom stringi stri_sub
 #' 
 #' @export
 setMethod(
