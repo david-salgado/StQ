@@ -19,7 +19,7 @@
 setGeneric("StQTorawStQ", function(Q){standardGeneric("StQTorawStQ")})
 #' @rdname StQTorawStQ
 #' 
-#' @include StQ-class.R rawKey-class.R rawDatadt-class.R rawStQ-class.R getDD.R getData.R DTToKey.R
+#' @include StQ-class.R rawKey-class.R rawDatadt-class.R rawStQ-class.R getDD.R getData.R
 #' 
 #' @importFrom stringr str_pad
 #' 
@@ -34,7 +34,7 @@ setMethod(
         DDdt.list <- lapply(DDdt.list, function(Name){slot(DD, Name)})
         DDdt <- Reduce('+', DDdt.list, init = DDdt.list[[1]])
         IDDDNames <- DDdt[Sort == 'IDDD'][['Variable']]
-        
+
         QData <- DatadtToDT(getData(Q))
         setnames(QData, 'IDDD', 'IDDDKey')
         ColNames <- setdiff(names(QData), c('IDDDKey', 'Value'))
@@ -70,7 +70,7 @@ setMethod(
             return(out)        
             
         })
-
+        
         QData <- rbindlist(QData.list)
 
         Value <- QData[['Value']]
@@ -83,7 +83,9 @@ setMethod(
 )
 #' @rdname StQTorawStQ
 #' 
-#' @include StQList-class.R rawKey-class.R rawDatadt-class.R rawStQ-class.R getDD.R getData.R DTToKey.R
+#' @include StQList-class.R rawKey-class.R rawDatadt-class.R rawStQ-class.R rawStQList-class.R getDD.R getData.R
+#' 
+#' @importFrom stringr str_pad
 #' 
 #' @export
 setMethod(
