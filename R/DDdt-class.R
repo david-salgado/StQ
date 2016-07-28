@@ -42,10 +42,9 @@ setClass(Class = "DDdt",
              NCol <- dim(object)[2]
              
              if (NCol < 6) {
-                 stop(paste0('[Validity DDdt] The object must be a data.table with 
-                                at least five columns named "Variable", "Sort", "Class", 
-                                "Length", "Qual1" and "ValueRegExp"'))   
-             } 
+                 
+                 stop(paste0('[Validity DDdt] The object must be a data.table with at least five columns named "Variable", "Sort", "Class", "Length", "Qual1" and "ValueRegExp"'))   
+            } 
              
              
              Data <- slot(object, ".Data")

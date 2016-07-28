@@ -200,7 +200,7 @@ setMethod(
                 
                 output[[Name]] <- out
                 
-            }else {
+            } else {
                 
                 next
             }
