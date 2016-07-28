@@ -38,7 +38,7 @@
 #' 
 #' Micro1dt <- new(Class = 'DDdt',
 #'                 .Data = data.table(Variable = c('NumIdEst', 'Market', 'Turnover'),
-#'                                    Sort = c('IDQual', rep('NonIDQual', 3), 'IDDD'),
+#'                                    Sort = c('IDQual', 'NonIDQual', 'IDDD'),
 #'                                    Class = c(rep('character', 2), 'numeric'),
 #'                                    Length = c('11', '2', '12'),
 #'                                    Qual1 = c(rep('', 2), 'NumIdEst'),
