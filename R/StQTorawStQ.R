@@ -44,8 +44,9 @@ setMethod(
             QData[, col := stringr::str_pad(get(col), Width, 'right', ' '), with = F]
             
         }
-        
-        QData.list <- split(QData, QData[['IDDDKey']])[IDDDNames]
+
+        QData.list <- split(QData, QData[['IDDDKey']])
+        QData.list <- QData.list[intersect(names(QData.list), IDDDNames)]
         QData.list <- lapply(names(QData.list), function(VarName){
             
             QualsDT <- DDdt[Variable == VarName, names(DDdt)[grep('Qual', names(DDdt))], with = F]
@@ -70,7 +71,7 @@ setMethod(
             return(out)        
             
         })
-        
+
         QData <- rbindlist(QData.list)
 
         Value <- QData[['Value']]

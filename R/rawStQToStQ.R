@@ -20,7 +20,7 @@ setGeneric("rawStQToStQ", function(rawQ){standardGeneric("rawStQToStQ")})
 #' 
 #' @include rawStQ-class.R Datadt-class.R StQ-class.R getDD.R getData.R
 #' 
-#' @importFrom stringr str_sub
+#' @importFrom stringi str_sub
 #' 
 #' @export
 setMethod(
@@ -47,27 +47,27 @@ setMethod(
                 return(Quals)
             })
         names(Quals.list) <- names(rawData.list)
-        
+
         Data.list <- lapply(names(rawData.list), function(VarName){
             
-            QualKey <- rawData.list[[VarName]][['QualKey']]
-            valQuals <- lapply(QualKey, function(key){
+            QualKey <- data.table(Quals = rawData.list[[VarName]][['QualKey']])
+
+            fin <- cumsum(names(Quals.list[[VarName]]))
+            init <- fin + 1
+            init <- c(1, init[-length(init)])
+            QualKey[, Quals.list[[VarName]] :={out <- stri_sub(Quals, from = init, to = fin); as.list(out)}, by = Quals]
+            QualKey[, Quals := NULL]
+            ColNames <- names(QualKey)
+            for (col in ColNames){
                 
-                    fin <- cumsum(names(Quals.list[[VarName]]))
-                    init <- fin + 1
-                    init <- c(1, init[-length(init)])
-                    
-                    valQuals <- str_sub(key, init, fin)
-                    names(valQuals) <- Quals.list[[VarName]]
-                    valQuals <- as.data.table(t(valQuals))
-                    return(valQuals)
-                })
-            valQuals <- rbindlist(valQuals)
-            Data.list <- copy(rawData.list[[VarName]])[, QualKey := NULL]
-            Data.list <- cbind(Data.list, valQuals)
-            return(Data.list)
+                QualKey[, col := stri_trim_right(get(col)), with = F]
+                
+            }
+            QualKey[, IDDD := rawData.list[[VarName]][['IDDD']]]
+            QualKey[, Value := rawData.list[[VarName]][['Value']]]
+            return(QualKey)
         })
-        
+
         Data <- rbindlist(Data.list, fill = TRUE)
         colData <- names(Data)
         for (col in colData){
@@ -75,7 +75,6 @@ setMethod(
             Data[is.na(get(col)), col := '', with = F]
         }
         setcolorder(Data, c(setdiff(names(Data), c('IDDD', 'Value')), 'IDDD', 'Value'))
-        
         Datadt <- new(Class = 'Datadt', Data)
         Q <- new(Class = 'StQ', Data = Datadt, DD = DD)
         
