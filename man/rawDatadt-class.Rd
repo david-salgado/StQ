@@ -19,25 +19,7 @@ The class \code{rawDatadt} is a \linkS4class{data.table} with the following colu
 
 # An empty rawDatadt object:
 library(data.table)
-<<<<<<< HEAD
-key <- new(Class = 'rawKey', 
-          data.table(IDDDKey = c('Turnover', 'Turnover', 'Turnover', 'Turnover'),
-                     QualKey = c('25641378SS2.0.', '25641378SS1.1.', '25641378SS1.2.', 
-                                 '25641378SS3.2.')))
-key <- as(key, 'data.table')
-rawData <- new(Class = 'rawDatadt', 
-               cbind(key, Value = c('625000', '23154', '25004', '10512')))
-||||||| merged common ancestors
-key <- new(Class = 'rawKey', 
-          c('Turnover@001@0@@', 
-            'Turnover@001@1@@', 
-            'Turnover@001@@04@', 
-            'Turnover@001@@@0512'))
-rawData <- new(Class = 'rawDatadt', 
-            data.table(Key = key, Value = c('625000', '23154', '25004', '10512')))
-=======
 new(Class = 'rawDatadt')
->>>>>>> dd5b9b2bd7b111f94c123cf9619690800f3602b6
                
 }
 
