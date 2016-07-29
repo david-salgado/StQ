@@ -128,7 +128,7 @@ setMethod(
         output <- c()
         for (slotDD in CompNames) {
             
-            IDDD <- getIDDD(slot(object,slotDD))
+            IDDD <- getIDDD(slot(object, slotDD))
             output <- c(output, IDDD)
         }
         

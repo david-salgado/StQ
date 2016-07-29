@@ -106,7 +106,7 @@ setMethod(
         Varslot <- DDslotWith(DD, VarName, DDslot)
         Quals <- setdiff(names(Varslot),
                          c('Variable', 'Sort', 'Class', 'Length', 'ValueRegExp'))
-        
+              
         NameQuals <- c()
         for (Qual in Quals){
             
