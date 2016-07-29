@@ -70,7 +70,7 @@ VarList2 <- list(
                                NonIDQual = c('', 'Market', 'Cod','Var1', 'Var2', ''),
                                IDDD = c('', '', '', '', '','IEPEntradaPed'),
                                NumIdEst = c('', '', '', '', '', '.'),
-                               Market = c('', '', '', '', '', '', '','3.'),
+                               Market = c('', '', '', '', '','3.'),
                                Cod = c('', '', '', '', '', ''),
                                Var1 = c('', '', '', '', '', ''),
                                Var2 = c('', '', '', '', '', ''),

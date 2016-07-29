@@ -155,6 +155,7 @@
             Excel <- DD@VarNameCorresp[[VNCcomp]]
             qualnotinDMinExcel <- intersect(qualnotinDM, names(Excel))
             varExcel <- Excel[IDDD %in% var]
+
             if (dim(varExcel)[1] > 0 && length(qualnotinDMinExcel) > 0){
                 
                 varExcel <- varExcel[, c('IDDD', qualnotinDMinExcel), with = FALSE]
@@ -169,13 +170,13 @@
                     
                 }
                 varExcel <- varExcel[, NotEmptyCols, with = F]
+
                 ColsNotUnit <- setdiff(names(varExcel), c('IDDD'))
                 for (col in ColsNotUnit) {
                     
                     varExcel[, IDDD := paste(IDDD, get(col), sep = '_')]
                     
                 } 
-                
                 if (length(intersect(out[['IDDD']], varExcel[['IDDD']])) == 0) next
                 out <- merge(out, varExcel, by = 'IDDD')
                 out[, IDDD := ExtractNames(IDDD)]
@@ -216,6 +217,7 @@
     output <- new(Class = 'Datadt', output)
     
     output.StQ <- new(Class = 'StQ', Data = output, DD = DD)
+
     validObject(output.StQ)
     return(output.StQ)
 

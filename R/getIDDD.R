@@ -80,7 +80,6 @@ setMethod(
         if (missing(CompNames)) CompNames <- names(object)
         
         aux <- object[CompNames]
-        
         IDDD.list <- lapply(aux, function(x) { 
             IDDD <- getIDDD(x)
             return(IDDD)

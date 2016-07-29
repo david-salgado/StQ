@@ -29,7 +29,8 @@ setMethod(
    function(x, i, j, ..., drop = TRUE){
     
        mc <- match.call()
-       mc[['x']] <- x@.Data
+       aux <- data.table(IDDDKey = x@.Data[[1]], QualKey = x@.Data[[2]])
+       mc[['x']] <- aux
        output <- eval(mc, envir = parent.frame())
        out <- new(Class = "rawKey", output)
        return(out)

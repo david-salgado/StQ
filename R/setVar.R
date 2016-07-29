@@ -161,7 +161,7 @@ setMethod(
             Data <- getData(object, ExprVariables, DDslot) 
             newObject <- new(Class = 'StQ', Data = Data, DD = newDD)
 
-            Data <- dcast_StQ(newObject, DDslot = DDslot)
+            Data <- dcast_StQ(newObject)
 
             if (is.null(by)){
 

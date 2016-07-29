@@ -57,16 +57,14 @@ setMethod(
                 NonIDQual <- DDlocal[Sort == 'NonIDQual', Variable]
 
                 Quals <- names(DDlocal)[grep('Qual', names(DDlocal))]
-                auxDD <- DDlocal[Variable == ExtractNames(VarNames),
-                            c('Variable', Quals),
-                            with = F]
+                auxDD <- DDlocal[Variable == ExtractNames(VarNames), c('Variable', Quals), with = F]
                 auxDD[, LHS := '']
                 auxDD[, RHS := '']
 
                 for (Qual in Quals){
 
-                    auxDD[, LHS := ifelse(get(Qual) %in% IDQual,
-                                          trim(paste(LHS, get(Qual))),
+                    auxDD[, LHS := ifelse(get(Qual) %in% IDQual, 
+                                          trim(paste(LHS, get(Qual))), 
                                           trim(LHS))]
                     auxDD[, RHS := ifelse(get(Qual) %in% NonIDQual,
                                           trim(paste(RHS, get(Qual))),
