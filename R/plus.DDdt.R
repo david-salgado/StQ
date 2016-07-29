@@ -38,7 +38,7 @@
 #' 
 #' Micro1dt <- new(Class = 'DDdt',
 #'                 .Data = data.table(Variable = c('NumIdEst', 'Market', 'Turnover'),
-#'                                    Sort = c('IDQual', rep('NonIDQual', 3), 'IDDD'),
+#'                                    Sort = c('IDQual', 'NonIDQual', 'IDDD'),
 #'                                    Class = c(rep('character', 2), 'numeric'),
 #'                                    Length = c('11', '2', '12'),
 #'                                    Qual1 = c(rep('', 2), 'NumIdEst'),
@@ -101,7 +101,8 @@ setMethod(
         setkeyv(outVar, setdiff(names(outVar), 'ValueRegExp'))
         outVar <- outVar[!duplicated(outVar)]
         setkeyv(outVar, 'Variable')
-        if (sum(duplicated(outVar)) > 0) stop('[StQ::+.DDdt] No duplicate variable allowed.')
+        if (sum(duplicated(outVar[Sort == 'IDDD'])) > 0) stop('[StQ::+.DDdt] No duplicate IDDD variable allowed.')
+        outVar <- outVar[!duplicated(outVar)]
         if (dim(outVar)[1] == 0) {
             
             output <- new(Class = 'DDdt')

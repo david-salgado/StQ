@@ -29,7 +29,7 @@ VarNamesToDD <- function(VarNames, DD){
     
     outputDD <- new(Class = 'DD')
     setVNC(outputDD) <- getVNC(DD) 
-
+    
     # Para una sola variable
     if (is.character(VarNames) & length(VarNames) == 1) {
         
