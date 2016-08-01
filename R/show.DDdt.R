@@ -51,7 +51,8 @@ setMethod(
             New.object <- object@.Data
             names(New.object) <- object@names
             New.object <- setDT(New.object)
-            return(New.object)
+            show(New.object)
+            return(invisible(NULL))
             
         } else {
 
