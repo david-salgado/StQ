@@ -154,7 +154,23 @@ setMethod(
         }
 
         output <- Reduce(
-            function(x, y){ merge(x, y, by = intersect(names(x), names(y)))}, 
+            function(x, y){ 
+                CommonCols <- intersect(names(x), names(y))
+                    if (length(CommonCols) > 0) {
+                        
+                        return(merge(x, y, by = CommonCols))
+                               
+                    } else {
+                        
+                        out <- rbindlist(list(x, y), fill = TRUE)
+                        ColNames <- names(out)
+                        for (col in ColNames){
+                            
+                            out[is.na(get(col)), col := '', with = F]
+                        }
+                        return(out)
+                    }
+                }, 
             dcastData, init = dcastData[[1]])
         
         # Asignamos los tipos a cada variable
