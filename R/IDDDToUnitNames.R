@@ -109,7 +109,7 @@ setMethod(
         XLS <- Reduce(`+`, VNC, init = VNC[[1]])
         XLS <- DatadtToDT(XLS)
         XLS[, IDDDName := '']
-        
+
         DDslots <- setdiff(slotNames(Correspondence), 'VarNameCorresp')
         DDdt <- new(Class = 'DDdt')
         for (DDslot in DDslots){
@@ -129,7 +129,7 @@ setMethod(
         names(Quals.list) <- RootNames
 
         XLS <- XLS[IDDD %in% RootNames | IDQual %in% RootNames | NonIDQual %in% RootNames]
-        
+
         NotBlankIDDDNames <- XLS[['IDDD']]
         NotBlankIDDDNames <- unique(NotBlankIDDDNames[NotBlankIDDDNames != ''])
         IDQuals <- getIDQual(Correspondence)
@@ -141,20 +141,18 @@ setMethod(
             #localXLS <- localXLS[!duplicated(localXLS)]
             QualNames <- Quals.list[[IDDDname]]
             localXLS <- localXLS[, c('IDDD', QualNames, 'UnitName', 'IDDDName'), with = F]
-            localNonIDQuals <- setdiff(intersect(names(localXLS), NonIDQuals), IDQuals)
-
+            localNonIDQuals <- setdiff(intersect(names(localXLS), NonIDQuals), setdiff(IDQuals, NonIDQuals))
             for (col in localNonIDQuals) {
                 
                 localXLS[, IDDDName := paste(IDDDName, get(col), sep = '_')]
                 
             }
             localXLS[, IDDDName := paste0(IDDD, IDDDName)]
-            localXLS <- localXLS[IDDDName %in% IDDDNames][, c('UnitName', 'IDDDName'), with = F]
+            localXLS <- localXLS[IDDDName %in% IDDDNames | ExtractNames(IDDDName) %in% IDDDNames][, c('UnitName', 'IDDDName'), with = F]
             return(localXLS)
               
         })
         UnitNames <- rbindlist(UnitNames)
-        
         IDQualXLS <- XLS[IDQual != '']
         IDQualXLS[, IDDDName := IDQual]
         IDQualXLS <- IDQualXLS[, c('UnitName', 'IDDDName'), with = F]

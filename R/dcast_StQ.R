@@ -155,6 +155,7 @@ setMethod(
             outNames <- sort(names(out))
             for (col in outNames){
               if (all(is.na(out[[col]]))) out[, col := NULL, with = F]
+              if (col == '.') out[, col := NULL, with = F]
             }
             return(out)
         })
