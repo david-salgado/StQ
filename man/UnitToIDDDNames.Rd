@@ -22,7 +22,7 @@ UnitToIDDDNames(UnitNames, Correspondence)
 \arguments{
 \item{UnitNames}{character vector with the name of variable corresponding to the specified Unit.}
 
-\item{object}{Object with the IDDD variable identifiers.}
+\item{Correspondence}{Object with the IDDD variable identifiers.}
 }
 \value{
 Data table with all the corresponding IDDD variable names. For objects the classes
