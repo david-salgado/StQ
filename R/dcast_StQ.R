@@ -167,22 +167,24 @@ setMethod(
         }
 
         output <- Reduce(
-            function(x, y){ 
+            function(x, y){
+                
                 CommonCols <- intersect(names(x), names(y))
                     if (length(CommonCols) > 0) {
                         
-                        return(merge(x, y, by = CommonCols))
+                        out <- merge(x, y, by = CommonCols, all = TRUE)
                                
                     } else {
                         
                         out <- rbindlist(list(x, y), fill = TRUE)
-                        ColNames <- names(out)
-                        for (col in ColNames){
-                            
-                            out[is.na(get(col)), col := '', with = F]
-                        }
-                        return(out)
+                        
                     }
+                    ColNames <- names(out)
+                    for (col in ColNames){
+                        
+                        out[is.na(get(col)), col := '', with = F]
+                    }
+                    return(out)
                 }, 
             dcastData, init = dcastData[[1]])
         
@@ -193,7 +195,7 @@ setMethod(
             
             colClass <- copy(DDdt)[Variable == ExtractNames(col)][['Class']]
             output[, col := as(get(col), colClass), with = F]
-
+            
         }
         return(output)
     }

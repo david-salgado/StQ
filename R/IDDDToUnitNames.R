@@ -110,11 +110,11 @@ setMethod(
         XLS <- DatadtToDT(XLS)
         XLS[, IDDDName := '']
         
-        DDslots <- setdiff(slotNames(DD), 'VarNameCorresp')
+        DDslots <- setdiff(slotNames(Correspondence), 'VarNameCorresp')
         DDdt <- new(Class = 'DDdt')
         for (DDslot in DDslots){
             
-            DDdt <- DDdt + slot(DD, DDslot)
+            DDdt <- DDdt + slot(Correspondence, DDslot)
             
         }
         RootNames <- unique(ExtractNames(IDDDNames))
@@ -159,7 +159,11 @@ setMethod(
         IDQualXLS[, IDDDName := IDQual]
         IDQualXLS <- IDQualXLS[, c('UnitName', 'IDDDName'), with = F]
         
-        UnitNames <- rbindlist(list(IDQualXLS, UnitNames))
+        NonIDQualXLS <- XLS[NonIDQual != '']
+        NonIDQualXLS[, IDDDName := NonIDQual]
+        NonIDQualXLS <- NonIDQualXLS[, c('UnitName', 'IDDDName'), with = F]
+        
+        UnitNames <- rbindlist(list(IDQualXLS, NonIDQualXLS, UnitNames))
         out <- UnitNames[['UnitName']]
         names(out) <- UnitNames[['IDDDName']]
         out <- out[IDDDNames]
