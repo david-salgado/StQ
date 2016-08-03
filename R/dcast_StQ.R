@@ -114,12 +114,12 @@ setMethod(
             if (dim(aux)[[1]] == 0) return(NULL)
             
             ColNames <- names(aux)
-            NotEmptyCols <- c()
-            for (col in setdiff(ColNames, 'Value')){
-                
-                if (!all(is.na(aux[[col]]) | aux[[col]] == '')) NotEmptyCols <- c(NotEmptyCols, col)
-            }
-            aux <- aux[, unique(c(NotEmptyCols, 'Value')), with = F]
+            #NotEmptyCols <- c()
+            #for (col in setdiff(ColNames, 'Value')){
+            #    
+            #    if (!all(is.na(aux[[col]]) | aux[[col]] == '')) NotEmptyCols <- c(NotEmptyCols, col)
+            #}
+            #aux <- aux[, unique(c(NotEmptyCols, 'Value')), with = F]
            
             setkeyv(aux, setdiff(names(aux), 'Value'))
             Dup <- aux[duplicated(aux)]
@@ -129,16 +129,29 @@ setMethod(
                              '.\n The table will be reformatted with the default agg.fun function (length).\n'))
              }
 
-            Form <-  unlist(strsplit(Form, ' + ', fixed = T, useBytes = T))
-            cals <- intersect(names(aux), Form)
+            FormVars <- all.vars(as.formula(Form))
+            MissingQuals <- setdiff(FormVars, names(aux))
+            MissingQuals <- setdiff(FormVars, names(aux))
+            if (length(MissingQuals) > 0) {
+                
+                aux[, MissingQuals := '', with = FALSE]
+            }
+            aux <- aux[, c(FormVars, 'Value'), with = F]
             
-            
-            Form <- Form[1]
-            Form <- paste0(c(Form, cals), collapse = ' + ')
+            #Form <-  unlist(strsplit(Form, ' + ', fixed = T, useBytes = T))
+            #cals <- intersect(names(aux), Form)
+            #Form <- Form[1]
+            #Form <- paste0(c(Form, cals), collapse = ' + ')
+
             out <- data.table::dcast.data.table(data = aux,
                                                 formula = as.formula(Form),
                                                 drop = TRUE,
                                                 value.var = 'Value')
+            if (length(MissingQuals) > 0) {
+                
+                aux[, MissingQuals := NULL, with = FALSE]
+                
+            }
             outNames <- sort(names(out))
             for (col in outNames){
               if (all(is.na(out[[col]]))) out[, col := NULL, with = F]

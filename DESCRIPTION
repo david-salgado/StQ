@@ -1,6 +1,6 @@
 Package: StQ
 Title: Construction of Standard Questionnaires
-Version: 0.2.5
+Version: 0.2.6
 Author: David Salgado
 Maintainer: David Salgado <david.salgado.fernandez@gmail.com>
 Description: This package contains the definition of the class StQ to
@@ -50,7 +50,7 @@ Collate:
     'ExampleVNC.R'
     'ExamplerawKey.R'
     'ExamplerawStQ.R'
-    'getIDQual.R'
+    'plus.VNCdt.R'
     'IDDDToUnitNames.R'
     'getDD.R'
     'getNonIDQual.R'
@@ -58,9 +58,9 @@ Collate:
     'getData.R'
     'StQListToStQ.R'
     'StQTorawStQ.R'
+    'getIDQual.R'
     'UnitToIDDDNames.R'
     'VarNamesToFormula.R'
-    'plus.VNCdt.R'
     'plus.VarNameCorresp.R'
     'plus.DDdt.R'
     'plus.DD.R'

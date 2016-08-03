@@ -2,14 +2,12 @@
 #'
 #' @description \code{IDDDToUnitNames} returns a data table with the unit
 #' variable name for each IDDD variable name.
-#'
-#' @param object Object with the IDDD variable identifiers.
 #' 
-#' @param IDDDNames character vector with the IDDD variables.
+#' @param IDDDNames Character vector with the IDDD variables.
 #' 
-#' @param Unit character vector with the unit names.
-#'
-#' @return Data table with the IDDD variable names and their corresponding 
+#' @param Correspondence Object with the IDDD variable identifiers.
+#' 
+#' @return \linkS4class{data.table} with the IDDD variable names and their corresponding 
 #' Unit\emph{j} names.
 #'
 #' @examples
@@ -91,119 +89,81 @@
 #'
 #'
 #' @export
-setGeneric("IDDDToUnitNames", function(object, IDDDNames, Unit){standardGeneric("IDDDToUnitNames")})
+setGeneric("IDDDToUnitNames", function(IDDDNames, Correspondence){standardGeneric("IDDDToUnitNames")})
 
 #' @rdname IDDDToUnitNames
 #'
-#' @include VNCdt-class.R getIDQual.R
+#' @include DD-class.R VarNameCorresp-class.R DatadtToDT.R getVNC.R plus.VNCdt.R
 #'
 #' @import data.table
 #' 
 #' @export
 setMethod(
     f = "IDDDToUnitNames",
-    signature = c("VNCdt"),
-    function(object, IDDDNames){
+    signature = c("character", "DD"),
+    function(IDDDNames, Correspondence){
         
         if (missing(IDDDNames)) IDDDNames <- NULL
         
-        XLS <- slot(object, '.Data')
-        names(XLS) <- names(object)
-        setDT(XLS)
-
-        ColsNotUnit <- setdiff(names(XLS), c('UnitName', getIDQual(object)))
+        VNC <- getVNC(Correspondence)
+        XLS <- Reduce(`+`, VNC, init = VNC[[1]])
+        XLS <- DatadtToDT(XLS)
         XLS[, IDDDName := '']
         
-        for (col in ColsNotUnit) {
+        DDslots <- setdiff(slotNames(DD), 'VarNameCorresp')
+        DDdt <- new(Class = 'DDdt')
+        for (DDslot in DDslots){
             
-            XLS[, IDDDName := paste(IDDDName, get(col), sep = '_')]
-            XLS[, IDDDName := gsub('^_+', '', IDDDName)]
-            XLS[, IDDDName := gsub('_+$', '', IDDDName)]
+            DDdt <- DDdt + slot(DD, DDslot)
             
         }
-
-        if (is.null(IDDDNames)) {output <- XLS[which(XLS[['UnitName']] != ""), 
-                                               c('IDDDName', 'UnitName'), 
-                                               with = F]
-        
-        } else {
+        RootNames <- unique(ExtractNames(IDDDNames))
+        Quals.list <- lapply(RootNames, function(IDDDName){
             
-            output <- XLS[IDDDName %in% IDDDNames, c('IDDDName', 'UnitName'), with = F]
-        
-        }
+            QualsDT <- DDdt[Variable == IDDDName, names(DDdt)[grep('Qual', names(DDdt))], with = F]
+            Quals <- t(QualsDT)[, 1]
+            Quals <- Quals[Quals != '']
+            return(Quals)
+        })
 
-        order <- match(output[[1]], IDDDNames)
-        output[, order := order]
-        setorder(output, order)
-        output[, order := NULL]
-        
-        return(output[])
-        
-    }
-    
-)
+        names(Quals.list) <- RootNames
 
-#' @rdname IDDDToUnitNames
-#'
-#' @include VarNameCorresp-class.R
-#'
-#' @import data.table
-#' 
-#' @export
-setMethod(
-    f = "IDDDToUnitNames",
-    signature = c("VarNameCorresp"),
-    function(object, IDDDNames, Unit){
+        XLS <- XLS[IDDD %in% RootNames | IDQual %in% RootNames | NonIDQual %in% RootNames]
         
-        VNCdtNames <- names(object)
-        
-        output <- list()
-        for (Name in VNCdtNames) {
+        NotBlankIDDDNames <- XLS[['IDDD']]
+        NotBlankIDDDNames <- unique(NotBlankIDDDNames[NotBlankIDDDNames != ''])
+        IDQuals <- getIDQual(Correspondence)
+        NonIDQuals <- getNonIDQual(Correspondence)
+        UnitNames <- lapply(NotBlankIDDDNames, function(IDDDname){
             
-            out <- IDDDToUnitNames(object[[Name]], IDDDNames, Unit)
-            
-            if (dim(out)[1] > 0) {
+            localXLS <- XLS[IDDD == IDDDname & IDDD != '']
+            #setkeyv(localXLS, 'IDDD')
+            #localXLS <- localXLS[!duplicated(localXLS)]
+            QualNames <- Quals.list[[IDDDname]]
+            localXLS <- localXLS[, c('IDDD', QualNames, 'UnitName', 'IDDDName'), with = F]
+            localNonIDQuals <- setdiff(intersect(names(localXLS), NonIDQuals), IDQuals)
+
+            for (col in localNonIDQuals) {
                 
-                output[[Name]] <- out
+                localXLS[, IDDDName := paste(IDDDName, get(col), sep = '_')]
                 
-            }else {
-                
-                next
             }
-        }
+            localXLS[, IDDDName := paste0(IDDD, IDDDName)]
+            localXLS <- localXLS[IDDDName %in% IDDDNames][, c('UnitName', 'IDDDName'), with = F]
+            return(localXLS)
+              
+        })
+        UnitNames <- rbindlist(UnitNames)
         
-        output <- rbindlist(output, fill = TRUE)
-        output <- output[!duplicated(output)] 
-        order <- match(output[[1]], IDDDNames)
-        output[, order := order]
-        setorder(output, order)
-        output[, order := NULL]
-
-        return(output)
+        IDQualXLS <- XLS[IDQual != '']
+        IDQualXLS[, IDDDName := IDQual]
+        IDQualXLS <- IDQualXLS[, c('UnitName', 'IDDDName'), with = F]
         
-    }
-    
-)
-
-#' @rdname IDDDToUnitNames
-#'
-#' @include DD-class.R VarNameCorresp-class.R
-#'
-#' @import data.table
-#' 
-#' @export
-setMethod(
-    f = "IDDDToUnitNames",
-    signature = c("DD"),
-    function(object, IDDDNames, Unit){
-        
-        
-        VNC <- slot(object, 'VarNameCorresp')
-        
-        output <- IDDDToUnitNames(VNC, IDDDNames, Unit)
-        
-        return(output)
-        
+        UnitNames <- rbindlist(list(IDQualXLS, UnitNames))
+        out <- UnitNames[['UnitName']]
+        names(out) <- UnitNames[['IDDDName']]
+        out <- out[IDDDNames]
+        return(out)
     }
 )
 
@@ -216,13 +176,13 @@ setMethod(
 #' @export
 setMethod(
     f = "IDDDToUnitNames",
-    signature = c("StQ"),
-    function(object, IDDDNames, Unit){
+    signature = c("character", "StQ"),
+    function(IDDDNames, Correspondence){
         
         
-        VNC <- slot(object@DD, 'VarNameCorresp')
+        DD <- getDD(Correspondence)
         
-        output <- IDDDToUnitNames(VNC, IDDDNames, Unit)
+        output <- IDDDToUnitNames(IDDDNames, DD)
         
         return(output)
         
