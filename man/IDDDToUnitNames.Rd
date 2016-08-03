@@ -3,31 +3,23 @@
 \docType{methods}
 \name{IDDDToUnitNames}
 \alias{IDDDToUnitNames}
-\alias{IDDDToUnitNames,DD-method}
-\alias{IDDDToUnitNames,StQ-method}
-\alias{IDDDToUnitNames,VNCdt-method}
-\alias{IDDDToUnitNames,VarNameCorresp-method}
+\alias{IDDDToUnitNames,character,DD-method}
+\alias{IDDDToUnitNames,character,StQ-method}
 \title{Convert IDDD variable names into their corresponding unit\emph{j} names}
 \usage{
-IDDDToUnitNames(object, IDDDNames, Unit)
+IDDDToUnitNames(IDDDNames, Correspondence)
 
-\S4method{IDDDToUnitNames}{VNCdt}(object, IDDDNames)
+\S4method{IDDDToUnitNames}{character,DD}(IDDDNames, Correspondence)
 
-\S4method{IDDDToUnitNames}{VarNameCorresp}(object, IDDDNames, Unit)
-
-\S4method{IDDDToUnitNames}{DD}(object, IDDDNames, Unit)
-
-\S4method{IDDDToUnitNames}{StQ}(object, IDDDNames, Unit)
+\S4method{IDDDToUnitNames}{character,StQ}(IDDDNames, Correspondence)
 }
 \arguments{
-\item{object}{Object with the IDDD variable identifiers.}
+\item{IDDDNames}{Character vector with the IDDD variables.}
 
-\item{IDDDNames}{character vector with the IDDD variables.}
-
-\item{Unit}{character vector with the unit names.}
+\item{Correspondence}{Object with the IDDD variable identifiers.}
 }
 \value{
-Data table with the IDDD variable names and their corresponding 
+\linkS4class{data.table} with the IDDD variable names and their corresponding 
 Unit\emph{j} names.
 }
 \description{
@@ -107,9 +99,7 @@ DD <- new(Class = 'DD',
           Aggregates = Aggdt)
 
 
-IDDDToUnitNames(VNC, IDDDNames = 'NewOrders_1.')
-
-IDDDToUnitNames(DD, IDDDNames = 'Date_Imputation')
+IDDDToUnitNames('Date_Imputation', DD)
 
 
 }

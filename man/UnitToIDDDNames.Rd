@@ -3,26 +3,26 @@
 \docType{methods}
 \name{UnitToIDDDNames}
 \alias{UnitToIDDDNames}
-\alias{UnitToIDDDNames,DD-method}
-\alias{UnitToIDDDNames,StQ-method}
-\alias{UnitToIDDDNames,VNCdt-method}
-\alias{UnitToIDDDNames,VarNameCorresp-method}
+\alias{UnitToIDDDNames,character,DD-method}
+\alias{UnitToIDDDNames,character,StQ-method}
+\alias{UnitToIDDDNames,character,VNCdt-method}
+\alias{UnitToIDDDNames,character,VarNameCorresp-method}
 \title{Convert unit\emph{j} names into their corresponding IDDD variable names.}
 \usage{
-UnitToIDDDNames(object, UnitNames)
+UnitToIDDDNames(UnitNames, Correspondence)
 
-\S4method{UnitToIDDDNames}{VNCdt}(object, UnitNames)
+\S4method{UnitToIDDDNames}{character,VNCdt}(UnitNames, Correspondence)
 
-\S4method{UnitToIDDDNames}{VarNameCorresp}(object, UnitNames)
+\S4method{UnitToIDDDNames}{character,VarNameCorresp}(UnitNames, Correspondence)
 
-\S4method{UnitToIDDDNames}{DD}(object, UnitNames)
+\S4method{UnitToIDDDNames}{character,DD}(UnitNames, Correspondence)
 
-\S4method{UnitToIDDDNames}{StQ}(object, UnitNames)
+\S4method{UnitToIDDDNames}{character,StQ}(UnitNames, Correspondence)
 }
 \arguments{
-\item{object}{Object with the IDDD variable identifiers.}
-
 \item{UnitNames}{character vector with the name of variable corresponding to the specified Unit.}
+
+\item{object}{Object with the IDDD variable identifiers.}
 }
 \value{
 Data table with all the corresponding IDDD variable names. For objects the classes

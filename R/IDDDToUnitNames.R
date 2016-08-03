@@ -83,9 +83,7 @@
 #'           Aggregates = Aggdt)
 #' 
 #' 
-#' IDDDToUnitNames(VNC, IDDDNames = 'NewOrders_1.')
-#' 
-#' IDDDToUnitNames(DD, IDDDNames = 'Date_Imputation')
+#' IDDDToUnitNames('Date_Imputation', DD)
 #'
 #'
 #' @export

@@ -3,10 +3,10 @@
 #' @description \code{UnitToIDDDNames} returns a data table with the IDDD variable name
 #' corresponding to the Unit\emph{j} variable name specified .
 #'
-#' @param object Object with the IDDD variable identifiers.
-#' 
 #' @param UnitNames character vector with the name of variable corresponding to the specified Unit.
 #'
+#' @param object Object with the IDDD variable identifiers.
+#' 
 #' @return Data table with all the corresponding IDDD variable names. For objects the classes
 #' \linkS4class{DD} and \linkS4class{StQ} it returns the IDDD the slot VarNameCorresp of the
 #' corresponding DD object.
