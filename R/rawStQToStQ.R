@@ -36,7 +36,7 @@ setMethod(
         rawDT <- DatadtToDT(getData(rawQ))
         setnames(rawDT, 'IDDDKey', 'IDDD')
         rawData.list <- split(rawDT, rawDT[['IDDD']])
-        
+
         Quals.list <- lapply(names(rawData.list), function(VarName){
             
                 QualsDT <- DDdt[Variable == VarName, names(DDdt)[grep('Qual', names(DDdt))], with = F]
@@ -51,30 +51,30 @@ setMethod(
         Data.list <- lapply(names(rawData.list), function(VarName){
             
             QualKey <- data.table(Quals = rawData.list[[VarName]][['QualKey']])
-
             fin <- cumsum(names(Quals.list[[VarName]]))
             init <- fin + 1
             init <- c(1, init[-length(init)])
-            QualKey[, Quals.list[[VarName]] :={out <- stri_sub(Quals, from = init, to = fin); as.list(out)}, by = Quals]
-            QualKey[, Quals := NULL]
-            ColNames <- names(QualKey)
-            for (col in ColNames){
+            out <- vector(mode = 'list', length = length(init))
+            out <- lapply(1:length(init), function(i){
                 
-                QualKey[, col := stri_trim_right(get(col)), with = F]
+                outLocal <- stri_sub(QualKey[['Quals']], from = init[i], to = fin[i])
                 
-            }
-            QualKey[, IDDD := rawData.list[[VarName]][['IDDD']]]
-            QualKey[, Value := rawData.list[[VarName]][['Value']]]
-            return(QualKey)
-        })
+            })
 
+            out <- as.data.table(out)
+            setnames(out, Quals.list[[VarName]])
+            out[, IDDD := rawData.list[[VarName]][['IDDD']]]
+            out[, Value := rawData.list[[VarName]][['Value']]]
+            return(out)
+        })
         Data <- rbindlist(Data.list, fill = TRUE)
-        colData <- names(Data)
-        for (col in colData){
+        Names <- intersect(c(getIDQual(getDD(rawQ)), getNonIDQual(getDD(rawQ)), 'IDDD', 'Value'), names(Data))
+        setcolorder(Data, Names)
+        ColNames <- names(Data)
+        for (col in ColNames){
             
             Data[is.na(get(col)), col := '', with = F]
         }
-        setcolorder(Data, c(setdiff(names(Data), c('IDDD', 'Value')), 'IDDD', 'Value'))
         Datadt <- new(Class = 'Datadt', Data)
         Q <- new(Class = 'StQ', Data = Datadt, DD = DD)
         
