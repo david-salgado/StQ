@@ -51,14 +51,11 @@ setMethod(
             New.object <- object@.Data
             names(New.object) <- object@names
             New.object <- setDT(New.object)
-            mc[['object']] <- New.object
-            output <- eval(mc, envir = parent.frame())
-            return(output)
-            
+            show(New.object)
+            return(invisible(NULL))
             
         } else {
 
-            
             NumCols <- min(length(NamesCol), ColMax)
             NamesShowCol <- NamesCol[1:NumCols]
             show(object[, NamesShowCol, with = F])
@@ -66,9 +63,10 @@ setMethod(
             cat(paste(rep('=', 40)), '\n\n')
             cat(paste0('The following columns have been omitted for clarity:\n ', paste0(setdiff(NamesCol, NamesShowCol), collapse = ', '),'\n'))
             cat(paste(rep('=', 40)), '\n\n')
+            return(invisible(NULL))
         }
         
-        invisible(NULL)
+        
     }
     
 )

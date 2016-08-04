@@ -78,12 +78,16 @@ setMethod(
                                                     gsub(' ', ' + ', trim(RHS))),
                                               paste(gsub(' ', ' + ', trim(LHS)),
                                                     '~ IDDD')),
-                                       paste0(gsub(' ', ' + ', trim(RHS)),
-                                              ' ~ IDDD'))]
+                                       ifelse(RHS != '',
+                                              paste('. ~ IDDD +',
+                                                    gsub(' ', ' + ', trim(RHS))),
+                                              paste('. ~ IDDD')))]
+
                 auxDD <- auxDD[, c('Variable', 'Form'), with = F]
                 auxDD[, Form := as.character(Form)]
                 output[[DDslot]] <- auxDD
             }
+
             outputGlobal <- Reduce(function(x, y){
                 merge(x, y, all = TRUE,
                       by = intersect(names(x), names(y)))},

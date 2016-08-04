@@ -100,8 +100,9 @@ setMethod(
     signature = c("DD"),
     function(object){
 
-      for (Slot in slotNames(object)){
+      for (Slot in setdiff(slotNames(object), 'VarNameCorresp')){
           
+          if (dim(slot(object, Slot))[1] == 0) next
           cat(paste0('Slot ', Slot, '\n\n'))
           show(slot(object, Slot))
           cat('\n\n')
