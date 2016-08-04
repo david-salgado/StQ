@@ -196,6 +196,7 @@ setMethod(
             
             colClass <- copy(DDdt)[Variable == ExtractNames(col)][['Class']]
             output[, col := as(get(col), colClass), with = F]
+            output[get(col) == '', col := NA, with = F]
             
         }
         return(output)

@@ -39,7 +39,7 @@ setMethod(
         setnames(QData, 'IDDD', 'IDDDKey')
         ColNames <- setdiff(names(QData), c('IDDDKey', 'Value'))
         for (col in ColNames){
-            
+   
             Width <- DDdt[Variable == col][['Length']]
             QData[, col := stringr::str_pad(get(col), Width, 'right', ' '), with = F]
             
@@ -48,7 +48,7 @@ setMethod(
         QData.list <- split(QData, QData[['IDDDKey']])
         QData.list <- QData.list[intersect(names(QData.list), IDDDNames)]
         QData.list <- lapply(names(QData.list), function(VarName){
-            
+     
             QualsDT <- DDdt[Variable == VarName, names(DDdt)[grep('Qual', names(DDdt))], with = F]
             Quals <- t(QualsDT)[, 1]
             Quals <- Quals[Quals != '']
