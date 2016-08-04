@@ -93,7 +93,7 @@ setClass(Class = "StQ",
                  QualinDD <- unique(c(QualinDD, DDlocal[Sort != 'IDDD'][['Variable']]))
                  IDDDinDD <- unique(c(IDDDinDD, DDlocal[Sort == 'IDDD'][['Variable']]))
              }
-             
+
              # Comparamos los calificadores en los slots Data y DD: Todos los calificadores en Data deben estar definidos en algún slot de DD
              if (length(QualinData) > 0 && !all(QualinData %in% QualinDD)) {
                  stop(paste0('[Validity StQ]  Columns not being "IDDD" and "Value" of slot Data must be specified as "IDQual" or "NonIDQual" in slot DD.'))
