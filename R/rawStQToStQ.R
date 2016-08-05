@@ -58,6 +58,7 @@ setMethod(
             out <- lapply(1:length(init), function(i){
                 
                 outLocal <- stri_sub(QualKey[['Quals']], from = init[i], to = fin[i])
+                outLocal <- stri_trim_right(outLocal)
                 
             })
 

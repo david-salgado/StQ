@@ -115,7 +115,7 @@
             qualnotinDM <- setdiff(qual, names(DataMatrix))
             
             aux <- DataMatrix[, c(qualinDM, auxVarNames), with = F]
-            
+            if (is.null(aux)) return(NULL)
             
             for (col in names(aux)){
                 
@@ -130,19 +130,20 @@
                                                value.name = 'Value',
                                                variable.factor = FALSE,
                                                value.factor = FALSE)
-            
-            for (idqual in IDQual){
+
+
+            LocalIDQual <- intersect(IDQual, names(out))
+            for (idqual in LocalIDQual){
                 
                 out <- out[get(idqual) != '']
                 
             }
             out <- out[, sapply(out, function(x) {!all(x == "")} ), with = F]
 
-            #for (VNCcomp in names(getVNC(DD))){
             Excel <- getVNC(DD)[[DDdtName]]
             var <- auxMeasureVar[[QualName]]
             varExcel <- Excel[IDDD %in% var]
-          
+
             if (dim(varExcel)[1] > 0) {
                 
                 for (col in setdiff(names(varExcel), c('IDDD', 'UnitName'))) {
@@ -158,13 +159,16 @@
                 varExcel <- varExcel[, setdiff(NotEmptyCols, 'UnitName'), with = F]
                     
                 ColsNotUnit <- setdiff(names(varExcel), c(IDQual, 'IDDD'))
+                QualsVec <- strsplit(QualName, split = ' ')[[1]]
+                ColsNotUnit <- intersect(QualsVec, ColsNotUnit)
+
                 for (col in ColsNotUnit) {
                         
                     varExcel[, IDDD := paste(IDDD, get(col), sep = '_')]
                         
-                } 
-                
-                out <- merge(out, varExcel, by = intersect(names(out), names(varExcel)), all = TRUE)
+                }
+
+                out <- merge(out, varExcel, by = intersect(names(out), names(varExcel)))
                 out[, IDDD := ExtractNames(IDDD)]
                     
             }
@@ -175,7 +179,7 @@
         })
      
         names(moltenData) <- names(auxMeasureVar)
-        
+
         #moltenData <- lapply(moltenData, function(DT) { DT <- DT[get(unlist(strsplit(names(DT), ' '))) != ""]})
         
         moltenData <- rbindlist(moltenData, fill = TRUE)
