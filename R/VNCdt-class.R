@@ -83,11 +83,11 @@ setClass(Class = "VNCdt",
              
              Units <- ColNames[grep('Unit', ColNames)]
              
-             UnitColNames <- setdiff(ColNames, c('IDQual', 'NonIDQual', 'IDDD', IDQuals, NonIDQuals))
+             UnitColNames <- setdiff(ColNames, c('IDQual', 'NonIDQual', 'IDDD', IDQuals, NonIDQuals, 'VarDescription'))
       
              if (!all(UnitColNames %in% Units)) {
                  
-                 stop('[Validity VNCdt] The names of the columns with production unit variable names must be "Unit1, Unit2, ...".')
+                 stop('[Validity VNCdt] The name of the column with production unit variable names must be "UnitName".')
              }
              
              return(TRUE)
