@@ -35,7 +35,9 @@
 #' @include Datadt-class.R StQ-class.R ExtractNames.R getVNC.R
 #'
 #' @import data.table
-#'
+#' 
+#' @importFrom stringi stri_split_fixed
+#' 
 #' @export
     melt_StQ <- function(DataMatrix, DD){
 
@@ -91,7 +93,7 @@
             auxDDdt[, col := ifelse(is.na(get(col)), '', get(col)), with = F]
             
         }
-return(list(names(DM), auxDDdt))
+
         auxMeasureVar <- split(auxDDdt[['Variable']], auxDDdt[['Qual']])
         if (length(auxMeasureVar) == 0) return(NULL)
 #        auxMeasureVar <- auxMeasureVar[which(lapply(auxMeasureVar, length) > 0)]
@@ -103,7 +105,8 @@ return(list(names(DM), auxDDdt))
         moltenData <- lapply(names(auxMeasureVar), function(QualName){
             
             indexCol <- ExtractNames(names(DM)) %in% auxMeasureVar[[QualName]]
-            ColNames <- c(strsplit(QualName, ' ')[[1]], names(DM)[indexCol])
+            LocalQuals <- strsplit(QualName, ' ')[[1]]
+            ColNames <- c(LocalQuals, names(DM)[indexCol])
             localDM <- DM[, intersect(ColNames, names(DM)), with = F]
             for (col in names(localDM)){
                 
@@ -118,96 +121,24 @@ return(list(names(DM), auxDDdt))
                                                value.name = 'Value',
                                                variable.factor = FALSE,
                                                value.factor = FALSE)
+            LocalNonIDQual <- setdiff(LocalQuals, names(out))
             
-return(out)            
-            #auxVarNames <- unique(unlist(DM.Names[
-            #    names(DM.Names) %in% intersect(DM.IDDD, auxMeasureVar[[QualName]])]))
-            #names(auxVarNames) <- NULL
-return(auxMeasureVar[[QualName]])
-            auxVarNames <- intersect(DM.IDDD, IDDDToUnitNames(auxMeasureVar[[QualName]], DD))
-return(auxVarNames)
-            qual <- unlist(strsplit(QualName, ' '))
-            qualinDM <- intersect(qual, names(DataMatrix))
-            qualnotinDM <- setdiff(qual, names(DataMatrix))
             
-            aux <- DataMatrix[, c(qualinDM, auxVarNames), with = F]
-<<<<<<< HEAD
-return(aux)            
-||||||| merged common ancestors
-            
-=======
-            if (is.null(aux)) return(NULL)
->>>>>>> 67907cfe65302899e961b0b974132cdd3a61214a
-            
-            for (col in names(aux)){
+            outLocal <- stringi::stri_split_fixed(out[['IDDD']], '_')
+            outLocal <- as.data.table(Reduce(rbind, outLocal))
+            setnames(outLocal, c('IDDD', LocalNonIDQual))
+            outLocal[, Value := out[['Value']]]
+            for (idqual in IDQual){
                 
-                aux[, col := as.character(get(col)), with = F]
-                
+                outLocal[, idqual := out[[idqual]], with = F]
             }
-            
-            out <- data.table::melt.data.table(aux,
-                                               id.vars = qualinDM,
-                                               measure.vars= auxVarNames,
-                                               variable.name = 'IDDD',
-                                               value.name = 'Value',
-                                               variable.factor = FALSE,
-                                               value.factor = FALSE)
+            setcolorder(outLocal, c(IDQual, LocalNonIDQual, 'IDDD', 'Value'))
+            return(outLocal)
 
-
-            LocalIDQual <- intersect(IDQual, names(out))
-            for (idqual in LocalIDQual){
-                
-                out <- out[get(idqual) != '']
-                
-            }
-            out <- out[, sapply(out, function(x) {!all(x == "")} ), with = F]
-
-            Excel <- getVNC(DD)[[DDdtName]]
-            var <- auxMeasureVar[[QualName]]
-            varExcel <- Excel[IDDD %in% var]
-
-            if (dim(varExcel)[1] > 0) {
-                
-                for (col in setdiff(names(varExcel), c('IDDD', 'UnitName'))) {
-                    varExcel[get(col) == '.', col := '', with = F]
-                }
-                ColNames <- names(varExcel)
-                NotEmptyCols <- c()
-                for (col in ColNames) {
-                        
-                    if (!all(is.na(varExcel[[col]]) | varExcel[[col]] == '')) NotEmptyCols <- c(NotEmptyCols, col)
-                        
-                }
-                varExcel <- varExcel[, setdiff(NotEmptyCols, 'UnitName'), with = F]
-                    
-                ColsNotUnit <- setdiff(names(varExcel), c(IDQual, 'IDDD'))
-                QualsVec <- strsplit(QualName, split = ' ')[[1]]
-                ColsNotUnit <- intersect(QualsVec, ColsNotUnit)
-
-                for (col in ColsNotUnit) {
-                        
-                    varExcel[, IDDD := paste(IDDD, get(col), sep = '_')]
-                        
-                }
-
-                out <- merge(out, varExcel, by = intersect(names(out), names(varExcel)))
-                out[, IDDD := ExtractNames(IDDD)]
-                    
-            }
-            
-            #setcolorder(out, c(qualinDM, intersect(names(out), qualnotinDM), 'IDDD', 'Value', 'UnitName'))
-            return(out)
-    
         })
      
         names(moltenData) <- names(auxMeasureVar)
-<<<<<<< HEAD
-return(moltenData)       
-||||||| merged common ancestors
-        
-=======
 
->>>>>>> 67907cfe65302899e961b0b974132cdd3a61214a
         #moltenData <- lapply(moltenData, function(DT) { DT <- DT[get(unlist(strsplit(names(DT), ' '))) != ""]})
         
         moltenData <- rbindlist(moltenData, fill = TRUE)
@@ -215,7 +146,7 @@ return(moltenData)
         return(moltenData)
         
     })
-return(out)
+
     out <- rbindlist(out, fill = TRUE)
     
     out[is.nan(Value) | Value == 'NaN', Value := '']
@@ -227,6 +158,8 @@ return(out)
         
         out[is.na(get(col)), col := '', with = F]
     }
+    
+    
     out <- new(Class = 'Datadt', out)
     
     output.StQ <- new(Class = 'StQ', Data = out, DD = DD)
