@@ -95,12 +95,9 @@
         }
 
         auxMeasureVar <- split(auxDDdt[['Variable']], auxDDdt[['Qual']])
-        if (length(auxMeasureVar) == 0) return(NULL)
+        if (length(auxMeasureVar) == 0) return(data.table(NULL))
 #        auxMeasureVar <- auxMeasureVar[which(lapply(auxMeasureVar, length) > 0)]
         
-        
-        
-
 
         moltenData <- lapply(names(auxMeasureVar), function(QualName){
             
@@ -108,6 +105,7 @@
             LocalQuals <- strsplit(QualName, ' ')[[1]]
             ColNames <- c(LocalQuals, names(DM)[indexCol])
             localDM <- DM[, intersect(ColNames, names(DM)), with = F]
+
             for (col in names(localDM)){
                 
                 localDM[, col := as.character(get(col)), with = F]
@@ -121,18 +119,25 @@
                                                value.name = 'Value',
                                                variable.factor = FALSE,
                                                value.factor = FALSE)
-            LocalNonIDQual <- setdiff(LocalQuals, names(out))
-            
-            
-            outLocal <- stringi::stri_split_fixed(out[['IDDD']], '_')
-            outLocal <- as.data.table(Reduce(rbind, outLocal))
-            setnames(outLocal, c('IDDD', LocalNonIDQual))
-            outLocal[, Value := out[['Value']]]
-            for (idqual in IDQual){
+            out <- out[Value != '']
+            LocalNonIDQual <- setdiff(LocalQuals, IDQual)
+            if (dim(out)[1] != 0){
                 
-                outLocal[, idqual := out[[idqual]], with = F]
+                outLocal <- stringi::stri_split_fixed(out[['IDDD']], '_')
+                outLocal <- as.data.table(Reduce(rbind, outLocal))
+                setnames(outLocal, c('IDDD', LocalNonIDQual))
+                outLocal[, Value := out[['Value']]]
+                for (idqual in IDQual){
+                    
+                    outLocal[, idqual := out[[idqual]], with = F]
+                }
+                setcolorder(outLocal, c(IDQual, LocalNonIDQual, 'IDDD', 'Value'))
+            
+            } else {
+                
+                outLocal <- data.table(NULL)
+                
             }
-            setcolorder(outLocal, c(IDQual, LocalNonIDQual, 'IDDD', 'Value'))
             return(outLocal)
 
         })
