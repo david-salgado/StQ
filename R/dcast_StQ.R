@@ -35,8 +35,7 @@
 #'
 #' @export
 setGeneric("dcast_StQ",
-           function(object,
-                    VarNames = NULL){standardGeneric("dcast_StQ")})
+           function(object, VarNames = NULL){standardGeneric("dcast_StQ")})
 
 #' @rdname dcast_StQ
 #'
@@ -62,24 +61,26 @@ setMethod(
         DDdt <- Reduce('+', DDdt.list, init = DDdt.list[[1]])
         
         for (VarName in VarNames){
-            
-            Quals <- setdiff(names(DDdt), c('Variable', 'Sort', 'Class', 'Length', 'ValueRegExp'))
-            
-            NameQuals <- c()
-            for (Qual in Quals){
-                
-                NameQuals <- c(NameQuals, DDdt[Variable == ExtractNames(VarName)][[Qual]])
-            }
-            
-            nonIDQuals <- getNonIDQual(DDdt)
-            
-            
-            if (!all(NameQuals %in% nonIDQuals) & VarName != ExtractNames(VarName)){
-                
-                stop('[StQ::dcast_StQ] Variable ', ExtractNames(VarName), ' has not any non-identity qualifiers, so VarName cannot be ', VarName, '.')
-            }
-        }
         
+            if (VarName != ExtractNames(VarName)) stop('[StQ::dcast_StQ] Only variable names without qualifiers are allowed in VarNames. If you are interested in a particular column, subset the dcasted data.table.')
+                
+        #    Quals <- setdiff(names(DDdt), c('Variable', 'Sort', 'Class', 'Length', 'ValueRegExp'))
+            
+        #    NameQuals <- c()
+        #    for (Qual in Quals){
+                
+        #        NameQuals <- c(NameQuals, DDdt[Variable == ExtractNames(VarName)][[Qual]])
+        #    }
+            
+        #    nonIDQuals <- getNonIDQual(DDdt)
+#return(list(NameQuals, nonIDQuals))
+            
+        #    if (!all(NameQuals %in% nonIDQuals) & VarName != ExtractNames(VarName)){
+                
+        #        stop('[StQ::dcast_StQ] Variable ', ExtractNames(VarName), ' has not any non-identity qualifiers, so VarName cannot be ', VarName, '.')
+        #    }
+        }
+#return(DDdt)        
         IDQual <- DDdt[Sort == 'IDQual', Variable]
         NonIDQual <- DDdt[Sort == 'NonIDQual', Variable]
 
