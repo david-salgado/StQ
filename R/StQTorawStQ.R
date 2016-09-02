@@ -72,9 +72,9 @@ setMethod(
             return(out)        
             
         })
-
         QData <- rbindlist(QData.list)
-        Value <- QData[['Value']]
+        setkeyv(QData, names(QData))
+        QData <- QData[!duplicated(QData)]
         rawDatadt <- new(Class = 'rawDatadt', .Data = QData)
         rawQ <- new(Class = 'rawStQ', Data = rawDatadt, DD = DD)
         return(rawQ)
