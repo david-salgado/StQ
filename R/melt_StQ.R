@@ -119,12 +119,22 @@
                                                value.name = 'Value',
                                                variable.factor = FALSE,
                                                value.factor = FALSE)
+
             out <- out[Value != '']
             LocalNonIDQual <- setdiff(LocalQuals, IDQual)
             if (dim(out)[1] != 0){
                 
                 outLocal <- stringi::stri_split_fixed(out[['IDDD']], '_')
-                outLocal <- as.data.table(Reduce(rbind, outLocal))
+
+                if (length(outLocal) == 1) {
+                    
+                    outLocal <- as.data.table(t(as.matrix(outLocal[[1]])))
+                    
+                } else {
+                    
+                    outLocal <- as.data.table(Reduce(rbind, outLocal))
+                    
+                }
                 setnames(outLocal, c('IDDD', LocalNonIDQual))
                 outLocal[, Value := out[['Value']]]
                 for (idqual in IDQual){
@@ -141,7 +151,7 @@
             return(outLocal)
 
         })
-     
+
         names(moltenData) <- names(auxMeasureVar)
 
         #moltenData <- lapply(moltenData, function(DT) { DT <- DT[get(unlist(strsplit(names(DT), ' '))) != ""]})
