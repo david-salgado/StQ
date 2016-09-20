@@ -51,8 +51,8 @@
     }
     
     DM <- copy(DataMatrix)
-    setnames(DM, names(DM), UnitToIDDDNames(names(DataMatrix), DD))
-    
+    setnames(DM, names(DM), UnitToIDDDNames(names(DM), DD))
+
     #Construimos un objeto DD auxiliar
     slots <- setdiff(names(getVNC(DD)), 'VarSpec')
 
@@ -112,6 +112,7 @@
                 
             }
             IDQual <- intersect(IDQual, names(localDM))
+
             out <- data.table::melt.data.table(localDM,
                                                id.vars = IDQual,
                                                measure.vars= setdiff(names(localDM), IDQual),
@@ -153,6 +154,7 @@
         })
 
         names(moltenData) <- names(auxMeasureVar)
+
         #moltenData <- lapply(moltenData, function(DT) { DT <- DT[get(unlist(strsplit(names(DT), ' '))) != ""]})
         
         moltenData <- rbindlist(moltenData, fill = TRUE)
@@ -160,7 +162,7 @@
         return(moltenData)
         
     })
-    
+   
     out <- rbindlist(out, fill = TRUE)
     
     if (all(dim(out) == c(0, 0))) {
