@@ -51,7 +51,7 @@
     }
     
     DM <- copy(DataMatrix)
-    setnames(DM, UnitToIDDDNames(names(DataMatrix), DD))
+    setnames(DM, names(DM), UnitToIDDDNames(names(DataMatrix), DD))
     
     #Construimos un objeto DD auxiliar
     slots <- setdiff(names(getVNC(DD)), 'VarSpec')
