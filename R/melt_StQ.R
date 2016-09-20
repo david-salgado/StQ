@@ -119,12 +119,22 @@
                                                value.name = 'Value',
                                                variable.factor = FALSE,
                                                value.factor = FALSE)
+
             out <- out[Value != '']
             LocalNonIDQual <- setdiff(LocalQuals, IDQual)
             if (dim(out)[1] != 0){
                 
                 outLocal <- stringi::stri_split_fixed(out[['IDDD']], '_')
-                outLocal <- as.data.table(Reduce(rbind, outLocal))
+
+                if (length(outLocal) == 1) {
+                    
+                    outLocal <- as.data.table(t(as.matrix(outLocal[[1]])))
+                    
+                } else {
+                    
+                    outLocal <- as.data.table(Reduce(rbind, outLocal))
+                    
+                }
                 setnames(outLocal, c('IDDD', LocalNonIDQual))
                 outLocal[, Value := out[['Value']]]
                 for (idqual in IDQual){
@@ -141,9 +151,8 @@
             return(outLocal)
 
         })
-     
-        names(moltenData) <- names(auxMeasureVar)
 
+        names(moltenData) <- names(auxMeasureVar)
         #moltenData <- lapply(moltenData, function(DT) { DT <- DT[get(unlist(strsplit(names(DT), ' '))) != ""]})
         
         moltenData <- rbindlist(moltenData, fill = TRUE)
@@ -151,22 +160,30 @@
         return(moltenData)
         
     })
-
+    
     out <- rbindlist(out, fill = TRUE)
     
-    out[is.nan(Value) | Value == 'NaN', Value := '']
-    setkeyv(out, setdiff(names(out), 'Value'))
-    out <- out[!duplicated(out)]
-    setcolorder(out, c(setdiff(names(out), c('Value', 'IDDD')), 'IDDD', 'Value'))
-    ColNames <- names(out)
-    for (col in ColNames){
+    if (all(dim(out) == c(0, 0))) {
         
-        out[is.na(get(col)), col := '', with = F]
+        output.StQ <- new(Class = 'StQ')
+    
+    } else {
+    
+        out[is.nan(Value) | Value == 'NaN', Value := '']
+        setkeyv(out, setdiff(names(out), 'Value'))
+        out <- out[!duplicated(out)]
+        setcolorder(out, c(setdiff(names(out), c('Value', 'IDDD')), 'IDDD', 'Value'))
+        ColNames <- names(out)
+        for (col in ColNames){
+            
+            out[is.na(get(col)), col := '', with = F]
+        }
+        
+        
+        out <- new(Class = 'Datadt', out)
+        
+        output.StQ <- new(Class = 'StQ', Data = out, DD = DD)
+    
     }
-    
-    
-    out <- new(Class = 'Datadt', out)
-    
-    output.StQ <- new(Class = 'StQ', Data = out, DD = DD)
     return(output.StQ)
 }
