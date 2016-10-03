@@ -167,7 +167,6 @@ setMethod(
         output <- rbindlist(list(output, XLS.Quals), fill = TRUE)
         
         output <- output[which(output[['UnitName']] %in% UnitNames), c('UnitName','IDDDName'), with = F]
-
         out <- output[['IDDDName']]
         names(out) <- output[['UnitName']]
         out <- out[UnitNames]
@@ -189,27 +188,11 @@ setMethod(
     signature = c("character", "VarNameCorresp"),
     function(UnitNames, Correspondence){
         
-        VNCdtNames <- names(Correspondence)
+        VNCdt <- Reduce('+', Correspondence)
         
-        output <- list()
-        for (Name in VNCdtNames) {
-            
-            localUnitNames <- intersect(UnitNames, Correspondence[[Name]][['UnitName']])
-            out <- UnitToIDDDNames(localUnitNames, Correspondence[[Name]])
-            
-            if (length(out) > 0) {
-                
-                output[[Name]] <- out
-                
-            } else {
-                
-                next
-            }
-        }
-        names(output) <- NULL
-        output <- unlist(output)
-        output <- output[!duplicated(output)] 
-        return(output)
+        out <- UnitToIDDDNames(UnitNames, VNCdt)
+        
+        return(out)        
         
     }
     

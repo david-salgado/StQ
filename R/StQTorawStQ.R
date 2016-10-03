@@ -47,7 +47,7 @@ setMethod(
 
         QData.list <- split(QData, QData[['IDDDKey']])
         QData.list <- QData.list[intersect(names(QData.list), IDDDNames)]
-
+        
         QData.list <- lapply(names(QData.list), function(VarName){
      
             QualsDT <- DDdt[Variable == VarName, names(DDdt)[grep('Qual', names(DDdt))], with = F]

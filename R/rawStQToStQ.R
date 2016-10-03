@@ -36,7 +36,7 @@ setMethod(
         rawDT <- DatadtToDT(getData(rawQ))
         setnames(rawDT, 'IDDDKey', 'IDDD')
         rawData.list <- split(rawDT, rawDT[['IDDD']])
-
+        
         Quals.list <- lapply(names(rawData.list), function(VarName){
             
                 QualsDT <- DDdt[Variable == VarName, names(DDdt)[grep('Qual', names(DDdt))], with = F]
