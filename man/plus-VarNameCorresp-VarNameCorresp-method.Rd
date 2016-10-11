@@ -13,13 +13,13 @@
 \item{e2}{Object of class \linkS4class{VarNameCorresp}.}
 }
 \value{
-Object of class \linkS4class{VarNameCorresp} resulting from 
-integrating both \linkS4class{VarNameCorresp} objects in a single 
+Object of class \linkS4class{VarNameCorresp} resulting from
+integrating both \linkS4class{VarNameCorresp} objects in a single
 \linkS4class{VarNameCorresp} object.
 }
 \description{
 \code{+} sums two objects of class \linkS4class{VarNameCorresp}.
- This method overloads the operator \link{+} and returns a new object of 
+ This method overloads the operator \link{+} and returns a new object of
  class \linkS4class{VarNameCorresp}.
 
 The integration is carried out according to the names of the components.
@@ -28,7 +28,7 @@ The integration is carried out according to the names of the components.
 library(data.table)
 
 VarList1 <- list(
-    ID = new(Class = 'VNCdt', 
+    ID = new(Class = 'VNCdt',
              .Data = data.table(IDQual = c('NumIdEst', rep('', 4)),
                                 NonIDQual = rep('', 5),
                                 IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
@@ -46,7 +46,7 @@ VarList1 <- list(
                                Var2 = c('', '', '', '', '', ''),
                                Unit1 = c('', '', '', '', '','cp09'))),
     ParaData = new(Class = 'VNCdt'),
-    Aggregates = new(Class = 'VNCdt', 
+    Aggregates = new(Class = 'VNCdt',
                      .Data = data.table(
                          IDQual = c('Province', 'NACE', 'Market', ''),
                          NonIDQual = rep('', 4),
@@ -58,7 +58,7 @@ VarList1 <- list(
 VNC1 <- new(Class = 'VarNameCorresp', .Data = VarList1)
 
 VarList2 <- list(
-    ID = new(Class = 'VNCdt', 
+    ID = new(Class = 'VNCdt',
              .Data = data.table(IDQual = c('NumIdEst', rep('', 4)),
                                 NonIDQual = rep('', 5),
                                 IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
@@ -76,7 +76,7 @@ VarList2 <- list(
                                Var2 = c('', '', '', '', '', ''),
                                Unit1 = c('', '', '', '', '','cp09'))),
     ParaData = new(Class = 'VNCdt'),
-    Aggregates = new(Class = 'VNCdt', 
+    Aggregates = new(Class = 'VNCdt',
                      .Data = data.table(
                          IDQual = c('Province', 'NACE', 'Market', ''),
                          NonIDQual = rep('', 4),
@@ -85,7 +85,7 @@ VarList2 <- list(
                          NACE = c('', '', '', '.'),
                          Market = c('', '', '', '2.'),
                          Unit1 = c('provincia', 'actividad', '', 'cn01'))))
-                         
+
 VNC2 <- new(Class = 'VarNameCorresp', .Data = VarList2)
 
 VNC1 + VNC2

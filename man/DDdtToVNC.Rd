@@ -16,7 +16,7 @@ DDdtToVNC(DDdt, NameVNC)
 the corresponding object of class \linkS4class{VarNameCorresp}.
 }
 \description{
-\code{DDdtToVNC} returns the corresponding object of class 
+\code{DDdtToVNC} returns the corresponding object of class
 \linkS4class{VarNameCorresp} according to the DDdt input object.
 }
 \examples{

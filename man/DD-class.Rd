@@ -5,15 +5,15 @@
 \alias{DD-class}
 \title{S4 class with the dictionary of data (variable specifications)}
 \description{
-Definition of an S4 class named \code{DD} with the specification 
-of each variable. 
+Definition of an S4 class named \code{DD} with the specification
+of each variable.
 
-The class \code{DD} comprises a slot of class \linkS4class{VarNameCorresp} 
-and slots of class \linkS4class{DDdt} of names \code{ID}, 
+The class \code{DD} comprises a slot of class \linkS4class{VarNameCorresp}
+and slots of class \linkS4class{DDdt} of names \code{ID},
 \code{MicroData}, \code{Aggregates}, \code{AggWeights}, \code{Other}
 }
 \examples{
-# An empty DD object is built through the code: 
+# An empty DD object is built through the code:
 new(Class = 'DD')
 
 # An example:
@@ -62,13 +62,13 @@ Paradt <-new( Class='DDdt', data.table(
     Length = c('11', '10', '10'),
     Qual1 = c(rep('', 2), 'NumIdEst'),
     Qual2 = c(rep('', 2), 'Action'),
-    ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 
+    ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation',
                     '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')))
 
-DD <- new(Class = 'DD', 
-          VarNameCorresp = VNC, 
-          ID = IDdt, 
-          MicroData = Microdt, 
+DD <- new(Class = 'DD',
+          VarNameCorresp = VNC,
+          ID = IDdt,
+          MicroData = Microdt,
           ParaData = Paradt)
 
 }

@@ -3,13 +3,13 @@
 \docType{class}
 \name{VNCdt-class}
 \alias{VNCdt-class}
-\title{S4 class for \linkS4class{data.table}s as components of 
+\title{S4 class for \linkS4class{data.table}s as components of
 \linkS4class{VarNameCorresp} objects}
 \description{
-Definition of an S4 class named \code{VNCdt} with the 
+Definition of an S4 class named \code{VNCdt} with the
 correspondence between variable names.
 
-The class \code{VNCdt} is a \linkS4class{data.table} with the following 
+The class \code{VNCdt} is a \linkS4class{data.table} with the following
 columns:
 
 \itemize{
@@ -17,20 +17,20 @@ columns:
  \item \code{NonIDQual}: names of variable qualifiers.
  \item \code{IDDD}: root names of the statistical variables.
  \item One column of name \emph{"IDQual"}\code{j} per each unit qualifier.
- \item One column of name \emph{"NonIDQual"}\code{k} per each variable 
- qualifier. 
- \item One column of name \emph{"Unit"}\code{p} per each production unit 
+ \item One column of name \emph{"NonIDQual"}\code{k} per each variable
+ qualifier.
+ \item One column of name \emph{"UnitName"}\code{p} per each production unit
  which assigns their proper statistical variable names.
 }
 }
 \examples{
 library(data.table)
-new(Class = 'VNCdt', 
-    data.table(IDQual = c('NOrden', '', '', ''), 
-               NonIDQual = c('', 'IsNatMarket', '', ''), 
+new(Class = 'VNCdt',
+    data.table(IDQual = c('NOrden', '', '', ''),
+               NonIDQual = c('', 'IsNatMarket', '', ''),
                IDDD = c('', '', 'Turnover', 'Turnover'),
                NOrden = c('', '', '.', '.'),
                IsNatMarket = c('', '', '0', '1'),
-               Unit1 = c('', '', 'cn01', 'cn02')))
+               UnitName = c('', '', 'cn01', 'cn02')))
 }
 
