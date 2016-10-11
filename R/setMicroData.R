@@ -22,10 +22,10 @@
 #'                                                           NumIdEst = c('', '', '', '.'),
 #'                                                           Market = c('', '', '', '1.'),
 #'                                                           Cod = rep('', 4),
-#'                                                           Unit1 = c('', '', '', 'cp02'))))
+#'                                                           UnitName = c('', '', '', 'cp02'))))
 #' VNC <- BuildVNC(VarList)
 #' DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = MicroDataDD)
-#' 
+#'
 #' Microdt <- data.table(Variable = c('NumIdEst', 'NewOrders'),
 #'                       Sort = c('IDQual', 'IDDD'),
 #'                       Class = c('character', 'character'),
@@ -33,10 +33,10 @@
 #'                       Qual1 = c('', 'NumIdEst'),
 #'                       ValueRegExp = c('[0-9]{9}PP', '([0-9]{1, 10}| )'))
 #' Microdt <- new(Class = 'DDdt', Microdt)
-#' 
+#'
 #' setMicroData(DD) <- Microdt
 #' DD
-#' 
+#'
 #' @rdname setMicroData
 #'
 #' @import data.table
@@ -55,18 +55,13 @@ setReplaceMethod(
     f = "setMicroData",
     signature = c("DD", "DDdt"),
     function(object, value){
-        
+
         setkeyv(value, setdiff(names(value), 'Value'))
-        if (dim(object@MicroData)[1] > 0){
-            
-            object@MicroData <- new(Class = 'DDdt')
-            setVNC(object) <- DDdtToVNC(value, 'MicroData')
-            
-        }else{
-            
-            setVNC(object) <- DDdtToVNC(value, 'MicroData') + getVNC(object)
-        }
-        
+
+        VNCaux <- getVNC(object)
+        VNCaux[['MicroData']] <- new(Class = 'VNCdt')
+
+        setVNC(object) <- DDdtToVNC(value, 'MicroData') + VNCaux
         object@MicroData <- value
         validObject(object)
         return(object)
@@ -83,7 +78,7 @@ setReplaceMethod(
     f = "setMicroData",
     signature = c("StQ", "DDdt"),
     function(object, value){
-        
+
         setMicroData(object@DD) <- value
         validObject(object)
         return(object)

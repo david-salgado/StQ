@@ -33,7 +33,7 @@ VarList1 <- list(
                                 NonIDQual = rep('', 5),
                                 IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
                                 NumIdEst = c('', rep('.', 4)),
-                                Unit1 = c('numidest', 'nombre', 'apellidos', 'direccion',
+                                UnitName = c('numidest', 'nombre', 'apellidos', 'direccion',
                                           'telefono'))),
     MicroData = new(Class = 'VNCdt',
                     data.table(IDQual = c('NumIdEst', '', '', '', '', ''),
@@ -44,7 +44,7 @@ VarList1 <- list(
                                Cod = c('', '', '', '', '', ''),
                                Var1 = c('', '', '', '', '', ''),
                                Var2 = c('', '', '', '', '', ''),
-                               Unit1 = c('', '', '', '', '','cp09'))),
+                               UnitName = c('', '', '', '', '','cp09'))),
     ParaData = new(Class = 'VNCdt'),
     Aggregates = new(Class = 'VNCdt',
                      .Data = data.table(
@@ -54,7 +54,7 @@ VarList1 <- list(
                          Province = c('', '', '', '.'),
                          NACE = c('', '', '', '.'),
                          Market = c('', '', '', '2.'),
-                         Unit1 = c('provincia', 'actividad', '', 'cn01'))))
+                         UnitName = c('provincia', 'actividad', '', 'cn01'))))
 VNC1 <- new(Class = 'VarNameCorresp', .Data = VarList1)
 
 VarList2 <- list(
@@ -63,7 +63,7 @@ VarList2 <- list(
                                 NonIDQual = rep('', 5),
                                 IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
                                 NumIdEst = c('', rep('.', 4)),
-                                Unit1 = c('numidest', 'nombre', 'apellidos', 'direccion',
+                                UnitName = c('numidest', 'nombre', 'apellidos', 'direccion',
                                           'telefono'))),
     MicroData = new(Class = 'VNCdt',
                     data.table(IDQual = c('NumIdEst', '', '', '', '', ''),
@@ -74,7 +74,7 @@ VarList2 <- list(
                                Cod = c('', '', '', '', '', ''),
                                Var1 = c('', '', '', '', '', ''),
                                Var2 = c('', '', '', '', '', ''),
-                               Unit1 = c('', '', '', '', '','cp09'))),
+                               UnitName = c('', '', '', '', '','cp09'))),
     ParaData = new(Class = 'VNCdt'),
     Aggregates = new(Class = 'VNCdt',
                      .Data = data.table(
@@ -84,7 +84,7 @@ VarList2 <- list(
                          Province = c('', '', '', '.'),
                          NACE = c('', '', '', '.'),
                          Market = c('', '', '', '2.'),
-                         Unit1 = c('provincia', 'actividad', '', 'cn01'))))
+                         UnitName = c('provincia', 'actividad', '', 'cn01'))))
 
 VNC2 <- new(Class = 'VarNameCorresp', .Data = VarList2)
 

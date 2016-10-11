@@ -22,7 +22,7 @@
 #'                                                           NumIdEst = c('', '', '', '.'),
 #'                                                           Market = c('', '', '', '1.'),
 #'                                                           Cod = rep('', 4),
-#'                                                           Unit1 = c('', '', '', 'cp02'))))
+#'                                                           UnitName = c('', '', '', 'cp02'))))
 #' VNC <- BuildVNC(VarList)
 #' DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = MicroDataDD)
 #' 
@@ -57,16 +57,11 @@ setReplaceMethod(
     function(object, value){
         
         setkeyv(value, setdiff(names(value), 'Value'))
-        if (dim(object@ID)[1] > 0){
-            
-            object@ID <- new(Class = 'DDdt')
-            setVNC(object) <- DDdtToVNC(value, 'ID')
-            
-        }else{
-            
-            setVNC(object) <- DDdtToVNC(value, 'ID') + getVNC(object)
-        }
+
+        VNCaux <- getVNC(object)
+        VNCaux[['ID']] <- new(Class = 'VNCdt')
         
+        setVNC(object) <- DDdtToVNC(value, 'ID') + VNCaux
         object@ID <- value
         validObject(object)
         return(object)
