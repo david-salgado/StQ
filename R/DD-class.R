@@ -1,16 +1,16 @@
 #' @title S4 class with the dictionary of data (variable specifications)
-#'  
-#' @description Definition of an S4 class named \code{DD} with the specification 
-#' of each variable. 
-#' 
-#' The class \code{DD} comprises a slot of class \linkS4class{VarNameCorresp} 
-#' and slots of class \linkS4class{DDdt} of names \code{ID}, 
-#' \code{MicroData}, \code{Aggregates}, \code{AggWeights}, \code{Other} 
-#' 
+#'
+#' @description Definition of an S4 class named \code{DD} with the specification
+#' of each variable.
+#'
+#' The class \code{DD} comprises a slot of class \linkS4class{VarNameCorresp}
+#' and slots of class \linkS4class{DDdt} of names \code{ID},
+#' \code{MicroData}, \code{Aggregates}, \code{AggWeights}, \code{Other}
+#'
 #' @examples
-#' # An empty DD object is built through the code: 
+#' # An empty DD object is built through the code:
 #' new(Class = 'DD')
-#' 
+#'
 #' # An example:
 #' library(data.table)
 #' ### We build the VNC object
@@ -19,23 +19,23 @@
 #'                            NonIDQual = c('','','','',''),
 #'                            IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
 #'                            NumIdEst = c('', rep('.', 4)),
-#'                            Unit1 = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'))
+#'                            UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'))
 #'  ),
 #' MicroData =new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
 #'                                            NonIDQual = c('', 'Market', ''),
 #'                                            IDDD = c(rep('', 2), 'NewOrders'),
 #'                                            NumIdEst = c(rep('', 2), '.'),
 #'                                            Market = c(rep('', 2), '1'),
-#'                                            Unit1 = c('numidest', '', 'cp09'))),
+#'                                            UnitName = c('numidest', '', 'cp09'))),
 #' ParaData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
 #'                                            NonIDQual = c('', 'Action', ''),
 #'                                            IDDD = c(rep('', 2), 'Date'),
 #'                                            NumIdEst = c(rep('', 2), '.'),
 #'                                            Action = c(rep('', 2), 'Imputation'),
-#'                                            Unit1 = c('numidest', '', 'FechaImput'))))
-#' 
+#'                                            UnitName = c('numidest', '', 'FechaImput'))))
+#'
 #' VNC <- new(Class = 'VarNameCorresp', VarList)
-#' 
+#'
 #' IDdt <- new( Class='DDdt',data.table(
 #'     Variable = c('NumIdEst', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
 #'     Sort = c('IDQual', rep('IDDD', 4)),
@@ -57,19 +57,19 @@
 #'     Length = c('11', '10', '10'),
 #'     Qual1 = c(rep('', 2), 'NumIdEst'),
 #'     Qual2 = c(rep('', 2), 'Action'),
-#'     ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 
+#'     ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation',
 #'                     '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')))
-#' 
-#' DD <- new(Class = 'DD', 
-#'           VarNameCorresp = VNC, 
-#'           ID = IDdt, 
-#'           MicroData = Microdt, 
+#'
+#' DD <- new(Class = 'DD',
+#'           VarNameCorresp = VNC,
+#'           ID = IDdt,
+#'           MicroData = Microdt,
 #'           ParaData = Paradt)
-#' 
+#'
 #' @include ExtractNames.R VarNameCorresp-class.R DDdt-class.R
-#' 
-#' @import data.table 
-#' 
+#'
+#' @import data.table
+#'
 #' @export
 setClass(Class = "DD",
          slots = c(VarNameCorresp = 'VarNameCorresp',
@@ -88,62 +88,61 @@ setClass(Class = "DD",
                           Other = new(Class='DDdt')
                           ),
          validity = function(object){
-             
+
              ColNames <- slotNames(object)
-             
+
              if (ColNames[1] != 'VarNameCorresp') {
-                 
+
                  stop('[validity DD] The first column of DD must be VarNameCorresp.')
              }
-             
+
              if (ColNames[2] != 'ID') {
-                 
+
                  stop('[validity DD] The second column of DD must be ID.')
              }
-             
+
              if (ColNames[3] != 'MicroData') {
-                 
+
                  stop('[validity DD] The third column of DD must be MicroData.')
              }
-             
+
              if (ColNames[4] != 'ParaData') {
-                 
+
                  stop('[validity DD] The fourth column of DD must be ParaData.')
              }
-             
+
              if (ColNames[5] != 'Aggregates') {
-                 
+
                  stop('[validity DD] The fifth column of DD must be Aggregates.')
              }
-             
+
              if (ColNames[6] != 'AggWeights') {
-                 
+
                  stop('[validity DD] The last second column of DD must be AggWeights.')
              }
-             
+
              if (ColNames[7] != 'Other') {
-                 
+
                  stop('[validity DD] The last column of DD must be Other.')
              }
-             
+
              variablesDD <- c()
-             for (Slot in setdiff(slotNames(object), 'VarNameCorresp')) { 
+             for (Slot in setdiff(slotNames(object), 'VarNameCorresp')) {
                  SlotNames <- slot(object, Slot)
                  variablesDD <- c(variablesDD,  SlotNames$Variable[SlotNames$Sort == 'IDDD'])
                  variablesDD <- unique(variablesDD)
              }
 
              variablesVNC <- getIDDD(object@VarNameCorresp)
-             varVNCnotinVNC <- setdiff(variablesDD, variablesVNC) 
-            
+             varVNCnotinVNC <- setdiff(variablesDD, variablesVNC)
              if (length(varVNCnotinVNC) > 0) {
-                 
+
                  stop(paste0('[Validity DD] The following variables in the column "IDDD" of the slot DD must be variables (IDDD) in the slot VNC:\n',
                              paste0(varVNCnotinVNC, collapse = ', '),
                              '\n\n Check if object VNC contains all variable names.'))
-                 
+
              }
-             
+
              return(TRUE)
          }
 )
