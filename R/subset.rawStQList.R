@@ -23,9 +23,9 @@
 #' mm <- c(paste0('0', 1:9), 10:12)
 #' TimePer <- paste0('MM', mm, '2015')
 #' QList <- vector('list', 12)
-#' QList <- lapply(QList, function(x) ExampleStQ)
+#' QList <- lapply(QList, function(x) ExamplerawStQ)
 #' names(QList) <- TimePer
-#' QList <- new(Class = 'StQList', Data = QList, Periods = newRepoTime(TimePer))
+#' QList <- new(Class = 'rawStQList', Data = QList, Periods = newRepoTime(TimePer))
 #' QList[c('MM092015', 'MM102015')]
 #'
 #' @include rawStQList-class.R getData.R
@@ -42,7 +42,7 @@ setMethod(
         DataList <- getData(x)
         mc[['x']] <- DataList
         DataList <- eval(mc, envir = parent.frame())
-        
+
         DD <- x@Data[[1L]]
         DD <- DD@DD
         
