@@ -146,9 +146,12 @@ setMethod(
 setMethod(
     f = "getNonIDQual",
     signature = c("StQ"),
-    function(object){
+    function(object, Namesdt){
         
-        output <- unique(object@Data[['NonIDQual']])
+        if (missing(Namesdt)) {output <- getNonIDQual(object@DD)
+        } else {output <- getNonIDQual(object@DD, Namesdt)}
+        
+        output <- intersect(names(object@Data), output)
         return(output)
     }
 )

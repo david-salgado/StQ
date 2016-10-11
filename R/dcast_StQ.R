@@ -55,32 +55,32 @@ setMethod(
 
         VNC <- getVNC(object)
         DD <- getDD(object)
-        
+
         DDdt.list <- setdiff(slotNames(DD), 'VarNameCorresp')
         DDdt.list <- lapply(DDdt.list, function(Name){slot(DD, Name)})
         DDdt <- Reduce('+', DDdt.list, init = DDdt.list[[1]])
-        
+
         for (VarName in VarNames){
-        
+
             if (VarName != ExtractNames(VarName)) stop('[StQ::dcast_StQ] Only variable names without qualifiers are allowed in VarNames. If you are interested in a particular column, subset the dcasted data.table.')
-                
+
         #    Quals <- setdiff(names(DDdt), c('Variable', 'Sort', 'Class', 'Length', 'ValueRegExp'))
-            
+
         #    NameQuals <- c()
         #    for (Qual in Quals){
-                
+
         #        NameQuals <- c(NameQuals, DDdt[Variable == ExtractNames(VarName)][[Qual]])
         #    }
-            
+
         #    nonIDQuals <- getNonIDQual(DDdt)
 #return(list(NameQuals, nonIDQuals))
-            
+
         #    if (!all(NameQuals %in% nonIDQuals) & VarName != ExtractNames(VarName)){
-                
+
         #        stop('[StQ::dcast_StQ] Variable ', ExtractNames(VarName), ' has not any non-identity qualifiers, so VarName cannot be ', VarName, '.')
         #    }
         }
-#return(DDdt)        
+#return(DDdt)
         IDQual <- DDdt[Sort == 'IDQual', Variable]
         NonIDQual <- DDdt[Sort == 'NonIDQual', Variable]
 
@@ -108,20 +108,20 @@ setMethod(
         auxData <- split(auxDD[['Variable']], auxDD[['Form']])
 
         dcastData <- lapply(as.list(names(auxData)), function(Form){
-            
-            
+
+
             aux <- getData(object)[IDDD %in% auxData[[Form]]]
-            
+
             if (dim(aux)[[1]] == 0) return(NULL)
-            
+
             ColNames <- names(aux)
             #NotEmptyCols <- c()
             #for (col in setdiff(ColNames, 'Value')){
-            #    
+            #
             #    if (!all(is.na(aux[[col]]) | aux[[col]] == '')) NotEmptyCols <- c(NotEmptyCols, col)
             #}
             #aux <- aux[, unique(c(NotEmptyCols, 'Value')), with = F]
-           
+
             setkeyv(aux, setdiff(names(aux), 'Value'))
             Dup <- aux[duplicated(aux)]
             if (dim(Dup)[[1]] > 0) {
@@ -134,11 +134,11 @@ setMethod(
             MissingQuals <- setdiff(FormVars, names(aux))
             MissingQuals <- setdiff(FormVars, names(aux))
             if (length(MissingQuals) > 0) {
-                
+
                 aux[, MissingQuals := '', with = FALSE]
             }
             aux <- aux[, c(FormVars, 'Value'), with = F]
-            
+
             #Form <-  unlist(strsplit(Form, ' + ', fixed = T, useBytes = T))
             #cals <- intersect(names(aux), Form)
             #Form <- Form[1]
@@ -149,9 +149,9 @@ setMethod(
                                                 drop = TRUE,
                                                 value.var = 'Value')
             if (length(MissingQuals) > 0) {
-                
+
                 aux[, MissingQuals := NULL, with = FALSE]
-                
+
             }
             outNames <- sort(names(out))
             for (col in outNames){
@@ -170,35 +170,35 @@ setMethod(
 
         output <- Reduce(
             function(x, y){
-                
+
                 CommonCols <- intersect(names(x), names(y))
                     if (length(CommonCols) > 0) {
-                        
+
                         out <- merge(x, y, by = CommonCols, all = TRUE)
-                               
+
                     } else {
-                        
+
                         out <- rbindlist(list(x, y), fill = TRUE)
-                        
+
                     }
                     ColNames <- names(out)
                     for (col in ColNames){
-                        
+
                         out[is.na(get(col)), col := '', with = F]
                     }
                     return(out)
-                }, 
+                },
             dcastData, init = dcastData[[1]])
-        
+
         # Asignamos los tipos a cada variable
 
         outCols <- names(output)
         for (col in outCols){
-            
+
             colClass <- copy(DDdt)[Variable == ExtractNames(col)][['Class']]
             output[, col := as(get(col), colClass), with = F]
             output[get(col) == '', col := NA, with = F]
-            
+
         }
         return(output)
     }

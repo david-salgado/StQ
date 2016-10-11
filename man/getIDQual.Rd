@@ -5,7 +5,6 @@
 \alias{getIDQual}
 \alias{getIDQual,DD-method}
 \alias{getIDQual,DDdt-method}
-\alias{getIDQual,Datadt-method}
 \alias{getIDQual,StQ-method}
 \alias{getIDQual,VNCdt-method}
 \alias{getIDQual,VarNameCorresp-method}
@@ -20,8 +19,6 @@ getIDQual(object, Namesdt)
 \S4method{getIDQual}{DDdt}(object)
 
 \S4method{getIDQual}{DD}(object, Namesdt)
-
-\S4method{getIDQual}{Datadt}(object)
 
 \S4method{getIDQual}{StQ}(object)
 }
