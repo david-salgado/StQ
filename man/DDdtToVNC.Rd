@@ -5,7 +5,7 @@
 \title{Returns the corresponding object of class \linkS4class{VarNameCorresp} according to the
  DDdt input object.}
 \usage{
-DDdtToVNC(DDdt, NameVNC)
+DDdtToVNC(DDdt, NameVNC, InFiles)
 }
 \arguments{
 \item{DDdt}{Object of class \linkS4class{DDdt}.}
@@ -27,7 +27,7 @@ AggWeights <- data.table(Variable = c('ID', 'Pond1'), Sort = c('IDQual', 'IDDD')
                          Qual1 = c('', 'ID'), ValueRegExp = c('', ''))
 AggWeights <- new(Class = 'DDdt', AggWeights)
 
-VNC <- DDdtToVNC(AggWeights, 'AggWeights')
+VNC <- DDdtToVNC(AggWeights, 'AggWeights', rep('FA', 2))
 
 }
 

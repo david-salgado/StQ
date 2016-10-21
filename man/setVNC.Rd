@@ -39,7 +39,8 @@ VarList <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst
                                                           NumIdEst = c('', '', '', '.'),
                                                           Market = c('', '', '', '1.'),
                                                           Cod = rep('', 4),
-                                                          Unit1 = c('', '', '', 'cp02'))))
+                                                          UnitName = c('', '', '', 'cp02'),
+                                                          InFiles = rep('FF', 4))))
 VNC <- BuildVNC(VarList)
 DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = MicroDataDD)
 
@@ -49,7 +50,8 @@ VarListAdd <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumId
                                                           NumIdEst = c('', '', '', '.'),
                                                           Market = c('', '', '', '2.'),
                                                           Cod = rep('', 4),
-                                                          Unit1 = c('', '', '', 'cp02'))))
+                                                          UnitName = c('', '', '', 'cp02'),
+                                                          InFiles = rep('FF', 4))))
 VNCAdd <- BuildVNC(VarListAdd)
 setVNC(DD) <- VNCAdd
 DD

@@ -19,8 +19,8 @@ columns:
  \item One column of name \emph{"IDQual"}\code{j} per each unit qualifier.
  \item One column of name \emph{"NonIDQual"}\code{k} per each variable
  qualifier.
- \item One column of name \emph{"UnitName"}\code{p} per each production unit
- which assigns their proper statistical variable names.
+ \item \code{UnitName}: statistical variable names currently used in production.
+ \item \code{InFiles}: codes for the files where each variable is to be included.
 }
 }
 \examples{
@@ -31,6 +31,7 @@ new(Class = 'VNCdt',
                IDDD = c('', '', 'Turnover', 'Turnover'),
                NOrden = c('', '', '.', '.'),
                IsNatMarket = c('', '', '0', '1'),
-               UnitName = c('', '', 'cn01', 'cn02')))
+               UnitName = c('', '', 'cn01', 'cn02'),
+               InFiles = rep('FF', 4)))
 }
 
