@@ -20,7 +20,7 @@ getIDQual(object, Namesdt)
 
 \S4method{getIDQual}{DD}(object, Namesdt)
 
-\S4method{getIDQual}{StQ}(object)
+\S4method{getIDQual}{StQ}(object, Namesdt)
 }
 \arguments{
 \item{object}{Object with the IDQual unit qualifier.}
@@ -32,7 +32,7 @@ are requiered.}
 Character vector with all the unit qualifier names.
 }
 \description{
-\code{getIDQual} returns a character vector with all unit qualifier 
+\code{getIDQual} returns a character vector with all unit qualifier
 names (IDQual) included in the input object.
 }
 \examples{
