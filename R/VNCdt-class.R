@@ -35,7 +35,8 @@ setClass(Class = "VNCdt",
          prototype = prototype(data.table(IDQual = character(0),
                                           NonIDQual = character(0),
                                           IDDD = character(0),
-                                          UnitName = character(0))),
+                                          UnitName = character(0),
+                                          InFiles = character(0))),
          validity = function(object){
 
              NCol <- dim(object)[2]
@@ -83,7 +84,7 @@ setClass(Class = "VNCdt",
 
              Units <- ColNames[grep('Unit', ColNames)]
 
-             UnitColNames <- setdiff(ColNames, c('IDQual', 'NonIDQual', 'IDDD', IDQuals, NonIDQuals, 'EnFicheros'))
+             UnitColNames <- setdiff(ColNames, c('IDQual', 'NonIDQual', 'IDDD', IDQuals, NonIDQuals, 'InFiles'))
          if (!all(UnitColNames %in% Units)) {
 
              stop('[Validity VNCdt] The name of the column with production unit variable names must be "UnitName".')
