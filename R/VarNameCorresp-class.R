@@ -17,7 +17,8 @@
 #'  \item \emph{One column per each name of the \code{NonIDQual} qualifiers}: 
 #'  Values of the corresponding \code{NonIDQual} Qualifier for each variable 
 #'  (row).
-#'  \item \code{Unit}\emph{j}: Variable name used by production Unit\emph{j}.
+#'  \item \code{UnitName}: Variable name used in production.
+#'  \item \code{InFiles}: code of the files where each variable is included.
 #' }
 #'
 #' @examples
@@ -29,7 +30,8 @@
 #'                  NonIDQual = rep('', 5),
 #'                  IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
 #'                  NumIdEst = c('', rep('.', 4)),
-#'                  Unit1 = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'))),
+#'                  UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'),
+#'                  InFiles = rep('FI', 5))),
 #'   MicroData = new(Class = 'VNCdt', 
 #'                   .Data = data.table(
 #'                       IDQual = c('NumIdEst', rep('', 4)),
@@ -39,7 +41,8 @@
 #'                       IsNatMarket = c(rep('', 4), '0'),
 #'                       IsEuroMarket = c(rep('', 4), '0'),
 #'                       IsRWMarket = c(rep('', 4), '1'),
-#'                       Unit1 = c('numidest', rep('', 3), 'cp09'))),
+#'                       UnitName = c('numidest', rep('', 3), 'cp09'),
+#'                       InFiles = rep('FF, FD, FG', 5))),
 #'  ParaData = new(Class = 'VNCdt'),
 #'  Aggregates = new(Class = 'VNCdt', 
 #'                   .Data = data.table(
@@ -49,7 +52,8 @@
 #'                      Province = c('', '', '', '.'),
 #'                      NACE = c('', '', '', '.'),
 #'                      IsNatMarket = c('', '', '', '1'),
-#'                      Unit1 = c('provincia', 'actividad', '', 'cn01'))))
+#'                      UnitName = c('provincia', 'actividad', '', 'cn01'),
+#'                      InFiles = rep('FA', 4))))
 #' new(Class = 'VarNameCorresp', .Data = VarList)
 #'
 #' @import data.table 

@@ -20,7 +20,8 @@
 #'                                   IDDD = c(rep('', 2), 'NewOrders'),
 #'                                   NumIdEst = c(rep('', 2), '.'),
 #'                                   Market = c(rep('', 2), '1.'),
-#'                                   UnitName = c('numidest', '', 'cp09')))
+#'                                   UnitName = c('numidest', '', 'cp09'),
+#'                                   InFiles = rep('FI', 3)))
 #'  
 #'  UnitToIDDDNames(VNCdt, UnitNames = c('cp09'))
 #'
@@ -34,8 +35,8 @@
 #'                                                      'PhoneNo'),
 #'                                             NumIdEst = c('', rep('.', 4)),
 #'                                             UnitName = c('numidest', 'nombre', 'apellidos', 
-#'                                                       'direccion', 'telefono')     
-#'                                 )),
+#'                                                       'direccion', 'telefono'),
+#'                                             InFiles = rep('FF', 5))),
 #'                 MicroData = new(Class = 'VNCdt',
 #'                                 .Data = data.table(
 #'                                         IDQual = c('NumIdEst', rep('', 2)),
@@ -43,7 +44,8 @@
 #'                                         IDDD = c(rep('', 2), 'NewOrders'),
 #'                                         NumIdEst = c(rep('', 2), '.'),
 #'                                         Market = c(rep('', 2), '2.'),
-#'                                         UnitName = c('numidest', '', 'cp09'))),
+#'                                         UnitName = c('numidest', '', 'cp09'),
+#'                                         InFiles = rep('FF', 3))),
 #'                 ParaData = new(Class = 'VNCdt',
 #'                                 .Data = data.table(
 #'                                         IDQual = c('NumIdEst', rep('', 2)),
@@ -51,7 +53,8 @@
 #'                                         IDDD = c(rep('', 2), 'Date'),
 #'                                         NumIdEst = c(rep('', 2), '.'),
 #'                                         Action = c(rep('', 2), 'Imputation'),
-#'                                         UnitName = c('numidest', '', 'FechaImput'))),
+#'                                         UnitName = c('numidest', '', 'FechaImput'),
+#'                                         InFiles = rep('FP', 3))),
 #'                 Aggregates = new(Class = 'VNCdt',
 #'                                  .Data = data.table(
 #'                                          IDQual = c('Province', 'NACE09', '', ''),
@@ -60,7 +63,8 @@
 #'                                          Province = c('', '', '', '.'),
 #'                                          NACE09 = c('', '', '', '.'),
 #'                                          Market = c('', '', '', '3.'),
-#'                                          UnitName = c('provincia', 'actividad', '', 'cn01'))))
+#'                                          UnitName = c('provincia', 'actividad', '', 'cn01'),
+#'                                          InFiles = rep('FA', 4))))
 #'
 #' VNC <- new(Class = 'VarNameCorresp', .Data = VarList)
 #' 

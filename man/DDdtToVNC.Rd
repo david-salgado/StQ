@@ -11,6 +11,9 @@ DDdtToVNC(DDdt, NameVNC, InFiles)
 \item{DDdt}{Object of class \linkS4class{DDdt}.}
 
 \item{NameVNC}{character vector with the name of the element in VNC which is being build.}
+
+\item{InFiles}{character vector with as many components as the rows of \code{DDdt} specifying the 
+files where to include each variable.}
 }
 \value{
 the corresponding object of class \linkS4class{VarNameCorresp}.
