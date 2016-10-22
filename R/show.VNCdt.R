@@ -17,12 +17,13 @@
 #' VNCdt1 <- new(Class = 'VNCdt',
 #'               data.table(IDQual = c('NumIdEst', '', '', ''),
 #'                          NonIDQual = c('', 'Market', 'Cod', ''),
-#'                          IDDD = c('', '', '','IEPEntradaPed'),
+#'                          IDDD = c('', '', '','NewOrders'),
 #'                          NumIdEst = c('', '', '', '.'),
 #'                          Market = c( '', '', '','0'),
 #'                          Cod = c('', '', '', ''),
-#'                          Unit1 = c( '', '', '','cp09')))
-#' 
+#'                          UnitName = c( '', '', '','cp09'),
+#'                          InFiles = rep('FF', 4)))
+#' show(VNCdt1)
 #'
 #' VNCdt2 <- new(Class = 'VNCdt', 
 #'               data.table(IDQual = c('NOrden', '', ''), 
@@ -30,8 +31,9 @@
 #'                          IDDD = c('', '', 'Turnover'),
 #'                          NOrden = c('', '', '.'),
 #'                          Market = c('', '', '1.'),
-#'                          Unit1 = c('', '', 'cn01')))
-#'
+#'                          UnitName = c('', '', 'cn01'),
+#'                          InFiles = rep('FF', 3)))
+#'show(VNCdt2)
 #'
 #' @include VNCdt-class.R
 #'
@@ -53,9 +55,7 @@ setMethod(
             names(New.object) <- object@names
             New.object <- setDT(New.object)
             mc[['object']] <- New.object
-            output <- eval(mc, envir = parent.frame())
-            return(output)
-            
+            eval(mc, envir = parent.frame())
                     
         }else {
                     

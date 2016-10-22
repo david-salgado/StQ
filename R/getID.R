@@ -17,38 +17,41 @@
 #'                            NonIDQual = c('','','','',''),
 #'                            IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
 #'                            NumIdEst = c('', rep('.', 4)),
-#'                            Unit1 = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'))
-#'  ),
+#'                            UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'),
+#'                            InFiles = rep('FI', 5))),
 #' MicroData =new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
 #'                                            NonIDQual = c('', 'Market', ''),
 #'                                            IDDD = c(rep('', 2), 'NewOrders'),
 #'                                            NumIdEst = c(rep('', 2), '.'),
 #'                                            Market = c(rep('', 2), '1.'),
-#'                                            Unit1 = c('numidest', '', 'cp09'))),
+#'                                            UnitName = c('numidest', '', 'cp09'),
+#'                                            InFiles = rep('FF', 3))),
 #' ParaData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
 #'                                            NonIDQual = c('', 'Action', ''),
 #'                                            IDDD = c(rep('', 2), 'Date'),
 #'                                            NumIdEst = c(rep('', 2), '.'),
 #'                                            Action = c(rep('', 2), 'Imputation'),
-#'                                            Unit1 = c('numidest', '', 'FechaImput'))),
+#'                                            UnitName = c('numidest', '', 'FechaImput'),
+#'                                            InFiles = rep('FP', 3))),
 #' AggWeights = new(Class = 'VNCdt', data.table(IDQual = c('CCAA', 'NACE09', ''),
 #'                                            NonIDQual = rep('', 3),
 #'                                            IDDD = c('', '', 'Ponderacion'),
 #'                                            CCAA = c('', '', '.'),
 #'                                            NACE09 = c('', '', '.'),
-#'                                            Unit1 = c('Provincia', '', ''))))
+#'                                            UnitName = c('Provincia', '', ''),
+#'                                            InFiles = rep('FF', 3))))
 #' 
 #' VNC <- new(Class = 'VarNameCorresp', VarList)
 #' 
 #' ### We build the specification data.tables
-#' IDdt <- new( Class='DDdt',data.table(
+#' IDdt <- new( Class='DDdt', data.table(
 #'     Variable = c('NumIdEst', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
 #'     Sort = c('IDQual', rep('IDDD', 4)),
 #'     Class = rep('character', 5),
 #'     Length = c('11', '15', '15', '20','9'),
 #'     Qual1 = c('', rep('NumIdEst', 4)),
 #'     ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}')))
-#' Microdt <- new( Class='DDdt',data.table(
+#' Microdt <- new( Class='DDdt', data.table(
 #'     Variable = c('NumIdEst', 'Market', 'NewOrders'),
 #'     Sort = c('IDQual', 'NonIDQual', 'IDDD'),
 #'     Class = c(rep('character', 2), 'numeric'),

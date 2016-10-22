@@ -28,7 +28,7 @@
 #' @import data.table methods
 #'
 #' @export
-DDdtToVNC <- function(DDdt, NameVNC, InFiles){
+DDdtToVNC <- function(DDdt, NameVNC, InFiles = rep('', dim(DDdt)[1])){
     
     numVar <- length(DDdt[['Variable']])
     if (length(InFiles) != numVar) stop('[StQ::DDdtToVNC] InFiles must be a character with as many components as rows in DDdt.\n')

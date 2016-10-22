@@ -5,7 +5,7 @@
 \title{Returns the corresponding object of class \linkS4class{VarNameCorresp} according to the
  DDdt input object.}
 \usage{
-DDdtToVNC(DDdt, NameVNC, InFiles)
+DDdtToVNC(DDdt, NameVNC, InFiles = rep("", dim(DDdt)[1]))
 }
 \arguments{
 \item{DDdt}{Object of class \linkS4class{DDdt}.}
