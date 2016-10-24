@@ -22,16 +22,18 @@
 #'                              NonIDQual = rep('', 5),
 #'                              IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
 #'                              NumIdEst = c('', rep('.', 4)),
-#'                              Unit1 = c('numidest', 'nombre', 'apellidos', 'direccion', 
-#'                                        'telefono')))
+#'                              UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 
+#'                                        'telefono'),
+#'                              InFiles = rep('FI', 5)))
 #'                                            
 #' ID2 <- new(Class = 'VNCdt',
 #'           .Data = data.table(IDQual = c('NumIdEst', rep('', 4)),
 #'                              NonIDQual = c(rep('', 5)),
 #'                              IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
 #'                              NumIdEst = c('', rep('.', 4)),
-#'                              Unit1 = c('numidest', 'nombre', 'apellidos', 'direccion', 
-#'                                        'telefono')))
+#'                              UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 
+#'                                        'telefono'),
+#'                              InFiles = rep('FI', 5)))
 #'                                            
 #' ID1 + ID2                                            
 #'                                            
@@ -41,7 +43,8 @@
 #'                                      IDDD = c(rep('', 2), 'Turnover'),
 #'                                      NumIdEst = c(rep('', 2), '.'),
 #'                                      Market = c(rep('', 2), '1.'),
-#'                                      Unit1 = c('numidest', '', 'cn05')))
+#'                                      UnitName = c('numidest', '', 'cn05'),
+#'                                      InFiles = rep('FF, FD, FG', 3)))
 #'                                      
 #' MicroData2 <- new(Class ='VNCdt',
 #'                   .Data = data.table(IDQual = c('NumIdEst', rep('', 2)),
@@ -49,8 +52,8 @@
 #'                                      IDDD = c(rep('', 2), 'NewOrders'),
 #'                                      NumIdEst = c(rep('', 2), '.'),
 #'                                      Market = c(rep('', 2), '3.'),
-#'                                      Unit1 = c('numidest', '', 'cp09'),
-#'                                      Unit2 = c('norden', rep('', 2))))
+#'                                      UnitName = c('numidest', '', 'cp09'),
+#'                                      InFiles = rep('FF, FD, FG', 3)))
 #'                                      
 #' MicroData1 + MicroData2                                      
 #'                                      
@@ -61,7 +64,8 @@
 #'                                       Province = c('', '', '', '.'),
 #'                                       NACE = c('', '', '', '.'),
 #'                                       Market = c('', '', '', '2.'),
-#'                                       Unit1 = c('provincia', 'actividad', '', 'cn01')))
+#'                                       UnitName = c('provincia', 'actividad', '', 'cn01'),
+#'                                       InFiles = rep('FA', 4)))
 #' 
 #' 
 #' Aggregates2 <- new(Class = 'VNCdt',
@@ -71,7 +75,8 @@
 #'                                      Province = c('', '', '', '.'),
 #'                                      NACE = c('', '', '', '.'),
 #'                                      Market = c('', '', '', '1.'),
-#'                                      Unit1 = c('provincia', 'actividad', '', 'cp02'))) 
+#'                                      UnitName = c('provincia', 'actividad', '', 'cp02'),
+#'                                      InFiles = rep('FA', 4))) 
 #'
 #' Aggregates1 + Aggregates2                                                   
 #' 
@@ -85,7 +90,7 @@ setMethod(
     f = "+",
     signature = c("VNCdt", "VNCdt"),
     definition = function(e1, e2){
-        
+
         CommonCols <- intersect(names(e1), names(e2))
         VNCdt1 <- setkeyv(e1, CommonCols)
         VNCdt2 <- setkeyv(e2, CommonCols)
@@ -98,14 +103,13 @@ setMethod(
                     
             }
         
-        UnitCol <- names(outVar)[grep('Unit', names(outVar))]
-        setkeyv(outVar, setdiff(names(outVar), UnitCol))
+        setkeyv(outVar, setdiff(names(outVar), c('UnitName', 'InFiles')))
         outVar <- outVar[!duplicated(outVar)]
 
         IDQual <- unique(outVar[which(IDQual != ""), IDQual])
         NonIDQual <- unique(outVar[which(NonIDQual != ""), NonIDQual])
         NonIDQual <- setdiff(NonIDQual, IDQual)
-        setcolorder(outVar, c('IDQual', 'NonIDQual', 'IDDD', IDQual, NonIDQual, UnitCol))
+        setcolorder(outVar, c('IDQual', 'NonIDQual', 'IDDD', IDQual, NonIDQual, 'UnitName', 'InFiles'))
         output <- new(Class = 'VNCdt', outVar) 
         
         return(output)

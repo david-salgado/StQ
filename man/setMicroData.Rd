@@ -28,26 +28,27 @@ Object \linkS4class{DD} with slot \code{ID} updated.
 \examples{
 # An example:
 library(data.table)
-MicroDataDD <- data.table(Variable = 'IEPEntradaPed', Sort = 'IDDD', Class = 'numeric',
+MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
                           Length = '8',
                           Qual1 = 'NumIdEst', Qual2 = 'Market', ValueRegExp = '')
 MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
 VarList <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','',''),
                                                           NonIDQual = c('', 'Market', 'Cod', ''),
-                                                          IDDD = c('', '', '' ,'IEPEntradaPed'),
+                                                          IDDD = c('', '', '' , 'NewOrders'),
                                                           NumIdEst = c('', '', '', '.'),
                                                           Market = c('', '', '', '1.'),
                                                           Cod = rep('', 4),
-                                                          UnitName = c('', '', '', 'cp02'))))
+                                                          UnitName = c('', '', '', 'cp02'),
+                                                          InFiles = rep('FF', 4))))
 VNC <- BuildVNC(VarList)
 DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = MicroDataDD)
 
-Microdt <- data.table(Variable = c('NumIdEst', 'NewOrders'),
-                      Sort = c('IDQual', 'IDDD'),
-                      Class = c('character', 'character'),
-                      Length = c('11', '8'),
-                      Qual1 = c('', 'NumIdEst'),
-                      ValueRegExp = c('[0-9]{9}PP', '([0-9]{1, 10}| )'))
+Microdt <- data.table(Variable = c('NumIdEst', 'NewOrders', 'Turnover'),
+                      Sort = c('IDQual', 'IDDD', 'IDDD'),
+                      Class = c('character', 'numeric', 'numeric'),
+                      Length = c('11', '8', '8'),
+                      Qual1 = c('', 'NumIdEst', 'NumIdEst'),
+                      ValueRegExp = c('[0-9]{9}PP', '([0-9]{1, 10}| )', '([0-9]{1, 10}| )'))
 Microdt <- new(Class = 'DDdt', Microdt)
 
 setMicroData(DD) <- Microdt

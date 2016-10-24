@@ -14,8 +14,8 @@
 #'  \item One column of name \emph{"IDQual"}\code{j} per each unit qualifier.
 #'  \item One column of name \emph{"NonIDQual"}\code{k} per each variable
 #'  qualifier.
-#'  \item One column of name \emph{"UnitName"}\code{p} per each production unit
-#'  which assigns their proper statistical variable names.
+#'  \item \code{UnitName}: statistical variable names currently used in production.
+#'  \item \code{InFiles}: codes for the files where each variable is to be included.
 #' }
 #'
 #' @examples
@@ -26,7 +26,8 @@
 #'                IDDD = c('', '', 'Turnover', 'Turnover'),
 #'                NOrden = c('', '', '.', '.'),
 #'                IsNatMarket = c('', '', '0', '1'),
-#'                UnitName = c('', '', 'cn01', 'cn02')))
+#'                UnitName = c('', '', 'cn01', 'cn02'),
+#'                InFiles = rep('FF', 4)))
 #' @import data.table
 #'
 #' @export
@@ -43,15 +44,15 @@ setClass(Class = "VNCdt",
              ColNames <- names(object)
              if (ColNames[1] != 'IDQual') {
 
-                 stop('[validity VNCdt] The first column of VNCdt must be IDQual.')
+                 stop('[validity VNCdt] The first column of VNCdt must be "IDQual".')
              }
              if (ColNames[2] != 'NonIDQual') {
 
-                 stop('[validity VNCdt] The second column of VNCdt must be NonIDQual.')
+                 stop('[validity VNCdt] The second column of VNCdt must be "NonIDQual".')
              }
              if (ColNames[3] != 'IDDD') {
 
-                 stop('[validity VNCdt] The third column of VNCdt must be IDDD.')
+                 stop('[validity VNCdt] The third column of VNCdt must be "IDDD".')
              }
 
              IDQuals <- object[['IDQual']]
@@ -82,13 +83,23 @@ setClass(Class = "VNCdt",
 
              }
 
-             Units <- ColNames[grep('Unit', ColNames)]
-
-             UnitColNames <- setdiff(ColNames, c('IDQual', 'NonIDQual', 'IDDD', IDQuals, NonIDQuals, 'InFiles'))
-         if (!all(UnitColNames %in% Units)) {
-
-             stop('[Validity VNCdt] The name of the column with production unit variable names must be "UnitName".')
+             if (ColNames[length(ColNames) - 1] != 'UnitName') {
+                 
+                 stop('[validity VNCdt] The penultimate column of VNCdt must be "UnitName".')
              }
+             
+             if (ColNames[length(ColNames)] != 'InFiles') {
+                 
+                 stop('[validity VNCdt] The last column of VNCdt must be "InFiles".')
+             }
+             
+             #Units <- ColNames[grep('Unit', ColNames)]
+
+             #UnitColNames <- setdiff(ColNames, c('IDQual', 'NonIDQual', 'IDDD', IDQuals, NonIDQuals, 'InFiles'))
+         #if (!all(UnitColNames %in% Units)) {
+
+             #stop('[Validity VNCdt] The name of the column with production unit variable names must be "UnitName".')
+             #}
 
              return(TRUE)
          }

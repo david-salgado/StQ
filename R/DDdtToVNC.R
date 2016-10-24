@@ -8,6 +8,9 @@
 #'
 #' @param NameVNC character vector with the name of the element in VNC which is being build.
 #'
+#' @param InFiles character vector with as many components as the rows of \code{DDdt} specifying the 
+#' files where to include each variable.
+#'
 #' @return the corresponding object of class \linkS4class{VarNameCorresp}.
 #'
 #' @examples
@@ -18,16 +21,17 @@
 #'                          Qual1 = c('', 'ID'), ValueRegExp = c('', ''))
 #' AggWeights <- new(Class = 'DDdt', AggWeights)
 #'
-#' VNC <- DDdtToVNC(AggWeights, 'AggWeights')
+#' VNC <- DDdtToVNC(AggWeights, 'AggWeights', rep('FA', 2))
 #'
 #' @include DDdt-class.R
 #'
 #' @import data.table methods
 #'
 #' @export
-DDdtToVNC <- function(DDdt, NameVNC){
-
+DDdtToVNC <- function(DDdt, NameVNC, InFiles = rep('', dim(DDdt)[1])){
+    
     numVar <- length(DDdt[['Variable']])
+    if (length(InFiles) != numVar) stop('[StQ::DDdtToVNC] InFiles must be a character with as many components as rows in DDdt.\n')
     IDQual <- vector('character', numVar)
     NonIDQual <- vector('character', numVar)
     IDDD <- vector('character', numVar)
@@ -63,7 +67,7 @@ DDdtToVNC <- function(DDdt, NameVNC){
     Quals <- c(IDQualdt, NonIDQualdt)
     if (length(Quals) >= 1){
 
-      for (i in seq(1,length(Quals))){
+      for (i in seq(1, length(Quals))){
 
         output <- cbind(output, vector('character', numVar))
         setnames(output, setdiff(names(output), c('IDQual', 'NonIDQual', 'IDDD'))[i], Quals[i])
@@ -72,6 +76,7 @@ DDdtToVNC <- function(DDdt, NameVNC){
     }
 
     output <- cbind(output, UnitName)
+    output <- cbind(output, InFiles)
     output <- new(Class = 'VNCdt', output)
     output <- list(output)
     names(output) <- NameVNC

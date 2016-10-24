@@ -48,7 +48,7 @@
 #' data(ExampleStQ)
 #' newVNCVar <- new(Class = 'VNCdt',
 #'                  data.table(IDQual = '', NonIDQual = '', IDDD = 'lTurnover',
-#'                             Unit1 = ''))
+#'                             UnitName = '', InFiles = 'FF'))
 #' newVNC <- BuildVNC(list(MicroData = newVNCVar))
 #' newDD <- new(Class = 'DD',
 #'              VarNameCorresp = newVNC, 
@@ -133,6 +133,7 @@ setMethod(
         newVNC <- newVNC[, 'NonIDQual' := NULL, with = F]
         UnitCols <- names(newVNC)[grep('Unit', names(newVNC))]
         newVNC <- newVNC[, UnitCols := NULL, with = F]
+        newVNC <- newVNC[, InFiles := NULL]
         NewVarName <- newVNC[['IDDD']]
         for (col in names(newVNC)[-1]){
             
