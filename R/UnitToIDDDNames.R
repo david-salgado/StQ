@@ -143,7 +143,7 @@ setMethod(
         XLS.Quals <- XLS[IDDD == '']
         XLS.Quals[IDQual != '', IDDDName := IDQual]
         XLS.Quals[NonIDQual != '', IDDDName := NonIDQual]
-        XLS.Quals <- XLS.Quals[, c('IDQual', 'NonIDQual', 'UnitName', 'IDDDName'), with = F]
+        XLS.Quals <- XLS.Quals[, c('IDQual', 'NonIDQual', 'UnitName', 'IDDDName', 'InFiles'), with = F]
         XLS <- XLS[IDDD != '']
         XLS.list <- split(XLS, XLS[['IDDD']])
         XLS.list <- lapply(XLS.list, function(xls){
@@ -156,7 +156,7 @@ setMethod(
 
             }
             xls <- xls[, NotEmptyCols, with = F]
-            ColsNotUnit <- setdiff(names(xls), c('IDDD', 'UnitName', 'IDDDName'))
+            ColsNotUnit <- setdiff(names(xls), c('IDDD', 'UnitName', 'IDDDName', 'InFiles'))
             for (col in ColsNotUnit) {
                 
                 if (all(xls[[col]] == '.') | all(is.na(xls[[col]]))) next
@@ -170,7 +170,7 @@ setMethod(
         output <- rbindlist(XLS.list, fill = TRUE)
         output <- rbindlist(list(output, XLS.Quals), fill = TRUE)
         
-        output <- output[which(output[['UnitName']] %in% UnitNames), c('UnitName','IDDDName'), with = F]
+        output <- output[which(output[['UnitName']] %in% UnitNames), c('UnitName','IDDDName', 'InFiles'), with = F]
         out <- output[['IDDDName']]
         names(out) <- output[['UnitName']]
         out <- out[UnitNames]

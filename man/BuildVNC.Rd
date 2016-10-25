@@ -29,7 +29,6 @@ VarList <- list(
                  NumIdEst = c('', rep('.', 4)),
                  UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'),
                  InFiles = rep('FI', 5))),
-
   MicroData = new(Class = 'VNCdt', 
                   .Data = data.table(
                       IDQual = c('NumIdEst', rep('', 2)),
@@ -39,7 +38,6 @@ VarList <- list(
                       Market = c(rep('', 2), '1.'),
                       UnitName = c('numidest', '', 'cp09'),
                       InFiles = rep('FF, FD, FG', 3))),
-
  Aggregates = new(Class = 'VNCdt', 
                   .Data = data.table(
                      IDQual = c('Province', 'NACE', 'Market', ''),
@@ -50,7 +48,6 @@ VarList <- list(
                      Market = c('', '', '', '1.'),
                      UnitName = c('provincia', 'actividad', '', 'cn01'),
                      InFiles = rep('FP', 4))))
-
                      
 VNC <- BuildVNC(VarList)
 VNC
