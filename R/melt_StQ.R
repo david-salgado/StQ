@@ -98,12 +98,12 @@
         if (length(auxMeasureVar) == 0) return(data.table(NULL))
 #        auxMeasureVar <- auxMeasureVar[which(lapply(auxMeasureVar, length) > 0)]
         
-
         moltenData <- lapply(names(auxMeasureVar), function(QualName){
             
             indexCol <- ExtractNames(names(DM)) %in% auxMeasureVar[[QualName]]
             LocalQuals <- strsplit(QualName, ' ')[[1]]
             ColNames <- c(LocalQuals, names(DM)[indexCol])
+
             localDM <- DM[, intersect(ColNames, names(DM)), with = F]
 
             for (col in names(localDM)){
@@ -123,6 +123,7 @@
 
             out <- out[Value != '']
             LocalNonIDQual <- setdiff(LocalQuals, IDQual)
+
             if (dim(out)[1] != 0){
                 
                 outLocal <- stringi::stri_split_fixed(out[['IDDD']], '_')
@@ -163,7 +164,7 @@
         return(moltenData)
         
     })
-   
+  
     out <- rbindlist(out, fill = TRUE)
     
     if (all(dim(out) == c(0, 0))) {

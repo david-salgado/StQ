@@ -125,64 +125,7 @@ setGeneric("UnitToIDDDNames", function(UnitNames, Correspondence){standardGeneri
 
 #' @rdname UnitToIDDDNames
 #'
-#' @include VNCdt-class.R getIDQual.R
-#'
-#' @import data.table
-#' 
-#' @export
-setMethod(
-    f = "UnitToIDDDNames",
-    signature = c("character", "VNCdt"),
-    function(UnitNames, Correspondence){
-        
-        XLS <- slot(Correspondence, '.Data')
-        names(XLS) <- names(Correspondence)
-        setDT(XLS)
-        
-        XLS[, IDDDName := IDDD]
-        XLS.Quals <- XLS[IDDD == '']
-        XLS.Quals[IDQual != '', IDDDName := IDQual]
-        XLS.Quals[NonIDQual != '', IDDDName := NonIDQual]
-        XLS.Quals <- XLS.Quals[, c('IDQual', 'NonIDQual', 'UnitName', 'IDDDName', 'InFiles'), with = F]
-        XLS <- XLS[IDDD != '']
-        XLS.list <- split(XLS, XLS[['IDDD']])
-        XLS.list <- lapply(XLS.list, function(xls){
-            
-            ColNames <- names(xls)
-            NotEmptyCols <- c()
-            for (col in ColNames){
-                
-                if (!all(is.na(xls[[col]]) | xls[[col]] == '')) NotEmptyCols <- c(NotEmptyCols, col)
-
-            }
-            xls <- xls[, NotEmptyCols, with = F]
-            ColsNotUnit <- setdiff(names(xls), c('IDDD', 'UnitName', 'IDDDName', 'InFiles'))
-            for (col in ColsNotUnit) {
-                
-                if (all(xls[[col]] == '.') | all(is.na(xls[[col]]))) next
-                xls[, IDDDName := paste(IDDDName, get(col), sep = '_')]
-                
-            }    
-            return(xls)
-        })
-
-        
-        output <- rbindlist(XLS.list, fill = TRUE)
-        output <- rbindlist(list(output, XLS.Quals), fill = TRUE)
-        
-        output <- output[which(output[['UnitName']] %in% UnitNames), c('UnitName','IDDDName', 'InFiles'), with = F]
-        out <- output[['IDDDName']]
-        names(out) <- output[['UnitName']]
-        out <- out[UnitNames]
-        return(out)
-        
-    }
-    
-)
-
-#' @rdname UnitToIDDDNames
-#'
-#' @include VarNameCorresp-class.R
+#' @include VNCdt-class.R getIDQual.R VarNameCorresp-class.R
 #'
 #' @import data.table
 #' 
@@ -192,11 +135,82 @@ setMethod(
     signature = c("character", "VarNameCorresp"),
     function(UnitNames, Correspondence){
         
-        VNCdt <- Reduce('+', Correspondence)
+        VNC <- Reduce('+', Correspondence)
         
-        out <- UnitToIDDDNames(UnitNames, VNCdt)
+        UnitToIDDDNames.local <- function(UnitNamesLocal, VNCdt){
+            
+            XLS <- slot(VNC, '.Data')
+            names(XLS) <- names(VNC)
+            setDT(XLS)
+            
+            XLS[, IDDDName := IDDD]
+            XLS.Quals <- XLS[IDDD == '']
+            XLS.Quals[IDQual != '', IDDDName := IDQual]
+            XLS.Quals[NonIDQual != '', IDDDName := NonIDQual]
+            XLS.Quals <- XLS.Quals[, c('IDQual', 'NonIDQual', 'UnitName', 'IDDDName', 'InFiles'), with = F]
+            XLS <- XLS[IDDD != '']
+            XLS.list <- split(XLS, XLS[['IDDD']])
+            
+            XLS.list <- lapply(XLS.list, function(xls){
+                
+                ColNames <- names(xls)
+                NotEmptyCols <- c()
+                for (col in ColNames){
+                    
+                    if (!all(is.na(xls[[col]]) | xls[[col]] == '')) NotEmptyCols <- c(NotEmptyCols, col)
+                    
+                }
+                xls <- xls[, NotEmptyCols, with = F]
+                ColsNotUnit <- setdiff(names(xls), c('IDDD', 'UnitName', 'IDDDName', 'InFiles'))
+                ColsNotUnit <- intersect(names(VNCdt), ColsNotUnit)
+                for (col in ColsNotUnit) {
+                    
+                    #if (all(xls[[col]] == '.') | all(is.na(xls[[col]]))) next
+                    if (all(xls[[col]] == '.')) next
+                    xls[, IDDDName := paste(IDDDName, get(col), sep = '_')]
+                    
+                }    
+                return(xls)
+            })
+            
+            
+            output <- rbindlist(XLS.list, fill = TRUE)
+            output <- rbindlist(list(output, XLS.Quals), fill = TRUE)
+            
+            outputNewName <- UnitNamesLocal[!UnitNamesLocal %in% output[['UnitName']]]
+            outputNewName <- data.table(UnitName = outputNewName, IDDDName = outputNewName)
+            output <- output[which(output[['UnitName']] %in% UnitNamesLocal), c('UnitName','IDDDName'), with = F]
+            output <- rbindlist(list(output, outputNewName))
+            out <- output[['IDDDName']]
+            names(out) <- output[['UnitName']]
+            out <- out[UnitNamesLocal]
+            return(out)
+            
+            
+            
+        }
         
-        return(out)        
+        
+        VNCNames <- unique(VNC[['UnitName']])
+        
+        out <- lapply(Correspondence, function(VNCdt){
+            
+            UnitNamesLocal <- intersect(UnitNames, VNCdt[['UnitName']])
+            UnitNamesLocalNewName <- setdiff(UnitNames, VNCNames)
+            UnitNamesLocal <- c(UnitNamesLocal, UnitNamesLocalNewName)
+            namesLocal <- UnitToIDDDNames.local(UnitNamesLocal, VNCdt)
+            outDT <- data.table(Unit = names(namesLocal), IDDD = namesLocal)
+            outDT <- outDT[Unit %in% UnitNames]
+            return(outDT)
+        })
+        outDT <- rbindlist(out)
+        setkeyv(outDT, names(outDT))
+        outDT <- outDT[!duplicated(outDT)]
+        outVector <- outDT[['IDDD']]
+        names(outVector) <- outDT[['Unit']]
+        outVector <- outVector[UnitNames]
+
+        return(outVector)        
         
     }
     
