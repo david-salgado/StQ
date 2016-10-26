@@ -5,13 +5,10 @@
 \alias{UnitToIDDDNames}
 \alias{UnitToIDDDNames,character,DD-method}
 \alias{UnitToIDDDNames,character,StQ-method}
-\alias{UnitToIDDDNames,character,VNCdt-method}
 \alias{UnitToIDDDNames,character,VarNameCorresp-method}
 \title{Convert unit\emph{j} names into their corresponding IDDD variable names.}
 \usage{
 UnitToIDDDNames(UnitNames, Correspondence)
-
-\S4method{UnitToIDDDNames}{character,VNCdt}(UnitNames, Correspondence)
 
 \S4method{UnitToIDDDNames}{character,VarNameCorresp}(UnitNames, Correspondence)
 
