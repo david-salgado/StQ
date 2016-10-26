@@ -1,11 +1,11 @@
 Package: StQ
-Title: Construction of Standard Questionnaires
+Title: Tools to manage metadata-incorporated key-value pair datasets 
 Version: 0.2.7
-Author: David Salgado
-Maintainer: David Salgado <david.salgado.fernandez@gmail.com>
-Description: This package contains the definition of the class StQ to
-    implement a standardized questionnaire and the methods to manage them (show,
-    subsetting, ...)
+Authors@R:
+    person("David", "Salgado", email = "david.salgado.fernandez@gmail.com", role = c("cre", "aut"),
+    person("Elisa", "Esteban", email = "elisa.esteban.segurado@gmail.com", role = "aut"),
+    person("Soledad", "Saldaña", email = "soledad.saldana.diaz@gmail.com", role = "aut"))
+Description: This package contains the definition of the class StQ to implement metadata-incorporated key-value pair datasets and the methods to manage them (show, subsetting, reshaping,...)
 Depends:
     R (>= 3.3.0)
 Imports:
