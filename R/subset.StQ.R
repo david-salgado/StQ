@@ -37,15 +37,14 @@ setMethod(
     Datadt <- new(Class = 'Datadt', eval(mc, envir = parent.frame()))
     
     # Si un identificador de unidad o variable está idénticamente en blanco, esta columna se elimina
-    colData <- names(Datadt)
-    colsData <- c('IDDD', 'Value')
-    Data <- DatadtToDT(Datadt)
-    for (col in setdiff(colData, colsData)){
-        
-        if (all(Data[[col]] == '')) Data[, col := NULL, with = F]
-    }
-    
-    setData(output) <- new(Class = 'Datadt', Data)
+    #colData <- names(Datadt)
+    #colsData <- c('IDDD', 'Value')
+    #Data <- DatadtToDT(Datadt)
+    #for (col in setdiff(colData, colsData)){
+    #    
+    #    if (all(Data[[col]] == '')) Data[, col := NULL, with = F]
+    #}
+    #setData(output) <- new(Class = 'Datadt', Data)
     
     validObject(output)
     return(output)
