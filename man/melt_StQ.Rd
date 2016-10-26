@@ -33,9 +33,10 @@ The input parameter \code{DD} must be of class \linkS4class{DD}.
 }
 \examples{
 data(ExampleDM)
+ExampleDM <- ExampleDM[ID != '']
 data(ExampleDD)
 Q <- melt_StQ(ExampleDM, ExampleDD)
-str(Q)
+Q
 
 }
 \seealso{
