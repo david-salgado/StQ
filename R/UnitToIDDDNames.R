@@ -185,9 +185,6 @@ setMethod(
             names(out) <- output[['UnitName']]
             out <- out[UnitNamesLocal]
             return(out)
-            
-            
-            
         }
         
         
