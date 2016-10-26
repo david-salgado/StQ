@@ -44,7 +44,7 @@ setMethod(
     #    
     #    if (all(Data[[col]] == '')) Data[, col := NULL, with = F]
     #}
-    #setData(output) <- new(Class = 'Datadt', Data)
+    setData(output) <- new(Class = 'Datadt', Datadt)
     
     validObject(output)
     return(output)
