@@ -14,16 +14,6 @@
 #' @examples
 #' # An example for VNCdt:
 #' library(data.table)
-#' VNCdt <- new(Class = 'VNCdt',
-#'                 .Data =data.table(IDQual = c('NumIdEst', rep('', 2)),
-#'                                   NonIDQual = c('', 'Market', ''),
-#'                                   IDDD = c(rep('', 2), 'NewOrders'),
-#'                                   NumIdEst = c(rep('', 2), '.'),
-#'                                   Market = c(rep('', 2), '1.'),
-#'                                   UnitName = c('numidest', '', 'cp09'),
-#'                                   InFiles = rep('FI', 3)))
-#'  
-#'  UnitToIDDDNames(VNCdt, UnitNames = c('cp09'))
 #'
 #' # An example for VNC and DD objects:
 #' library(data.table)
