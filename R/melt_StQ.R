@@ -24,6 +24,7 @@
 #'
 #' @examples
 #' data(ExampleDM)
+#' ExampleDM <- ExampleDM[ID != '']
 #' data(ExampleDD)
 #' Q <- melt_StQ(ExampleDM, ExampleDD)
 #' str(Q)
@@ -97,7 +98,7 @@
         auxMeasureVar <- split(auxDDdt[['Variable']], auxDDdt[['Qual']])
         if (length(auxMeasureVar) == 0) return(data.table(NULL))
 #        auxMeasureVar <- auxMeasureVar[which(lapply(auxMeasureVar, length) > 0)]
-        
+
         moltenData <- lapply(names(auxMeasureVar), function(QualName){
             
             indexCol <- ExtractNames(names(DM)) %in% auxMeasureVar[[QualName]]
@@ -164,7 +165,7 @@
         return(moltenData)
         
     })
-  
+
     out <- rbindlist(out, fill = TRUE)
     
     if (all(dim(out) == c(0, 0))) {
