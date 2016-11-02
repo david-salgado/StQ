@@ -62,7 +62,7 @@ library(data.table)
 data(ExampleStQ)
 newVNCVar <- new(Class = 'VNCdt',
                  data.table(IDQual = '', NonIDQual = '', IDDD = 'lTurnover',
-                            Unit1 = ''))
+                            UnitName = '', InFiles = 'FF'))
 newVNC <- BuildVNC(list(MicroData = newVNCVar))
 newDD <- new(Class = 'DD',
              VarNameCorresp = newVNC, 

@@ -5,13 +5,10 @@
 \alias{UnitToIDDDNames}
 \alias{UnitToIDDDNames,character,DD-method}
 \alias{UnitToIDDDNames,character,StQ-method}
-\alias{UnitToIDDDNames,character,VNCdt-method}
 \alias{UnitToIDDDNames,character,VarNameCorresp-method}
 \title{Convert unit\emph{j} names into their corresponding IDDD variable names.}
 \usage{
 UnitToIDDDNames(UnitNames, Correspondence)
-
-\S4method{UnitToIDDDNames}{character,VNCdt}(UnitNames, Correspondence)
 
 \S4method{UnitToIDDDNames}{character,VarNameCorresp}(UnitNames, Correspondence)
 
@@ -36,15 +33,6 @@ corresponding to the Unit\emph{j} variable name specified .
 \examples{
 # An example for VNCdt:
 library(data.table)
-VNCdt <- new(Class = 'VNCdt',
-                .Data =data.table(IDQual = c('NumIdEst', rep('', 2)),
-                                  NonIDQual = c('', 'Market', ''),
-                                  IDDD = c(rep('', 2), 'NewOrders'),
-                                  NumIdEst = c(rep('', 2), '.'),
-                                  Market = c(rep('', 2), '1.'),
-                                  UnitName = c('numidest', '', 'cp09')))
- 
- UnitToIDDDNames(VNCdt, UnitNames = c('cp09'))
 
 # An example for VNC and DD objects:
 library(data.table)
@@ -56,8 +44,8 @@ VarList <- list(ID = new(Class = 'VNCdt',
                                                      'PhoneNo'),
                                             NumIdEst = c('', rep('.', 4)),
                                             UnitName = c('numidest', 'nombre', 'apellidos', 
-                                                      'direccion', 'telefono')     
-                                )),
+                                                      'direccion', 'telefono'),
+                                            InFiles = rep('FF', 5))),
                 MicroData = new(Class = 'VNCdt',
                                 .Data = data.table(
                                         IDQual = c('NumIdEst', rep('', 2)),
@@ -65,7 +53,8 @@ VarList <- list(ID = new(Class = 'VNCdt',
                                         IDDD = c(rep('', 2), 'NewOrders'),
                                         NumIdEst = c(rep('', 2), '.'),
                                         Market = c(rep('', 2), '2.'),
-                                        UnitName = c('numidest', '', 'cp09'))),
+                                        UnitName = c('numidest', '', 'cp09'),
+                                        InFiles = rep('FF', 3))),
                 ParaData = new(Class = 'VNCdt',
                                 .Data = data.table(
                                         IDQual = c('NumIdEst', rep('', 2)),
@@ -73,7 +62,8 @@ VarList <- list(ID = new(Class = 'VNCdt',
                                         IDDD = c(rep('', 2), 'Date'),
                                         NumIdEst = c(rep('', 2), '.'),
                                         Action = c(rep('', 2), 'Imputation'),
-                                        UnitName = c('numidest', '', 'FechaImput'))),
+                                        UnitName = c('numidest', '', 'FechaImput'),
+                                        InFiles = rep('FP', 3))),
                 Aggregates = new(Class = 'VNCdt',
                                  .Data = data.table(
                                          IDQual = c('Province', 'NACE09', '', ''),
@@ -82,7 +72,8 @@ VarList <- list(ID = new(Class = 'VNCdt',
                                          Province = c('', '', '', '.'),
                                          NACE09 = c('', '', '', '.'),
                                          Market = c('', '', '', '3.'),
-                                         UnitName = c('provincia', 'actividad', '', 'cn01'))))
+                                         UnitName = c('provincia', 'actividad', '', 'cn01'),
+                                         InFiles = rep('FA', 4))))
 
 VNC <- new(Class = 'VarNameCorresp', .Data = VarList)
 

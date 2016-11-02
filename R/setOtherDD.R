@@ -12,17 +12,18 @@
 #' @examples
 #' # An example:
 #' library(data.table)
-#' MicroDataDD <- data.table(Variable = 'IEPEntradaPed', Sort = 'IDDD', Class = 'numeric',
+#' MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
 #'                           Length = '8',
 #'                           Qual1 = 'NumIdEst', Qual2 = 'Market', ValueRegExp = '')
 #' MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
 #' VarList <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','',''),
 #'                                                           NonIDQual = c('', 'Market', 'Cod', ''),
-#'                                                           IDDD = c('', '', '' ,'IEPEntradaPed'),
+#'                                                           IDDD = c('', '', '' ,'NewOrders'),
 #'                                                           NumIdEst = c('', '', '', '.'),
 #'                                                           Market = c('', '', '', '1.'),
 #'                                                           Cod = rep('', 4),
-#'                                                           UnitName = c('', '', '', 'cp02'))))
+#'                                                           UnitName = c('', '', '', 'cp02'),
+#'                                                           InFiles = rep('FF', 4))))
 #' VNC <- BuildVNC(VarList)
 #' DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = MicroDataDD)
 #'           

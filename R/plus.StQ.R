@@ -25,7 +25,8 @@
 #'                    NonIDQual = c('', ''),
 #'                    IDDD = c('', 'NewOrders'),
 #'                    ID = c('', '.'),
-#'                    Unit1 = c('numidest', 'cp01'))
+#'                    UnitName = c('numidest', 'cp01'),
+#'                    InFiles = rep('FF', 2))
 #' VNC1 <- new(Class = 'VNCdt', VNC1)
 #' VNC1 <- BuildVNC(list(MicroData = VNC1))
 #'

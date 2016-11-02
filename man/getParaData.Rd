@@ -30,27 +30,29 @@ VarList <- list(ID = new(Class = 'VNCdt',
                            NonIDQual = c('','','','',''),
                            IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
                            NumIdEst = c('', rep('.', 4)),
-                           Unit1 = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'))
- ),
+                           UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'),
+                           InFiles = rep('FI', 5))),
 MicroData =new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
                                            NonIDQual = c('', 'Market', ''),
                                            IDDD = c(rep('', 2), 'NewOrders'),
                                            NumIdEst = c(rep('', 2), '.'),
                                            Market = c(rep('', 2), '1.'),
-                                           Unit1 = c('numidest', '', 'cp09'))),
+                                           UnitName = c('numidest', '', 'cp09'),
+                                           InFiles = rep('FF, FD, FG', 3))),
 ParaData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
                                            NonIDQual = c('', 'Action', ''),
                                            IDDD = c(rep('', 2), 'Date'),
                                            NumIdEst = c(rep('', 2), '.'),
                                            Action = c(rep('', 2), 'Imputation'),
-                                           Unit1 = c('numidest', '', 'FechaImput'))),
+                                           UnitName = c('numidest', '', 'FechaImput'),
+                                           InFiles = rep('FP', 3))),
 AggWeights = new(Class = 'VNCdt', data.table(IDQual = c('CCAA', 'NACE09', ''),
                                            NonIDQual = rep('', 3),
                                            IDDD = c('', '', 'Ponderacion'),
                                            CCAA = c('', '', '.'),
                                            NACE09 = c('', '', '.'),
-                                           Unit1 = c('Provincia', '', ''))))
-
+                                           UnitName = c('Provincia', '', ''),
+                                           InFiles = rep('FA', 3))))
 VNC <- new(Class = 'VarNameCorresp', VarList)
 
 ### We build the specification data.tables

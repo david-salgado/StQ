@@ -20,14 +20,16 @@
 #'                                                       'PhoneNo'),
 #'                                              ID = c('', rep('.', 4)),
 #'                                              UnitName = c('numidest', 'nombre', 'apellidos', 
-#'                                                 'direccion', 'telefono'))),
+#'                                                 'direccion', 'telefono'),
+#'                                              InFiles = rep('FI', 5))),
 #'                  MicroData = new(Class = "VNCdt",
 #'                                  .Data = data.table(IDQual = c('ID', rep('', 2)),
 #'                                                     NonIDQual = c('', 'Market', ''),
 #'                                                     IDDD = c(rep('', 2), 'Turnover'),
 #'                                                     ID = c(rep('', 2), '.'),
 #'                                                     Market = c(rep('', 2), '1'),
-#'                                                     UnitName = c('numidest', '', 'cn05'))),
+#'                                                     UnitName = c('numidest', '', 'cn05'),
+#'                                                     InFiles = rep('FF, FD, FG', 3))),
 #'                 Aggregates = new(Class = "VNCdt",
 #'                                  .Data = data.table(IDQual = c('Province', 'NACE', 'Market', ''),
 #'                                                     NonIDQual = c(rep('', 4)),
@@ -36,7 +38,8 @@
 #'                                                     NACE = c('', '', '', '.'),
 #'                                                     Market = c('', '', '', '2'),
 #'                                                     UnitName = c('provincia', 'actividad', '', 
-#'                                                               'cn01'))))
+#'                                                               'cn01'),
+#'                                                     InFiles = rep('FP', 4))))
 #' VNC1 <- BuildVNC(VarList1)
 #' 
 #' ID1dt <- new(Class = 'DDdt', 
@@ -74,14 +77,16 @@
 #'                                                       'PhoneNo'),
 #'                                              ID = c('', rep('.', 4)),
 #'                                              UnitName = c('numidest', 'nombre', 'apellidos', 
-#'                                                    'direccion', 'telefono'))),     
+#'                                                    'direccion', 'telefono'),
+#'                                              InFiles = rep('FI', 5))),     
 #'                  MicroData = new(Class = "VNCdt",
 #'                                  .Data =data.table(IDQual = c('ID', rep('', 2)),
 #'                                                    NonIDQual = c('', 'Market', ''),
 #'                                                    IDDD = c(rep('', 2), 'NewOrders'),
 #'                                                    ID = c(rep('', 2), '.'),
 #'                                                    Market = c(rep('', 2), '1.'),
-#'                                                    UnitName = c('numidest', '', 'cp09'))),
+#'                                                    UnitName = c('numidest', '', 'cp09'),
+#'                                                    InFiles = rep('FF, FD, FG', 3))),
 #'                 Aggregates = new(Class = "VNCdt",
 #'                                  .Data =data.table(IDQual = c('Province', 'NACE', 'Market', ''),
 #'                                                    NonIDQual = c(rep('', 4)),
@@ -90,7 +95,8 @@
 #'                                                    NACE = c('', '', '', '.'),
 #'                                                    Market = c('', '', '', '2.'),
 #'                                                    UnitName = c('provincia', 'actividad','', 
-#'                                                              'cp02'))))
+#'                                                              'cp02'),
+#'                                                    InFiles = rep('FP', 4))))
 #' VNC2 <- BuildVNC(VarList2)
 #' 
 #' ID2dt <- new(Class = 'DDdt',

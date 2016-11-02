@@ -21,7 +21,8 @@
 #'                                             IDDD = c(rep('', 2), 'NewOrders'),
 #'                                             NumIdEst = c(rep('', 2), '.'),
 #'                                             Market = c(rep('', 2), '1.'),
-#'                                             Unit1 = c('numidest', '', 'cp09')))
+#'                                             UnitName = c('numidest', '', 'cp09'),
+#'                                             InFiles = rep('FF', 3)))
 #' MicroData[IDDD == 'NewOrders']
 #' 
 #'

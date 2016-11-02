@@ -24,9 +24,10 @@
 #'
 #' @examples
 #' data(ExampleDM)
+#' ExampleDM <- ExampleDM[ID != '']
 #' data(ExampleDD)
 #' Q <- melt_StQ(ExampleDM, ExampleDD)
-#' str(Q)
+#' Q
 #'
 #' @seealso \code{\link{dcast_StQ}}, \code{\link[data.table]{dcast.data.table}},
 #' \code{\link[data.table]{melt.data.table}}, \code{\link[reshape2]{melt}},
@@ -97,13 +98,13 @@
         auxMeasureVar <- split(auxDDdt[['Variable']], auxDDdt[['Qual']])
         if (length(auxMeasureVar) == 0) return(data.table(NULL))
 #        auxMeasureVar <- auxMeasureVar[which(lapply(auxMeasureVar, length) > 0)]
-        
 
         moltenData <- lapply(names(auxMeasureVar), function(QualName){
             
             indexCol <- ExtractNames(names(DM)) %in% auxMeasureVar[[QualName]]
             LocalQuals <- strsplit(QualName, ' ')[[1]]
             ColNames <- c(LocalQuals, names(DM)[indexCol])
+
             localDM <- DM[, intersect(ColNames, names(DM)), with = F]
 
             for (col in names(localDM)){
@@ -123,26 +124,45 @@
 
             out <- out[Value != '']
             LocalNonIDQual <- setdiff(LocalQuals, IDQual)
+#return(out)
             if (dim(out)[1] != 0){
                 
-                outLocal <- stringi::stri_split_fixed(out[['IDDD']], '_')
-
-                if (length(outLocal) == 1) {
+                if (length(LocalNonIDQual) > 0) {
                     
-                    outLocal <- as.data.table(t(as.matrix(outLocal[[1]])))
+                    auxIDDD <- stringi::stri_split_fixed(out[['IDDD']], '_')
+                    ExtractCol <- function(i){
+                        
+                        Col <- unlist(lapply(auxIDDD, '[', i))
+                        return(Col)
+                    }
+                    
+                    if (length(auxIDDD) == 1){
+                        
+                        outLocal <- as.data.table(t(as.matrix(auxIDDD[[1]])))
+                    
+                    } else {
+                    
+                        ColNames <- c('IDDD', LocalNonIDQual)
+                        outLocal <- out[, setdiff(names(out), ColNames), with = F]
+                        for (index.col in seq(along = ColNames)){
+                            
+                            outLocal[, ColNames[index.col] := ExtractCol(index.col), with = F]
+                        }
+                        setcolorder(outLocal, c(IDQual, LocalNonIDQual, 'IDDD', 'Value'))
+                    }
                     
                 } else {
                     
-                    outLocal <- as.data.table(Reduce(rbind, outLocal))
-                    
+                    outLocal <- out
                 }
-                setnames(outLocal, c('IDDD', LocalNonIDQual))
-                outLocal[, Value := out[['Value']]]
-                for (idqual in IDQual){
+
+                #setnames(outLocal, c('IDDD', LocalNonIDQual))
+                #outLocal[, Value := out[['Value']]]
+                #for (idqual in IDQual){
                     
-                    outLocal[, idqual := out[[idqual]], with = F]
-                }
-                setcolorder(outLocal, c(IDQual, LocalNonIDQual, 'IDDD', 'Value'))
+                #    outLocal[, idqual := out[[idqual]], with = F]
+                #}
+                #setcolorder(outLocal, c(IDQual, LocalNonIDQual, 'IDDD', 'Value'))
             
             } else {
                 
@@ -162,7 +182,7 @@
         return(moltenData)
         
     })
-   
+
     out <- rbindlist(out, fill = TRUE)
     
     if (all(dim(out) == c(0, 0))) {

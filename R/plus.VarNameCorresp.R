@@ -24,7 +24,8 @@
 #'                                 IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
 #'                                 NumIdEst = c('', rep('.', 4)),
 #'                                 UnitName = c('numidest', 'nombre', 'apellidos', 'direccion',
-#'                                           'telefono'))),
+#'                                           'telefono'),
+#'                                 InFiles = rep('FI', 5))),
 #'     MicroData = new(Class = 'VNCdt',
 #'                     data.table(IDQual = c('NumIdEst', '', '', '', '', ''),
 #'                                NonIDQual = c('', 'Market', 'Cod','Var1', 'Var2', ''),
@@ -34,7 +35,8 @@
 #'                                Cod = c('', '', '', '', '', ''),
 #'                                Var1 = c('', '', '', '', '', ''),
 #'                                Var2 = c('', '', '', '', '', ''),
-#'                                UnitName = c('', '', '', '', '','cp09'))),
+#'                                UnitName = c('', '', '', '', '','cp09'),
+#'                                InFiles = rep('FF', 6))),
 #'     ParaData = new(Class = 'VNCdt'),
 #'     Aggregates = new(Class = 'VNCdt',
 #'                      .Data = data.table(
@@ -44,7 +46,8 @@
 #'                          Province = c('', '', '', '.'),
 #'                          NACE = c('', '', '', '.'),
 #'                          Market = c('', '', '', '2.'),
-#'                          UnitName = c('provincia', 'actividad', '', 'cn01'))))
+#'                          UnitName = c('provincia', 'actividad', '', 'cn01'),
+#'                          InFiles = rep('FP', 4))))
 #' VNC1 <- new(Class = 'VarNameCorresp', .Data = VarList1)
 #'
 #' VarList2 <- list(
@@ -54,7 +57,8 @@
 #'                                 IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
 #'                                 NumIdEst = c('', rep('.', 4)),
 #'                                 UnitName = c('numidest', 'nombre', 'apellidos', 'direccion',
-#'                                           'telefono'))),
+#'                                           'telefono'),
+#'                                 InFiles = rep('FI', 5))),
 #'     MicroData = new(Class = 'VNCdt',
 #'                     data.table(IDQual = c('NumIdEst', '', '', '', '', ''),
 #'                                NonIDQual = c('', 'Market', 'Cod','Var1', 'Var2', ''),
@@ -64,7 +68,8 @@
 #'                                Cod = c('', '', '', '', '', ''),
 #'                                Var1 = c('', '', '', '', '', ''),
 #'                                Var2 = c('', '', '', '', '', ''),
-#'                                UnitName = c('', '', '', '', '','cp09'))),
+#'                                UnitName = c('', '', '', '', '','cp09'),
+#'                                InFiles = rep('FF', 6))),
 #'     ParaData = new(Class = 'VNCdt'),
 #'     Aggregates = new(Class = 'VNCdt',
 #'                      .Data = data.table(
@@ -74,7 +79,8 @@
 #'                          Province = c('', '', '', '.'),
 #'                          NACE = c('', '', '', '.'),
 #'                          Market = c('', '', '', '2.'),
-#'                          UnitName = c('provincia', 'actividad', '', 'cn01'))))
+#'                          UnitName = c('provincia', 'actividad', '', 'cn01'),
+#'                          InFiles = rep('FA', 4))))
 #'
 #' VNC2 <- new(Class = 'VarNameCorresp', .Data = VarList2)
 #'
