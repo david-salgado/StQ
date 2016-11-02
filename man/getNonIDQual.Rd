@@ -20,7 +20,7 @@ getNonIDQual(object, Namesdt)
 
 \S4method{getNonIDQual}{DD}(object, Namesdt)
 
-\S4method{getNonIDQual}{StQ}(object)
+\S4method{getNonIDQual}{StQ}(object, Namesdt)
 }
 \arguments{
 \item{object}{Object with the NonIDQual variable qualifiers.}
