@@ -29,6 +29,12 @@ setMethod(
     signature = c("StQ"),
     function(Q){
         
+        if (dim(getData(Q))[1] == 0){
+          
+          rawQ <- new(Class = 'rawStQ')
+          return(rawQ)
+        }
+      
         DD <- getDD(Q)
         DDdt.list <- setdiff(slotNames(DD), 'VarNameCorresp')
         DDdt.list <- lapply(DDdt.list, function(Name){slot(DD, Name)})
