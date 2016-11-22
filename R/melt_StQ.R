@@ -52,6 +52,14 @@
     }
     
     DM <- copy(DataMatrix)
+    DMnames <- names(DM)
+    for (col in DMnames){
+      
+      if (all(DM[[col]] == '')){
+        
+        DM <- DM[, setdiff(names(DM), col), with = FALSE]
+      }
+    }
     setnames(DM, names(DM), UnitToIDDDNames(names(DM), DD))
 
     #Construimos un objeto DD auxiliar
@@ -124,7 +132,7 @@
 
             out <- out[Value != '']
             LocalNonIDQual <- setdiff(LocalQuals, IDQual)
-#return(out)
+
             if (dim(out)[1] != 0){
                 
                 if (length(LocalNonIDQual) > 0) {
@@ -184,7 +192,7 @@
     })
 
     out <- rbindlist(out, fill = TRUE)
-    
+   
     if (all(dim(out) == c(0, 0))) {
         
         output.StQ <- new(Class = 'StQ')
@@ -201,7 +209,7 @@
             out[is.na(get(col)), col := '', with = F]
         }
         
-        
+      
         out <- new(Class = 'Datadt', out)
      
         output.StQ <- new(Class = 'StQ', Data = out, DD = DD)
