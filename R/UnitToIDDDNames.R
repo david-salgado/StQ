@@ -172,26 +172,34 @@ setMethod(
             aux <- output[, c('UnitName', 'IDDDName'), with = FALSE]
             UnitNames <- unique(aux[['UnitName']])
             patrones <- UnitNames[grep('[[]', UnitNames)]
-            metaVar <- lapply(patrones, function(patron){
-                  
-                        patron_aux <- patron
-                        patron <- gsub('\\[mm\\]', '(([0][1-9])|([1][0-2]))', patron)
-                        patron <- gsub('\\[aa\\]', '[0-9]{2}', patron)
-                        Var <- lapply(outputNewName, function(name){
-                                out <- regexpr(patron, name)
-                                out <- regmatches(name, out)
-                                names(out) <- rep(aux[UnitName %in% patron_aux][['IDDDName']], length(out))
-                                return(out)
-                        })
-                        
-                        return(Var)
-                      })
-            
-            metaVar <- unlist(metaVar)
+            if (length(outputNewName) > 0){
+              
+              metaVar <- lapply(patrones, function(patron){
+                
+                patron_aux <- patron
+                patron <- gsub('\\[mm\\]', '(([0][1-9])|([1][0-2]))', patron)
+                patron <- gsub('\\[aa\\]', '[0-9]{2}', patron)
+                Var <- lapply(outputNewName, function(name){
+                  out <- regexpr(patron, name)
+                  out <- regmatches(name, out)
+                  names(out) <- rep(aux[UnitName %in% patron_aux][['IDDDName']], length(out))
+                  return(out)
+                })
+                
+                return(Var)
+              })
+              
+              metaVar <- unlist(metaVar)
+      
+              outputMetaVar <- data.table(UnitName = metaVar, IDDDName = names(metaVar))
+            }else{
+              
+              outputMetaVar <- data.table()
+            }
+
           
             outputNew <- setdiff(outputNewName, metaVar)
             outputNew <- data.table(UnitName = outputNew, IDDDName = outputNew)
-            outputMetaVar <- data.table(UnitName = metaVar, IDDDName = names(metaVar))
             output <- output[which(output[['UnitName']] %in% UnitNamesLocal), c('UnitName','IDDDName'), with = F]
             output <- rbindlist(list(output, outputMetaVar, outputNew))
             out <- output[['IDDDName']]
