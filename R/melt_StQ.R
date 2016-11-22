@@ -203,7 +203,7 @@
         
         
         out <- new(Class = 'Datadt', out)
-        
+     
         output.StQ <- new(Class = 'StQ', Data = out, DD = DD)
     
     }
