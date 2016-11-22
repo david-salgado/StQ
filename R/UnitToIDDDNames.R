@@ -190,15 +190,16 @@ setMethod(
               })
               
               metaVar <- unlist(metaVar)
-      
+              outputNew <- setdiff(outputNewName, metaVar)
               outputMetaVar <- data.table(UnitName = metaVar, IDDDName = names(metaVar))
             }else{
               
               outputMetaVar <- data.table()
+              outputNew <- outputNewName
             }
 
           
-            outputNew <- setdiff(outputNewName, metaVar)
+            
             outputNew <- data.table(UnitName = outputNew, IDDDName = outputNew)
             output <- output[which(output[['UnitName']] %in% UnitNamesLocal), c('UnitName','IDDDName'), with = F]
             output <- rbindlist(list(output, outputMetaVar, outputNew))
