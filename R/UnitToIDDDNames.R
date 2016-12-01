@@ -172,7 +172,7 @@ setMethod(
             aux <- output[, c('UnitName', 'IDDDName'), with = FALSE]
             UnitNames <- unique(aux[['UnitName']])
             patrones <- UnitNames[grep('[[]', UnitNames)]
-            if (length(outputNewName) > 0){
+            if (length(outputNewName) > 0 & length(patrones) > 0){
               
               metaVar <- lapply(patrones, function(patron){
                 
