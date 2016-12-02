@@ -40,7 +40,7 @@
 #' @importFrom stringi stri_split_fixed
 #' 
 #' @export
-    melt_StQ <- function(DataMatrix, DD){
+melt_StQ <- function(DataMatrix, DD){
 
     # Función que elimina carácter blanco al principio y al final
     trim <- function (x) gsub("^\\s+|\\s+$", "", x, useBytes = T)
@@ -60,6 +60,7 @@
         DM <- DM[, setdiff(names(DM), col), with = FALSE]
       }
     }
+
     setnames(DM, names(DM), UnitToIDDDNames(names(DM), DD))
 
     #Construimos un objeto DD auxiliar
@@ -111,6 +112,7 @@
             
             indexCol <- ExtractNames(names(DM)) %in% auxMeasureVar[[QualName]]
             LocalQuals <- strsplit(QualName, ' ')[[1]]
+
             ColNames <- c(LocalQuals, names(DM)[indexCol])
 
             localDM <- DM[, intersect(ColNames, names(DM)), with = F]
@@ -180,7 +182,6 @@
             return(outLocal)
 
         })
-
         names(moltenData) <- names(auxMeasureVar)
 
         #moltenData <- lapply(moltenData, function(DT) { DT <- DT[get(unlist(strsplit(names(DT), ' '))) != ""]})
@@ -211,7 +212,6 @@
         
       
         out <- new(Class = 'Datadt', out)
-     
         output.StQ <- new(Class = 'StQ', Data = out, DD = DD)
     
     }
