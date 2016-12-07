@@ -40,7 +40,7 @@
 #' @importFrom stringi stri_split_fixed
 #' 
 #' @export
-    melt_StQ <- function(DataMatrix, DD){
+melt_StQ <- function(DataMatrix, DD){
 
     # Función que elimina carácter blanco al principio y al final
     trim <- function (x) gsub("^\\s+|\\s+$", "", x, useBytes = T)
@@ -60,7 +60,9 @@
         DM <- DM[, setdiff(names(DM), col), with = FALSE]
       }
     }
+
     setnames(DM, names(DM), UnitToIDDDNames(names(DM), DD))
+
 
     #Construimos un objeto DD auxiliar
     slots <- setdiff(names(getVNC(DD)), 'VarSpec')
@@ -82,15 +84,12 @@
 
         #DM.IDDD <- setdiff(intersect(ExtractNames(DM.Names), IDDD), c(DM.IDQual, DM.NonIDQual))
         DM.IDDD <- setdiff(DM.Names, c(DM.IDQual, DM.NonIDQual))
-
         auxDDdt <- auxDDdt[Variable %in% ExtractNames(DM.IDDD)]
-
         auxDDdt[, Qual := '']
         for (i in 1:nQual){
             
             auxDDdt[, Qual := ifelse(get(paste0('Qual', i)) != '',
-                                     trim(paste(Qual, get(paste0('Qual',
-                                                                 i)))),
+                                     trim(paste(Qual, get(paste0('Qual',i)))),
                                      trim(Qual))]
             
         }
@@ -111,6 +110,7 @@
             
             indexCol <- ExtractNames(names(DM)) %in% auxMeasureVar[[QualName]]
             LocalQuals <- strsplit(QualName, ' ')[[1]]
+
             ColNames <- c(LocalQuals, names(DM)[indexCol])
 
             localDM <- DM[, intersect(ColNames, names(DM)), with = F]
@@ -121,7 +121,6 @@
                 
             }
             IDQual <- intersect(IDQual, names(localDM))
-
             out <- data.table::melt.data.table(localDM,
                                                id.vars = IDQual,
                                                measure.vars= setdiff(names(localDM), IDQual),
@@ -180,7 +179,6 @@
             return(outLocal)
 
         })
-
         names(moltenData) <- names(auxMeasureVar)
 
         #moltenData <- lapply(moltenData, function(DT) { DT <- DT[get(unlist(strsplit(names(DT), ' '))) != ""]})
@@ -192,7 +190,7 @@
     })
 
     out <- rbindlist(out, fill = TRUE)
-   
+  
     if (all(dim(out) == c(0, 0))) {
         
         output.StQ <- new(Class = 'StQ')
@@ -209,9 +207,8 @@
             out[is.na(get(col)), col := '', with = F]
         }
         
-      
+
         out <- new(Class = 'Datadt', out)
-     
         output.StQ <- new(Class = 'StQ', Data = out, DD = DD)
     
     }
