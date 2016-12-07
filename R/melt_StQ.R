@@ -63,6 +63,7 @@ melt_StQ <- function(DataMatrix, DD){
 
     setnames(DM, names(DM), UnitToIDDDNames(names(DM), DD))
 
+
     #Construimos un objeto DD auxiliar
     slots <- setdiff(names(getVNC(DD)), 'VarSpec')
 
@@ -83,15 +84,12 @@ melt_StQ <- function(DataMatrix, DD){
 
         #DM.IDDD <- setdiff(intersect(ExtractNames(DM.Names), IDDD), c(DM.IDQual, DM.NonIDQual))
         DM.IDDD <- setdiff(DM.Names, c(DM.IDQual, DM.NonIDQual))
-
         auxDDdt <- auxDDdt[Variable %in% ExtractNames(DM.IDDD)]
-
         auxDDdt[, Qual := '']
         for (i in 1:nQual){
             
             auxDDdt[, Qual := ifelse(get(paste0('Qual', i)) != '',
-                                     trim(paste(Qual, get(paste0('Qual',
-                                                                 i)))),
+                                     trim(paste(Qual, get(paste0('Qual',i)))),
                                      trim(Qual))]
             
         }
@@ -123,7 +121,6 @@ melt_StQ <- function(DataMatrix, DD){
                 
             }
             IDQual <- intersect(IDQual, names(localDM))
-
             out <- data.table::melt.data.table(localDM,
                                                id.vars = IDQual,
                                                measure.vars= setdiff(names(localDM), IDQual),
@@ -193,7 +190,7 @@ melt_StQ <- function(DataMatrix, DD){
     })
 
     out <- rbindlist(out, fill = TRUE)
-   
+  
     if (all(dim(out) == c(0, 0))) {
         
         output.StQ <- new(Class = 'StQ')
@@ -210,7 +207,7 @@ melt_StQ <- function(DataMatrix, DD){
             out[is.na(get(col)), col := '', with = F]
         }
         
-      
+
         out <- new(Class = 'Datadt', out)
         output.StQ <- new(Class = 'StQ', Data = out, DD = DD)
     

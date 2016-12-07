@@ -164,7 +164,7 @@ setMethod(
             output <- rbindlist(XLS.list, fill = TRUE)
             output <- rbindlist(list(output, XLS.Quals), fill = TRUE)
             aux <- output[, c('UnitName', 'IDDDName'), with = FALSE]
-           
+          
             # Patterns in UnitNames : [mm], [aa], [aaaa], etc.
             UnitNames_aux <- unique(aux[['UnitName']])
             patrones <- UnitNames_aux[grep('[[]', UnitNames_aux)]
@@ -192,7 +192,7 @@ setMethod(
                   })
     
                   metaVar <- unlist(metaVar)
-                  outputNew <- setdiff(outputNewName, metaVar)
+                  #outputNew <- setdiff(outputNewName, metaVar)
                   if (length(metaVar) > 0) {
                       
                       outputMetaVar <- data.table(UnitName = metaVar, IDDDName = names(metaVar))
@@ -205,26 +205,26 @@ setMethod(
                 } else {
                   
                   outputMetaVar <- data.table()
-                  outputNew <- outputNewName
+                  #outputNew <- outputNewName
                 }
     
               
                 
-                outputNew <- data.table(UnitName = outputNew, IDDDName = outputNew)
+                #outputNew <- data.table(UnitName = outputNew, IDDDName = outputNew)
                 output <- output[which(output[['UnitName']] %in% UnitNamesLocal), c('UnitName','IDDDName'), with = F]
-                output <- rbindlist(list(output, outputMetaVar, outputNew))
+                output <- rbindlist(list(output, outputMetaVar))
                 out <- output[['IDDDName']]
                 names(out) <- output[['UnitName']]
                 out <- out[UnitNamesLocal]
                 return(out)
             }
-           
           
             VNCNames <- unique(VNC[['UnitName']])
             UnitNamesLocal <- intersect(UnitNames, VNC[['UnitName']])
             UnitNamesLocalNewName <- setdiff(UnitNames, UnitNamesLocal)
             UnitNamesLocal <- c(UnitNamesLocal, UnitNamesLocalNewName)
             namesLocal <- UnitToIDDDNames.local(UnitNamesLocal)
+
             outDT <- data.table(Unit = names(namesLocal), IDDD = namesLocal)
             outDT <- outDT[Unit %in% UnitNames]
             return(outDT)
