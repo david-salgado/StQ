@@ -70,7 +70,7 @@ VarNamesToDT <- function(VarNames, DD){
                         
                         if (Names.DT[[paste0('Qual', i)]] %in% IDQual) {
                             
-                            Names.DT[, paste0('Qual', i) := NULL, with = F]
+                            Names.DT[, (paste0('Qual', i)) := NULL]
                             IDQualCounter <- IDQualCounter + 1
                             next
                         }
@@ -78,12 +78,11 @@ VarNamesToDT <- function(VarNames, DD){
                         auxName <- Names.DT[[paste0('Qual', i)]]
                         if (auxName == '') {
                             
-                            Names.DT[, paste0('Qual', i) := NULL, with = F]
+                            Names.DT[, (paste0('Qual', i)) := NULL]
                             next
                         }
                         setnames(Names.DT, paste0('Qual', i), auxName)
-                        Names.DT[, auxName := ParsedNames[i - IDQualCounter + 1],
-                                 with = F]
+                        Names.DT[, (auxName) := ParsedNames[i - IDQualCounter + 1]]
                     }
                 }
 
@@ -91,7 +90,7 @@ VarNamesToDT <- function(VarNames, DD){
                 # Eliminamos columnas vacías
                 for (col in names(Names.DT)){
 
-                  Names.DT[is.na(get(col)), col := '', with = F]
+                  Names.DT[is.na(get(col)), (col) := '']
 
                 }
 
@@ -117,8 +116,8 @@ VarNamesToDT <- function(VarNames, DD){
         # Pasamos NA a '' y eliminamos columnas vacías
         Cols <- sort(names(out))
         for (col in Cols){
-            out[, col := ifelse(is.na(get(col)), '', get(col)), with = F]
-            if(all(out[[col]] == '')) out[, col := NULL, with = F]
+            out[, (col) := ifelse(is.na(get(col)), '', get(col))]
+            if(all(out[[col]] == '')) out[, (col) := NULL]
         }
         return(out)
     }

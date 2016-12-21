@@ -35,14 +35,14 @@ setMethod(
     mc[['x']] <- getData(x)
     output <- x
     Datadt <- new(Class = 'Datadt', eval(mc, envir = parent.frame()))
-    
+
     # Si un identificador de unidad o variable está idénticamente en blanco, esta columna se elimina
     #colData <- names(Datadt)
     #colsData <- c('IDDD', 'Value')
     #Data <- DatadtToDT(Datadt)
     #for (col in setdiff(colData, colsData)){
     #    
-    #    if (all(Data[[col]] == '')) Data[, col := NULL, with = F]
+    #    if (all(Data[[col]] == '')) Data[, (col) := NULL]
     #}
     setData(output) <- new(Class = 'Datadt', Datadt)
     

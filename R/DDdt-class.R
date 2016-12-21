@@ -55,7 +55,7 @@ setClass(Class = "DDdt",
              }
 
              setkeyv(object, 'Variable')
-             if (sum(duplicated(object)) > 0) {
+             if (sum(duplicated(object, by = key(object))) > 0) {
                  
                  stop('[Validity DDdt] No duplicate variable is allowed.')
                  

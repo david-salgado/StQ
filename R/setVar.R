@@ -129,10 +129,10 @@ setMethod(
         }
 
         newVNC <- copy(getVNC(newDD)[[DDslot]])
-        newVNC <- newVNC[, 'IDQual' := NULL, with = F]
-        newVNC <- newVNC[, 'NonIDQual' := NULL, with = F]
+        newVNC <- newVNC[, ('IDQual') := NULL]
+        newVNC <- newVNC[, ('NonIDQual') := NULL]
         UnitCols <- names(newVNC)[grep('Unit', names(newVNC))]
-        newVNC <- newVNC[, UnitCols := NULL, with = F]
+        newVNC <- newVNC[, (UnitCols) := NULL]
         newVNC <- newVNC[, InFiles := NULL]
         NewVarName <- newVNC[['IDDD']]
         for (col in names(newVNC)[-1]){
@@ -175,7 +175,7 @@ setMethod(
                 Data[, Value := eval(Value), by = eval(by)]
             }
 
-            NewData <- Data[, ExprVariables := NULL, with = F]
+            NewData <- Data[, (ExprVariables) := NULL]
             NewData[, IDDD := NewVarName]
 
             setcolorder(NewData,

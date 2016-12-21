@@ -67,7 +67,7 @@ setMethod(
   
     if (length(NewCol.e2) > 0){
         
-        Datae1 <- copy(getData(e1))[, NewCol.e2 := character(.N), with = FALSE]
+        Datae1 <- copy(getData(e1))[, (NewCol.e2) := character(.N)]
         
     } else {
         
@@ -76,7 +76,7 @@ setMethod(
 
     if (length(NewCol.e1) > 0){
         
-        Datae2 <- copy(getData(e2))[, NewCol.e1 := character(.N), with = FALSE]
+        Datae2 <- copy(getData(e2))[, (NewCol.e1) := character(.N)]
 
     } else {
         
@@ -89,7 +89,7 @@ setMethod(
     setcolorder(Datae2, ColNames)
     output.Data <- rbindlist(list(Datae1, Datae2))
     setkeyv(output.Data, names(output.Data)[-which(names(output.Data) == 'Value')])
-    DupRows <- duplicated(output.Data)
+    DupRows <- duplicated(output.Data, by = key(output.Data))
     if (sum(DupRows) > 0) {
       cat('[StQ::+] ATENTION!! Duplicated rows! If you are summing data sets
           corresponding to two different time periods, make sure that the time

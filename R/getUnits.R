@@ -34,7 +34,7 @@ setMethod(
     IDQual <- DDData[Sort == 'IDQual', Variable]
     output <- getData(object)[, IDQual, with = F]
     setkeyv(output, IDQual)
-    output <- output[!duplicated(output)]
+    output <- output[!duplicated(output, by = key(output))]
     for (IDQ in IDQual){
         
         output <- output[get(IDQ) != '']
@@ -63,7 +63,7 @@ setMethod(
                               c('Mes', 'NomControl', 'Condicion', 'LimInf', 'LimSup'))
             Units <- object[, IDQual, with = FALSE]
             setkeyv(Units, IDQual)
-            Units <- Units[!duplicated(Units)]
+            Units <- Units[!duplicated(Units, by = key(Units))]
             return(Units)
             
         }
@@ -74,7 +74,7 @@ setMethod(
                               c('Month', 'EditName', 'Condition', 'LowBound', 'UpperBound'))
             Units <- object[, IDQual, with = FALSE]
             setkeyv(Units, IDQual)
-            Units <- Units[!duplicated(Units)]
+            Units <- Units[!duplicated(Units, by = key(Units))]
             return(Units)
         }
         

@@ -61,7 +61,7 @@ setClass(Class = "StQ",
              Data <- DatadtToDT(Datadt)
              for (col in setdiff(colData, colsData)){
                  
-                 if (all(Data[[col]] == '')) Data[, col := NULL, with = F]
+                 if (all(Data[[col]] == '')) Data[, (col) := NULL]
              }
              
              object@Data <- new(Class = 'Datadt', Data)
@@ -72,7 +72,7 @@ setClass(Class = "StQ",
              if (dim(Data)[[1]] != 0){
                  
                  setkeyv(Data, colData[-which(colData == 'Value')])
-                 DupRows <- duplicated(Data)
+                 DupRows <- duplicated(Data, by = key(Data))
                  if (sum(DupRows) > 0) {
                      warning('[Validity StQ] The following rows are duplicated:\n\n')
                      print(Data[DupRows])

@@ -91,7 +91,7 @@ setMethod(
         Var <- VarNamesToDT(VarName, DD)
         for (col in names(Var)){
             
-            Data[, col := ifelse(is.na(get(col)), Var[[col]], get(col)), with = FALSE]
+            Data[, (col) := ifelse(is.na(get(col)), Var[[col]], get(col))]
         }
 
         if (VarName != ExtractNames(VarName)){

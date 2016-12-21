@@ -123,7 +123,7 @@ setMethod(
             #aux <- aux[, unique(c(NotEmptyCols, 'Value')), with = F]
 
             setkeyv(aux, setdiff(names(aux), 'Value'))
-            Dup <- aux[duplicated(aux)]
+            Dup <- aux[duplicated(aux, by = key(aux))]
             if (dim(Dup)[[1]] > 0) {
               warning(paste0('[StQ::dcast_StQ] There exist duplicated rows in the component ',
                              Form,
@@ -135,7 +135,7 @@ setMethod(
             MissingQuals <- setdiff(FormVars, names(aux))
             if (length(MissingQuals) > 0) {
 
-                aux[, MissingQuals := '', with = FALSE]
+                aux[, (MissingQuals) := '']
             }
             aux <- aux[, c(FormVars, 'Value'), with = F]
 
@@ -150,13 +150,13 @@ setMethod(
                                                 value.var = 'Value')
             if (length(MissingQuals) > 0) {
 
-                aux[, MissingQuals := NULL, with = FALSE]
+                aux[, (MissingQuals) := NULL]
 
             }
             outNames <- sort(names(out))
             for (col in outNames){
-              if (all(is.na(out[[col]]))) out[, col := NULL, with = F]
-              if (col == '.') out[, col := NULL, with = F]
+              if (all(is.na(out[[col]]))) out[, (col) := NULL]
+              if (col == '.') out[, (col) := NULL]
             }
             return(out)
         })
@@ -184,7 +184,7 @@ setMethod(
                     ColNames <- names(out)
                     for (col in ColNames){
 
-                        out[is.na(get(col)), col := '', with = F]
+                        out[is.na(get(col)), (col) := '']
                     }
                     return(out)
                 },
@@ -196,8 +196,8 @@ setMethod(
         for (col in outCols){
 
             colClass <- copy(DDdt)[Variable == ExtractNames(col)][['Class']]
-            output[, col := as(get(col), colClass), with = F]
-            output[get(col) == '', col := NA, with = F]
+            output[, (col) := as(get(col), colClass)]
+            output[get(col) == '', (col) := NA]
 
         }
         return(output)

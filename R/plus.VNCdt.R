@@ -99,12 +99,12 @@ setMethod(
         
             for (col in names(outVar)) {
                 
-                    outVar[, col := ifelse(is.na(get(col)), '', get(col)), with = F]
+                    outVar[, (col) := ifelse(is.na(get(col)), '', get(col))]
                     
             }
         
         setkeyv(outVar, setdiff(names(outVar), c('UnitName', 'InFiles')))
-        outVar <- outVar[!duplicated(outVar)]
+        outVar <- outVar[!duplicated(outVar, by = key(outVar))]
 
         IDQual <- unique(outVar[which(IDQual != ""), IDQual])
         NonIDQual <- unique(outVar[which(NonIDQual != ""), NonIDQual])

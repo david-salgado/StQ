@@ -74,7 +74,7 @@ setMethod(
         ColNames <- names(Data)
         for (col in ColNames){
             
-            Data[is.na(get(col)), col := '', with = F]
+            Data[is.na(get(col)), (col) := '']
         }
         Datadt <- new(Class = 'Datadt', Data)
         Q <- new(Class = 'StQ', Data = Datadt, DD = DD)
