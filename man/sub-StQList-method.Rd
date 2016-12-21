@@ -26,10 +26,10 @@ subset.
 \code{[} extracts parts of an object of class \linkS4class{StQList}.
 
 It is indeed the method \code{[} for the class \linkS4class{StQList}. This method returns a
-subset of an input object of class \linkS4class{StQList}. Thus it returns an object of class \linkS4class{StQList}.
+subset of an input object of class \linkS4class{StQList}. Thus it returns an object of class
+\linkS4class{StQList}.
 }
 \examples{
-\dontrun{ Function changed: reconstruct the example
 library(RepoTime)
 mm <- c(paste0('0', 1:9), 10:12)
 TimePer <- paste0('MM', mm, '2015')
@@ -38,6 +38,6 @@ QList <- lapply(QList, function(x) ExampleStQ)
 names(QList) <- TimePer
 QList <- new(Class = 'StQList', Data = QList, Periods = newRepoTime(TimePer))
 QList[c('MM092015', 'MM102015')]
-}
+
 }
 

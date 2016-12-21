@@ -3,7 +3,8 @@
 #' @description \code{[} extracts parts of an object of class \linkS4class{StQList}.
 #'
 #' It is indeed the method \code{[} for the class \linkS4class{StQList}. This method returns a
-#' subset of an input object of class \linkS4class{StQList}. Thus it returns an object of class \linkS4class{StQList}.
+#' subset of an input object of class \linkS4class{StQList}. Thus it returns an object of class
+#' \linkS4class{StQList}.
 #'
 #' @param x object of class \linkS4class{StQList}.
 #'
@@ -19,7 +20,6 @@
 #' subset.
 #'
 #' @examples
-#' \dontrun{ Function changed: reconstruct the example
 #' library(RepoTime)
 #' mm <- c(paste0('0', 1:9), 10:12)
 #' TimePer <- paste0('MM', mm, '2015')
@@ -28,7 +28,7 @@
 #' names(QList) <- TimePer
 #' QList <- new(Class = 'StQList', Data = QList, Periods = newRepoTime(TimePer))
 #' QList[c('MM092015', 'MM102015')]
-#' }
+#' 
 #' @include StQList-class.R getData.R
 #'
 #' @import data.table RepoTime
@@ -39,27 +39,14 @@ setMethod(
   signature = c("StQList"),
   function(x, i, j, ..., drop = TRUE){
 
-    #mc <- match.call()
-    #DataList <- getData(x)
-    #mc[['x']] <- DataList
-    #DataList <- eval(mc, envir = parent.frame())
+     mc <- match.call()
+     DataList <- getData(x)
+     mc[['x']] <- DataList
+     DataList <- eval(mc, envir = parent.frame())
+     Periods <- names(DataList)
 
-    #DD <- x@Data[[1L]]
-    #DD <- DD@DD
-
-    #names(DataList) <- i
-    #output <- new(Class = 'StQList', Data = DataList, Periods = newRepoTime(i))
-    
-    mc <- match.call()
-    output <- lapply(getData(x), function(StQ){
-        
-        mclocal <- mc
-        mclocal[['x']] <- StQ
-        out <- eval(mclocal, envir = parent.frame())
-        return(out)
-    })
-      
-    return(output)
+     output <- new(Class = 'StQList', Data = DataList, Periods = newRepoTime(Periods))
+     return(output)    
 
   }
 )
