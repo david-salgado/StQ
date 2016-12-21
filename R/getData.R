@@ -127,7 +127,7 @@ setMethod(
 
     for (col in ColNames){
 
-        if (all(VarNames.DT[[col]] == '')) VarNames.DT[, col := NULL, with = F]
+        if (all(VarNames.DT[[col]] == '')) VarNames.DT[, (col) := NULL]
         
     }
 
@@ -144,7 +144,7 @@ setMethod(
     Cols <- sort(names(output))
     for (col in Cols){
       
-      if (all(output[[col]] == '')) output[, col := NULL, with = F]
+      if (all(output[[col]] == '')) output[, (col) := NULL]
       
     }
 
@@ -174,7 +174,20 @@ setMethod(
   signature = c("StQList"),
   function(object, VarNames, DDslot = 'MicroData'){
     
-      output <- copy(object@Data)
+      DataList <- copy(object@Data)
+      DDList <- lapply(DataList, function(x){x@DD})
+      if (missing(VarNames)){
+
+        DataList <- lapply(DataList, getData)
+        
+      } else {
+
+        DataList <- lapply(DataList, function(x){getData(x, VarNames)})
+      }
+      
+      output <- lapply(seq(along = DataList), function(index){new(Class = 'StQ', Data = DataList[[index]], DD = DDList[[index]])})
+      
+      names(output) <- getPeriods.StQList(object)
       
       return(output)
   }

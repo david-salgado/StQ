@@ -47,7 +47,7 @@ setMethod(
         for (col in ColNames){
    
             Width <- DDdt[Variable == col][['Length']]
-            QData[, col := stringr::str_pad(get(col), Width, 'right', ' '), with = F]
+            QData[, (col) := stringr::str_pad(get(col), Width, 'right', ' ')]
             
         }
 
@@ -80,7 +80,7 @@ setMethod(
         })
         QData <- rbindlist(QData.list)
         setkeyv(QData, names(QData))
-        QData <- QData[!duplicated(QData)]
+        QData <- QData[!duplicated(QData, by = key(QData))]
         rawDatadt <- new(Class = 'rawDatadt', .Data = QData)
         rawQ <- new(Class = 'rawStQ', Data = rawDatadt, DD = DD)
         return(rawQ)

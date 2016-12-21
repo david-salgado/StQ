@@ -56,12 +56,13 @@ setClass(Class = "rawStQ",
          validity = function(object){
 
              Data <- getData(object)
-
+             Data <- DatadtToDT(Data)
+             
              # Detección de filas duplicadas
              if (dim(Data)[[1]] != 0) {
                  
                  setkeyv(Data, c('IDDDKey', 'QualKey'))
-                 DupRows <- duplicated(Data)
+                 DupRows <- duplicated(Data, by = key(Data))
                  if (sum(DupRows) > 0) {
                      warning('[Validity rawStQ] The following rows are duplicated:\n\n')
                      print(Data[DupRows])

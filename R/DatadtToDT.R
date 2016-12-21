@@ -29,7 +29,7 @@ DatadtToDT <- function(object){
     ColNames <- names(object)
     for (col in ColNames) {
         
-        output[, col := object[[col]], with = F]
+        output[, (col) := object[[col]]]
         
     }
     output[, aux := NULL]

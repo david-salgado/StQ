@@ -46,7 +46,7 @@ VarNamesToDD <- function(VarNames, DD){
                 for (col in QualNames) {
                     
                     if (all(Names.DT[[col]] == '')) {
-                        Names.DT[, col := NULL, with = F]
+                        Names.DT[, (col) := NULL]
                     }
                     
                 }

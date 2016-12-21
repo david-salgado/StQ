@@ -95,14 +95,14 @@ setMethod(
         outVar <- rbindlist(list(DDdt1, DDdt2), fill = TRUE)
         for (col in names(outVar)) {
             
-            outVar[, col := ifelse(is.na(get(col)), '', get(col)), with = F]
+            outVar[, (col) := ifelse(is.na(get(col)), '', get(col))]
             
         }
         setkeyv(outVar, setdiff(names(outVar), 'ValueRegExp'))
-        outVar <- outVar[!duplicated(outVar)]
+        outVar <- outVar[!duplicated(outVar, by = key(outVar))]
         setkeyv(outVar, 'Variable')
-        if (sum(duplicated(outVar[Sort == 'IDDD'])) > 0) stop('[StQ::+.DDdt] No duplicate IDDD variable allowed.')
-        outVar <- outVar[!duplicated(outVar)]
+        if (sum(duplicated(outVar[Sort == 'IDDD'], by = key(outVar))) > 0) stop('[StQ::+.DDdt] No duplicate IDDD variable allowed.')
+        outVar <- outVar[!duplicated(outVar, by = key(outVar))]
         if (dim(outVar)[1] == 0) {
             
             output <- new(Class = 'DDdt')
@@ -111,7 +111,7 @@ setMethod(
             
             QualCol <- names(outVar)[grep('Qual', names(outVar))]
             setkeyv(outVar, setdiff(names(outVar), QualCol))
-            outVar <- outVar[!duplicated(outVar)]
+            outVar <- outVar[!duplicated(outVar, by = key(outVar))]
             setcolorder(outVar, c('Variable', 'Sort', 'Class', 'Length', QualCol, 'ValueRegExp'))
             output <- new(Class = 'DDdt', outVar) 
         } 

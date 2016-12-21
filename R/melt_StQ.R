@@ -98,7 +98,7 @@ melt_StQ <- function(DataMatrix, DD){
         ColNames <- names(auxDDdt)
         for (col in ColNames){
             
-            auxDDdt[, col := ifelse(is.na(get(col)), '', get(col)), with = F]
+            auxDDdt[, (col) := ifelse(is.na(get(col)), '', get(col))]
             
         }
 
@@ -117,7 +117,7 @@ melt_StQ <- function(DataMatrix, DD){
 
             for (col in names(localDM)){
                 
-                localDM[, col := as.character(get(col)), with = F]
+                localDM[, (col) := as.character(get(col))]
                 
             }
             IDQual <- intersect(IDQual, names(localDM))
@@ -153,7 +153,7 @@ melt_StQ <- function(DataMatrix, DD){
                         outLocal <- out[, setdiff(names(out), ColNames), with = F]
                         for (index.col in seq(along = ColNames)){
                             
-                            outLocal[, ColNames[index.col] := ExtractCol(index.col), with = F]
+                            outLocal[, (ColNames[index.col]) := ExtractCol(index.col)]
                         }
                         setcolorder(outLocal, c(IDQual, LocalNonIDQual, 'IDDD', 'Value'))
                     }
@@ -167,7 +167,7 @@ melt_StQ <- function(DataMatrix, DD){
                 #outLocal[, Value := out[['Value']]]
                 #for (idqual in IDQual){
                     
-                #    outLocal[, idqual := out[[idqual]], with = F]
+                #    outLocal[, (idqual) := out[[idqual]]]
                 #}
                 #setcolorder(outLocal, c(IDQual, LocalNonIDQual, 'IDDD', 'Value'))
             
@@ -199,12 +199,12 @@ melt_StQ <- function(DataMatrix, DD){
     
         out[is.nan(Value) | Value == 'NaN', Value := '']
         setkeyv(out, setdiff(names(out), 'Value'))
-        out <- out[!duplicated(out)]
+        out <- out[!duplicated(out, by = key(out))]
         setcolorder(out, c(setdiff(names(out), c('Value', 'IDDD')), 'IDDD', 'Value'))
         ColNames <- names(out)
         for (col in ColNames){
             
-            out[is.na(get(col)), col := '', with = F]
+            out[is.na(get(col)), (col) := '']
         }
         
 

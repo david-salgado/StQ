@@ -50,7 +50,7 @@ setMethod(
         ColnewMD.DT <- names(newMD.DT)
 
         nQual <- length(grep('Qual', ColnewMD.DT)) + 1
-        newMD.DT[Sort == 'IDDD', paste0('Qual', nQual) := 'Period', with = F]
+        newMD.DT[Sort == 'IDDD', (paste0('Qual', nQual)) := 'Period']
         setcolorder(newMD.DT, c('Variable', 'Sort', 'Class', 'Length', paste0('Qual', 1:nQual), 'ValueRegExp'))
         setMicroData(DD) <- new(Class = 'DDdt', newMD.DT)
 

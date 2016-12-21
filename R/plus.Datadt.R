@@ -45,8 +45,8 @@ setMethod(
         NewCol.e2 <- setdiff(ColNames.e2, ColNames.e1)
         NewCol.e1 <- setdiff(ColNames.e1, ColNames.e2)
         
-        if (length(NewCol.e2) > 0) e1 <- copy(e1)[, NewCol.e2 := character(.N), with = FALSE]
-        if (length(NewCol.e1) > 0) e2 <- copy(e2)[, NewCol.e1 := character(.N), with = FALSE]
+        if (length(NewCol.e2) > 0) e1 <- copy(e1)[, (NewCol.e2) := character(.N)]
+        if (length(NewCol.e1) > 0) e2 <- copy(e2)[, (NewCol.e1) := character(.N)]
         
         # Unimos los slots Data con rbindlist eliminando los duplicados
         ColNames <- c(setdiff(names(e1), c('IDDD', 'Value')), setdiff(names(e2), setdiff(names(e1), c('IDDD', 'Value'))))
@@ -54,7 +54,7 @@ setMethod(
         setcolorder(e2, ColNames)
         output.Data <- rbindlist(list(e1, e2))
         setkeyv(output.Data, names(output.Data)[-which(names(output.Data) == 'Value')])
-        DupRows <- duplicated(output.Data)
+        DupRows <- duplicated(output.Data, by = key(output.Data))
         if (sum(DupRows) > 0) {
             cat('[Datadt::+] ATENTION!! Duplicated rows! If you are summing data sets
                 corresponding to two different time periods, make sure that the time

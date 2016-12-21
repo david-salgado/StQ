@@ -139,7 +139,7 @@ setMethod(
             
             localXLS <- XLS[IDDD == IDDDname & IDDD != '']
             #setkeyv(localXLS, 'IDDD')
-            #localXLS <- localXLS[!duplicated(localXLS)]
+            #localXLS <- localXLS[!duplicated(localXLS, by = key(localXLS))]
             QualNames <- Quals.list[[IDDDname]]
             localXLS <- localXLS[, c('IDDD', QualNames, 'UnitName', 'IDDDName'), with = F]
             localNonIDQuals <- setdiff(intersect(names(localXLS), NonIDQuals), setdiff(IDQuals, NonIDQuals))

@@ -190,7 +190,7 @@ setMethod(
                     
                     return(Var)
                   })
-    
+      
                   metaVar <- unlist(metaVar)
                   #outputNew <- setdiff(outputNewName, metaVar)
                   if (length(metaVar) > 0) {
@@ -220,7 +220,7 @@ setMethod(
             }
           
             VNCNames <- unique(VNC[['UnitName']])
-            UnitNamesLocal <- intersect(UnitNames, VNC[['UnitName']])
+            UnitNamesLocal <- intersect(UnitNames, VNCNames)
             UnitNamesLocalNewName <- setdiff(UnitNames, UnitNamesLocal)
             UnitNamesLocal <- c(UnitNamesLocal, UnitNamesLocalNewName)
             namesLocal <- UnitToIDDDNames.local(UnitNamesLocal)
@@ -234,7 +234,7 @@ setMethod(
 
         outDT <- rbindlist(output.list)
         setkeyv(outDT, names(outDT))
-        outDT <- outDT[!duplicated(outDT)]
+        outDT <- outDT[!duplicated(outDT, by = key(outDT))]
         outVector <- outDT[['IDDD']]
         names(outVector) <- outDT[['Unit']]
         outVector <- outVector[UnitNames]
