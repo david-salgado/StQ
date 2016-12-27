@@ -137,8 +137,9 @@ setMethod(
             XLS.Quals[NonIDQual != '', IDDDName := NonIDQual]
             XLS.Quals <- XLS.Quals[, c('IDQual', 'NonIDQual', 'UnitName', 'IDDDName', 'InFiles'), with = F]
             XLS <- XLS[IDDD != '']
+            XLS <- XLS[, setdiff(names(XLS), getIDQual(Correspondence)), with = F]
             XLS.list <- split(XLS, XLS[['IDDD']])
-           
+
             XLS.list <- lapply(XLS.list, function(xls){
               
               ColNames <- names(xls)
@@ -161,10 +162,11 @@ setMethod(
               }    
               return(xls)
             })
+
             output <- rbindlist(XLS.list, fill = TRUE)
             output <- rbindlist(list(output, XLS.Quals), fill = TRUE)
             aux <- output[, c('UnitName', 'IDDDName'), with = FALSE]
-          
+
             # Patterns in UnitNames : [mm], [aa], [aaaa], etc.
             UnitNames_aux <- unique(aux[['UnitName']])
             patrones <- UnitNames_aux[grep('[[]', UnitNames_aux)]
@@ -224,7 +226,6 @@ setMethod(
             UnitNamesLocalNewName <- setdiff(UnitNames, UnitNamesLocal)
             UnitNamesLocal <- c(UnitNamesLocal, UnitNamesLocalNewName)
             namesLocal <- UnitToIDDDNames.local(UnitNamesLocal)
-
             outDT <- data.table(Unit = names(namesLocal), IDDD = namesLocal)
             outDT <- outDT[Unit %in% UnitNames]
             return(outDT)

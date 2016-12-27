@@ -94,7 +94,7 @@ setGeneric("IDDDToUnitNames", function(IDDDNames, Correspondence){standardGeneri
 
 #' @rdname IDDDToUnitNames
 #'
-#' @include DD-class.R VarNameCorresp-class.R DatadtToDT.R getVNC.R plus.VNCdt.R
+#' @include DD-class.R VarNameCorresp-class.R DatadtToDT.R getVNC.R plus.VNCdt.R getDotQual.R
 #'
 #' @import data.table
 #' 
@@ -119,11 +119,13 @@ setMethod(
             
         }
         RootNames <- unique(ExtractNames(IDDDNames))
+        DotQual <- getDotQual(Correspondence)
         Quals.list <- lapply(RootNames, function(IDDDName){
             
             QualsDT <- DDdt[Variable == IDDDName, names(DDdt)[grep('Qual', names(DDdt))], with = F]
             Quals <- t(QualsDT)[, 1]
             Quals <- Quals[Quals != '']
+            Quals <- Quals[!Quals %in% DotQual]
             return(Quals)
         })
 
@@ -135,6 +137,7 @@ setMethod(
         NotBlankIDDDNames <- unique(NotBlankIDDDNames[NotBlankIDDDNames != ''])
         IDQuals <- getIDQual(Correspondence)
         NonIDQuals <- getNonIDQual(Correspondence)
+
         UnitNames <- lapply(NotBlankIDDDNames, function(IDDDname){
             
             localXLS <- XLS[IDDD == IDDDname & IDDD != '']
@@ -145,9 +148,11 @@ setMethod(
             localNonIDQuals <- setdiff(intersect(names(localXLS), NonIDQuals), setdiff(IDQuals, NonIDQuals))
             for (col in localNonIDQuals) {
                 
+                if (any(localXLS[[col]] == '.')) next
                 localXLS[, IDDDName := paste(IDDDName, get(col), sep = '_')]
                 
             }
+
             localXLS[, IDDDName := paste0(IDDD, IDDDName)]
             localXLS <- localXLS[IDDDName %in% IDDDNames | ExtractNames(IDDDName) %in% IDDDNames][, c('UnitName', 'IDDDName'), with = F]
             return(localXLS)

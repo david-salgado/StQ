@@ -103,7 +103,7 @@ setMethod(
 
         # Creamos una data.table auxDD con la fórmula asociada a cada variable según el slot DD
         auxDD <- VarNamesToFormula(IDDDVarNames, DD)
-
+#return(auxDD)
         # Se asocia a cada fórmula su correspondiente data.table dcasted
         auxData <- split(auxDD[['Variable']], auxDD[['Form']])
 
@@ -148,6 +148,7 @@ setMethod(
                                                 formula = as.formula(Form),
                                                 drop = TRUE,
                                                 value.var = 'Value')
+
             if (length(MissingQuals) > 0) {
 
                 aux[, (MissingQuals) := NULL]
@@ -160,6 +161,7 @@ setMethod(
             }
             return(out)
         })
+
         names(dcastData) <- names(auxData)
 
         # Eliminamos componentes NULL de la lista de data.tables
@@ -191,7 +193,6 @@ setMethod(
             dcastData, init = dcastData[[1]])
 
         # Asignamos los tipos a cada variable
-
         outCols <- names(output)
         for (col in outCols){
 

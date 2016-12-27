@@ -1,14 +1,14 @@
 #' @title Return IDDD identifiers from an object
 #'
-#' @description \code{getIDQual} returns a character vector with all unit qualifier
-#' names (IDQual) included in the input object.
+#' @description \code{getDotQual} returns a character vector with all qualifier names (IDQual) 
+#' with wildcard dot in the VNC component the input object.
 #'
-#' @param object Object with the IDQual unit qualifier.
+#' @param object Object with the dot qualifiers.
 #'
-#' @param Namesdt Character vector with the components or slots from which IDQuals
-#' are requiered.
+#' @param Namesdt Character vector with the components or slots from which dot qualifiers are 
+#' required.
 #'
-#' @return Character vector with all the unit qualifier names.
+#' @return Character vector with all the dot qualifier names.
 #'
 #' @examples
 #' library(data.table)
@@ -41,13 +41,13 @@
 #'                                            UnitName = c('Provincia', '', ''),
 #'                                            InFiles = rep('FA', 3))))
 #' VNC <- new(Class = 'VarNameCorresp', .Data = VarList)
-#' getIDQual(VNC)
+#' getDotQual(VNC)
 #'
 #'
 #' @export
-setGeneric("getIDQual", function(object, Namesdt){standardGeneric("getIDQual")})
+setGeneric("getDotQual", function(object, Namesdt){standardGeneric("getDotQual")})
 
-#' @rdname getIDQual
+#' @rdname getDotQual
 #'
 #' @include VNCdt-class.R
 #'
@@ -55,17 +55,22 @@ setGeneric("getIDQual", function(object, Namesdt){standardGeneric("getIDQual")})
 #'
 #' @export
 setMethod(
-    f = "getIDQual",
+    f = "getDotQual",
     signature = c("VNCdt"),
     function(object, Namesdt){
-
-        output <- unique(object[['IDQual']])
-        output <- output[output != '']
+        
+        ColNames <- names(object)
+        output <- c()
+        for (col in ColNames){
+            
+            if (any(object[[col]] == '.')) output <- c(output, col)
+            
+        }
         return(output)
-
+        
     }
 )
-#' @rdname getIDQual
+#' @rdname getDotQual
 #'
 #' @include VarNameCorresp-class.R
 #'
@@ -73,46 +78,28 @@ setMethod(
 #'
 #' @export
 setMethod(
-    f = "getIDQual",
+    f = "getDotQual",
     signature = c("VarNameCorresp"),
     function(object, Namesdt){
-
+        
         if (missing(Namesdt)) Namesdt <- names(object)
-
+        
         aux <- object[Namesdt]
-
+        
         IDQual.list <- lapply(aux, function(x) {
-            IDQual <- getIDQual(x)
+            IDQual <- getDotQual(x)
             return(IDQual)
         }
         )
-
+        
         output <- unique(Reduce(c, IDQual.list, init = IDQual.list[[1]]))
         return(output)
-
+        
     }
 )
 
-#' @rdname getIDQual
-#'
-#' @include DDdt-class.R
-#'
-#' @import data.table
-#'
-#' @export
-setMethod(
-    f = "getIDQual",
-    signature = c("DDdt"),
-    function(object, Namesdt){
 
-        output <- unique(object[Sort == 'IDQual', Variable])
-        output <- output[output != '']
-
-        return(output)
-    }
-)
-
-#' @rdname getIDQual
+#' @rdname getDotQual
 #'
 #' @include DD-class.R
 #'
@@ -120,26 +107,17 @@ setMethod(
 #'
 #' @export
 setMethod(
-    f = "getIDQual",
+    f = "getDotQual",
     signature = c("DD"),
     function(object, Namesdt){
-
-        if (missing(Namesdt)) Namesdt <- slotNames(object)
-
-        Namesdt <- setdiff(Namesdt, 'VarNameCorresp')
-        output <- c()
-        for (DDdt in Namesdt) {
-
-            IDQual <- getIDQual(slot(object, DDdt))
-            output <- c(output, IDQual)
-        }
-
-        output <- unique(output)
+        
+        VNC <- getVNC(object)
+        output <- getDotQual(VNC, Namesdt)
         return(output)
     }
 )
 
-#' @rdname getIDQual
+#' @rdname getDotQual
 #'
 #' @include StQ-class.R
 #'
@@ -147,14 +125,21 @@ setMethod(
 #'
 #' @export
 setMethod(
-    f = "getIDQual",
+    f = "getDotQual",
     signature = c("StQ"),
     function(object, Namesdt){
-
-        if (missing(Namesdt)) {output <- getIDQual(object@DD)
-        } else{output <- getIDQual(object@DD, Namesdt)}
         
-        output <- intersect(names(object@Data), output)
+        if (missing(Namesdt)) {
+            
+            output <- getDotQual(getDD(object))
+        
+        } else{
+            
+            output <- getDotQual(getDD(object), Namesdt)
+        
+        }
+        
         return(output)
     }
 )
+

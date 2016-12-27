@@ -1,11 +1,13 @@
 Package: StQ
-Title: Tools to manage metadata-incorporated key-value pair datasets 
-Version: 0.2.8
+Title: Tools to manage metadata-incorporated key-value pair datasets
+Version: 0.3.0
 Authors@R: c(
     person("David", "Salgado", email = "david.salgado.fernandez@gmail.com", role = c("cre", "aut")),
     person("Elisa", "Esteban", email = "elisa.esteban.segurado@gmail.com", role = "aut"),
     person("Soledad", "Saldaña", email = "soledad.saldana.diaz@gmail.com", role = "aut"))
-Description: This package contains the definition of the class StQ to implement metadata-incorporated key-value pair datasets and the methods to manage them (show, subsetting, reshaping,...)
+Description: This package contains the definition of the class StQ to implement
+    metadata-incorporated key-value pair datasets and the methods to manage them
+    (show, subsetting, reshaping,...)
 Depends:
     R (>= 3.3.0)
 Imports:
@@ -50,6 +52,7 @@ Collate:
     'ExampleVNC.R'
     'ExamplerawKey.R'
     'ExamplerawStQ.R'
+    'getDotQual.R'
     'plus.VNCdt.R'
     'IDDDToUnitNames.R'
     'getDD.R'
