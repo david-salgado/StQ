@@ -1,12 +1,10 @@
-#' @title Return slot ID from a DD object
+#' @title Return slot ID from an object
 #'
-#' @description \code{getID} returns slot \code{ID} of the input
-#' \linkS4class{DD} object.
+#' @description \code{getID} returns slot \code{ID} of the input object.
 #' 
-#' @param object a DD Object whose slot \code{ID} is queried.
+#' @param object An object whose slot \code{ID} is queried.
 #'
-#' @return \linkS4class{data.table} with data from slot \code{ID} of the
-#' input \linkS4class{DD} object.
+#' @return Returns a \linkS4class{DDdt} object containing the slot \code{ID} of the input object.
 #'
 #' @examples
 #' # An example:
@@ -86,8 +84,15 @@
 #'           
 #' getID(DD)
 #' 
+#' StQ <- new(Class = 'StQ', Data = new(Class = 'Datadt'), DD = DD)
+#' getID(StQ)
+#' 
+#' rawStQ <- new(Class = 'rawStQ', Data = new(Class = 'rawDatadt'), DD = DD)
+#' getID(rawStQ)
+#' 
 #' @export
 setGeneric("getID", function(object){standardGeneric("getID")})
+
 #' @rdname getID
 #' 
 #' @include DD-class.R
@@ -100,5 +105,37 @@ setMethod(
         
         out <- copy(object@ID)
         return(out)
+    }
+)
+
+#' @rdname getID
+#' 
+#' @include StQ-class.R getDD.R
+#' 
+#' @export
+setMethod(
+    f = "getID",
+    signature = c("StQ"),
+    function(object){
+        
+        DD <- getDD(object)
+        output <- getID(DD)
+        return(output)
+    }
+)
+
+#' @rdname getID
+#' 
+#' @include rawStQ-class.R getDD.R
+#' 
+#' @export
+setMethod(
+    f = "getID",
+    signature = c("rawStQ"),
+    function(object){
+        
+        DD <- getDD(object)
+        output <- getID(DD)
+        return(output)
     }
 )

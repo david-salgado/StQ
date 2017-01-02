@@ -1,12 +1,13 @@
-#' @title Set value of slot \code{AggWeights}
+#' @title Set value of slot \code{Aggregates}
 #'
-#' @description \code{setAggrWeights} assigns a \linkS4class{DDdt} to the slot \code{AggrWeights} of the input object.
+#' @description \code{setAggregates} assigns a \linkS4class{DDdt} to the slot \code{Aggregates} of 
+#' the input object.
 #'
-#' @param object Object whose slot \code{AggWeights} is to be assigned.
+#' @param object Object whose slot \code{Aggregates} is to be assigned.
 #'
-#' @param value \linkS4class{DDdt} to be assigned to the slot \code{AggWeights}.
+#' @param value \linkS4class{DDdt} to be assigned to the slot \code{Aggregates}.
 #'
-#' @return Object with slot AggWeights updated.
+#' @return Object with slot Aggregates updated.
 #'
 #' @examples
 #' library(data.table)
@@ -24,46 +25,47 @@
 #'                                                           InFiles = rep('FF', 4))))
 #' VNC <- BuildVNC(VarList)
 #' DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = MicroDataDD)
-#' 
-#' AggWeights <- data.table(Variable = c('ID', 'Pond1'), Sort = c('IDQual', 'IDDD'),
-#'                          Class = c('character', 'character'),
-#'                          Length = c('11', '8'),
-#'                          Qual1 = c('', 'ID'), ValueRegExp = c('', ''))
-#' AggWeights <- new(Class = 'DDdt', AggWeights)
-#' 
-#' setAggWeights(DD) <- AggWeights
+#'           
+#' Aggdt <- data.table(Variable = c('NACE09', 'Turnover'),
+#'                     Sort = c('IDQual', 'IDDD'),
+#'                     Class = c('character', 'character'),
+#'                     Length = c('4', '10'),
+#'                     Qual1 = c('', 'NACE09'),
+#'                     ValueRegExp = c('([0-4][0-9])|(5[0-2])', '([0-9]{1, 15}| )'))  
+#' Aggdt <- new(Class = 'DDdt', Aggdt)          
+#' setAggregates(DD) <- Aggdt
 #' DD
 #'
-#' @rdname setAggWeights
+#' @rdname setAggregates
 #'
 #' @import data.table
 #'
 #' @export
-setGeneric("setAggWeights<-", function(object, value){standardGeneric("setAggWeights<-")})
-#' @rdname setAggWeights
+setGeneric("setAggregates<-", function(object, value){standardGeneric("setAggregates<-")})
+#' @rdname setAggregates
 #'
-#' @include DD-class.R getVNC.R DDdtToVNC.R
+#' @include DD-class.R getVNC.R DDdtToVNC.R setVNC.R
 #'
 #' @import data.table
 #'
 #' @export
 setReplaceMethod(
-    f = "setAggWeights",
+    f = "setAggregates",
     signature = c("DD", "DDdt"),
     function(object, value){
         
         setkeyv(value, setdiff(names(value), 'Value'))
 
         VNCaux <- getVNC(object)
-        VNCaux[['AggWeights']] <- new(Class = 'VNCdt')
+        VNCaux[['Aggregates']] <- new(Class = 'VNCdt')
         
-        setVNC(object) <- DDdtToVNC(value, 'AggWeights') + VNCaux
-        object@AggWeights <- value
+        setVNC(object) <- DDdtToVNC(value, 'Aggregates') + VNCaux
+        object@Aggregates <- value
         validObject(object)
         return(object)
     }
 )
-#' @rdname setAggWeights
+#' @rdname setAggregates
 #'
 #' @include StQ-class.R
 #'
@@ -71,11 +73,11 @@ setReplaceMethod(
 #'
 #' @export
 setReplaceMethod(
-    f = "setAggWeights",
+    f = "setAggregates",
     signature = c("StQ", "DDdt"),
     function(object, value){
         
-        setAggWeights(object@DD) <- value
+        setAggregates(object@DD) <- value
         validObject(object)
         return(object)
     }

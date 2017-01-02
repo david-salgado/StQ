@@ -1,13 +1,15 @@
 #' @title Constructor of objects of class \linkS4class{VarNameCorresp}
 #'
-#' @description This constructor returns objects of class \linkS4class{VarNameCorresp}.
-#' THe input parameter is a \code{list} of objects of class \linkS4class{VNCdt}.
+#' @description This constructor returns an object of class \linkS4class{VarNameCorresp}.
+#' The input parameter is a named \code{list} of objects of class \linkS4class{VNCdt}. Notice that
+#' the names of this \code{list} must be any of 'ID', 'MicroData', 'ParaData', 'Aggregates', 
+#' 'AggWeights', 'Other'.
 #'
-#' @param Data \code{List} of named objects of class \linkS4class{VNCdt}.
+#' @param Data A named \code{list} of objects of class \linkS4class{VNCdt}.
 #'
 #' @return An object of class \linkS4class{VarNameCorresp} with components 
-#' specified in the input Data. Components 'ID', 'MicroData' and/or 'ParaData' 
-#' no specified are set as an empty \linkS4class{VNCdt} object.
+#' specified in the input parameter Data. Components 'ID', 'MicroData' and/or 'ParaData' 
+#' not being specified are set as an empty \linkS4class{VNCdt} object.
 #' 
 #'
 #' @examples
@@ -54,15 +56,24 @@
 #' @export
 BuildVNC <- function(Data){
     
-    if (is.null(names(Data))) stop('[StQ::BuildVNC] Data must be a named list of VNCdt objects.')
+    if (is.null(names(Data))) stop('[StQ::BuildVNC] The input parameter Data must be a named list of VNCdt objects.')
     
     if (is.null(Data$ID)) Data$ID <- new(Class = 'VNCdt')
     
     if (is.null(Data$MicroData)) Data$MicroData <- new(Class = 'VNCdt')
     
-    if (is.null(Data$ParaData)) Data$ParaData <- new(Class = 'VNCdt')
+    ComponentNames <- names(Data)
+    RootCompNames <- unlist(lapply(ComponentNames, 
+                                   function(Name){
+                                       strsplit(Name, '_', fixed = TRUE)[[1]][1]
+                                   }))
+    RootCompNames <- unique(RootCompNames)
     
-    Data <- Data[c('ID', 'MicroData', 'ParaData', setdiff(names(Data), c('ID', 'MicroData', 'ParaData' )))]
+    if (!'ParaData' %in% RootCompNames) Data$ParaData <- new(Class = 'VNCdt')
+    
+    ParaDataNames <- names(Data)[grep('ParaData', names(Data))]
+    
+    Data <- Data[c('ID', 'MicroData', ParaDataNames, setdiff(names(Data), c('ID', 'MicroData', ParaDataNames)))]
     out <- new(Class = 'VarNameCorresp', .Data = Data)
     validObject(out)
     

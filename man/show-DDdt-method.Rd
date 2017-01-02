@@ -14,11 +14,10 @@
 Invisible object of class \code{\link{NULL}}.
 }
 \description{
-The method \code{show} shows the slots of an object
-\linkS4class{DDdt} limiting the number of columns on screen up to 8.
+The method \code{show} shows the slots of an object \linkS4class{DDdt} limiting the 
+number of columns on screen up to 8.
 
-It is indeed the method \link[methods]{show} adapted to the class
-\linkS4class{DDdt}.
+It is indeed the method \link[methods]{show} adapted to the class \linkS4class{DDdt}.
 }
 \examples{
 # A trivial example
@@ -32,13 +31,15 @@ DDdt1 <- new(Class = 'DDdt', data.table(Variable = 'NOrden',
                                         Qual1 = 'NOrden',
                                         ValueRegExp = '[0-9]{9}SS'))
 show(DDdt1)
-                        
+
 DDdt2 <- new(Class = 'DDdt', data.table(Variable = 'NOrden', 
                                         Sort = 'IDQual', 
                                         Class = 'character',
                                         Length = '11',
                                         Qual1 = 'NOrden',
-                                        Qual2 = 'Cal2',
+                                        Qual2 = '1.2.',
+                                        Qual3 = ' ',
+                                        Qual4 = '3.2.1.',
                                         ValueRegExp = '[0-9]{9}SS'))
 show(DDdt2)
 

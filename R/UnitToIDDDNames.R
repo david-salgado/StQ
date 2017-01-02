@@ -1,20 +1,21 @@
-#' @title Convert unit\emph{j} names into their corresponding IDDD variable names.  
+#' @title Convert production unit names into their corresponding statistical variable names (IDDD)
 #'
-#' @description \code{UnitToIDDDNames} returns a data table with the IDDD variable name
-#' corresponding to the Unit\emph{j} variable name specified .
+#' @description \code{UnitToIDDDNames} returns a \linkS4class{data.table} with the statistical 
+#' variable name (IDDD + Qualifiers) corresponding to the production unit variable name specified as
+#' input argument.
 #'
-#' @param UnitNames character vector with the name of variable corresponding to the specified Unit.
+#' @param UnitNames \code{Character} vector with the production unit variable name.
 #'
-#' @param Correspondence Object with the IDDD variable identifiers.
+#' @param Correspondence Object with the IDDD variable name.
 #' 
-#' @return Data table with all the corresponding IDDD variable names. For objects the classes
-#' \linkS4class{DD} and \linkS4class{StQ} it returns the IDDD the slot VarNameCorresp of the
+#' @return Returns a \linkS4class{data.table} with all the corresponding IDDD variable names. For 
+#' objects the classes \linkS4class{DD} and \linkS4class{StQ} it returns the IDDD the slot VarNameCorresp of the
 #' corresponding DD object.
 #'
-#' @examples
-#' # An example for VNCdt:
-#' library(data.table)
+#' @details IDDD and qualifiers compose together the so-called IDDDname of the variable by pasting
+#' the IDDD identifier and each consecutive qualifier with an underscore _.
 #'
+#' @examples
 #' # An example for VNC and DD objects:
 #' library(data.table)
 #' ### We build the VNC object
@@ -104,10 +105,13 @@
 #'           ParaData = Paradt,
 #'           Aggregates = Aggdt)
 #' 
+#' StQ <- new(Class = 'StQ', Data = new(Class = 'Datadt'), DD = DD)
 #' 
 #' UnitToIDDDNames(VNC, UnitNames = 'cp09')
 #' 
-#' UnitToIDDDNames(DD, UnitNames = 'cp09')
+#' UnitToIDDDNames(DD, UnitNames = c('cn01', 'cp09'))
+#' 
+#' UnitToIDDDNames(StQ, UnitNames = c('cn01', 'provincia', 'cp09'))
 #'
 #'
 #' @export
@@ -135,7 +139,8 @@ setMethod(
             XLS.Quals <- XLS[IDDD == '']
             XLS.Quals[IDQual != '', IDDDName := IDQual]
             XLS.Quals[NonIDQual != '', IDDDName := NonIDQual]
-            XLS.Quals <- XLS.Quals[, c('IDQual', 'NonIDQual', 'UnitName', 'IDDDName', 'InFiles'), with = F]
+            XLS.Quals <- XLS.Quals[, c('IDQual', 'NonIDQual', 'UnitName', 'IDDDName', 'InFiles'), 
+                                   with = F]
             XLS <- XLS[IDDD != '']
             XLS <- XLS[, setdiff(names(XLS), getIDQual(Correspondence)), with = F]
             XLS.list <- split(XLS, XLS[['IDDD']])
@@ -213,7 +218,8 @@ setMethod(
               
                 
                 #outputNew <- data.table(UnitName = outputNew, IDDDName = outputNew)
-                output <- output[which(output[['UnitName']] %in% UnitNamesLocal), c('UnitName','IDDDName'), with = F]
+                output <- output[which(output[['UnitName']] %in% UnitNamesLocal), 
+                                 c('UnitName','IDDDName'), with = F]
                 output <- rbindlist(list(output, outputMetaVar))
                 out <- output[['IDDDName']]
                 names(out) <- output[['UnitName']]

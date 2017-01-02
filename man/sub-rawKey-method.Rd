@@ -26,7 +26,8 @@ It is indeed the method \code{[} for the class \linkS4class{rawKey}.
 }
 \examples{
 data(ExamplerawKey)
-ExamplerawKey[1] 
+ExamplerawKey[1]
+ExamplerawKey[IDDDKey == 'Turnover']
 
 }
 

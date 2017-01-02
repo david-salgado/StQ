@@ -1,8 +1,8 @@
 #' @title Returns the corresponding object of class \linkS4class{VarNameCorresp} according to the
-#'  DDdt input object.
+#'  DDdt input object
 #'
-#' @description \code{DDdtToVNC} returns the corresponding object of class
-#' \linkS4class{VarNameCorresp} according to the DDdt input object.
+#' @description \code{DDdtToVNC} returns the corresponding object of class 
+#' \linkS4class{VarNameCorresp} according to the \linkS4class{DDdt} input object.
 #'
 #' @param DDdt Object of class \linkS4class{DDdt}.
 #'
@@ -11,7 +11,7 @@
 #' @param InFiles character vector with as many components as the rows of \code{DDdt} specifying the 
 #' files where to include each variable.
 #'
-#' @return the corresponding object of class \linkS4class{VarNameCorresp}.
+#' @return Returns the corresponding object of class \linkS4class{VarNameCorresp}.
 #'
 #' @examples
 #' library(data.table)
@@ -20,10 +20,9 @@
 #'                          Length = c('11', '7'),
 #'                          Qual1 = c('', 'ID'), ValueRegExp = c('', ''))
 #' AggWeights <- new(Class = 'DDdt', AggWeights)
+#' DDdtToVNC(AggWeights, 'AggWeights', rep('FA', 2))
 #'
-#' VNC <- DDdtToVNC(AggWeights, 'AggWeights', rep('FA', 2))
-#'
-#' @include DDdt-class.R
+#' @include DDdt-class.R getIDQual.R getNonIDQual.R getIDDD.R BuildVNC.R VNCdt-class.R
 #'
 #' @import data.table methods
 #'
@@ -37,10 +36,10 @@ DDdtToVNC <- function(DDdt, NameVNC, InFiles = rep('', dim(DDdt)[1])){
     IDDD <- vector('character', numVar)
     UnitName <- vector('character', numVar)
 
-    IDQualdt <- DDdt[Sort == 'IDQual', Variable]
-    NonIDQualdt <- DDdt[Sort == 'NonIDQual', Variable]
-    IDDDdt <- DDdt[Sort == 'IDDD', Variable]
-
+    IDQualdt <- getIDQual(DDdt)
+    NonIDQualdt <- getNonIDQual(DDdt)
+    IDDDdt <- getIDDD(DDdt)
+    
     if (length(IDQualdt) > 0){
 
         fin <- length(IDQualdt)

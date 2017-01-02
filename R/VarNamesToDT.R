@@ -25,17 +25,18 @@
 #'
 #'
 #' @examples
-#' # We load RepoReadWrite to obtain the included example DD object
 #' data(ExampleDD)
 #' VarNamesToDT(c('Employees_1.'), ExampleDD)
 #'
-#' @include ExtractNames.R
+#' @include ExtractNames.R getVariables.R
 #'
 #' @import data.table
 #'
 #' @export
 VarNamesToDT <- function(VarNames, DD){
-
+    
+    NotPresentVar  <- setdiff(ExtractNames(VarNames), getVariables(DD))
+    if (length(NotPresentVar) > 0) stop(paste0('[StQ::VarNamesToDD] The following variables are not contained in the DD slot: ', NotPresentVar, '.\n'))
     # Para una sola variable
     if (is.character(VarNames) & length(VarNames) == 1){
 
@@ -116,8 +117,10 @@ VarNamesToDT <- function(VarNames, DD){
         # Pasamos NA a '' y eliminamos columnas vacías
         Cols <- sort(names(out))
         for (col in Cols){
+            
             out[, (col) := ifelse(is.na(get(col)), '', get(col))]
-            if(all(out[[col]] == '')) out[, (col) := NULL]
+            if (all(out[[col]] == '')) out[, (col) := NULL]
+        
         }
         return(out)
     }

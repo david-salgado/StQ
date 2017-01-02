@@ -1,22 +1,20 @@
-#' @title Convert a dcasted \linkS4class{data.table} into an object of class
-#' \linkS4class{StQ}
+#' @title Convert a dcasted \linkS4class{data.table} into an object of class \linkS4class{StQ}
 #'
-#' @description \code{melt_StQ} returns an object of class \linkS4class{StQ}
-#' from a \linkS4class{data.table} in dcasted form.
+#' @description \code{melt_StQ} returns an object of class \linkS4class{StQ} from a 
+#' \linkS4class{data.table} in dcasted form.
 #'
-#' This method builds an object of class \linkS4class{StQ} with the slot
-#' \code{Data} constructed from the input \linkS4class{data.table} and the slot
-#' \code{DD} given as an input parameter.
+#' This method builds an object of class \linkS4class{StQ} with the slot \code{Data} constructed 
+#' from the input \linkS4class{data.table} and the slot \code{DD} given as an input parameter.
 #'
-#' This function can be considered as a constructor for the class \code{StQ}. It
-#' is indeed a wrapper for the function \code{\link[data.table]{melt.data.table}}
-#' from the package \linkS4class{data.table} adapted to the structure of the slot
-#' \code{Data} of object \linkS4class{StQ}.
+#' This function can be considered as a constructor for the class \code{StQ}. It is indeed a wrapper
+#'  for the function \code{\link[data.table]{melt.data.table}} from the package 
+#'  \linkS4class{data.table} adapted to the structure of the slot \code{Data} of object 
+#'  \linkS4class{StQ}.
 #'
 #' The input parameter \code{DD} must be of class \linkS4class{DD}.
 #'
-#' @param DataMatrix of class \linkS4class{data.table} with dcasted form
-#' (statistical units by rows and variables by columns).
+#' @param DataMatrix of class \linkS4class{data.table} with dcasted form (statistical units by rows 
+#' and variables by columns).
 #' 
 #' @param DD Object of class \linkS4class{DD}.
 #'
@@ -33,7 +31,7 @@
 #' \code{\link[data.table]{melt.data.table}}, \code{\link[reshape2]{melt}},
 #' \code{\link[reshape2]{dcast}}
 #'
-#' @include Datadt-class.R StQ-class.R ExtractNames.R getVNC.R
+#' @include Datadt-class.R StQ-class.R ExtractNames.R getVNC.R UnitToIDDDNames.R
 #'
 #' @import data.table
 #' 
@@ -47,8 +45,10 @@ melt_StQ <- function(DataMatrix, DD){
     
     # Función para construir nombres de variables
     pasteNA <- function(x, y){
+        
         out <- ifelse(is.na(y) | y == '', paste0(x, ''), paste(x, y, sep = "_"))
         return(out)
+    
     }
     
     DM <- copy(DataMatrix)
@@ -61,8 +61,7 @@ melt_StQ <- function(DataMatrix, DD){
       }
     }
 
-    setnames(DM, names(DM), UnitToIDDDNames(names(DM), DD))
-
+    setnames(DM, UnitToIDDDNames(names(DM), DD))
 
     #Construimos un objeto DD auxiliar
     slots <- setdiff(names(getVNC(DD)), 'VarSpec')
@@ -81,8 +80,6 @@ melt_StQ <- function(DataMatrix, DD){
         DM.Names <- names(DM)
         DM.IDQual <- DM.Names[DM.Names %in% IDQual]
         DM.NonIDQual <- DM.Names[DM.Names %in% NonIDQual]
-
-        #DM.IDDD <- setdiff(intersect(ExtractNames(DM.Names), IDDD), c(DM.IDQual, DM.NonIDQual))
         DM.IDDD <- setdiff(DM.Names, c(DM.IDQual, DM.NonIDQual))
         auxDDdt <- auxDDdt[Variable %in% ExtractNames(DM.IDDD)]
         auxDDdt[, Qual := '']
@@ -93,8 +90,7 @@ melt_StQ <- function(DataMatrix, DD){
                                      trim(Qual))]
             
         }
-        #auxDDdt <- auxDDdt[Qual1 != '']
-
+        
         ColNames <- names(auxDDdt)
         for (col in ColNames){
             
@@ -104,7 +100,6 @@ melt_StQ <- function(DataMatrix, DD){
 
         auxMeasureVar <- split(auxDDdt[['Variable']], auxDDdt[['Qual']])
         if (length(auxMeasureVar) == 0) return(data.table(NULL))
-#        auxMeasureVar <- auxMeasureVar[which(lapply(auxMeasureVar, length) > 0)]
 
         moltenData <- lapply(names(auxMeasureVar), function(QualName){
             
@@ -163,14 +158,6 @@ melt_StQ <- function(DataMatrix, DD){
                     outLocal <- out
                 }
 
-                #setnames(outLocal, c('IDDD', LocalNonIDQual))
-                #outLocal[, Value := out[['Value']]]
-                #for (idqual in IDQual){
-                    
-                #    outLocal[, (idqual) := out[[idqual]]]
-                #}
-                #setcolorder(outLocal, c(IDQual, LocalNonIDQual, 'IDDD', 'Value'))
-            
             } else {
                 
                 outLocal <- data.table(NULL)
@@ -181,8 +168,6 @@ melt_StQ <- function(DataMatrix, DD){
         })
         names(moltenData) <- names(auxMeasureVar)
 
-        #moltenData <- lapply(moltenData, function(DT) { DT <- DT[get(unlist(strsplit(names(DT), ' '))) != ""]})
-        
         moltenData <- rbindlist(moltenData, fill = TRUE)
         
         return(moltenData)

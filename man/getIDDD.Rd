@@ -5,41 +5,43 @@
 \alias{getIDDD}
 \alias{getIDDD,DD-method}
 \alias{getIDDD,DDdt-method}
-\alias{getIDDD,Datadt-method}
 \alias{getIDDD,StQ-method}
 \alias{getIDDD,VNCdt-method}
 \alias{getIDDD,VarNameCorresp-method}
-\title{Return IDDD identifiers from an object}
+\alias{getIDDD,rawStQ-method}
+\title{Return IDDD identifiers (statistical variable names) from the slot DD of an object}
 \usage{
-getIDDD(object, CompNames)
+getIDDD(object, CompNames = names(object))
 
-\S4method{getIDDD}{VNCdt}(object, CompNames)
+\S4method{getIDDD}{VNCdt}(object, CompNames = names(object))
 
-\S4method{getIDDD}{VarNameCorresp}(object, CompNames)
+\S4method{getIDDD}{VarNameCorresp}(object, CompNames = names(object))
 
-\S4method{getIDDD}{DDdt}(object, CompNames)
+\S4method{getIDDD}{DDdt}(object, CompNames = names(object))
 
-\S4method{getIDDD}{DD}(object, CompNames)
+\S4method{getIDDD}{DD}(object, CompNames = setdiff(slotNames(object),
+  "VarNameCorresp"))
 
-\S4method{getIDDD}{Datadt}(object, CompNames)
+\S4method{getIDDD}{StQ}(object, CompNames = setdiff(slotNames(getDD(object)),
+  "VarNameCorresp"))
 
-\S4method{getIDDD}{StQ}(object, CompNames)
+\S4method{getIDDD}{rawStQ}(object,
+  CompNames = setdiff(slotNames(getDD(object)), "VarNameCorresp"))
 }
 \arguments{
-\item{object}{Object whose IDDD identifiers are required.}
+\item{object}{Object whose IDDD identifiers in the slot \linkS4class{DD} are required.}
 
-\item{CompNames}{Character vector with the names of components or slots of the 
-object from which the IDDD identifiers are requested.}
+\item{CompNames}{\code{Character} vector with the names of components or slots of the object from
+which the IDDD identifiers are requested.}
 }
 \value{
-In the case of \linkS4class{VarNameCorresp} it returns a character
-vector with the IDDD identifiers from the components specified in Namesdt. 
-If no Namesdt is specified, it returns the IDDD identifier from all the 
-components of the object.
+Returns a character vector with the IDDD identifiers from the components specified in 
+CompNames. If no CompNames parameter is specified, it returns the IDDD identifiers from all the 
+components of the input object.
 }
 \description{
-\code{getIDDD} returns the IDDD identifiers from the input 
-object.
+\code{getIDDD} returns the IDDD identifiers from the slot DD of the input object.
+Notice that not all returned IDDD identifiers may be present in the input object.
 }
 \examples{
 library(data.table)

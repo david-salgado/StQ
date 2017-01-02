@@ -1,7 +1,6 @@
 #' @title Set value of slot \code{ID} of an object \linkS4class{DD}
 #'
-#' @description \code{setID} assigns a \linkS4class{DDdt} to the
-#'  slot \code{ID} of the input object.
+#' @description \code{setID} assigns a \linkS4class{DDdt} to the slot \code{ID} of the input object.
 #'
 #' @param object Object containing slot \code{ID} to be assigned.
 #'
@@ -10,15 +9,14 @@
 #' @return Object \linkS4class{DD} with slot \code{ID} updated.
 #'
 #' @examples
-#' # An example:
 #' library(data.table)
-#' MicroDataDD <- data.table(Variable = 'IEPEntradaPed', Sort = 'IDDD', Class = 'numeric',
+#' MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
 #'                           Length = '8',
 #'                           Qual1 = 'NumIdEst', Qual2 = 'Market', ValueRegExp = '')
 #' MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
 #' VarList <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','',''),
 #'                                                           NonIDQual = c('', 'Market', 'Cod', ''),
-#'                                                           IDDD = c('', '', '' ,'IEPEntradaPed'),
+#'                                                           IDDD = c('', '', '' ,'NewOrders'),
 #'                                                           NumIdEst = c('', '', '', '.'),
 #'                                                           Market = c('', '', '', '1.'),
 #'                                                           Cod = rep('', 4),
@@ -47,7 +45,7 @@ setGeneric("setID<-", function(object, value){standardGeneric("setID<-")})
 
 #' @rdname setID
 #'
-#' @include DD-class.R
+#' @include DD-class.R getVNC.R DDdtToVNC.R
 #'
 #' @import data.table
 #'

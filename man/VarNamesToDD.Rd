@@ -20,12 +20,11 @@ parameter \code{VarNames}.
 names specified in the input parameter \code{VarNames}.
 }
 \examples{
-data(ExampleDD)         
- 
-VarNames <- c('Turnover') 
+VarNames <- c('Turnover')
+data(ExampleDD)          
 VarNamesToDD(VarNames, ExampleDD)
  
-VarNames <- c('NOrden', 'Turnover', 'EsRemuner', 'Employees')
+VarNames <- c('ID', 'Turnover', 'EmplType', 'Employees')
 VarNamesToDD(VarNames, ExampleDD)                     
 
 }

@@ -29,7 +29,7 @@
 #' QList[['MM092015']]
 #' QList[[2]]
 #'
-#' @include StQList-class.R getPeriods.StQList.R
+#' @include StQList-class.R getPeriods.R
 #'
 #' @import data.table
 #'
@@ -40,7 +40,7 @@ setMethod(
   function(x, i, j, ..., exact = TRUE){
 
     Data <- x@Data
-    names(Data) <- getPeriods.StQList(x)
+    names(Data) <- getPeriods(x)
     output <- Data[[i]]
     return(output)
 

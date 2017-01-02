@@ -1,11 +1,11 @@
-#' @title S4 class with the dictionary of data (variable specifications)
+#' @title S4 class with the data dictionary (variable specifications)
 #'
-#' @description Definition of an S4 class named \code{DD} with the specification
-#' of each variable.
+#' @description Definition of an S4 class named \code{DD} with the specification of each variable.
 #'
-#' The class \code{DD} comprises a slot of class \linkS4class{VarNameCorresp}
-#' and slots of class \linkS4class{DDdt} of names \code{ID},
-#' \code{MicroData}, \code{Aggregates}, \code{AggWeights}, \code{Other}
+#' The class \code{DD} comprises a slot of class \linkS4class{VarNameCorresp} and slots of class 
+#' \linkS4class{DDdt} of names \code{ID}, \code{MicroData}, \code{ParaData}, \code{Aggregates}, 
+#' \code{AggWeights}, \code{Other} or names compounds with underscores with these roots (e.g. 
+#' ParaData_Collection, ParaData_Editing).
 #'
 #' @examples
 #' # An empty DD object is built through the code:
@@ -67,7 +67,7 @@
 #'           ID = IDdt,
 #'           MicroData = Microdt,
 #'           ParaData = Paradt)
-#'
+#' DD
 #' @include ExtractNames.R VarNameCorresp-class.R DDdt-class.R
 #'
 #' @import data.table
@@ -82,65 +82,72 @@ setClass(Class = "DD",
                    AggWeights = 'DDdt',
                    Other = 'DDdt'),
          prototype = list(VarNameCorresp = new(Class = 'VarNameCorresp'),
-                          ID = new(Class='DDdt'),
-                          MicroData = new(Class='DDdt'),
-                          ParaData = new(Class='DDdt'),
-                          Aggregates = new(Class='DDdt'),
-                          AggWeights = new(Class='DDdt'),
-                          Other = new(Class='DDdt')
-                          ),
+                          ID = new(Class = 'DDdt'),
+                          MicroData = new(Class = 'DDdt'),
+                          ParaData = new(Class = 'DDdt'),
+                          Aggregates = new(Class = 'DDdt'),
+                          AggWeights = new(Class = 'DDdt'),
+                          Other = new(Class = 'DDdt')),
          validity = function(object){
 
              ColNames <- slotNames(object)
 
              if (ColNames[1] != 'VarNameCorresp') {
 
-                 stop('[validity DD] The first column of DD must be VarNameCorresp.')
+                 stop('[StQ:: validity DD] The first component of DD must be VarNameCorresp.')
              }
 
              if (ColNames[2] != 'ID') {
 
-                 stop('[validity DD] The second column of DD must be ID.')
+                 stop('[StQ:: validity DD] The second component of DD must be ID.')
              }
 
              if (ColNames[3] != 'MicroData') {
 
-                 stop('[validity DD] The third column of DD must be MicroData.')
+                 stop('[StQ:: validity DD] The third component of DD must be MicroData.')
              }
 
              if (ColNames[4] != 'ParaData') {
 
-                 stop('[validity DD] The fourth column of DD must be ParaData.')
+                 stop('[StQ:: validity DD] The fourth component of DD must be ParaData.')
              }
 
              if (ColNames[5] != 'Aggregates') {
 
-                 stop('[validity DD] The fifth column of DD must be Aggregates.')
+                 stop('[StQ:: validity DD] The fifth component of DD must be Aggregates.')
              }
 
              if (ColNames[6] != 'AggWeights') {
 
-                 stop('[validity DD] The last second column of DD must be AggWeights.')
+                 stop('[StQ:: validity DD] The last but one component of DD must be AggWeights.')
              }
 
              if (ColNames[7] != 'Other') {
 
-                 stop('[validity DD] The last column of DD must be Other.')
+                 stop('[StQ:: validity DD] The last component of DD must be Other.')
              }
 
              variablesDD <- c()
              for (Slot in setdiff(slotNames(object), 'VarNameCorresp')) {
+                 
                  SlotNames <- slot(object, Slot)
                  variablesDD <- c(variablesDD,  SlotNames$Variable[SlotNames$Sort == 'IDDD'])
                  variablesDD <- unique(variablesDD)
              }
 
-             variablesVNC <- getIDDD(object@VarNameCorresp)
-             varVNCnotinVNC <- setdiff(variablesDD, variablesVNC)
-             if (length(varVNCnotinVNC) > 0) {
+             variablesVNC <- c()
+             for (Component in object@VarNameCorresp){
+                 
+                 auxVar <- Component[['IDDD']]
+                 auxVar <- auxVar[auxVar != '']
+                 variablesVNC <- c(variablesVNC, auxVar)
+             }    
+                 
+             varDDnotinVNC <- setdiff(variablesDD, variablesVNC)
+             if (length(varDDnotinVNC) > 0) {
 
-                 stop(paste0('[Validity DD] The following variables in the column "IDDD" of the slot DD must be variables (IDDD) in the slot VNC:\n',
-                             paste0(varVNCnotinVNC, collapse = ', '),
+                 stop(paste0('[StQ:: Validity DD] The following variables in the column "IDDD" of the slot DD must be variables (IDDD) in the slot VNC:\n',
+                             paste0(varDDnotinVNC, collapse = ', '),
                              '\n\n Check if object VNC contains all variable names.'))
 
              }

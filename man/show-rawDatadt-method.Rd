@@ -14,7 +14,8 @@
 Invisible object of class \code{\link{NULL}}.
 }
 \description{
-The method \code{show} shows the slot \code{Data} of an object \linkS4class{rawDatadt}.
+The method \code{show} shows the slot \code{Data} of an object 
+\linkS4class{rawDatadt}.
 
 It is indeed the method \link[methods]{show} adapted to the class \linkS4class{rawDatadt}.
 }

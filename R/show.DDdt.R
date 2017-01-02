@@ -1,10 +1,9 @@
 #' @title Show an object of class \linkS4class{DDdt}
 #'
-#' @description The method \code{show} shows the slots of an object
-#' \linkS4class{DDdt} limiting the number of columns on screen up to 8.
+#' @description The method \code{show} shows the slots of an object \linkS4class{DDdt} limiting the 
+#' number of columns on screen up to 8.
 #'
-#' It is indeed the method \link[methods]{show} adapted to the class
-#' \linkS4class{DDdt}.
+#' It is indeed the method \link[methods]{show} adapted to the class \linkS4class{DDdt}.
 #'
 #' @param object Object of class \linkS4class{DDdt}.
 #'
@@ -22,13 +21,15 @@
 #'                                         Qual1 = 'NOrden',
 #'                                         ValueRegExp = '[0-9]{9}SS'))
 #' show(DDdt1)
-#'                         
+#' 
 #' DDdt2 <- new(Class = 'DDdt', data.table(Variable = 'NOrden', 
 #'                                         Sort = 'IDQual', 
 #'                                         Class = 'character',
 #'                                         Length = '11',
 #'                                         Qual1 = 'NOrden',
-#'                                         Qual2 = 'Cal2',
+#'                                         Qual2 = '1.2.',
+#'                                         Qual3 = ' ',
+#'                                         Qual4 = '3.2.1.',
 #'                                         ValueRegExp = '[0-9]{9}SS'))
 #' show(DDdt2)
 #' 
@@ -44,8 +45,8 @@ setMethod(
 
         ColMax <- 8 
         NamesCol <- names(object)
-        
-        if (length(NamesCol) <= ColMax) {
+        NumCol <- length(NamesCol) 
+        if (NumCol <= ColMax) {
             
             mc <- match.call()
             New.object <- object@.Data
@@ -56,8 +57,8 @@ setMethod(
             
         } else {
 
-            NumCols <- min(length(NamesCol), ColMax)
-            NamesShowCol <- NamesCol[1:NumCols]
+            NumCols <- min(NumCol, ColMax)
+            NamesShowCol <- NamesCol[c(1:(ColMax - 2), (NumCol - 1):NumCol)]
             show(object[, NamesShowCol, with = F])
             cat('\n\n')
             cat(paste(rep('=', 40)), '\n\n')

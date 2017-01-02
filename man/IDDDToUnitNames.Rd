@@ -5,7 +5,7 @@
 \alias{IDDDToUnitNames}
 \alias{IDDDToUnitNames,character,DD-method}
 \alias{IDDDToUnitNames,character,StQ-method}
-\title{Convert IDDD variable names into their corresponding unit\emph{j} names}
+\title{Convert IDDD variable names into their corresponding production unit names}
 \usage{
 IDDDToUnitNames(IDDDNames, Correspondence)
 
@@ -16,15 +16,16 @@ IDDDToUnitNames(IDDDNames, Correspondence)
 \arguments{
 \item{IDDDNames}{Character vector with the IDDD variables.}
 
-\item{Correspondence}{Object with the IDDD variable identifiers.}
+\item{Correspondence}{Object with the IDDD variable identifiers (of class \linkS4class{DD} or 
+\linkS4class{StQ}).}
 }
 \value{
-\linkS4class{data.table} with the IDDD variable names and their corresponding 
-Unit\emph{j} names.
+\linkS4class{data.table} with the IDDD variable names and their corresponding production 
+unit names.
 }
 \description{
-\code{IDDDToUnitNames} returns a data table with the unit
-variable name for each IDDD variable name.
+\code{IDDDToUnitNames} returns a data table with the production unit variable name 
+for each IDDD variable name.
 }
 \examples{
 library(data.table)

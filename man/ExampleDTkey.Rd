@@ -4,7 +4,7 @@
 \name{ExampleDTkey}
 \alias{ExampleDTkey}
 \title{\linkS4class{data.table} with the key component of a \linkS4class{StQ} object}
-\format{Object of class \linkS4class{data.table} for 354458 values.}
+\format{Object of class \linkS4class{data.table} with 354458 rows and 4 columns.}
 \usage{
 data(ExampleDTkey)
 }

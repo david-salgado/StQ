@@ -27,9 +27,8 @@ key-value pair structure.
 \linkS4class{rawStQ} from the input\linkS4class{StQ} object.
 }
 \examples{
-library(data.table)
 data(ExampleStQ)
-newrawQ <- StQTorawStQ(ExampleStQ)
+StQTorawStQ(ExampleStQ)
  
 }
 

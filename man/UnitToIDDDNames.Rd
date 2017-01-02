@@ -6,7 +6,7 @@
 \alias{UnitToIDDDNames,character,DD-method}
 \alias{UnitToIDDDNames,character,StQ-method}
 \alias{UnitToIDDDNames,character,VarNameCorresp-method}
-\title{Convert unit\emph{j} names into their corresponding IDDD variable names.}
+\title{Convert production unit names into their corresponding statistical variable names (IDDD)}
 \usage{
 UnitToIDDDNames(UnitNames, Correspondence)
 
@@ -17,23 +17,25 @@ UnitToIDDDNames(UnitNames, Correspondence)
 \S4method{UnitToIDDDNames}{character,StQ}(UnitNames, Correspondence)
 }
 \arguments{
-\item{UnitNames}{character vector with the name of variable corresponding to the specified Unit.}
+\item{UnitNames}{\code{Character} vector with the production unit variable name.}
 
-\item{Correspondence}{Object with the IDDD variable identifiers.}
+\item{Correspondence}{Object with the IDDD variable name.}
 }
 \value{
-Data table with all the corresponding IDDD variable names. For objects the classes
-\linkS4class{DD} and \linkS4class{StQ} it returns the IDDD the slot VarNameCorresp of the
+Returns a \linkS4class{data.table} with all the corresponding IDDD variable names. For 
+objects the classes \linkS4class{DD} and \linkS4class{StQ} it returns the IDDD the slot VarNameCorresp of the
 corresponding DD object.
 }
 \description{
-\code{UnitToIDDDNames} returns a data table with the IDDD variable name
-corresponding to the Unit\emph{j} variable name specified .
+\code{UnitToIDDDNames} returns a \linkS4class{data.table} with the statistical 
+variable name (IDDD + Qualifiers) corresponding to the production unit variable name specified as
+input argument.
+}
+\details{
+IDDD and qualifiers compose together the so-called IDDDname of the variable by pasting
+the IDDD identifier and each consecutive qualifier with an underscore _.
 }
 \examples{
-# An example for VNCdt:
-library(data.table)
-
 # An example for VNC and DD objects:
 library(data.table)
 ### We build the VNC object
@@ -123,10 +125,13 @@ DD <- new(Class = 'DD',
           ParaData = Paradt,
           Aggregates = Aggdt)
 
+StQ <- new(Class = 'StQ', Data = new(Class = 'Datadt'), DD = DD)
 
 UnitToIDDDNames(VNC, UnitNames = 'cp09')
 
-UnitToIDDDNames(DD, UnitNames = 'cp09')
+UnitToIDDDNames(DD, UnitNames = c('cn01', 'cp09'))
+
+UnitToIDDDNames(StQ, UnitNames = c('cn01', 'provincia', 'cp09'))
 
 
 }

@@ -1,11 +1,7 @@
 #' @title S4 class for the raw key of \linkS4class{rawDatadt} objects.
 #'
-#' @description Definition of an S4 class named \code{rawKey} implementing the
-#' key of each key-value pair in a \linkS4class{rawDatadt} object.
-#'
-#' The structure of the class \code{rawDatadt} comprises a character vector whose
-#' components follow precisely defined syntax rules given by the regexp 
-#' \code{[A-Za-z]+:[A-Za-z0-9]+(_[A-Za-z]+:[A-Za-z0-9]+)*}.
+#' @description Definition of an S4 class named \code{rawKey} implementing the key of each key-value
+#'  pair in a \linkS4class{rawDatadt} object.
 #' 
 #' @examples
 #' # An empty key
@@ -46,7 +42,6 @@ setClass(Class = "rawKey",
                  
              }
              
-             
              IDDDkeySyntax <- "[A-Za-z0-9]*"
              ValidIDDDKey <- regexpr(IDDDkeySyntax, object[['IDDDKey']])
              ExactLength <- (attributes(ValidIDDDKey)$match.length == nchar(object[['IDDDKey']]))
@@ -61,13 +56,11 @@ setClass(Class = "rawKey",
                       call. = FALSE)
              }
              
-             #numkeySyntax <- "[A-Za-z0-9]+(^|[A-Za-z0-9.)*([0-9.]+(e(+|-)[0-9]+)?)*"
              numkeySyntax <- "[A-Za-z0-9]+(^|[A-Za-z0-9.])*"
              Validnum <- regexpr(numkeySyntax, object[['QualKey']])
              ExactLength <- (attributes(Validnum)$match.length == nchar(object[['QualKey']]))
              Validnum <- unlist(Validnum) & ExactLength
              
-             #charkeySyntax <- "[A-Za-z0-9]+([^a-z]|[A-Za-z0-9.])*[A-Za-z0-9]*"
              charkeySyntax <- "[A-Za-z0-9]+([^A-Za-z0-9._]|[A-Za-z0-9.])*"
              Validchar <- regexpr(charkeySyntax, object[['QualKey']])
              ExactLength <- (attributes(Validchar)$match.length == nchar(object[['QualKey']]))

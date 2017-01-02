@@ -4,7 +4,7 @@
 \name{getEditNames}
 \alias{getEditNames}
 \alias{getEditNames,data.table-method}
-\title{Extract edit names from an object}
+\title{Extract edit names from an object (THIS FUNCTION MUST BE REFACTORED)}
 \usage{
 getEditNames(object)
 

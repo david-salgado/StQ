@@ -12,7 +12,7 @@
 #'   \item \code{Class}: class of the variable (\code{numeric}, \code{character},...).
 #'   \item \code{Length}: highest length for each variable.
 #'   \item \code{Qual1} to \code{Qual3}: 1st to 3rd variable qualifier.
-#'   \item \code{ValueRegExp}: regexp for the variable values.
+#'   \item \code{ValueRegExp}: regexp for the variable values (not yet active).
 #' }
 #' 
 #' @docType data
@@ -21,5 +21,5 @@
 #'
 #' @usage data(ExampleDDdt)
 #'
-#' @format Object of class \linkS4class{DDdt} with 14 rows and 8 columns.
+#' @format Object of class \linkS4class{DDdt} with 13 rows and 7 columns.
 NULL

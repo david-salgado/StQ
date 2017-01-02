@@ -1,14 +1,15 @@
-#' @title Convert IDDD variable names into their corresponding unit\emph{j} names
+#' @title Convert IDDD variable names into their corresponding production unit names
 #'
-#' @description \code{IDDDToUnitNames} returns a data table with the unit
-#' variable name for each IDDD variable name.
+#' @description \code{IDDDToUnitNames} returns a data table with the production unit variable name 
+#' for each IDDD variable name.
 #' 
 #' @param IDDDNames Character vector with the IDDD variables.
 #' 
-#' @param Correspondence Object with the IDDD variable identifiers.
+#' @param Correspondence Object with the IDDD variable identifiers (of class \linkS4class{DD} or 
+#' \linkS4class{StQ}).
 #' 
-#' @return \linkS4class{data.table} with the IDDD variable names and their corresponding 
-#' Unit\emph{j} names.
+#' @return \linkS4class{data.table} with the IDDD variable names and their corresponding production 
+#' unit names.
 #'
 #' @examples
 #' library(data.table)
@@ -104,13 +105,14 @@ setMethod(
     signature = c("character", "DD"),
     function(IDDDNames, Correspondence){
         
-        if (missing(IDDDNames)) IDDDNames <- NULL
+        if (missing(IDDDNames)) stop('[StQ::IDDDToUnitNames] A character vector of IDDDNames must be specified.\n')
+        if (missing(Correspondence)) stop('[StQ::IDDDToUnitNames] A correspondence object (DD or StQ) must be specified.\n')
         
         VNC <- getVNC(Correspondence)
         XLS <- Reduce(`+`, VNC, init = VNC[[1]])
         XLS <- DatadtToDT(XLS)
         XLS[, IDDDName := '']
-
+        
         DDslots <- setdiff(slotNames(Correspondence), 'VarNameCorresp')
         DDdt <- new(Class = 'DDdt')
         for (DDslot in DDslots){
@@ -141,8 +143,6 @@ setMethod(
         UnitNames <- lapply(NotBlankIDDDNames, function(IDDDname){
             
             localXLS <- XLS[IDDD == IDDDname & IDDD != '']
-            #setkeyv(localXLS, 'IDDD')
-            #localXLS <- localXLS[!duplicated(localXLS, by = key(localXLS))]
             QualNames <- Quals.list[[IDDDname]]
             localXLS <- localXLS[, c('IDDD', QualNames, 'UnitName', 'IDDDName'), with = F]
             localNonIDQuals <- setdiff(intersect(names(localXLS), NonIDQuals), setdiff(IDQuals, NonIDQuals))
@@ -168,8 +168,10 @@ setMethod(
         NonIDQualXLS <- NonIDQualXLS[, c('UnitName', 'IDDDName'), with = F]
         
         UnitNames <- rbindlist(list(IDQualXLS, NonIDQualXLS, UnitNames))
-        out <- UnitNames[['UnitName']]
-        names(out) <- UnitNames[['IDDDName']]
+        IDDDNamesDT <- data.table(IDDDName = IDDDNames)
+        outDT <- merge(UnitNames, IDDDNamesDT, by = 'IDDDName', all.y = TRUE)
+        out <- outDT[['UnitName']]
+        names(out) <- outDT[['IDDDName']]
         out <- out[IDDDNames]
         return(out)
     }
@@ -177,7 +179,7 @@ setMethod(
 
 #' @rdname IDDDToUnitNames
 #'
-#' @include StQ-class.R DD-class.R
+#' @include StQ-class.R DD-class.R getDD.R
 #'
 #' @import data.table
 #' 
@@ -196,5 +198,3 @@ setMethod(
         
     }
 )
-
-

@@ -24,16 +24,19 @@
 #' presents the corresponding formula.
 #'
 #' @examples
-#' # We build a DD object to be used as the second input parameter:
 #' data(ExampleDD)
-#' VarNamesToFormula(c('IASSEmpleo_1.', 'IASSEmpleo_2.2', 'IASSEmpleo'), ExampleDD)
+#' VarNamesToFormula('Turnover', ExampleDD)
+#' 
+#' VarNamesToFormula(c('Employees_1.', 'Employees_2.2', 'Employees'), ExampleDD)
+#' 
+#' VarNamesToFormula(c('Turnover', 'Employees_1.', 'Employees_2.2', 'Employees'), ExampleDD)
 #'
 #' @export
 setGeneric("VarNamesToFormula",
            function(VarNames, DD){standardGeneric("VarNamesToFormula")})
 #' @rdname VarNamesToFormula
 #'
-#' @include DD-class.R ExtractNames.R
+#' @include DD-class.R ExtractNames.R getVariables.R
 #'
 #' @import data.table
 #'
@@ -45,6 +48,8 @@ setMethod(
 
         trim <- function (x) gsub("^\\s+|\\s+$", "", x, useBytes = T)
         
+        NotPresentVar  <- setdiff(ExtractNames(VarNames), getVariables(DD))
+        if (length(NotPresentVar) > 0) stop(paste0('[StQ::VarNamesToDD] The following variables are not contained in the DD slot: ', NotPresentVar, '.\n'))
         DotQual <- getDotQual(DD)
         
         # Para una variable

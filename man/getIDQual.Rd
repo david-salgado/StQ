@@ -8,32 +8,40 @@
 \alias{getIDQual,StQ-method}
 \alias{getIDQual,VNCdt-method}
 \alias{getIDQual,VarNameCorresp-method}
-\title{Return IDDD identifiers from an object}
+\alias{getIDQual,rawStQ-method}
+\title{Return unit qualifiers from an object}
 \usage{
-getIDQual(object, Namesdt)
+getIDQual(object, CompNames = names(object))
 
-\S4method{getIDQual}{VNCdt}(object, Namesdt)
+\S4method{getIDQual}{VNCdt}(object, CompNames = names(object))
 
-\S4method{getIDQual}{VarNameCorresp}(object, Namesdt)
+\S4method{getIDQual}{VarNameCorresp}(object, CompNames = names(object))
 
-\S4method{getIDQual}{DDdt}(object, Namesdt)
+\S4method{getIDQual}{DDdt}(object, CompNames = names(object))
 
-\S4method{getIDQual}{DD}(object, Namesdt)
+\S4method{getIDQual}{DD}(object, CompNames = setdiff(slotNames(object),
+  "VarNameCorresp"))
 
-\S4method{getIDQual}{StQ}(object, Namesdt)
+\S4method{getIDQual}{StQ}(object,
+  CompNames = setdiff(slotNames(getDD(object)), "VarNameCorresp"))
+
+\S4method{getIDQual}{rawStQ}(object,
+  CompNames = setdiff(slotNames(getDD(object)), "VarNameCorresp"))
 }
 \arguments{
-\item{object}{Object with the IDQual unit qualifier.}
+\item{object}{Object with the unit qualifiers (IDQual) to be queried.}
 
-\item{Namesdt}{Character vector with the components or slots from which IDQuals
-are requiered.}
+\item{CompNames}{Character vector with the components or slots from which IDQuals are queried.}
 }
 \value{
 Character vector with all the unit qualifier names.
 }
 \description{
-\code{getIDQual} returns a character vector with all unit qualifier
-names (IDQual) included in the input object.
+\code{getIDQual} returns a character vector with all unit qualifier names (IDQual) 
+contained in the input object.
+}
+\details{
+Unit qualifiers are those qualifiers identifying statistical units.
 }
 \examples{
 library(data.table)
@@ -68,6 +76,11 @@ AggWeights = new(Class = 'VNCdt', data.table(IDQual = c('CCAA', 'NACE09', ''),
 VNC <- new(Class = 'VarNameCorresp', .Data = VarList)
 getIDQual(VNC)
 
+getIDQual(ExampleDD)
+getIDQual(ExampleDD, 'MicroData')
+
+getIDQual(ExampleStQ)
+getIDQual(ExampleStQ, 'Aggregates')
 
 }
 

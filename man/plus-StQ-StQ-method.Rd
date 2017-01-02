@@ -17,11 +17,11 @@ Object of class \code{StQ} with the join of both slots \code{DD} and
 \code{Data}.
 }
 \description{
-\code{+} joins two objects of class \linkS4class{StQ} in a
-single object of the same class.
+\code{+} joins two objects of class \linkS4class{StQ} in a single object of the same
+ class.
 
-This method overloads the operator \code{\link{+}} and builds a new
-\linkS4class{StQ} object joining both input objects.
+This method overloads the operator \code{\link{+}} and builds a new \linkS4class{StQ} object 
+combining both input objects.
 }
 \examples{
 # We build a trivial data set:
@@ -54,8 +54,7 @@ DD1 <- new(Class = 'DD', VarNameCorresp = VNC1, MicroData = MicroDD1)
 data(ExampleStQ)  
 Q1 <- new(Class = 'StQ', Data = Data1, DD = DD1)
 Q2 <- ExampleStQ
-Q <- Q1 + Q2
-str(Q)
+Q1 + Q2
 
 }
 

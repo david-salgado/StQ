@@ -1,14 +1,14 @@
-#' @title Return IDDD identifiers from an object
+#' @title Return non-unit qualifiers not used in compound variable names
 #'
-#' @description \code{getDotQual} returns a character vector with all qualifier names (IDQual) 
-#' with wildcard dot in the VNC component the input object.
+#' @description \code{getDotQual} returns a character vector with all non-unit qualifier names 
+#' specified with a wildcard dot in the VNC component of the input object.
 #'
-#' @param object Object with the dot qualifiers.
+#' @param object Object containing the dot qualifiers.
 #'
-#' @param Namesdt Character vector with the components or slots from which dot qualifiers are 
+#' @param Component \code{Character} vector with the components or slots from which dot qualifiers are 
 #' required.
 #'
-#' @return Character vector with all the dot qualifier names.
+#' @return \code{Character} vector with all the dot qualifier names.
 #'
 #' @examples
 #' library(data.table)
@@ -19,13 +19,13 @@
 #'                            NumIdEst = c('', rep('.', 4)),
 #'                            UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'),
 #'                            InFiles = rep('FI', 5))),
-#' MicroData =new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
-#'                                            NonIDQual = c('', 'Market', ''),
-#'                                            IDDD = c(rep('', 2), 'NewOrders'),
-#'                                            NumIdEst = c(rep('', 2), '.'),
-#'                                            Market = c(rep('', 2), '1.'),
-#'                                            UnitName = c('numidest', '', 'cp09'),
-#'                                            InFiles = rep('FF, FD, FG', 3))),
+#' MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
+#'                                             NonIDQual = c('', 'Market', ''),
+#'                                             IDDD = c(rep('', 2), 'NewOrders'),
+#'                                             NumIdEst = c(rep('', 2), '.'),
+#'                                             Market = c(rep('', 2), '1.'),
+#'                                             UnitName = c('numidest', '', 'cp09'),
+#'                                             InFiles = rep('FF, FD, FG', 3))),
 #' ParaData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
 #'                                            NonIDQual = c('', 'Action', ''),
 #'                                            IDDD = c(rep('', 2), 'Date'),
@@ -45,7 +45,7 @@
 #'
 #'
 #' @export
-setGeneric("getDotQual", function(object, Namesdt){standardGeneric("getDotQual")})
+setGeneric("getDotQual", function(object, Component = names(object)){standardGeneric("getDotQual")})
 
 #' @rdname getDotQual
 #'
@@ -57,7 +57,7 @@ setGeneric("getDotQual", function(object, Namesdt){standardGeneric("getDotQual")
 setMethod(
     f = "getDotQual",
     signature = c("VNCdt"),
-    function(object, Namesdt){
+    function(object, Component = names(object)){
         
         ColNames <- names(object)
         output <- c()
@@ -80,18 +80,14 @@ setMethod(
 setMethod(
     f = "getDotQual",
     signature = c("VarNameCorresp"),
-    function(object, Namesdt){
-        
-        if (missing(Namesdt)) Namesdt <- names(object)
-        
-        aux <- object[Namesdt]
-        
-        IDQual.list <- lapply(aux, function(x) {
-            IDQual <- getDotQual(x)
-            return(IDQual)
-        }
-        )
-        
+    function(object, Component = names(object)){
+
+        ValidComp <- names(object)
+        NotValidComp <- Component[!Component %in% ValidComp]
+        if(!all(Component %in% ValidComp)) stop(paste0('[StQ::getDotQual] The following components are not present in the input object: ', 
+                                                       paste0(NotValidComp, collapse = ', '), '.\n'))
+        aux <- object[Component]
+        IDQual.list <- lapply(aux, function(x){getDotQual(x, Component)})
         output <- unique(Reduce(c, IDQual.list, init = IDQual.list[[1]]))
         return(output)
         
@@ -101,7 +97,7 @@ setMethod(
 
 #' @rdname getDotQual
 #'
-#' @include DD-class.R
+#' @include DD-class.R getVNC.R
 #'
 #' @import data.table
 #'
@@ -109,17 +105,17 @@ setMethod(
 setMethod(
     f = "getDotQual",
     signature = c("DD"),
-    function(object, Namesdt){
+    function(object, Component = names(getVNC(object))){
         
         VNC <- getVNC(object)
-        output <- getDotQual(VNC, Namesdt)
+        output <- getDotQual(VNC, Component)
         return(output)
     }
 )
 
 #' @rdname getDotQual
 #'
-#' @include StQ-class.R
+#' @include StQ-class.R getDD.R
 #'
 #' @import data.table
 #'
@@ -127,15 +123,15 @@ setMethod(
 setMethod(
     f = "getDotQual",
     signature = c("StQ"),
-    function(object, Namesdt){
+    function(object, Component){
         
-        if (missing(Namesdt)) {
+        if (missing(Component)){
             
             output <- getDotQual(getDD(object))
         
-        } else{
+        } else {
             
-            output <- getDotQual(getDD(object), Namesdt)
+            output <- getDotQual(getDD(object), Component)
         
         }
         

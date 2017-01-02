@@ -7,30 +7,30 @@
 \alias{getDotQual,StQ-method}
 \alias{getDotQual,VNCdt-method}
 \alias{getDotQual,VarNameCorresp-method}
-\title{Return IDDD identifiers from an object}
+\title{Return non-unit qualifiers not used in compound variable names}
 \usage{
-getDotQual(object, Namesdt)
+getDotQual(object, Component = names(object))
 
-\S4method{getDotQual}{VNCdt}(object, Namesdt)
+\S4method{getDotQual}{VNCdt}(object, Component = names(object))
 
-\S4method{getDotQual}{VarNameCorresp}(object, Namesdt)
+\S4method{getDotQual}{VarNameCorresp}(object, Component = names(object))
 
-\S4method{getDotQual}{DD}(object, Namesdt)
+\S4method{getDotQual}{DD}(object, Component = names(getVNC(object)))
 
-\S4method{getDotQual}{StQ}(object, Namesdt)
+\S4method{getDotQual}{StQ}(object, Component = names(object))
 }
 \arguments{
-\item{object}{Object with the dot qualifiers.}
+\item{object}{Object containing the dot qualifiers.}
 
-\item{Namesdt}{Character vector with the components or slots from which dot qualifiers are 
+\item{Component}{\code{Character} vector with the components or slots from which dot qualifiers are 
 required.}
 }
 \value{
-Character vector with all the dot qualifier names.
+\code{Character} vector with all the dot qualifier names.
 }
 \description{
-\code{getDotQual} returns a character vector with all qualifier names (IDQual) 
-with wildcard dot in the VNC component the input object.
+\code{getDotQual} returns a character vector with all non-unit qualifier names 
+specified with a wildcard dot in the VNC component of the input object.
 }
 \examples{
 library(data.table)
@@ -41,13 +41,13 @@ VarList <- list(ID = new(Class = 'VNCdt',
                            NumIdEst = c('', rep('.', 4)),
                            UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'),
                            InFiles = rep('FI', 5))),
-MicroData =new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
-                                           NonIDQual = c('', 'Market', ''),
-                                           IDDD = c(rep('', 2), 'NewOrders'),
-                                           NumIdEst = c(rep('', 2), '.'),
-                                           Market = c(rep('', 2), '1.'),
-                                           UnitName = c('numidest', '', 'cp09'),
-                                           InFiles = rep('FF, FD, FG', 3))),
+MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
+                                            NonIDQual = c('', 'Market', ''),
+                                            IDDD = c(rep('', 2), 'NewOrders'),
+                                            NumIdEst = c(rep('', 2), '.'),
+                                            Market = c(rep('', 2), '1.'),
+                                            UnitName = c('numidest', '', 'cp09'),
+                                            InFiles = rep('FF, FD, FG', 3))),
 ParaData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
                                            NonIDQual = c('', 'Action', ''),
                                            IDDD = c(rep('', 2), 'Date'),

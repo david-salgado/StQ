@@ -1,12 +1,12 @@
-#' @title S4 class for the variable names correspondence
+#' @title S4 class for the correspondence between variable names
 #'
-#' @description Definition of an S4 class named \code{VarNameCorresp} with the 
-#' correspondence between variable names used by different production units for
-#' a given statistical variable.
+#' @description Definition of an S4 class named \linkS4class{VarNameCorresp} with the correspondence 
+#' between variable names used by the different production unit for a given statistical variable and
+#' variable names according to the key-value pair data model with qualifiers given by statistical 
+#' metadata.
 #'
-#' The class \code{VarNameCorresp} comprises a \linkS4class{list} whose 
-#' components are \code{data.table}s with a row per each variable and the
-#' following columns:
+#' The class \linkS4class{VarNameCorresp} comprises a \linkS4class{list} whose components are 
+#' \linkS4class{data.table}s with a row per each variable and the following columns:
 #'
 #' \itemize{
 #'  \item \code{IDQual}: Names of unit qualifiers.
@@ -23,38 +23,30 @@
 #'
 #' @examples
 #' library(data.table)
-#' VarList <- list(
-#'   ID = new(Class = 'VNCdt', 
-#'            .Data = data.table(
-#'                  IDQual = c('NumIdEst', rep('', 4)),
-#'                  NonIDQual = rep('', 5),
-#'                  IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
-#'                  NumIdEst = c('', rep('.', 4)),
-#'                  UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'),
-#'                  InFiles = rep('FI', 5))),
-#'   MicroData = new(Class = 'VNCdt', 
-#'                   .Data = data.table(
-#'                       IDQual = c('NumIdEst', rep('', 4)),
-#'                       NonIDQual = c('', 'IsNatMarket', 'IsEuroMarket', 'IsRWMarket', ''),
-#'                       IDDD = c(rep('', 4), 'NewOrders'),
-#'                       NumIdEst = c(rep('', 4), '.'),
-#'                       IsNatMarket = c(rep('', 4), '0'),
-#'                       IsEuroMarket = c(rep('', 4), '0'),
-#'                       IsRWMarket = c(rep('', 4), '1'),
-#'                       UnitName = c('numidest', rep('', 3), 'cp09'),
-#'                       InFiles = rep('FF, FD, FG', 5))),
-#'  ParaData = new(Class = 'VNCdt'),
-#'  Aggregates = new(Class = 'VNCdt', 
-#'                   .Data = data.table(
-#'                      IDQual = c('Province', 'NACE', 'IsNatMarket', ''),
-#'                      NonIDQual = rep('', 4),
-#'                      IDDD = c('', '', '', 'TotalTurnover'),
-#'                      Province = c('', '', '', '.'),
-#'                      NACE = c('', '', '', '.'),
-#'                      IsNatMarket = c('', '', '', '1'),
-#'                      UnitName = c('provincia', 'actividad', '', 'cn01'),
-#'                      InFiles = rep('FA', 4))))
-#' new(Class = 'VarNameCorresp', .Data = VarList)
+#' VarList <- list(ID = new(Class = 'VNCdt',
+#'                 data.table(IDQual = c('NumIdEst', rep('', 4)),
+#'                            NonIDQual = c('','','','',''),
+#'                            IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
+#'                            NumIdEst = c('', rep('.', 4)),
+#'                            UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'),
+#'                            InFiles = rep('FI', 5))),
+#' MicroData =new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
+#'                                            NonIDQual = c('', 'Market', ''),
+#'                                            IDDD = c(rep('', 2), 'NewOrders'),
+#'                                            NumIdEst = c(rep('', 2), '.'),
+#'                                            Market = c(rep('', 2), '1'),
+#'                                            UnitName = c('numidest', '', 'cp09'),
+#'                                            InFiles = rep('FF, FD, FG', 3))),
+#' ParaData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
+#'                                            NonIDQual = c('', 'Action', ''),
+#'                                            IDDD = c(rep('', 2), 'Date'),
+#'                                            NumIdEst = c(rep('', 2), '.'),
+#'                                            Action = c(rep('', 2), 'Imputation'),
+#'                                            UnitName = c('numidest', '', 'FechaImput'),
+#'                                            InFiles = rep('FP', 3))))
+#'
+#' VNC <- new(Class = 'VarNameCorresp', VarList)
+#' VNC
 #'
 #' @import data.table 
 #' 
@@ -71,23 +63,38 @@ setClass(Class = "VarNameCorresp",
          
          if (is.null(names(object))) {
              
-             stop('[Validity VarNameCorresp] A VarNameCorresp object must be a named list.')
+             stop('[StQ:: Validity VarNameCorresp] A VarNameCorresp object must be a named list.')
          
          }
+         
+         ComponentNames <- sort(names(object))
+         RootCompNames <- unlist(lapply(ComponentNames, 
+                                        function(Name){
+                                            strsplit(Name, '_', fixed = TRUE)[[1]][1]
+         }))
+         RootCompNames <- unique(RootCompNames)
+
+         if (!all(RootCompNames %in% c('ID',
+                                       'MicroData',
+                                       'ParaData',
+                                       'Aggregates',
+                                       'AggWeights',
+                                       'Other'))) {
              
-         if (!all(c('ID', 'MicroData', 'ParaData') %in% names(object))) {
+             stop('[StQ::validity VarNameCorresp] The valid names must be any of ID, MicroData, ParaData, Aggregates, AggWeights, Other or be compound with underscores beginning with these names.\n')
+             
+         }
+                  
+         if(!all(c('ID', 'MicroData', 'ParaData') %in% RootCompNames)) {
                  
-                 stop('[Validity VarNameCorresp] A VarNamesCorrespo object must
-                       be a list with at least components "ID", "MicroData" and 
-                      "Paradata"')
+                 stop('[StQ::Validity VarNameCorresp] A VarNamesCorresp object must be a named list with at least components with names ID, MicroData and Paradata or compound names with underscores beginning with these names.\n')
                  
          }     
              
          ComponentClasses <- unlist(lapply(object, function(x){class(x)[1]}))
          if (!all(ComponentClasses == 'VNCdt')) {
              
-             stop('[Validity VarNameCorresp] All components of slot VarNameCorresp
-                    must be objects of class VNCdt.')     
+             stop('[StQ::Validity VarNameCorresp] All components of slot VarNameCorresp must be objects of class VNCdt.\n')     
          
          }
           

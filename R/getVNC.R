@@ -1,15 +1,14 @@
 #' @title Return slot \code{VarNameCorresp} from an object
 #'
-#' @description \code{getVNC} extracts slot \code{VarNameCorresp} from an object
-#'  of class \linkS4class{DD} or class \linkS4class{StQ}.
+#' @description \code{getVNC} extracts slot \code{VarNameCorresp} from an object of class 
+#' \linkS4class{DD} or class \linkS4class{StQ}.
 #'
-#' This method returns an object of class \linkS4class{VarNameCorresp} from an 
-#' object of class \linkS4class{DD} or \linkS4class{StQ} specified as input 
-#' argument.
+#' This method returns an object of class \linkS4class{VarNameCorresp} from an object of class 
+#' \linkS4class{DD} or \linkS4class{StQ} specified as input argument.
 #'
 #' @param object Object of class \linkS4class{DD} or \linkS4class{StQ}.
 #'
-#' @return Object of class \linkS4class{VarNameCorresp} of the input parameter.
+#' @return Object of class \linkS4class{VarNameCorresp} of the input object.
 #'
 #' @include VarNameCorresp-class.R DD-class.R StQ-class.R
 #'
@@ -89,7 +88,10 @@
 #'           ParaData = Paradt,
 #'           AggWeights = Aggdt)
 #'          
-#' getVNC(DD)         
+#' getVNC(DD)
+#' 
+#' getVNC(ExampleDD)
+#' getVNC(ExampleStQ)         
 #' 
 #' @export
 setGeneric("getVNC", function(object) {standardGeneric("getVNC")})
@@ -113,7 +115,7 @@ setMethod(
 )
 #' @rdname getVNC
 #'
-#' @include StQ-class.R
+#' @include StQ-class.R getDD.R
 #'
 #' @import data.table
 #'
@@ -123,7 +125,7 @@ setMethod(
     signature = c("StQ"),
     function(object){
         
-        VNC <- getVNC(object@DD)
+        VNC <- getVNC(getDD(object))
         return(VNC)
         
     }
