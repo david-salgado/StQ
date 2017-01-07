@@ -27,18 +27,18 @@ setClass(Class = "rawKey",
              ColNames <- names(object)
              if (ColNames[1] != 'IDDDKey') {
                  
-                 stop('[validity rawKey] The first column of rawKey must be IDDDKey.')
+                 stop('[StQ::validity rawKey] The first column of rawKey must be IDDDKey.')
              }
              
              if (ColNames[2] != 'QualKey') {
                  
-                 stop('[validity rawKey] The second column of rawKey must be QualKey.')
+                 stop('[StQ::validity rawKey] The second column of rawKey must be QualKey.')
              }
              
              Ncol <- length(ColNames)
              if (Ncol != 2) {
                  
-                 stop('[validity rawKey] Only two columns are allowed in a rawKey object.')    
+                 stop('[StQ::validity rawKey] Only two columns are allowed in a rawKey object.')    
                  
              }
              
@@ -51,7 +51,7 @@ setClass(Class = "rawKey",
                  
                  indexNotValid <- which(!ValidIDDDKey)
                  InvalidIDDDKeys <- object[['IDDDKey']]@.Data[indexNotValid]
-                 stop(paste0('[Validity rawKey] Not valid IDDDKeys detected:\n ',
+                 stop(paste0('[StQ::validity rawKey] Not valid IDDDKeys detected:\n ',
                              paste0(InvalidIDDDKeys, collapse = ',\n')),
                       call. = FALSE)
              }
@@ -73,7 +73,7 @@ setClass(Class = "rawKey",
                  
                  indexNotValid <- which(!Validany)
                  InvalidKeys <- object[['QualKey']]@.Data[indexNotValid]
-                 stop(paste0('[Validity rawKey] Not valid QualKeys detected:\n ',
+                 stop(paste0('[StQ::validity rawKey] Not valid QualKeys detected:\n ',
                              paste0(InvalidKeys, collapse = ',\n')),
                       call. = FALSE)
              }

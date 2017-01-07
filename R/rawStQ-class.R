@@ -61,9 +61,9 @@ setClass(Class = "rawStQ",
                  setkeyv(Data, c('IDDDKey', 'QualKey'))
                  DupRows <- duplicated(Data, by = key(Data))
                  if (sum(DupRows) > 0) {
-                     warning('[Validity rawStQ] The following rows are duplicated:\n\n')
+                     warning('[StQ::validity rawStQ] The following rows are duplicated:\n\n')
                      print(Data[DupRows])
-                     stop('[Validity rawStQ] Please remove duplicated rows.')
+                     stop('[StQ::validity rawStQ] Please remove duplicated rows.')
                  }
              }
              
@@ -87,14 +87,14 @@ setClass(Class = "rawStQ",
              #QualinData <- Reduce(max, QualinData) - 1
              #if (QualinData > QualinDD){
                  
-             #    stop('[Validity rawStQ] Length in some element in column key of slot Data is not correct.')
+             #    stop('[StQ::validity rawStQ] Length in some element in column key of slot Data is not correct.')
              #}
 
              # Comparamos las variables en los slots Data y DD: Todas las variables en Data deben estar definidas en algún slot de DD
              #IDDDinData <- unlist(lapply(strsplit(Data@.Data[[1]], '@@'), function(x){x[1]}))
              #NotinDD <- setdiff(IDDDinData, IDDDinDD)
              #if (length(NotinDD) > 0) {
-             #    stop(paste0('\n[Validity rawStQ] The following variables included in column Key of slot Data are not defined in slot DD: \n',
+             #    stop(paste0('\n[StQ::validity rawStQ] The following variables included in column Key of slot Data are not defined in slot DD: \n',
              #                paste0(NotinDD, collapse = ', '), '.\n'))
              #}
 

@@ -69,9 +69,9 @@ setClass(Class = "StQ",
                  setkeyv(Data, colData[-which(colData == 'Value')])
                  DupRows <- duplicated(Data, by = key(Data))
                  if (sum(DupRows) > 0) {
-                     warning('[Validity StQ] The following rows are duplicated:\n\n')
+                     warning('[StQ::validity StQ] The following rows are duplicated:\n\n')
                      print(Data[DupRows])
-                     stop('[Validity StQ] Please remove duplicated rows.')
+                     stop('[StQ::validity StQ] Please remove duplicated rows.')
                  }
              }
              
@@ -91,14 +91,14 @@ setClass(Class = "StQ",
 
              # Comparamos los calificadores en los slots Data y DD: Todos los calificadores en Data deben estar definidos en algún slot de DD
              if (length(QualinData) > 0 && !all(QualinData %in% QualinDD)) {
-                 stop(paste0('[Validity StQ]  Columns not being "IDDD" and "Value" of slot Data must be specified as "IDQual" or "NonIDQual" in slot DD.'))
+                 stop(paste0('[StQ::validity StQ]  Columns not being "IDDD" and "Value" of slot Data must be specified as "IDQual" or "NonIDQual" in slot DD.'))
              }
              
              # Comparamos las variables en los slots Data y DD: Todas las variables en Data deben estar definidas en algún slot de DD
              IDDDinData <- unique(Data[['IDDD']])
              NotinDD <- setdiff(IDDDinData, IDDDinDD)
              if (length(NotinDD) > 0) {
-                 stop(paste0('\n[Validity StQ] The following variables in the column IDDD of slot "Data" are not defined in slot DD: \n',
+                 stop(paste0('\n[StQ::validity StQ] The following variables in the column IDDD of slot "Data" are not defined in slot DD: \n',
                              paste0(NotinDD, collapse = ', '), '.\n'))
              }
              
