@@ -41,6 +41,6 @@ vignette: >
 
 ## Managing variable names
 
-## Managing file format: dcasting and melting
+## Managing file formats: dcasting and melting
 
 ## Combining objects
