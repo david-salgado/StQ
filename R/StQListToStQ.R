@@ -34,7 +34,8 @@ setMethod(
                                                                    NonIDQual = '',
                                                                    IDDD = '',
                                                                    Period = '.',
-                                                                   UnitName = ''))))
+                                                                   UnitName = '',
+                                                                   InFiles = ''))))
         Microdt <- new(Class = 'DDdt',data.table(Variable = c('Period'),
                                                  Sort = c('IDQual'),
                                                  Class = c('character'),
