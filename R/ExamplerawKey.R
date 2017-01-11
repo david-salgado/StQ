@@ -9,5 +9,5 @@
 #'
 #' @usage data(ExamplerawKey)
 #'
-#' @format Object of class \linkS4class{rawKey} for 354456 values.
+#' @format Object of class \linkS4class{rawKey} for 354458 values.
 NULL

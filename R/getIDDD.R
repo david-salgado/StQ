@@ -1,16 +1,16 @@
-#' @title Return IDDD identifiers from an object
+#' @title Return IDDD identifiers (statistical variable names) from the slot DD of an object
 #'
-#' @description \code{getIDDD} returns the IDDD identifiers from the input 
-#' object.  
-#' @param object Object whose IDDD identifiers are required.
+#' @description \code{getIDDD} returns the IDDD identifiers from the slot DD of the input object.
+#' Notice that not all returned IDDD identifiers may be present in the input object.
+#'   
+#' @param object Object whose IDDD identifiers in the slot \linkS4class{DD} are required.
 #' 
-#' @param CompNames Character vector with the names of components or slots of the 
-#' object from which the IDDD identifiers are requested.
+#' @param CompNames \code{Character} vector with the names of components or slots of the object from
+#'  which the IDDD identifiers are requested.
 #'
-#' @return In the case of \linkS4class{VarNameCorresp} it returns a character
-#' vector with the IDDD identifiers from the components specified in Namesdt. 
-#' If no Namesdt is specified, it returns the IDDD identifier from all the 
-#' components of the object.
+#' @return Returns a character vector with the IDDD identifiers from the components specified in 
+#' CompNames. If no CompNames parameter is specified, it returns the IDDD identifiers from all the 
+#' components of the input object.
 #'
 #' @examples
 #' library(data.table)
@@ -48,7 +48,7 @@
 #' 
 #' 
 #' @export
-setGeneric("getIDDD", function(object, CompNames){standardGeneric("getIDDD")})
+setGeneric("getIDDD", function(object, CompNames = names(object)){standardGeneric("getIDDD")})
 
 #' @rdname getIDDD
 #' 
@@ -80,14 +80,13 @@ setMethod(
     signature = c("VarNameCorresp"),
     function(object, CompNames){
         
-        if (missing(CompNames)) CompNames <- names(object)
+        ValidComp <- names(object)
+        NotValidComp <- CompNames[!CompNames %in% ValidComp]
+        if(!all(CompNames %in% ValidComp)) stop(paste0('[StQ::getIDDD] The following components are not present in the input object: ', 
+                                                       paste0(NotValidComp, collapse = ', '), '.\n'))
         
         aux <- object[CompNames]
-        IDDD.list <- lapply(aux, function(x) { 
-            IDDD <- getIDDD(x)
-            return(IDDD)
-        }
-        )
+        IDDD.list <- lapply(aux, function(x){getIDDD(x, CompNames)})
         
         output <- unique(Reduce(c, IDDD.list, init = IDDD.list[[1]]))
         return(output)
@@ -124,14 +123,12 @@ setMethod(
 setMethod(
     f = "getIDDD",
     signature = c("DD"),
-    function(object, CompNames){
-        
-        if (missing(CompNames)) CompNames <- slotNames(object)
+    function(object, CompNames = setdiff(slotNames(object), 'VarNameCorresp')){
         
         output <- c()
         for (slotDD in CompNames) {
             
-            IDDD <- getIDDD(slot(object, slotDD))
+            IDDD <- getIDDD(slot(object, slotDD), slotDD)
             output <- c(output, IDDD)
         }
         
@@ -142,24 +139,7 @@ setMethod(
 
 #' @rdname getIDDD
 #' 
-#' @include Datadt-class.R
-#' 
-#' @import data.table
-#' 
-#' @export
-setMethod(
-    f = "getIDDD",
-    signature = c("Datadt"),
-    function(object, CompNames){
-        
-        output <- unique(object[['IDDD']])
-        return(output)
-    }
-)
-
-#' @rdname getIDDD
-#' 
-#' @include StQ-class.R
+#' @include StQ-class.R getDD.R
 #' 
 #' @import data.table
 #' 
@@ -167,10 +147,26 @@ setMethod(
 setMethod(
     f = "getIDDD",
     signature = c("StQ"),
-    function(object, CompNames){
+    function(object, CompNames = setdiff(slotNames(getDD(object)), 'VarNameCorresp')){
         
-        output <- getIDDD(object@Data)
+        output <- getIDDD(getDD(object), CompNames)
         return(output)
     }
 )
 
+#' @rdname getIDDD
+#' 
+#' @include rawStQ-class.R getDD.R
+#' 
+#' @import data.table
+#' 
+#' @export
+setMethod(
+    f = "getIDDD",
+    signature = c("rawStQ"),
+    function(object, CompNames = setdiff(slotNames(getDD(object)), 'VarNameCorresp')){
+        
+        output <- getIDDD(getDD(object), CompNames)
+        return(output)
+    }
+)

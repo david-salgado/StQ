@@ -22,19 +22,17 @@ setID(object) <- value
 Object \linkS4class{DD} with slot \code{ID} updated.
 }
 \description{
-\code{setID} assigns a \linkS4class{DDdt} to the
- slot \code{ID} of the input object.
+\code{setID} assigns a \linkS4class{DDdt} to the slot \code{ID} of the input object.
 }
 \examples{
-# An example:
 library(data.table)
-MicroDataDD <- data.table(Variable = 'IEPEntradaPed', Sort = 'IDDD', Class = 'numeric',
+MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
                           Length = '8',
                           Qual1 = 'NumIdEst', Qual2 = 'Market', ValueRegExp = '')
 MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
 VarList <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','',''),
                                                           NonIDQual = c('', 'Market', 'Cod', ''),
-                                                          IDDD = c('', '', '' ,'IEPEntradaPed'),
+                                                          IDDD = c('', '', '' ,'NewOrders'),
                                                           NumIdEst = c('', '', '', '.'),
                                                           Market = c('', '', '', '1.'),
                                                           Cod = rep('', 4),

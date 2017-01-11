@@ -13,19 +13,19 @@ DDslotWith(object, VarName, DDslot = "MicroData")
 \arguments{
 \item{object}{Object of class \linkS4class{DD}.}
 
-\item{VarName}{Character vector with the name of the variable.}
+\item{VarName}{\code{Character} vector with the name of the variable.}
 
-\item{DDslot}{Character vector of length 1 with the name of DD slot in which
-variables in VarName are defined. Its default value is \code{MicroData}.}
+\item{DDslot}{\code{Character} vector of length 1 with the name of DD slot in which variables in 
+VarName are defined (default value \code{MicroData}).}
 }
 \value{
-Matrix with the queried values.
+Returns an object of class \linkS4class{DDdt} containing the input variable.
 }
 \description{
 \code{DDslotWith} returns the slot of the input \linkS4class{DD} object which 
  contains the variable name specified as input parameter \code{VarName}. If the variable is 
  present in more than one slot, the input parameter \code{DDslot} is used to choose the correct
- slot; otherwise an error is triggered.
+ slot (with default value MicroData).
 }
 \examples{
 data(ExampleDD)

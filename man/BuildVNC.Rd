@@ -7,16 +7,18 @@
 BuildVNC(Data)
 }
 \arguments{
-\item{Data}{\code{List} of named objects of class \linkS4class{VNCdt}.}
+\item{Data}{A named \code{list} of objects of class \linkS4class{VNCdt}.}
 }
 \value{
 An object of class \linkS4class{VarNameCorresp} with components 
-specified in the input Data. Components 'ID', 'MicroData' and/or 'ParaData' 
-no specified are set as an empty \linkS4class{VNCdt} object.
+specified in the input parameter Data. Components 'ID', 'MicroData' and/or 'ParaData' 
+not being specified are set as an empty \linkS4class{VNCdt} object.
 }
 \description{
-This constructor returns objects of class \linkS4class{VarNameCorresp}.
-THe input parameter is a \code{list} of objects of class \linkS4class{VNCdt}.
+This constructor returns an object of class \linkS4class{VarNameCorresp}.
+The input parameter is a named \code{list} of objects of class \linkS4class{VNCdt}. Notice that
+the names of this \code{list} must be any of 'ID', 'MicroData', 'ParaData', 'Aggregates', 
+'AggWeights', 'Other'.
 }
 \examples{
 library(data.table)

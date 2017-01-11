@@ -3,14 +3,14 @@
 \docType{class}
 \name{DD-class}
 \alias{DD-class}
-\title{S4 class with the dictionary of data (variable specifications)}
+\title{S4 class with the data dictionary (variable specifications)}
 \description{
-Definition of an S4 class named \code{DD} with the specification
-of each variable.
+Definition of an S4 class named \code{DD} with the specification of each variable.
 
-The class \code{DD} comprises a slot of class \linkS4class{VarNameCorresp}
-and slots of class \linkS4class{DDdt} of names \code{ID},
-\code{MicroData}, \code{Aggregates}, \code{AggWeights}, \code{Other}
+The class \code{DD} comprises a slot of class \linkS4class{VarNameCorresp} and slots of class 
+\linkS4class{DDdt} of names \code{ID}, \code{MicroData}, \code{ParaData}, \code{Aggregates}, 
+\code{AggWeights}, \code{Other} or names compounds with underscores with these roots (e.g. 
+ParaData_Collection, ParaData_Editing).
 }
 \examples{
 # An empty DD object is built through the code:
@@ -72,6 +72,6 @@ DD <- new(Class = 'DD',
           ID = IDdt,
           MicroData = Microdt,
           ParaData = Paradt)
-
+DD
 }
 

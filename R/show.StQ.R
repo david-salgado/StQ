@@ -4,7 +4,7 @@
 #' number of columns on screen up to 8.
 #'
 #' This method displays only the content of slot \code{Data} from the input \linkS4class{StQ} 
-#' object.It is indeed the method \link[methods]{show} adapted to class \linkS4class{StQ}.
+#' object. It is indeed the method \link[methods]{show} adapted to class \linkS4class{StQ}.
 #'
 #' @param object Object of class \linkS4class{StQ}.
 #'
@@ -26,16 +26,18 @@ setMethod(
     f = "show",
     signature = c("StQ"),
     function(object){
-
+        
+        ColMax <- 8 
         NamesCol <- names(getData(object))
-        if (length(NamesCol) <= 10) {
+        NumCol <- length(NamesCol)
+        if (NumCol <= ColMax) {
 
             show(getData(object))
 
         } else {
-
-            NumCols <- min(length(NamesCol) - 2, 8)
-            NamesShowCol <- c(NamesCol[1:NumCols], 'IDDD', 'Value')
+            
+            NumCols <- min(NumCol, ColMax)
+            NamesShowCol <- NamesCol[c(1:(ColMax - 2), (NumCol - 1):NumCol)]
             show(getData(object)[, NamesShowCol, with = F])
             cat('\n')
             cat(paste(rep('=', 40)), '\n\n')

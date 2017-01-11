@@ -4,7 +4,7 @@
 \name{setData<-}
 \alias{setData<-}
 \alias{setData<-,StQ,Datadt-method}
-\title{Set value of slot \code{Data}.}
+\title{Set value of slot \code{Data}}
 \usage{
 setData(object) <- value
 

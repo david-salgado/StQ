@@ -13,20 +13,17 @@
 \item{e2}{Object of class \linkS4class{VNCdt}.}
 }
 \value{
-Object of class \linkS4class{VNCdt} resulting from 
-integrating both \linkS4class{VNCdt} objects in a single 
-\linkS4class{VNCdt} object.
+Object of class \linkS4class{VNCdt} resulting from integrating both \linkS4class{VNCdt} 
+objects in a single \linkS4class{VNCdt} object.
 }
 \description{
-\code{+} sums two objects of class \linkS4class{VNCdt}.
- This method overloads the operator \link{+} and returns a new object of 
- class \linkS4class{VNCdt}.
+\code{+} sums two objects of class \linkS4class{VNCdt}. This method overloads the 
+operator \link{+} and returns a new object of class \linkS4class{VNCdt}.
 
 The integration is carried out according to the names of the components.
 }
 \examples{
 library(data.table)
-
 ID1 <- new(Class = "VNCdt", 
           .Data = data.table(IDQual = c('NumIdEst', rep('', 4)),
                              NonIDQual = rep('', 5),

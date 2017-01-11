@@ -1,8 +1,7 @@
 #' @title Method \code{+} for the class \linkS4class{VarNameCorresp}
 #'
-#' @description \code{+} sums two objects of class \linkS4class{VarNameCorresp}.
-#'  This method overloads the operator \link{+} and returns a new object of
-#'  class \linkS4class{VarNameCorresp}.
+#' @description \code{+} sums two objects of class \linkS4class{VarNameCorresp}. This method 
+#' overloads the operator \link{+} and returns a new object of class \linkS4class{VarNameCorresp}.
 #'
 #' The integration is carried out according to the names of the components.
 #'
@@ -10,13 +9,11 @@
 #'
 #' @param e2 Object of class \linkS4class{VarNameCorresp}.
 #'
-#' @return Object of class \linkS4class{VarNameCorresp} resulting from
-#' integrating both \linkS4class{VarNameCorresp} objects in a single
-#' \linkS4class{VarNameCorresp} object.
+#' @return Object of class \linkS4class{VarNameCorresp} resulting from integrating both 
+#' \linkS4class{VarNameCorresp} objects in a single \linkS4class{VarNameCorresp} object.
 #'
 #' @examples
 #' library(data.table)
-#'
 #' VarList1 <- list(
 #'     ID = new(Class = 'VNCdt',
 #'              .Data = data.table(IDQual = c('NumIdEst', rep('', 4)),
@@ -104,21 +101,11 @@ setMethod(
 
         outVarList <- list()
 
-        for (Name in CommonNames) {
+        for (Name in CommonNames){outVarList[[Name]] <- e1[[Name]] + e2[[Name]]}
 
-            outVarList[[Name]] <- e1[[Name]] + e2[[Name]]
+        for (Name in In1Not2Names){outVarList[[Name]] <- e1[[Name]]}
 
-        }
-
-        for (Name in In1Not2Names) {
-
-            outVarList[[Name]] <- e1[[Name]]
-        }
-
-        for (Name in In2Not1Names) {
-
-            outVarList[[Name]] <- e2[[Name]]
-        }
+        for (Name in In2Not1Names){outVarList[[Name]] <- e2[[Name]]}
 
         output <- new(Class = 'VarNameCorresp', outVarList)
         return(output)

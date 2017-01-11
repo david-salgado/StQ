@@ -1,7 +1,6 @@
-#' @title Set value of slot \code{AggWeights}.
+#' @title Set value of slot \code{AggWeights}
 #'
-#' @description \code{setAggrWeights} assigns a \linkS4class{DDdt} to the slot
-#' \code{AggrWeights} of the input object.
+#' @description \code{setAggrWeights} assigns a \linkS4class{DDdt} to the slot \code{AggrWeights} of the input object.
 #'
 #' @param object Object whose slot \code{AggWeights} is to be assigned.
 #'
@@ -11,13 +10,13 @@
 #'
 #' @examples
 #' library(data.table)
-#' MicroDataDD <- data.table(Variable = 'IEPEntradaPed', Sort = 'IDDD', Class = 'numeric',
+#' MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
 #'                           Length = '8',
 #'                           Qual1 = 'NumIdEst', Qual2 = 'Market', ValueRegExp = '')
 #' MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
 #' VarList <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','',''),
 #'                                                           NonIDQual = c('', 'Market', 'Cod', ''),
-#'                                                           IDDD = c('', '', '' ,'IEPEntradaPed'),
+#'                                                           IDDD = c('', '', '' ,'NewOrders'),
 #'                                                           NumIdEst = c('', '', '', '.'),
 #'                                                           Market = c('', '', '', '1.'),
 #'                                                           Cod = rep('', 4),
@@ -43,7 +42,7 @@
 setGeneric("setAggWeights<-", function(object, value){standardGeneric("setAggWeights<-")})
 #' @rdname setAggWeights
 #'
-#' @include DD-class.R
+#' @include DD-class.R getVNC.R DDdtToVNC.R
 #'
 #' @import data.table
 #'

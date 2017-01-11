@@ -4,12 +4,12 @@
 \name{ExamplerawStQ}
 \alias{ExamplerawStQ}
 \title{Object of class \linkS4class{rawStQ}}
-\format{Object of class \code{rawStQ}. Its slot \code{Data} has 383994 rows and 2 columns.}
+\format{Object of class \code{rawStQ}. Its slot \code{Data} has 354458 rows and 3 columns.}
 \usage{
 data(ExamplerawStQ)
 }
 \description{
-\code{ExamplerawStQ} is an object of class \linkS4class{rawStQ} 
-containing severely perturbed anonymised data of real data set.
+\code{ExamplerawStQ} is an object of class \linkS4class{rawStQ} containing severely 
+perturbed anonymised data from a real official statistical operation.
 }
 

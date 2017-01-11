@@ -9,5 +9,5 @@
 #'
 #' @usage data(ExampleDTkey)
 #'
-#' @format Object of class \linkS4class{data.table} for 354458 values.
+#' @format Object of class \linkS4class{data.table} with 354458 rows and 4 columns.
 NULL

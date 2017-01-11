@@ -1,10 +1,9 @@
-#' @title Return an object as the input object but with slot \code{Data} restricted to the specified
-#' units.
+#' @title Return the input object with slot \code{Data} restricted to the specified units
 #'
-#' @description \code{setUnits} returns an object as the input object but with slot \code{Data}
-#' restricted to the specified units.
+#' @description \code{setUnits} returns the input object with slot \code{Data} restricted to the 
+#' specified units.
 #'
-#' @param object Objeto whose slot \code{Data} is to be restricted.
+#' @param object Object whose slot \code{Data} is to be restricted.
 #'
 #' @param value \linkS4class{data.table} with the values of the unit qualifiers identifying the 
 #' restricted units.

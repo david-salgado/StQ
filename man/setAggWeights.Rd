@@ -5,7 +5,7 @@
 \alias{setAggWeights<-}
 \alias{setAggWeights<-,DD,DDdt-method}
 \alias{setAggWeights<-,StQ,DDdt-method}
-\title{Set value of slot \code{AggWeights}.}
+\title{Set value of slot \code{AggWeights}}
 \usage{
 setAggWeights(object) <- value
 
@@ -22,18 +22,17 @@ setAggWeights(object) <- value
 Object with slot AggWeights updated.
 }
 \description{
-\code{setAggrWeights} assigns a \linkS4class{DDdt} to the slot
-\code{AggrWeights} of the input object.
+\code{setAggrWeights} assigns a \linkS4class{DDdt} to the slot \code{AggrWeights} of the input object.
 }
 \examples{
 library(data.table)
-MicroDataDD <- data.table(Variable = 'IEPEntradaPed', Sort = 'IDDD', Class = 'numeric',
+MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
                           Length = '8',
                           Qual1 = 'NumIdEst', Qual2 = 'Market', ValueRegExp = '')
 MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
 VarList <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','',''),
                                                           NonIDQual = c('', 'Market', 'Cod', ''),
-                                                          IDDD = c('', '', '' ,'IEPEntradaPed'),
+                                                          IDDD = c('', '', '' ,'NewOrders'),
                                                           NumIdEst = c('', '', '', '.'),
                                                           Market = c('', '', '', '1.'),
                                                           Cod = rep('', 4),

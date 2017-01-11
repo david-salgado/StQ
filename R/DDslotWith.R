@@ -3,16 +3,16 @@
 #' @description \code{DDslotWith} returns the slot of the input \linkS4class{DD} object which 
 #'  contains the variable name specified as input parameter \code{VarName}. If the variable is 
 #'  present in more than one slot, the input parameter \code{DDslot} is used to choose the correct
-#'  slot; otherwise an error is triggered.
+#'  slot (with default value MicroData).
 #'  
 #' @param object Object of class \linkS4class{DD}.
 #' 
-#' @param VarName Character vector with the name of the variable.
+#' @param VarName \code{Character} vector with the name of the variable.
 #' 
-#' @param DDslot Character vector of length 1 with the name of DD slot in which
-#' variables in VarName are defined. Its default value is \code{MicroData}.
+#' @param DDslot \code{Character} vector of length 1 with the name of DD slot in which variables in 
+#' VarName are defined (default value \code{MicroData}).
 #'
-#' @return Matrix with the queried values.
+#' @return Returns an object of class \linkS4class{DDdt} containing the input variable.
 #'
 #' @examples
 #' data(ExampleDD)
@@ -56,7 +56,7 @@ setMethod(
 
         if (!DDslot %in% Varslot){
             
-            stop('[DD::DDslotWith] Variable ', ExtractNames(VarName), ' is not defined in slot ', DDslot, ' of the input object.')
+            stop('[StQ::DDslotWith] Variable ', ExtractNames(VarName), ' is not defined in slot ', DDslot, ' of the input object.')
         }
         
         output <- slot(object, DDslot)

@@ -1,15 +1,16 @@
-#' @title Return IDDD identifiers from an object
+#' @title Return unit qualifiers from an object
 #'
-#' @description \code{getIDQual} returns a character vector with all unit qualifier
-#' names (IDQual) included in the input object.
+#' @description \code{getIDQual} returns a character vector with all unit qualifier names (IDQual) 
+#' contained in the input object.
 #'
-#' @param object Object with the IDQual unit qualifier.
+#' @param object Object with the unit qualifiers (IDQual) to be queried.
 #'
-#' @param Namesdt Character vector with the components or slots from which IDQuals
-#' are requiered.
+#' @param CompNames Character vector with the components or slots from which IDQuals are queried.
 #'
 #' @return Character vector with all the unit qualifier names.
-#'
+#' 
+#' @details Unit qualifiers are those qualifiers identifying statistical units.
+#' 
 #' @examples
 #' library(data.table)
 #' VarList <- list(ID = new(Class = 'VNCdt',
@@ -43,9 +44,14 @@
 #' VNC <- new(Class = 'VarNameCorresp', .Data = VarList)
 #' getIDQual(VNC)
 #'
+#' getIDQual(ExampleDD)
+#' getIDQual(ExampleDD, 'MicroData')
+#' 
+#' getIDQual(ExampleStQ)
+#' getIDQual(ExampleStQ, 'Aggregates')
 #'
 #' @export
-setGeneric("getIDQual", function(object, Namesdt){standardGeneric("getIDQual")})
+setGeneric("getIDQual", function(object, CompNames = names(object)){standardGeneric("getIDQual")})
 
 #' @rdname getIDQual
 #'
@@ -57,7 +63,7 @@ setGeneric("getIDQual", function(object, Namesdt){standardGeneric("getIDQual")})
 setMethod(
     f = "getIDQual",
     signature = c("VNCdt"),
-    function(object){
+    function(object, CompNames){
 
         output <- unique(object[['IDQual']])
         output <- output[output != '']
@@ -75,17 +81,16 @@ setMethod(
 setMethod(
     f = "getIDQual",
     signature = c("VarNameCorresp"),
-    function(object, Namesdt){
+    function(object, CompNames = names(object)){
 
-        if (missing(Namesdt)) Namesdt <- names(object)
+        ValidComp <- names(object)
+        NotValidComp <- CompNames[!CompNames %in% ValidComp]
+        if(!all(CompNames %in% ValidComp)) stop(paste0('[StQ::getIDQual] The following components are not present in the input object: ', 
+                                                       paste0(NotValidComp, collapse = ', '), '.\n'))
+        
+        aux <- object[CompNames]
 
-        aux <- object[Namesdt]
-
-        IDQual.list <- lapply(aux, function(x) {
-            IDQual <- getIDQual(x)
-            return(IDQual)
-        }
-        )
+        IDQual.list <- lapply(aux, function(x) {getIDQual(x)})
 
         output <- unique(Reduce(c, IDQual.list, init = IDQual.list[[1]]))
         return(output)
@@ -103,7 +108,7 @@ setMethod(
 setMethod(
     f = "getIDQual",
     signature = c("DDdt"),
-    function(object){
+    function(object, CompNames){
 
         output <- unique(object[Sort == 'IDQual', Variable])
         output <- output[output != '']
@@ -122,13 +127,10 @@ setMethod(
 setMethod(
     f = "getIDQual",
     signature = c("DD"),
-    function(object, Namesdt){
+    function(object, CompNames = setdiff(slotNames(object), 'VarNameCorresp')){
 
-        if (missing(Namesdt)) Namesdt <- slotNames(object)
-
-        Namesdt <- setdiff(Namesdt, 'VarNameCorresp')
         output <- c()
-        for (DDdt in Namesdt) {
+        for (DDdt in CompNames) {
 
             IDQual <- getIDQual(slot(object, DDdt))
             output <- c(output, IDQual)
@@ -141,7 +143,7 @@ setMethod(
 
 #' @rdname getIDQual
 #'
-#' @include StQ-class.R
+#' @include StQ-class.R getDD.R
 #'
 #' @import data.table
 #'
@@ -149,12 +151,26 @@ setMethod(
 setMethod(
     f = "getIDQual",
     signature = c("StQ"),
-    function(object, Namesdt){
+    function(object, CompNames = setdiff(slotNames(getDD(object)), 'VarNameCorresp')){
 
-        if (missing(Namesdt)) {output <- getIDQual(object@DD)
-        } else{output <- getIDQual(object@DD, Namesdt)}
+        output <- getIDQual(getDD(object), CompNames)
+        return(output)
+    }
+)
+
+#' @rdname getIDQual
+#'
+#' @include rawStQ-class.R getDD.R
+#'
+#' @import data.table
+#'
+#' @export
+setMethod(
+    f = "getIDQual",
+    signature = c("rawStQ"),
+    function(object, CompNames = setdiff(slotNames(getDD(object)), 'VarNameCorresp')){
         
-        output <- intersect(names(object@Data), output)
+        output <- getIDQual(getDD(object), CompNames)
         return(output)
     }
 )

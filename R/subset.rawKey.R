@@ -16,7 +16,8 @@
 #'
 #' @examples
 #' data(ExamplerawKey)
-#' ExamplerawKey[1] 
+#' ExamplerawKey[1]
+#' ExamplerawKey[IDDDKey == 'Turnover']
 #'
 #' @include rawKey-class.R
 #'

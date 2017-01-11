@@ -3,37 +3,34 @@
 \docType{class}
 \name{rawStQ-class}
 \alias{rawStQ-class}
-\title{S4 class for sets of \emph{raw} \emph{St}andarized 
-\emph{Q}uestionnaires}
+\title{S4 class for sets of \emph{raw} \emph{St}andarized \emph{Q}uestionnaires}
 \description{
-Definition of an S4 class named \code{rawStQ} for sets of raw
-standardized questionnaires.
+Definition of an S4 class named \code{rawStQ} for sets of raw standardized 
+questionnaires.
 
-The structure of the class \code{rawStQ} comprises 2 attribute:
+The structure of the class \code{rawStQ} comprises 2 attributes:
 \itemize{
-\item The attribute \code{Data}, which is an object of class 
-\linkS4class{rawDatadt} with key-value pair structure containing all
-statistical variables, both from the questionnaire and any resulting metadata
-from the data processing.
+\item The attribute \code{Data}, which is an object of class \linkS4class{rawDatadt} with 
+key-value pair structure containing all statistical variables, both from the questionnaire and 
+any resulting metadata from the data processing.
 
-\item The attribute \code{DD}, which is an object of class \linkS4class{DD}.
-It basically contains the definition and properties of each variable.
+\item The attribute \code{DD}, which is an object of class \linkS4class{DD}. It basically 
+contains the definition and properties of each variable.
 }
 }
 \section{Slots}{
 
 \describe{
-\item{\code{Data}}{Object of class \linkS4class{rawDatadt} with key-value pair
-structure. It must have exactly three columns: \code{IDDDKey},  \code{QualKey} and \code{Value}.
-It contains all statistical variables (including some metadata) together with
-their corresponding values. If \code{Data} is not specified as an input
-parameter, an empty \linkS4class{rawDatadt} object with columns \code{IDDDKey}, \code{QualKey} 
-and \code{Value} will be initiated.}
+\item{\code{Data}}{Object of class \linkS4class{rawDatadt} with key-value pair structure. It must have 
+exactly three columns: \code{IDDDKey},  \code{QualKey} and \code{Value}. It contains all 
+statistical variables (including some metadata) together with their corresponding values. If 
+\code{Data} is not specified as an input parameter, an empty \linkS4class{rawDatadt} object with 
+columns \code{IDDDKey}, \code{QualKey} and \code{Value} will be initiated.}
 
-\item{\code{DD}}{Object of class \linkS4class{DD} with the definition and properties
-of all variables. If \code{DD} is not specified as an input parameter, an
-empty \linkS4class{DD} object with columns \code{Variable}, \code{Sort},
-\code{Class}, \code{Qual1} and \ code{ValueRegExp} will be initiated.}
+\item{\code{DD}}{Object of class \linkS4class{DD} with the definition and properties of all variables. If
+\code{DD} is not specified as an input parameter, an empty \linkS4class{DD} object with columns 
+\code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} and \ code{ValueRegExp} will be 
+initiated.}
 }}
 \examples{
 # An empty standardized questionnaire set:

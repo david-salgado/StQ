@@ -19,7 +19,7 @@ number of columns on screen up to 8.
 }
 \details{
 This method displays only the content of slot \code{Data} from the input \linkS4class{StQ} 
-object.It is indeed the method \link[methods]{show} adapted to class \linkS4class{StQ}.
+object. It is indeed the method \link[methods]{show} adapted to class \linkS4class{StQ}.
 }
 \examples{
 # A trivial example

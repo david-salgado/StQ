@@ -17,15 +17,14 @@ getVNC(object)
 \item{object}{Object of class \linkS4class{DD} or \linkS4class{StQ}.}
 }
 \value{
-Object of class \linkS4class{VarNameCorresp} of the input parameter.
+Object of class \linkS4class{VarNameCorresp} of the input object.
 }
 \description{
-\code{getVNC} extracts slot \code{VarNameCorresp} from an object
- of class \linkS4class{DD} or class \linkS4class{StQ}.
+\code{getVNC} extracts slot \code{VarNameCorresp} from an object of class 
+\linkS4class{DD} or class \linkS4class{StQ}.
 
-This method returns an object of class \linkS4class{VarNameCorresp} from an 
-object of class \linkS4class{DD} or \linkS4class{StQ} specified as input 
-argument.
+This method returns an object of class \linkS4class{VarNameCorresp} from an object of class 
+\linkS4class{DD} or \linkS4class{StQ} specified as input argument.
 }
 \examples{
 # An example:
@@ -103,7 +102,10 @@ DD <- new(Class = 'DD',
           ParaData = Paradt,
           AggWeights = Aggdt)
          
-getVNC(DD)         
+getVNC(DD)
+
+getVNC(ExampleDD)
+getVNC(ExampleStQ)         
 
 }
 

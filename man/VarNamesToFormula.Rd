@@ -37,9 +37,12 @@ with qualifier values. It is fundamentally designed for the internal use in the 
 editing strategies, but it can also be of utility in some scripts.
 }
 \examples{
-# We build a DD object to be used as the second input parameter:
 data(ExampleDD)
-VarNamesToFormula(c('IASSEmpleo_1.', 'IASSEmpleo_2.2', 'IASSEmpleo'), ExampleDD)
+VarNamesToFormula('Turnover', ExampleDD)
+
+VarNamesToFormula(c('Employees_1.', 'Employees_2.2', 'Employees'), ExampleDD)
+
+VarNamesToFormula(c('Turnover', 'Employees_1.', 'Employees_2.2', 'Employees'), ExampleDD)
 
 }
 

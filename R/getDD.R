@@ -2,7 +2,8 @@
 #'
 #' @description \code{getDD} extracts the slot \code{DD} of the input object.
 #'
-#' @param object Object of class \linkS4class{StQ} or \linkS4class{StQList}.
+#' @param object Object of class \linkS4class{StQ}, \linkS4class{rawStQ}, \linkS4class{StQList} or 
+#' \linkS4class{rawStQList}.
 #'
 #' @return Object of class \linkS4class{DD} corresponding to the slot \code{DD} of the input 
 #' parameter.
@@ -34,6 +35,22 @@ setMethod(
 )
 
 #' @rdname getDD
+#'
+#' @include rawStQ-class.R
+#'
+#' @import data.table
+#'
+#' @export
+setMethod(
+    f = "getDD",
+    signature = c("rawStQ"),
+    function(object){
+        
+        return(copy(object@DD))
+        
+    }
+)
+#' @rdname getDD
 #' 
 #' @include StQList-class.R
 #' 
@@ -52,18 +69,20 @@ setMethod(
 )
 
 #' @rdname getDD
-#'
-#' @include rawStQ-class.R
-#'
+#' 
+#' @include rawStQList-class.R
+#' 
 #' @import data.table
-#'
+#' 
 #' @export
 setMethod(
     f = "getDD",
-    signature = c("rawStQ"),
+    signature = c("rawStQList"),
     function(object){
         
-        return(copy(object@DD))
+        output <- lapply(getData(object), function(x) getDD(x))  
         
+        return(output)
     }
 )
+

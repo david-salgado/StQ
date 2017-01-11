@@ -4,7 +4,7 @@
 \name{ExamplerawKey}
 \alias{ExamplerawKey}
 \title{Object of class \linkS4class{rawKey}}
-\format{Object of class \linkS4class{rawKey} for 354456 values.}
+\format{Object of class \linkS4class{rawKey} for 354458 values.}
 \usage{
 data(ExamplerawKey)
 }

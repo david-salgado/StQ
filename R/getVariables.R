@@ -1,24 +1,28 @@
-#' @title Return the set of Variable Names from an object
+#' @title Return the set of Variable Names from the DD slot of an object
 #'
-#' @description \code{getVariables} returns all Variable names from the input object.  
+#' @description \code{getVariables} returns all Variable names from the slot DD of the input object.  
 #' 
 #' @param object Object whose Variable names are queried.
 #' 
 #' @param Sort Character vector with the Sort of Variables ('IDDD', 'IDQual', 'NonIDQual').
 #' 
-#' @param slots Character vector with the slots names if object class is \linkS4class{DD}.
+#' @param slots Character vector with the slot names if object class is \linkS4class{DD} or 
+#' \linkS4class{StQ}.
 #'
-#' @return In the case of \linkS4class{DD} it returns the Variable columns from each of its slots
-#' different from \code{VarNameCorresp} slot.
+#' @return Returns a character vector with the variable names.
 #'
 #' @examples
 #' data(ExampleDD) 
 #' getVariables(ExampleDD)
 #' getVariables(ExampleDD, Sort = 'IDDD', slots = 'MicroData')
+#' getVariables(ExampleStQ, Sort = 'IDDD', slots = 'Aggregates')
 #' 
 #' 
 #' @export
-setGeneric("getVariables", function(object, Sort, slots){standardGeneric("getVariables")})
+setGeneric("getVariables", function(object, 
+                                    Sort = c('IDDD', 'IDQual', 'NonIDQual'), 
+                                    slots = setdiff(slotNames(object), 'VarNameCorresp')){
+    standardGeneric("getVariables")})
 
 #' @rdname getVariables
 #' 
@@ -30,10 +34,13 @@ setGeneric("getVariables", function(object, Sort, slots){standardGeneric("getVar
 setMethod(
     f = "getVariables",
     signature = c("DDdt"),
-    function(object, Sort = c('IDDD', 'IDQual', 'NonIDQual')){
+    function(object, Sort = c('IDDD', 'IDQual', 'NonIDQual'), slots){
         
+        if (any(!Sort %in% c('IDDD', 'IDQual', 'NonIDQual'))) stop('[StQ::DDdt] The input parameter Sort can only be composed of "IDQual", "NonIDQual", "IDDD".\n')
         objectDT <- DatadtToDT(object)
-        output <- objectDT[Sort %in% Sort][['Variable']]
+        Sort <- intersect(Sort, objectDT[['Sort']])
+        setkeyv(objectDT, 'Sort')
+        output <- objectDT[Sort][['Variable']]
         return(output)
     }
 )
@@ -48,17 +55,15 @@ setMethod(
 setMethod(
     f = "getVariables",
     signature = c("DD"),
-    function(object, Sort, slots){
+    function(object, 
+             Sort = c('IDDD', 'IDQual', 'NonIDQual'), 
+             slots = setdiff(slotNames(object), 'VarNameCorresp')){
         
-        if (missing(Sort)) Sort <- c('IDDD', 'IDQual', 'NonIDQual')
-        if (missing(slots)) slots <- slotNames(object)
-        
-        slots <- setdiff(slots, 'VarNameCorresp')
         output <- c()
         for (DDdt in slots) {
             
-            IDDD <- getVariables(slot(object, DDdt), Sort)
-            output <- c(output, IDDD)
+            aux <- getVariables(slot(object, DDdt), Sort)
+            output <- c(output, aux)
         }
         
         output <- unique(output)
@@ -70,7 +75,7 @@ setMethod(
 
 #' @rdname getVariables
 #' 
-#' @include StQ-class.R  
+#' @include StQ-class.R getDD.R
 #' 
 #' @import data.table
 #' 
@@ -78,9 +83,11 @@ setMethod(
 setMethod(
     f = "getVariables",
     signature = c("StQ"),
-    function(object, Sort, slots){
+    function(object, 
+             Sort = c('IDDD', 'IDQual', 'NonIDQual'), 
+             slots = setdiff(slotNames(getDD(object)), 'VarNameCorresp')){
         
-        output <- unique(getVariables(object@DD, Sort, slots))
+        output <- unique(getVariables(getDD(object), Sort, slots))
         
         return(output)
     }

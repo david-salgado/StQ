@@ -1,15 +1,14 @@
 #' @title Method \code{+} for the class \linkS4class{DDdt}
 #'
-#' @description \code{+} sums two objects of class \linkS4class{DDdt}. This method
-#' overloads the operator \link{+} and returns a new object of class
-#' \linkS4class{DDdt}.
+#' @description \code{+} sums two objects of class \linkS4class{DDdt}. This method overloads the 
+#' operator \link{+} and returns a new object of class \linkS4class{DDdt}.
 #'
 #' @param e1 Object of class \linkS4class{DDdt}.
 #'
 #' @param e2 Object of class \linkS4class{DDdt}.
 #'
-#' @return Object of class \linkS4class{DDdt} resulting from integrating both
-#' \linkS4class{DDdt} objects in a single \linkS4class{DDdt} object.
+#' @return Object of class \linkS4class{DDdt} resulting from integrating both \linkS4class{DDdt} 
+#' objects in a single \linkS4class{DDdt} object.
 #'
 #' @examples
 #' library(data.table)
@@ -76,8 +75,6 @@
 #'                                              '([0-9]{1, 15}| )'))) 
 #' Agg1dt + Agg2dt
 #' 
-#'
-#' 
 #' @include DDdt-class.R 
 #'
 #' @import data.table
@@ -93,15 +90,15 @@ setMethod(
         DDdt2 <- setkeyv(e2, CommonCols)
 
         outVar <- rbindlist(list(DDdt1, DDdt2), fill = TRUE)
-        for (col in names(outVar)) {
-            
-            outVar[, (col) := ifelse(is.na(get(col)), '', get(col))]
-            
-        }
+        for (col in names(outVar)){outVar[, (col) := ifelse(is.na(get(col)), '', get(col))]}
         setkeyv(outVar, setdiff(names(outVar), 'ValueRegExp'))
         outVar <- outVar[!duplicated(outVar, by = key(outVar))]
         setkeyv(outVar, 'Variable')
-        if (sum(duplicated(outVar[Sort == 'IDDD'], by = key(outVar))) > 0) stop('[StQ::+.DDdt] No duplicate IDDD variable allowed.')
+        if (sum(duplicated(outVar[Sort == 'IDDD'], by = key(outVar))) > 0) {
+            
+            stop('[StQ::+.DDdt] No duplicate IDDD variable allowed.')
+            
+        }
         outVar <- outVar[!duplicated(outVar, by = key(outVar))]
         if (dim(outVar)[1] == 0) {
             

@@ -19,14 +19,13 @@ setOtherDD(object) <- value
 \item{value}{\linkS4class{DDdt} to be assigned to the slot \code{Other}.}
 }
 \value{
-Object with slot Other updated.
+Object with slot \code{Other} updated.
 }
 \description{
-\code{setOtherDD} assigns a \linkS4class{DDdt} to the slot
-\code{Other} of the input object.
+\code{setOtherDD} assigns a \linkS4class{DDdt} to the slot \code{Other} of the input
+ object.
 }
 \examples{
-# An example:
 library(data.table)
 MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
                           Length = '8',

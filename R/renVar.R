@@ -1,10 +1,10 @@
-#' @title Rename variables in an object
+#' @title Rename statistical variable names (IDDD) in an object
 #'
 #' @description \code{renVar} rename variables in a object keeping the rest of the object intact.
 #'
 #' This method returns the input object with the specified variable names in the input parameter
 #' \code{VarNames} renamed with the names in the input parameter \code{NewVarNames}. Variables are
-#' renamed in all slots.
+#' renamed in all slots. Old names are dropped out.
 #'
 #' @param object Input object.
 #'
@@ -51,7 +51,7 @@ setMethod(
            paste0(NotPresentVar, collapse = ', '), ' is(are) not in the input object.'))
     }
 
-    outputData <- copy(getData(object))
+    outputData <- getData(object)
     auxData <- outputData[['IDDD']]
     for (indexVar in seq(along = VarNames)){
         
@@ -60,7 +60,7 @@ setMethod(
 
     outputDD <- list()
     for (DDslot in setdiff(slotNames(getDD(object)), 'VarNameCorresp')){
-        outputDD[[DDslot]] <- copy(slot(getDD(object), DDslot))
+        outputDD[[DDslot]] <- slot(getDD(object), DDslot)
         setkeyv(outputDD[[DDslot]], 'Variable')
         for (indexVar in seq(along = VarNames)){
           
