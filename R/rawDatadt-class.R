@@ -6,7 +6,9 @@
 #' The class \code{rawDatadt} is a \linkS4class{data.table} with the following columns:
 #'
 #' \itemize{
-#'  \item \code{IDDDKey}: compund key of class \linkS4class{rawKey} per each value.
+#'  \item \code{IDDDKey}: character vector with the statistical variable identifiers (IDDD).
+#'  \item \code{QualKey}: character vector with the sequence of qualifier values (IDQUal + 
+#'  NonIDQual).
 #'  \item \code{Value}: value.
 #' }
 #'
@@ -32,23 +34,23 @@ setClass(Class = "rawDatadt",
              ColNames <- names(object)
              if (ColNames[1] != 'IDDDKey') {
                  
-                 stop('[validity rawDatadt] The first column of rawDatadt must be IDDDKey.')
+                 stop('[StQ::validity rawDatadt] The first column of rawDatadt must be IDDDKey.')
              }
              
              if (ColNames[2] != 'QualKey') {
                  
-                 stop('[validity rawDatadt] The second column of rawDatadt must be QualKey.')
+                 stop('[StQ::validity rawDatadt] The second column of rawDatadt must be QualKey.')
              }
              
              if (ColNames[3] != 'Value') {
                  
-                 stop('[validity rawDatadt] The third column of rawDatadt must be Value.')
+                 stop('[StQ::validity rawDatadt] The third column of rawDatadt must be Value.')
              }
              
              Ncol <- length(ColNames)
              if (Ncol != 3) {
                 
-                 stop('[validity rawDatadt] Only three columns are allowed in a rawDatadt object.')    
+                 stop('[StQ::validity rawDatadt] Only three columns are allowed in a rawDatadt object.')    
                  
              }
              

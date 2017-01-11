@@ -11,7 +11,9 @@ Definition of an S4 class named \code{rawDatadt} as a subclass of class
 The class \code{rawDatadt} is a \linkS4class{data.table} with the following columns:
 
 \itemize{
- \item \code{IDDDKey}: compund key of class \linkS4class{rawKey} per each value.
+ \item \code{IDDDKey}: character vector with the statistical variable identifiers (IDDD).
+ \item \code{QualKey}: character vector with the sequence of qualifier values (IDQUal + 
+ NonIDQual).
  \item \code{Value}: value.
 }
 }

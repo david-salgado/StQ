@@ -20,8 +20,9 @@
 #' data(ExampleStQ)
 #' ExampleStQ[IDDD == 'Turnover']
 #' ExampleStQ[3:4]
+#' ExampleStQ[ID == '00021']
 #'
-#' @include StQ-class.R getData.R setData.R
+#' @include StQ-class.R getData.R setData.R Datadt-class.R
 #'
 #' @import data.table
 #'
@@ -35,17 +36,7 @@ setMethod(
     mc[['x']] <- getData(x)
     output <- x
     Datadt <- new(Class = 'Datadt', eval(mc, envir = parent.frame()))
-
-    # Si un identificador de unidad o variable está idénticamente en blanco, esta columna se elimina
-    #colData <- names(Datadt)
-    #colsData <- c('IDDD', 'Value')
-    #Data <- DatadtToDT(Datadt)
-    #for (col in setdiff(colData, colsData)){
-    #    
-    #    if (all(Data[[col]] == '')) Data[, (col) := NULL]
-    #}
     setData(output) <- new(Class = 'Datadt', Datadt)
-    
     validObject(output)
     return(output)
 

@@ -13,13 +13,12 @@
 \item{e2}{Object of class \linkS4class{DDdt}.}
 }
 \value{
-Object of class \linkS4class{DDdt} resulting from integrating both
-\linkS4class{DDdt} objects in a single \linkS4class{DDdt} object.
+Object of class \linkS4class{DDdt} resulting from integrating both \linkS4class{DDdt} 
+objects in a single \linkS4class{DDdt} object.
 }
 \description{
-\code{+} sums two objects of class \linkS4class{DDdt}. This method
-overloads the operator \link{+} and returns a new object of class
-\linkS4class{DDdt}.
+\code{+} sums two objects of class \linkS4class{DDdt}. This method overloads the 
+operator \link{+} and returns a new object of class \linkS4class{DDdt}.
 }
 \examples{
 library(data.table)
@@ -85,8 +84,6 @@ Agg2dt <- new(Class = 'DDdt',
                                  ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])',
                                              '([0-9]{1, 15}| )'))) 
 Agg1dt + Agg2dt
-
-
 
 }
 

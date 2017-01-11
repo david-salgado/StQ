@@ -29,10 +29,10 @@
 #' QList[['MM092015']]
 #' QList[[2]]
 #'
-#' @include rawStQList-class.R getPeriods.rawStQList.R
+#' @include rawStQList-class.R getPeriods.R
 #'
 #' @import data.table
-#'
+#' 
 #' @export
 setMethod(
     f = "[[",
@@ -40,7 +40,7 @@ setMethod(
     function(x, i, j, ..., exact = TRUE){
         
         Data <- x@Data
-        names(Data) <- getPeriods.rawStQList(x)
+        names(Data) <- getPeriods(x)
         output <- Data[[i]]
         return(output)
         

@@ -1,16 +1,15 @@
 #' @title Set value of slot \code{Other}
 #'
-#' @description \code{setOtherDD} assigns a \linkS4class{DDdt} to the slot
-#' \code{Other} of the input object.
+#' @description \code{setOtherDD} assigns a \linkS4class{DDdt} to the slot \code{Other} of the input
+#'  object.
 #'
 #' @param object Object whose slot \code{Other} is to be assigned.
 #'
 #' @param value \linkS4class{DDdt} to be assigned to the slot \code{Other}.
 #'
-#' @return Object with slot Other updated.
+#' @return Object with slot \code{Other} updated.
 #'
 #' @examples
-#' # An example:
 #' library(data.table)
 #' MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
 #'                           Length = '8',
@@ -43,7 +42,7 @@
 setGeneric("setOtherDD<-", function(object, value){standardGeneric("setOtherDD<-")})
 #' @rdname setOtherDD
 #'
-#' @include StQ-class.R
+#' @include StQ-class.R getVNC.R DDdtToVNC.R
 #'
 #' @import data.table
 #'

@@ -1,4 +1,4 @@
-#' @title Extract edit names from an object
+#' @title Extract edit names from an object (THIS FUNCTION MUST BE REFACTORED)
 #'
 #' @description This method identifies the IDQual qualifiers in the input object and returns a
 #' \linkS4class{data.table} with the values of these qualifiers for each statistical unit and their

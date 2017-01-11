@@ -3,23 +3,22 @@
 \docType{class}
 \name{DDdt-class}
 \alias{DDdt-class}
-\title{S4 class for \linkS4class{data.table}s as components of 
-\linkS4class{DD} objects}
+\title{S4 class for \linkS4class{data.table}s with columns containing the variable specifications}
 \description{
-Definition of an S4 class named \code{DDdt} with the 
-properties of each statistical variable.
+Definition of an S4 class named \code{DDdt} with the properties of each statistical 
+variable. This is a subclass of \linkS4class{data.table} used as slots in a \linkS4class{DD}
+object.
 
-The class \code{DDdt} is a \linkS4class{data.table} with the following 
-columns:
+The class \code{DDdt} is a \linkS4class{data.table} with the following columns (in this order):
 
 \itemize{
  \item \code{Variable}: name of each variable.
  \item \code{Sort}: role of each variable (IDQual, NonIDQual, IDDD).
  \item \code{Class}: class of each variable (character, numeric, ...).
- \item \code{Length}: highest length for each variable.
- \item One column of name \emph{"Qual"}\code{j} per each name of the 
- qualifiers needed for each variable.
- \item \code{ValueRegExp}: regexp for the value of each variable.
+ \item \code{Length}: highest length for each variable (in terms of number of characters).
+ \item One column of name [\emph{Qual}\code{j}] per each name of the qualifiers needed for each 
+ variable.
+ \item \code{ValueRegExp}: regexp for the value of each variable (not active yet).
 }
 }
 \examples{
@@ -31,5 +30,9 @@ new(Class = 'DDdt',
                Length = '11', 
                Qual1 = 'NOrden', 
                ValueRegExp = '[0-9]{9}SS'))
+               
+data(ExampleDDdt)
+ExampleDDdt
+
 }
 

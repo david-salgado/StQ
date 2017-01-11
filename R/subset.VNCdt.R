@@ -42,8 +42,7 @@ setMethod(
        New.x <- setDT(New.x)
        mc[['x']] <- New.x
        output <- eval(mc, envir = parent.frame())
-       
-       #output <- new(Class = "VNCdt", output)
+       output <- new(Class = "VNCdt", output)
        return(output)
    }
 )

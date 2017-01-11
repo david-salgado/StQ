@@ -4,24 +4,23 @@
 \name{setDD<-}
 \alias{setDD<-}
 \alias{setDD<-,StQ,DD-method}
-\title{Set value of slot \code{DD}.}
+\title{Set value of slot \code{DD}}
 \usage{
 setDD(object) <- value
 
 \S4method{setDD}{StQ,DD}(object) <- value
 }
 \arguments{
-\item{object}{Object whose slot \code{DD} is to be assigned.}
+\item{object}{Object whose slot \code{DD} is to be set.}
 
-\item{value}{Object of class \linkS4class{DD} to be assigned to the input
-object.}
+\item{value}{Object of class \linkS4class{DD} to be assigned to the input object.}
 }
 \value{
 Object of class \linkS4class{StQ} with slot DD updated.
 }
 \description{
-\code{setDD} assigns an object of class \linkS4class{DD} to the
- slot \code{DD} of the input object.
+\code{setDD} assigns an object of class \linkS4class{DD} to the slot \code{DD} of 
+the input object.
 }
 \examples{
 # We build an empty StQ object:

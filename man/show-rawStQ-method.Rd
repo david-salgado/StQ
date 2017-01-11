@@ -3,7 +3,7 @@
 \docType{methods}
 \name{show,rawStQ-method}
 \alias{show,rawStQ-method}
-\title{Show an object of class \linkS4class{rawStQ}.}
+\title{Show an object of class \linkS4class{rawStQ}}
 \usage{
 \S4method{show}{rawStQ}(object)
 }
@@ -23,6 +23,8 @@ object. It is indeed the method \link[methods]{show} adapted to class \linkS4cla
 \examples{
 # A trivial example
 show(new(Class = 'rawStQ'))
+
+show(ExamplerawStQ)
 
 }
 

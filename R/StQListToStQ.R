@@ -1,10 +1,11 @@
-#' @title Method to transform an StQList object into a list of StQ's objects.
+#' @title Method to transform an \linkS4class{StQList} object into a list of StQs objects
 #'
-#' @description \code{StQListToStQ} transform an StQList object into a list of StQ's objects with a
-#' new variable "Period" to take in account the interval times related to StQList object.
+#' @description \code{StQListToStQ} transform an \linkS4class{StQList} object into a list of StQs 
+#' objects with a new variable "Period" to take into account the interval period times related to 
+#' \linkS4class{StQList} object.
 #'
 #' This method creates a variable with the name \code{Period} in Data slots with the period related
-#' to each Data and adds this variable to each DD slot of the new StQ's objects.
+#' to each Data and adds this variable to each DD slot of the new StQs objects.
 #'
 #' @param object Object of class \linkS4class{StQList} to be transformed.
 #'

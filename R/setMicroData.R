@@ -1,7 +1,7 @@
 #' @title Set value of slot \code{MicroData} of an object \linkS4class{DD}
 #'
-#' @description \code{setMicroData} assigns a \linkS4class{DDdt} to the
-#'  slot \code{ID} of the input object.
+#' @description \code{setMicroData} assigns a \linkS4class{DDdt} to the slot \code{ID} of the input 
+#' object.
 #'
 #' @param object Object containing slot \code{ID} to be assigned.
 #'
@@ -10,7 +10,6 @@
 #' @return Object \linkS4class{DD} with slot \code{ID} updated.
 #'
 #' @examples
-#' # An example:
 #' library(data.table)
 #' MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
 #'                           Length = '8',
@@ -47,7 +46,7 @@ setGeneric("setMicroData<-", function(object, value){standardGeneric("setMicroDa
 
 #' @rdname setMicroData
 #'
-#' @include DD-class.R
+#' @include DD-class.R getVNC.R DDdtToVNC.R
 #'
 #' @import data.table
 #'

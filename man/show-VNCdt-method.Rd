@@ -41,6 +41,8 @@ VNCdt2 <- new(Class = 'VNCdt',
                          IDDD = c('', '', 'Turnover'),
                          NOrden = c('', '', '.'),
                          Market = c('', '', '1.'),
+                         Import = c('', '', '0'),
+                         Geo = c('', '', '2.'),
                          UnitName = c('', '', 'cn01'),
                          InFiles = rep('FF', 3)))
 show(VNCdt2)

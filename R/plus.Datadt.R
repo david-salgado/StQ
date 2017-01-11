@@ -1,10 +1,10 @@
 #' @title Method \code{+} for the class \linkS4class{Datadt}
 #'
-#' @description \code{+} joins two objects of class \linkS4class{Datadt} in a
-#' single object of the same class.
+#' @description \code{+} combines two objects of class \linkS4class{Datadt} in a single object of 
+#' the same class.
 #'
-#' This method overloads the operator \code{\link{+}} and builds a new
-#' \linkS4class{Datadt} object joining both input objects.
+#' This method overloads the operator \code{\link{+}} and builds a new \linkS4class{Datadt} object 
+#' combining both input objects.
 #'
 #' @param e1 Object of class \code{Datadt}.
 #'
@@ -26,8 +26,7 @@
 #'                    IDDD = c( 'Turnover', 'CCAA', 'IASSCifraNeg'),
 #'                    Value = c('648154', '25', '45645')))
 #'
-#' Ddt <- Ddt1 + Ddt2
-#' show(Ddt)
+#' Ddt1 + Ddt2
 #'
 #' @import data.table
 #'
@@ -40,16 +39,17 @@ setMethod(
         #Incluimos las mismas columnas en ambos objetos
         e1 <- DatadtToDT(e1)
         e2 <- DatadtToDT(e2)
-        ColNames.e1 <- copy(names(e1))
-        ColNames.e2 <- copy(names(e2))
+        ColNames.e1 <- names(e1)
+        ColNames.e2 <- names(e2)
         NewCol.e2 <- setdiff(ColNames.e2, ColNames.e1)
         NewCol.e1 <- setdiff(ColNames.e1, ColNames.e2)
         
-        if (length(NewCol.e2) > 0) e1 <- copy(e1)[, (NewCol.e2) := character(.N)]
-        if (length(NewCol.e1) > 0) e2 <- copy(e2)[, (NewCol.e1) := character(.N)]
+        if (length(NewCol.e2) > 0) e1 <- e1[, (NewCol.e2) := character(.N)]
+        if (length(NewCol.e1) > 0) e2 <- e2[, (NewCol.e1) := character(.N)]
         
         # Unimos los slots Data con rbindlist eliminando los duplicados
-        ColNames <- c(setdiff(names(e1), c('IDDD', 'Value')), setdiff(names(e2), setdiff(names(e1), c('IDDD', 'Value'))))
+        ColNames <- c(setdiff(names(e1), c('IDDD', 'Value')), 
+                      setdiff(names(e2), setdiff(names(e1), c('IDDD', 'Value'))))
         setcolorder(e1, ColNames)
         setcolorder(e2, ColNames)
         output.Data <- rbindlist(list(e1, e2))
@@ -72,4 +72,4 @@ setMethod(
         return(output)
         
     }
-            )
+)

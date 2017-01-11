@@ -1,4 +1,4 @@
-#' Show an object of class \linkS4class{rawStQ}.
+#' Show an object of class \linkS4class{rawStQ}
 #'
 #' \code{show} displays the slot \code{Data} of the input \linkS4class{rawStQ}.
 #'
@@ -12,6 +12,8 @@
 #' @examples
 #' # A trivial example
 #' show(new(Class = 'rawStQ'))
+#'
+#' show(ExamplerawStQ)
 #'
 #' @include rawStQ-class.R
 #'

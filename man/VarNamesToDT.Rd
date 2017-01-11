@@ -33,7 +33,6 @@ second input parameter.
 editing strategies, but it can also be of utility in some scripts.
 }
 \examples{
-# We load RepoReadWrite to obtain the included example DD object
 data(ExampleDD)
 VarNamesToDT(c('Employees_1.'), ExampleDD)
 

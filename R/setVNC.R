@@ -1,14 +1,14 @@
-#' @title Set value of slot \code{VarNameCorresp}
+#' @title Set value of slot \linkS4class{VarNameCorresp}
 #'
-#' @description \code{setVNC} assigns a list of \linkS4class{data.table}s to the
-#'  slot \code{VarNameCorresp} of the input object.
+#' @description \code{setVNC} assigns a  \linkS4class{VarNameCorresp} object to the slot 
+#' \code{VarNameCorresp} of the input object.
 #'
-#' @param object Object containing slot \code{VarNameCorresp} to be assigned.
+#' @param object Object containing slot \code{VarNameCorresp} to be set.
 #'
 #' @param value List of \linkS4class{data.table}s to be assigned to the slot 
-#' \code{VarNameCorresp}.
+#' \linkS4class{VarNameCorresp}.
 #'
-#' @return Object with slot \code{VarNameCorresp} updated.
+#' @return Object with slot \linkS4class{VarNameCorresp} updated.
 #'
 #' @examples
 #' # On an object of class DD:

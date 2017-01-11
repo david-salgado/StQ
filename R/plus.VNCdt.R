@@ -1,8 +1,7 @@
 #' @title Method \code{+} for the class \linkS4class{VNCdt}
 #'
-#' @description \code{+} sums two objects of class \linkS4class{VNCdt}.
-#'  This method overloads the operator \link{+} and returns a new object of 
-#'  class \linkS4class{VNCdt}.
+#' @description \code{+} sums two objects of class \linkS4class{VNCdt}. This method overloads the 
+#' operator \link{+} and returns a new object of class \linkS4class{VNCdt}.
 #'
 #' The integration is carried out according to the names of the components. 
 #'
@@ -10,13 +9,11 @@
 #'
 #' @param e2 Object of class \linkS4class{VNCdt}.
 #'
-#' @return Object of class \linkS4class{VNCdt} resulting from 
-#' integrating both \linkS4class{VNCdt} objects in a single 
-#' \linkS4class{VNCdt} object.
+#' @return Object of class \linkS4class{VNCdt} resulting from integrating both \linkS4class{VNCdt} 
+#' objects in a single \linkS4class{VNCdt} object.
 #'
 #' @examples
 #' library(data.table)
-#' 
 #' ID1 <- new(Class = "VNCdt", 
 #'           .Data = data.table(IDQual = c('NumIdEst', rep('', 4)),
 #'                              NonIDQual = rep('', 5),

@@ -5,7 +5,7 @@
 \alias{setVNC<-}
 \alias{setVNC<-,DD,VarNameCorresp-method}
 \alias{setVNC<-,StQ,VarNameCorresp-method}
-\title{Set value of slot \code{VarNameCorresp}}
+\title{Set value of slot \linkS4class{VarNameCorresp}}
 \usage{
 setVNC(object) <- value
 
@@ -14,17 +14,17 @@ setVNC(object) <- value
 \S4method{setVNC}{StQ,VarNameCorresp}(object) <- value
 }
 \arguments{
-\item{object}{Object containing slot \code{VarNameCorresp} to be assigned.}
+\item{object}{Object containing slot \code{VarNameCorresp} to be set.}
 
 \item{value}{List of \linkS4class{data.table}s to be assigned to the slot 
-\code{VarNameCorresp}.}
+\linkS4class{VarNameCorresp}.}
 }
 \value{
-Object with slot \code{VarNameCorresp} updated.
+Object with slot \linkS4class{VarNameCorresp} updated.
 }
 \description{
-\code{setVNC} assigns a list of \linkS4class{data.table}s to the
- slot \code{VarNameCorresp} of the input object.
+\code{setVNC} assigns a  \linkS4class{VarNameCorresp} object to the slot 
+\code{VarNameCorresp} of the input object.
 }
 \examples{
 # On an object of class DD:

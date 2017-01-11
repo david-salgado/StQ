@@ -2,19 +2,21 @@
 % Please edit documentation in R/BuildrawStQList.R
 \name{BuildrawStQList}
 \alias{BuildrawStQList}
-\title{Constructor of objects of class \linkS4class{rawStQList}.}
+\title{Constructor of objects of class \linkS4class{rawStQList}}
 \usage{
 BuildrawStQList(Data)
 }
 \arguments{
-\item{Data}{\code{List} of objects of class \linkS4class{rawStQ}.}
+\item{Data}{A named \code{list} of objects of class \linkS4class{rawStQ}.}
 }
 \value{
 An object of class \linkS4class{rawStQList}.
 }
 \description{
-This constructor returns objects of class \linkS4class{rawStQList}.
-The input parameter is a \code{list} of objects of class \linkS4class{rawStQ}.
+This constructor returns an object of class \linkS4class{rawStQList}.
+The input parameter is a named \code{list} of objects of class \linkS4class{rawStQ}. Notice that 
+the names of the \code{list} must be valid time period names according to package 
+\link[=RepoTime]{RepoTime}.
 }
 \examples{
 mm <- c(paste0('0', 1:9), 10:12)
@@ -23,7 +25,6 @@ EmptyrawQ <- new(Class = 'rawStQ')
 EmptyrawQList <- vector('list', 12)
 EmptyrawQList <- lapply(EmptyrawQList, function(x) EmptyrawQ)
 names(EmptyrawQList) <- TimePer
-
 rawQList <- BuildrawStQList(EmptyrawQList)
 rawQList
 #Notice that it is indeed an object with complex structure:

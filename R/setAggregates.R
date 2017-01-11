@@ -1,7 +1,7 @@
-#' @title Set value of slot \code{Aggregates}.
+#' @title Set value of slot \code{Aggregates}
 #'
-#' @description \code{setAggr} assigns a \linkS4class{DDdt} to the slot
-#' \code{Aggregates} of the input object.
+#' @description \code{setAggregates} assigns a \linkS4class{DDdt} to the slot \code{Aggregates} of 
+#' the input object.
 #'
 #' @param object Object whose slot \code{Aggregates} is to be assigned.
 #'
@@ -10,15 +10,14 @@
 #' @return Object with slot Aggregates updated.
 #'
 #' @examples
-#' # An example:
 #' library(data.table)
-#' MicroDataDD <- data.table(Variable = 'IEPEntradaPed', Sort = 'IDDD', Class = 'numeric',
+#' MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
 #'                           Length = '8',
 #'                           Qual1 = 'NumIdEst', Qual2 = 'Market', ValueRegExp = '')
 #' MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
 #' VarList <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','',''),
 #'                                                           NonIDQual = c('', 'Market', 'Cod', ''),
-#'                                                           IDDD = c('', '', '' ,'IEPEntradaPed'),
+#'                                                           IDDD = c('', '', '' ,'NewOrders'),
 #'                                                           NumIdEst = c('', '', '', '.'),
 #'                                                           Market = c('', '', '', '1.'),
 #'                                                           Cod = rep('', 4),
@@ -34,24 +33,24 @@
 #'                     Qual1 = c('', 'NACE09'),
 #'                     ValueRegExp = c('([0-4][0-9])|(5[0-2])', '([0-9]{1, 15}| )'))  
 #' Aggdt <- new(Class = 'DDdt', Aggdt)          
-#' setAggr(DD) <- Aggdt
+#' setAggregates(DD) <- Aggdt
 #' DD
 #'
-#' @rdname setAggr
+#' @rdname setAggregates
 #'
 #' @import data.table
 #'
 #' @export
-setGeneric("setAggr<-", function(object, value){standardGeneric("setAggr<-")})
-#' @rdname setAggr
+setGeneric("setAggregates<-", function(object, value){standardGeneric("setAggregates<-")})
+#' @rdname setAggregates
 #'
-#' @include DD-class.R
+#' @include DD-class.R getVNC.R DDdtToVNC.R setVNC.R
 #'
 #' @import data.table
 #'
 #' @export
 setReplaceMethod(
-    f = "setAggr",
+    f = "setAggregates",
     signature = c("DD", "DDdt"),
     function(object, value){
         
@@ -66,7 +65,7 @@ setReplaceMethod(
         return(object)
     }
 )
-#' @rdname setAggr
+#' @rdname setAggregates
 #'
 #' @include StQ-class.R
 #'
@@ -74,11 +73,11 @@ setReplaceMethod(
 #'
 #' @export
 setReplaceMethod(
-    f = "setAggr",
+    f = "setAggregates",
     signature = c("StQ", "DDdt"),
     function(object, value){
         
-        setAggr(object@DD) <- value
+        setAggregates(object@DD) <- value
         validObject(object)
         return(object)
     }

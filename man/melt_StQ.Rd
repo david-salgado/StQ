@@ -2,14 +2,13 @@
 % Please edit documentation in R/melt_StQ.R
 \name{melt_StQ}
 \alias{melt_StQ}
-\title{Convert a dcasted \linkS4class{data.table} into an object of class
-\linkS4class{StQ}}
+\title{Convert a dcasted \linkS4class{data.table} into an object of class \linkS4class{StQ}}
 \usage{
 melt_StQ(DataMatrix, DD)
 }
 \arguments{
-\item{DataMatrix}{of class \linkS4class{data.table} with dcasted form
-(statistical units by rows and variables by columns).}
+\item{DataMatrix}{of class \linkS4class{data.table} with dcasted form (statistical units by rows 
+and variables by columns).}
 
 \item{DD}{Object of class \linkS4class{DD}.}
 }
@@ -17,17 +16,16 @@ melt_StQ(DataMatrix, DD)
 Object of class \linkS4class{StQ}.
 }
 \description{
-\code{melt_StQ} returns an object of class \linkS4class{StQ}
-from a \linkS4class{data.table} in dcasted form.
+\code{melt_StQ} returns an object of class \linkS4class{StQ} from a 
+\linkS4class{data.table} in dcasted form.
 
-This method builds an object of class \linkS4class{StQ} with the slot
-\code{Data} constructed from the input \linkS4class{data.table} and the slot
-\code{DD} given as an input parameter.
+This method builds an object of class \linkS4class{StQ} with the slot \code{Data} constructed 
+from the input \linkS4class{data.table} and the slot \code{DD} given as an input parameter.
 
-This function can be considered as a constructor for the class \code{StQ}. It
-is indeed a wrapper for the function \code{\link[data.table]{melt.data.table}}
-from the package \linkS4class{data.table} adapted to the structure of the slot
-\code{Data} of object \linkS4class{StQ}.
+This function can be considered as a constructor for the class \code{StQ}. It is indeed a wrapper
+ for the function \code{\link[data.table]{melt.data.table}} from the package 
+ \linkS4class{data.table} adapted to the structure of the slot \code{Data} of object 
+ \linkS4class{StQ}.
 
 The input parameter \code{DD} must be of class \linkS4class{DD}.
 }

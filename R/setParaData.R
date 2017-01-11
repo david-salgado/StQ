@@ -1,7 +1,7 @@
-#' @title Set value of slot \code{ParaData}.
+#' @title Set value of slot \code{ParaData}
 #'
-#' @description \code{setParaData} assigns a \linkS4class{DDdt} to the slot
-#' \code{ParaData} of the input object.
+#' @description \code{setParaData} assigns a \linkS4class{DDdt} to the slot \code{ParaData} of the 
+#' input object.
 #'
 #' @param object Object whose slot \code{ParaData} is to be assigned.
 #'
@@ -10,7 +10,6 @@
 #' @return Object with slot ParaData updated.
 #'
 #' @examples
-#' # An example:
 #' library(data.table)
 #' MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
 #'                           Length = '8',
@@ -47,7 +46,7 @@
 setGeneric("setParaData<-", function(object, value){standardGeneric("setParaData<-")})
 #' @rdname setParaData
 #'
-#' @include StQ-class.R
+#' @include StQ-class.R getVNC.R DDdtToVNC.R
 #'
 #' @import data.table
 #'

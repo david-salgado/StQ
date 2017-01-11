@@ -25,10 +25,8 @@ Object of class \linkS4class{DDdt} with the subsetted input object.
 It is indeed the method \code{[} for the class \linkS4class{DDdt}.
 }
 \examples{
-\dontrun{
-data(ExampleStQ)
-ExampleStQ[IDDD == 'IASSCifraNeg']
-}
+data(ExampleDDdt)
+ExampleDDdt[Sort == 'IDQual']
 
 }
 

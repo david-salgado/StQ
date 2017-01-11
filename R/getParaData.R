@@ -1,12 +1,10 @@
-#' @title Return slot ParaData from a DD object
+#' @title Return slot ParaData from an object
 #'
-#' @description \code{getParaData} returns slot \code{ParaData} of the input
-#' \linkS4class{DD} object.
+#' @description \code{getParaData} returns slot \code{ParaData} of the input object.
 #' 
 #' @param object a DD Object whose slot \code{ParaData} is queried.
 #'
-#' @return \linkS4class{data.table} with data from slot \code{ParaData} of the
-#' input \linkS4class{DD} object.
+#' @return Returns a \linkS4class{DDdt} object containing the slot \code{ParaData} of the input object.
 #'
 #' @examples
 #' # An example:
@@ -43,21 +41,26 @@
 #' VNC <- new(Class = 'VarNameCorresp', VarList)
 #' 
 #' ### We build the specification data.tables
-#' IDdt <- new( Class='DDdt',data.table(
+#' IDdt <- new(Class='DDdt',
+#'   data.table(
 #'     Variable = c('NumIdEst', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
 #'     Sort = c('IDQual', rep('IDDD', 4)),
 #'     Class = rep('character', 5),
 #'     Length = c('11', '15', '15', '20','9'),
 #'     Qual1 = c('', rep('NumIdEst', 4)),
 #'     ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}')))
-#' Microdt <- new( Class='DDdt',data.table(
+#'     
+#' Microdt <- new(Class='DDdt',
+#'   data.table(
 #'     Variable = c('NumIdEst', 'Market', 'NewOrders'),
 #'     Sort = c('IDQual', 'NonIDQual', 'IDDD'),
 #'     Class = c(rep('character', 2), 'numeric'),
 #'     Length = c('11', '2', '7'),
 #'     Qual1 = c(rep('', 2), 'NumIdEst'),
 #'     ValueRegExp = c('[0-9]{9}PP', '.+', '([0-9]{1, 10}| )')))
-#' Paradt <-new( Class='DDdt', data.table(
+#'     
+#' Paradt <-new(Class='DDdt', 
+#'   data.table(
 #'     Variable = c('NumIdEst', 'Action', 'Date'),
 #'     Sort = c('IDQual', 'NonIDQual', 'IDDD'),
 #'     Class = rep('character', 3),
@@ -66,15 +69,16 @@
 #'     Qual2 = c(rep('', 2), 'Action'),
 #'     ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 
 #'                     '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')))
+#'                     
 #' Aggdt <- new(Class='DDdt',
-#'              data.table(Variable = c('CCAA', 'NACE09', 'Ponderacion'),
-#'                         Sort = c(rep('IDQual', 2), 'IDDD'),
-#'                         Class = c(rep('character', 2), 'numeric'),
-#'                         Length = c('2', '4', '7'),
-#'                         Qual1 = c(rep('', 2), 'CCAA'),
-#'                         Qual2 = c(rep('', 2), 'NACE09'),
-#'                         ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])', 
-#'                                         '([0-9]{1, 15}| )')))
+#'   data.table(
+#'     Variable = c('CCAA', 'NACE09', 'Ponderacion'),
+#'     Sort = c(rep('IDQual', 2), 'IDDD'),
+#'     Class = c(rep('character', 2), 'numeric'),
+#'     Length = c('2', '4', '7'),
+#'     Qual1 = c(rep('', 2), 'CCAA'),
+#'     Qual2 = c(rep('', 2), 'NACE09'),
+#'     ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])', '([0-9]{1, 15}| )')))
 #' 
 #' DD <- new(Class = 'DD', 
 #'           VarNameCorresp = VNC, 
@@ -85,8 +89,16 @@
 #' 
 #' getParaData(DD)
 #' 
+#' StQ <- new(Class = 'StQ', Data = new(Class = 'Datadt'), DD = DD)
+#' getOtherDD(StQ)
+#' 
+#' rawStQ <- new(Class = 'rawStQ', Data = new(Class = 'rawDatadt'), DD = DD)
+#' getOtherDD(rawStQ)
+
+#' 
 #' @export
 setGeneric("getParaData", function(object){standardGeneric("getParaData")})
+
 #' @rdname getParaData
 #' 
 #' @include DD-class.R
@@ -99,6 +111,36 @@ setMethod(
         
         out <- copy(object@ParaData)
         return(out)
+    }
+)
+
+#' @rdname getParaData
+#' 
+#' @include StQ-class.R getDD.R
+#' 
+#' @export
+setMethod(
+    f = "getParaData",
+    signature = c("StQ"),
+    function(object){
+        
+        output <- getParaData(getDD(object))
+        return(output)
+    }
+)
+
+#' @rdname getParaData
+#' 
+#' @include rawStQ-class.R getDD.R
+#' 
+#' @export
+setMethod(
+    f = "getParaData",
+    signature = c("rawStQ"),
+    function(object){
+        
+        output <- getParaData(getDD(object))
+        return(output)
     }
 )
 

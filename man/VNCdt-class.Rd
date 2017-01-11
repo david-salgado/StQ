@@ -3,14 +3,13 @@
 \docType{class}
 \name{VNCdt-class}
 \alias{VNCdt-class}
-\title{S4 class for \linkS4class{data.table}s as components of
-\linkS4class{VarNameCorresp} objects}
+\title{S4 class for \linkS4class{data.table}s as components of \linkS4class{VarNameCorresp} 
+objects}
 \description{
-Definition of an S4 class named \code{VNCdt} with the
-correspondence between variable names.
+Definition of an S4 class named \code{VNCdt} with the correspondence between 
+variable names.
 
-The class \code{VNCdt} is a \linkS4class{data.table} with the following
-columns:
+The class \code{VNCdt} is a \linkS4class{data.table} with the following columns:
 
 \itemize{
  \item \code{IDQual}: names of unit qualifiers.
@@ -33,5 +32,6 @@ new(Class = 'VNCdt',
                IsNatMarket = c('', '', '0', '1'),
                UnitName = c('', '', 'cn01', 'cn02'),
                InFiles = rep('FF', 4)))
+               
 }
 

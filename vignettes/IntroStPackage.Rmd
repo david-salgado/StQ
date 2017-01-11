@@ -1,0 +1,46 @@
+---
+title: "An introduction to the StQ package"
+author: "E. Esteban, S. Saldaña, D. Salgado"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{An introduction to the StQ package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+# The statistical data model
+
+# Classes: definitions, initializers and constructors
+
+## General view
+
+## Class *VarNameCorresp*
+
+## Class *DD*
+
+## Class **StQ**
+
+## Class **rawStQ**
+
+## Class **StQList**
+
+## Class **rawStQList**
+
+# Getters and setters
+
+## Getters
+
+## Setters
+
+# Subsetting
+
+# Specific functionalities
+
+## Managing variable names
+
+## Managing file formats: dcasting and melting
+
+## Combining objects

@@ -1,4 +1,4 @@
-#' @title Set value of slot \code{Data}.
+#' @title Set value of slot \code{Data}
 #'
 #' @description \code{setData} assigns a \linkS4class{Datadt} to the slot \code{Data} of the input
 #' object.

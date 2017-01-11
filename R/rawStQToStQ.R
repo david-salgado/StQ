@@ -88,6 +88,8 @@ setMethod(
 #' 
 #' @importFrom stringi stri_sub
 #' 
+#' @import RepoTime
+#' 
 #' @export
 setMethod(
     f = "rawStQToStQ",

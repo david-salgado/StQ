@@ -4,15 +4,14 @@
 \name{setUnits<-}
 \alias{setUnits<-}
 \alias{setUnits<-,StQ,data.table-method}
-\title{Return an object as the input object but with slot \code{Data} restricted to the specified
-units.}
+\title{Return the input object with slot \code{Data} restricted to the specified units}
 \usage{
 setUnits(object) <- value
 
 \S4method{setUnits}{StQ,data.table}(object) <- value
 }
 \arguments{
-\item{object}{Objeto whose slot \code{Data} is to be restricted.}
+\item{object}{Object whose slot \code{Data} is to be restricted.}
 
 \item{value}{\linkS4class{data.table} with the values of the unit qualifiers identifying the 
 restricted units.}
@@ -22,8 +21,8 @@ Object with the same class as the input object with slot Data restricted to the 
 units.
 }
 \description{
-\code{setUnits} returns an object as the input object but with slot \code{Data}
-restricted to the specified units.
+\code{setUnits} returns the input object with slot \code{Data} restricted to the 
+specified units.
 }
 \examples{
 library(data.table)

@@ -22,11 +22,10 @@ setMicroData(object) <- value
 Object \linkS4class{DD} with slot \code{ID} updated.
 }
 \description{
-\code{setMicroData} assigns a \linkS4class{DDdt} to the
- slot \code{ID} of the input object.
+\code{setMicroData} assigns a \linkS4class{DDdt} to the slot \code{ID} of the input 
+object.
 }
 \examples{
-# An example:
 library(data.table)
 MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
                           Length = '8',

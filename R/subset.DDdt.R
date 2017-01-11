@@ -15,10 +15,8 @@
 #' @return Object of class \linkS4class{DDdt} with the subsetted input object.
 #'
 #' @examples
-#' \dontrun{
-#' data(ExampleStQ)
-#' ExampleStQ[IDDD == 'IASSCifraNeg']
-#' }
+#' data(ExampleDDdt)
+#' ExampleDDdt[Sort == 'IDQual']
 #'
 #' @include DDdt-class.R
 #'

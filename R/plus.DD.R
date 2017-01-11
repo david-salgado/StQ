@@ -1,15 +1,14 @@
 #' @title Method \code{+} for the class \linkS4class{DD}
 #'
-#' @description \code{+} sums two objects of class \linkS4class{DD}. This method
-#' overloads the operator \link{+} and returns a new object of class
-#' \linkS4class{DD}.
+#' @description \code{+} sums two objects of class \linkS4class{DD}. This method overloads the 
+#' operator \link{+} and returns a new object of class \linkS4class{DD}.
 #'
 #' @param e1 Object of class \linkS4class{DD}.
 #'
 #' @param e2 Object of class \linkS4class{DD}.
 #'
-#' @return Object of class \linkS4class{DD} resulting from integrating both
-#' \linkS4class{DD} objects in a single \linkS4class{DD} object.
+#' @return Object of class \linkS4class{DD} resulting from integrating both \linkS4class{DD} objects
+#'  in a single \linkS4class{DD} object.
 #'
 #' @examples
 #' library(data.table)
@@ -148,21 +147,11 @@ setMethod(
         
         outVarList <- list()
 
-        for (Name in CommonSlots) {
+        for (Name in CommonSlots) {outVarList[[Name]] <- slot(e1, Name) + slot(e2, Name)}
 
-            outVarList[[Name]] <- slot(e1, Name) + slot(e2, Name)
-            
-        }
-
-        for (Name in In1Not2Names) {
-            
-            outVarList[[Name]] <- slot(e1, Name)
-        }
+        for (Name in In1Not2Names) {outVarList[[Name]] <- slot(e1, Name)}
         
-        for (Name in In2Not1Names) {
-            
-            outVarList[[Name]] <- slot(e2, Name)
-        }
+        for (Name in In2Not1Names) {outVarList[[Name]] <- slot(e2, Name)}
 
         output <- new(Class = 'DD',
                       VarNameCorresp = outVarList[['VarNameCorresp']],

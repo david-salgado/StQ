@@ -24,16 +24,19 @@
 #' presents the corresponding formula.
 #'
 #' @examples
-#' # We build a DD object to be used as the second input parameter:
 #' data(ExampleDD)
-#' VarNamesToFormula(c('IASSEmpleo_1.', 'IASSEmpleo_2.2', 'IASSEmpleo'), ExampleDD)
+#' VarNamesToFormula('Turnover', ExampleDD)
+#' 
+#' VarNamesToFormula(c('Employees_1.', 'Employees_2.2', 'Employees'), ExampleDD)
+#' 
+#' VarNamesToFormula(c('Turnover', 'Employees_1.', 'Employees_2.2', 'Employees'), ExampleDD)
 #'
 #' @export
 setGeneric("VarNamesToFormula",
            function(VarNames, DD){standardGeneric("VarNamesToFormula")})
 #' @rdname VarNamesToFormula
 #'
-#' @include DD-class.R ExtractNames.R
+#' @include DD-class.R ExtractNames.R getVariables.R
 #'
 #' @import data.table
 #'
@@ -44,7 +47,11 @@ setMethod(
     function(VarNames, DD){
 
         trim <- function (x) gsub("^\\s+|\\s+$", "", x, useBytes = T)
-
+        
+        NotPresentVar  <- setdiff(ExtractNames(VarNames), getVariables(DD))
+        if (length(NotPresentVar) > 0) stop(paste0('[StQ::VarNamesToDD] The following variables are not contained in the DD slot: ', NotPresentVar, '.\n'))
+        DotQual <- getDotQual(DD)
+        
         # Para una variable
         if (is.character(VarNames) & length(VarNames) == 1){
             
@@ -55,7 +62,7 @@ setMethod(
                 DDlocal <- slot(DD, DDslot)
                 IDQual <- DDlocal[Sort == 'IDQual', Variable]
                 NonIDQual <- DDlocal[Sort == 'NonIDQual', Variable]
-
+                
                 Quals <- names(DDlocal)[grep('Qual', names(DDlocal))]
                 auxDD <- DDlocal[Variable == ExtractNames(VarNames), c('Variable', Quals), with = F]
                 auxDD[, LHS := '']
@@ -63,10 +70,10 @@ setMethod(
 
                 for (Qual in Quals){
 
-                    auxDD[, LHS := ifelse(get(Qual) %in% IDQual, 
+                    auxDD[, LHS := ifelse(get(Qual) %in% IDQual | get(Qual) %in% DotQual, 
                                           trim(paste(LHS, get(Qual))), 
                                           trim(LHS))]
-                    auxDD[, RHS := ifelse(get(Qual) %in% NonIDQual,
+                    auxDD[, RHS := ifelse(get(Qual) %in% NonIDQual & !get(Qual) %in% DotQual,
                                           trim(paste(RHS, get(Qual))),
                                           trim(RHS))]
                 }

@@ -1,10 +1,10 @@
 #' @title Object of class \linkS4class{Datadt}
 #'
 #' @description \code{ExampleDatadt} is an object of class \linkS4class{Datadt} with key-value pair
-#' structure for the included severely perturbed anonymised data from a real statistical operation.
-#' The class \linkS4class{Datadt} is a subclass of \linkS4class{data.table}.
+#' structure. Data are severely perturbed anonymised data from a real statistical operation. The 
+#' class \linkS4class{Datadt} is a subclass of \linkS4class{data.table}.
 #'
-#' The columns this object are:
+#' The columns of this object are:
 #' \itemize{
 #'   \item ID: First qualifier (statistical unit qualifier).
 #'   \item IsRemun: Second qualifier (variable name qualifier).
@@ -20,5 +20,5 @@
 #'
 #' @usage data(ExampleDatadt)
 #'
-#' @format Object of class \linkS4class{Datadt} with 383994 rows and 5 columns.
+#' @format Object of class \linkS4class{Datadt} with 354458 rows and 4 columns.
 NULL

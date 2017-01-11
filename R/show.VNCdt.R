@@ -31,11 +31,13 @@
 #'                          IDDD = c('', '', 'Turnover'),
 #'                          NOrden = c('', '', '.'),
 #'                          Market = c('', '', '1.'),
+#'                          Import = c('', '', '0'),
+#'                          Geo = c('', '', '2.'),
 #'                          UnitName = c('', '', 'cn01'),
 #'                          InFiles = rep('FF', 3)))
-#'show(VNCdt2)
+#' show(VNCdt2)
 #'
-#' @include VNCdt-class.R
+#' @include VNCdt-class.R DatadtToDT.R
 #'
 #' @import data.table
 #' 
@@ -47,26 +49,23 @@ setMethod(
         
         ColMax <- 8 
         NamesCol <- names(object)
+        NumCol <- length(NamesCol)
         
-        if (length(NamesCol) <= ColMax) {
+        if (NumCol <= ColMax) {
             
-            mc <- match.call()
-            New.object <- object@.Data
-            names(New.object) <- object@names
-            New.object <- setDT(New.object)
-            mc[['object']] <- New.object
-            eval(mc, envir = parent.frame())
-                    
-        }else {
-                    
-                NumCols <- min(length(NamesCol), ColMax)
-                NamesShowCol <- NamesCol[1:NumCols]
-                show(object[, NamesShowCol, with = F])
-                cat('\n\n')
-                cat(paste(rep('=', 40)), '\n\n')
-                    cat(paste0('The following columns have been omitted for clarity:\n ', paste0(setdiff(NamesCol, NamesShowCol), collapse = ', '),'\n'))
-                    cat(paste(rep('=', 40)), '\n\n')
-            }
+            show(DatadtToDT(object))
+
+        } else {
+            
+            NumCols <- min(NumCol, ColMax)
+            NamesShowCol <- NamesCol[c(1:(ColMax - 2), (NumCol - 1):NumCol)]
+            show(DatadtToDT(object)[, NamesShowCol, with = F])
+            cat('\n\n')
+            cat(paste(rep('=', 40)), '\n\n')
+            cat(paste0('The following columns have been omitted for clarity:\n ', paste0(setdiff(NamesCol, NamesShowCol), collapse = ', '),'\n'))
+            cat('\n\n')
+            cat(paste(rep('=', 40)), '\n\n')
+        }
         invisible(NULL)
     }
     

@@ -1,9 +1,8 @@
 #' @title Return slot Aggregates from a DD object
 #'
-#' @description \code{getAggr} returns slot \code{Aggregates} of the input
-#' \linkS4class{DD} object.
+#' @description \code{getAggregates} returns slot \code{Aggregates} of the input \linkS4class{DD} object.
 #' 
-#' @param object a DD Object whose slot \code{Aggregates} is queried.
+#' @param object A DD Object whose slot \code{Aggregates} is queried.
 #'
 #' @return \linkS4class{data.table} with data from slot \code{Aggregates} of the
 #' input \linkS4class{DD} object.
@@ -84,17 +83,17 @@
 #'           ParaData = Paradt,
 #'           AggWeights = Aggdt)
 #'                      
-#' getAggr(DD)
+#' getAggregates(DD)
 #' 
 #' @export
-setGeneric("getAggr", function(object){standardGeneric("getAggr")})
-#' @rdname getAggr
+setGeneric("getAggregates", function(object){standardGeneric("getAggregates")})
+#' @rdname getAggregates
 #' 
 #' @include DD-class.R
 #' 
 #' @export
 setMethod(
-    f = "getAggr",
+    f = "getAggregates",
     signature = c("DD"),
     function(object){
         

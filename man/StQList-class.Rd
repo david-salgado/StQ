@@ -3,11 +3,11 @@
 \docType{class}
 \name{StQList-class}
 \alias{StQList-class}
-\title{S4 class to implement a named list of objects of class \linkS4class{StQ}.}
+\title{S4 class to implement a named list of objects of class \linkS4class{StQ}}
 \description{
 Definition of an S4 class of name \code{StQList} with a list of objects of class
 \linkS4class{StQ}. Instead of an atomic vector as a name, we associate with it an object of class
-\linkS4class{RepoTimeInt} containingthe names of the time periods corresponding to each
+\linkS4class{RepoTimeInt} containing the names of the time periods corresponding to each
 \linkS4class{StQ} object.
 
 The structure of this S4 class \code{StQList} comprises 2 attributes:

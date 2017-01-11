@@ -1,10 +1,10 @@
 #' @title Method \code{+} for the class \linkS4class{StQ}
 #'
-#' @description \code{+} joins two objects of class \linkS4class{StQ} in a
-#' single object of the same class.
+#' @description \code{+} joins two objects of class \linkS4class{StQ} in a single object of the same
+#'  class.
 #'
-#' This method overloads the operator \code{\link{+}} and builds a new
-#' \linkS4class{StQ} object joining both input objects.
+#' This method overloads the operator \code{\link{+}} and builds a new \linkS4class{StQ} object 
+#' combining both input objects.
 #'
 #' @param e1 Object of class \code{StQ}.
 #'
@@ -44,8 +44,7 @@
 #' data(ExampleStQ)  
 #' Q1 <- new(Class = 'StQ', Data = Data1, DD = DD1)
 #' Q2 <- ExampleStQ
-#' Q <- Q1 + Q2
-#' str(Q)
+#' Q1 + Q2
 #'
 #' @include StQ-class.R DD-class.R getDD.R getData.R getUnits.R
 #'
@@ -60,31 +59,32 @@ setMethod(
     outputDD <- getDD(e1) + getDD(e2)
 
     #Incluimos las mismas columnas en ambos objetos
-    ColNames.e1 <- copy(names(getData(e1)))
-    ColNames.e2 <- copy(names(getData(e2)))
+    ColNames.e1 <- names(getData(e1))
+    ColNames.e2 <- names(getData(e2))
     NewCol.e2 <- setdiff(ColNames.e2, ColNames.e1)
     NewCol.e1 <- setdiff(ColNames.e1, ColNames.e2)
   
     if (length(NewCol.e2) > 0){
         
-        Datae1 <- copy(getData(e1))[, (NewCol.e2) := character(.N)]
+        Datae1 <- getData(e1)[, (NewCol.e2) := character(.N)]
         
     } else {
         
-        Datae1 <- copy(getData(e1))
+        Datae1 <- getData(e1)
     }
 
     if (length(NewCol.e1) > 0){
         
-        Datae2 <- copy(getData(e2))[, (NewCol.e1) := character(.N)]
+        Datae2 <- getData(e2)[, (NewCol.e1) := character(.N)]
 
     } else {
         
-        Datae2 <- copy(getData(e2))
+        Datae2 <- getData(e2)
     }
     
     # Unimos los slots Data con rbindlist eliminando los duplicados
-    ColNames <- c(setdiff(names(getData(e1)), c('IDDD', 'Value')), setdiff(names(getData(e2)), setdiff(names(getData(e1)), c('IDDD', 'Value'))))
+    ColNames <- c(setdiff(names(getData(e1)), c('IDDD', 'Value')), 
+                  setdiff(names(getData(e2)), setdiff(names(getData(e1)), c('IDDD', 'Value'))))
     setcolorder(Datae1, ColNames)
     setcolorder(Datae2, ColNames)
     output.Data <- rbindlist(list(Datae1, Datae2))

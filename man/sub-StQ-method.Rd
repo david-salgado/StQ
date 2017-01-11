@@ -30,6 +30,7 @@ The output is an object of the same class \linkS4class{StQ} as the input paramet
 data(ExampleStQ)
 ExampleStQ[IDDD == 'Turnover']
 ExampleStQ[3:4]
+ExampleStQ[ID == '00021']
 
 }
 

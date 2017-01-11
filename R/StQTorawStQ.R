@@ -11,9 +11,8 @@
 #' key-value pair structure.
 #'
 #' @examples
-#' library(data.table)
 #' data(ExampleStQ)
-#' newrawQ <- StQTorawStQ(ExampleStQ)
+#' StQTorawStQ(ExampleStQ)
 #'  
 #' @export
 setGeneric("StQTorawStQ", function(Q){standardGeneric("StQTorawStQ")})

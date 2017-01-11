@@ -8,32 +8,40 @@
 \alias{getNonIDQual,StQ-method}
 \alias{getNonIDQual,VNCdt-method}
 \alias{getNonIDQual,VarNameCorresp-method}
-\title{Return the variable names included in columns 'NonIDQual" of the input object}
+\alias{getNonIDQual,rawStQ-method}
+\title{Return non-unit qualifiers from an object}
 \usage{
-getNonIDQual(object, Namesdt)
+getNonIDQual(object, CompNames = names(object))
 
 \S4method{getNonIDQual}{VNCdt}(object)
 
-\S4method{getNonIDQual}{VarNameCorresp}(object, Namesdt)
+\S4method{getNonIDQual}{VarNameCorresp}(object, CompNames = names(object))
 
 \S4method{getNonIDQual}{DDdt}(object)
 
-\S4method{getNonIDQual}{DD}(object, Namesdt)
+\S4method{getNonIDQual}{DD}(object, CompNames = setdiff(slotNames(object),
+  "VarNameCorresp"))
 
-\S4method{getNonIDQual}{StQ}(object, Namesdt)
+\S4method{getNonIDQual}{StQ}(object,
+  CompNames = setdiff(slotNames(getDD(object)), "VarNameCorresp"))
+
+\S4method{getNonIDQual}{rawStQ}(object,
+  CompNames = setdiff(slotNames(getDD(object)), "VarNameCorresp"))
 }
 \arguments{
-\item{object}{Object with the NonIDQual variable qualifiers.}
+\item{object}{Object with the non-unit variable qualifiers (NonIDQual) to be queried.}
 
-\item{Namesdt}{Character vector with the components or slots of the object
-from which NonIDQuals are required.}
+\item{CompNames}{Character vector with the components or slots from which NonIDQuals are queried.}
 }
 \value{
-Character vector with the NonIDQual variable qualifiers names.
+Character vector with all the non-unit qualifier names.
 }
 \description{
-\code{getNonIDQual} returns a character vector with all variable 
-qualifiers names (NonIDQual) included in the input object.
+\code{getNonIDQual} returns a character vector with all non-unit qualifier names 
+(NonIDQual) contained in the input object.
+}
+\details{
+Non-unit qualifiers are those qualifiers used to compose statistical variable names.
 }
 \examples{
 library(data.table)
@@ -68,6 +76,11 @@ AggWeights = new(Class = 'VNCdt', data.table(IDQual = c('CCAA', 'NACE09', ''),
 VNC <- new(Class = 'VarNameCorresp', .Data = VarList)
 getNonIDQual(VNC)
 
+getNonIDQual(ExampleDD)
+getNonIDQual(ExampleDD, 'MicroData')
+
+getNonIDQual(ExampleStQ)
+getNonIDQual(ExampleStQ, 'Aggregates')
 
 }
 

@@ -2,24 +2,24 @@
 % Please edit documentation in R/BuildrawDatadt.R
 \name{BuildrawDatadt}
 \alias{BuildrawDatadt}
-\title{Constructor of objects of class \linkS4class{rawDatadt}.}
+\title{Constructor of objects of class \linkS4class{rawDatadt}}
 \usage{
 BuildrawDatadt(key, value)
 }
 \arguments{
-\item{key}{object of class \linkS4class{rawKey}.}
+\item{key}{Object of class \linkS4class{rawKey}.}
 
-\item{value}{Character vector with the values of the variables in key parameter.}
+\item{value}{\code{Character} vector with the values of the variables.}
 }
 \value{
 An object of class \linkS4class{rawDatadt}.
 }
 \description{
-This constructor returns objects of class \linkS4class{rawDatadt}.
-The input parameters are an object of class \linkS4class{rawKey} and a character \code{vector}.
+This constructor returns an object of class \linkS4class{rawDatadt}. This 
+constructor builds these objects out of an object of class \linkS4class{rawKey} (with the key of 
+the key-value pair) and a \code{character} vector (with the values).
 }
 \examples{
-
 library(data.table)
 key <- new(Class = 'rawKey', 
           data.table(IDDDKey = c('Employees', 'Employees', 'RemEmployees', 'Turnover'),

@@ -5,7 +5,7 @@
 \alias{setParaData<-}
 \alias{setParaData<-,DD,DDdt-method}
 \alias{setParaData<-,StQ,DDdt-method}
-\title{Set value of slot \code{ParaData}.}
+\title{Set value of slot \code{ParaData}}
 \usage{
 setParaData(object) <- value
 
@@ -22,11 +22,10 @@ setParaData(object) <- value
 Object with slot ParaData updated.
 }
 \description{
-\code{setParaData} assigns a \linkS4class{DDdt} to the slot
-\code{ParaData} of the input object.
+\code{setParaData} assigns a \linkS4class{DDdt} to the slot \code{ParaData} of the 
+input object.
 }
 \examples{
-# An example:
 library(data.table)
 MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
                           Length = '8',

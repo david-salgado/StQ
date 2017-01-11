@@ -13,13 +13,12 @@
 \item{e2}{Object of class \linkS4class{DD}.}
 }
 \value{
-Object of class \linkS4class{DD} resulting from integrating both
-\linkS4class{DD} objects in a single \linkS4class{DD} object.
+Object of class \linkS4class{DD} resulting from integrating both \linkS4class{DD} objects
+ in a single \linkS4class{DD} object.
 }
 \description{
-\code{+} sums two objects of class \linkS4class{DD}. This method
-overloads the operator \link{+} and returns a new object of class
-\linkS4class{DD}.
+\code{+} sums two objects of class \linkS4class{DD}. This method overloads the 
+operator \link{+} and returns a new object of class \linkS4class{DD}.
 }
 \examples{
 library(data.table)

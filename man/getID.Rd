@@ -4,22 +4,26 @@
 \name{getID}
 \alias{getID}
 \alias{getID,DD-method}
-\title{Return slot ID from a DD object}
+\alias{getID,StQ-method}
+\alias{getID,rawStQ-method}
+\title{Return slot ID from an object}
 \usage{
 getID(object)
 
 \S4method{getID}{DD}(object)
+
+\S4method{getID}{StQ}(object)
+
+\S4method{getID}{rawStQ}(object)
 }
 \arguments{
-\item{object}{a DD Object whose slot \code{ID} is queried.}
+\item{object}{An object whose slot \code{ID} is queried.}
 }
 \value{
-\linkS4class{data.table} with data from slot \code{ID} of the
-input \linkS4class{DD} object.
+Returns a \linkS4class{DDdt} object containing the slot \code{ID} of the input object.
 }
 \description{
-\code{getID} returns slot \code{ID} of the input
-\linkS4class{DD} object.
+\code{getID} returns slot \code{ID} of the input object.
 }
 \examples{
 # An example:
@@ -98,6 +102,12 @@ DD <- new(Class = 'DD',
           AggWeights = Aggdt)
           
 getID(DD)
+
+StQ <- new(Class = 'StQ', Data = new(Class = 'Datadt'), DD = DD)
+getID(StQ)
+
+rawStQ <- new(Class = 'rawStQ', Data = new(Class = 'rawDatadt'), DD = DD)
+getID(rawStQ)
 
 }
 

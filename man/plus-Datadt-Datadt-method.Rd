@@ -16,11 +16,11 @@
 Object of class \code{Datadt}.
 }
 \description{
-\code{+} joins two objects of class \linkS4class{Datadt} in a
-single object of the same class.
+\code{+} combines two objects of class \linkS4class{Datadt} in a single object of 
+the same class.
 
-This method overloads the operator \code{\link{+}} and builds a new
-\linkS4class{Datadt} object joining both input objects.
+This method overloads the operator \code{\link{+}} and builds a new \linkS4class{Datadt} object 
+combining both input objects.
 }
 \examples{
 # We build two trivial data sets:
@@ -36,8 +36,7 @@ Ddt2 <- new(Class = 'Datadt',
                    IDDD = c( 'Turnover', 'CCAA', 'IASSCifraNeg'),
                    Value = c('648154', '25', '45645')))
 
-Ddt <- Ddt1 + Ddt2
-show(Ddt)
+Ddt1 + Ddt2
 
 }
 
