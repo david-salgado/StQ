@@ -108,6 +108,21 @@ setMethod(
         if (missing(IDDDNames)) stop('[StQ::IDDDToUnitNames] A character vector of IDDDNames must be specified.\n')
         if (missing(Correspondence)) stop('[StQ::IDDDToUnitNames] A correspondence object (DD or StQ) must be specified.\n')
         
+        Suffixes <- VarNamesToDT(IDDDNames, Correspondence)
+        CommonDDQual <- intersect(names(Suffixes), getDoubleDotQual(Correspondence))
+        Suffixes <- Suffixes[, c('IDDD', CommonDDQual), with = FALSE]
+        # OJO: ESTAMOS SUPONIENDO QUE SOLO SE TIENE UN CALIFICADOR .. (LO CONTRARIO SERIA UNA 
+        # LOCURA PARA LLAMAR A LAS VARIABLES; ESTAMOS POR TANTO ESTE COMPORTAMIENTO EN LA 
+        # CONSTRUCCION DE NOMBRES DE VARIABLES)
+        Suffixes[, Suffix := '']
+        colSuffixes <- names(Suffixes)
+        for (col in setdiff(colSuffixes, 'IDDD')){
+            
+            Suffixes[, Suffix := ifelse(Suffix == '', get(col), Suffix)]
+            
+        }
+        Suffixes <- Suffixes[, c('IDDD', 'Suffix'), with = F] 
+        
         VNC <- getVNC(Correspondence)
         XLS <- Reduce(`+`, VNC, init = VNC[[1]])
         XLS <- DatadtToDT(XLS)
@@ -122,6 +137,7 @@ setMethod(
         }
         RootNames <- unique(ExtractNames(IDDDNames))
         DotQual <- getDotQual(Correspondence)
+
         Quals.list <- lapply(RootNames, function(IDDDName){
             
             QualsDT <- DDdt[Variable == IDDDName, names(DDdt)[grep('Qual', names(DDdt))], with = F]
@@ -146,19 +162,45 @@ setMethod(
             QualNames <- Quals.list[[IDDDname]]
             localXLS <- localXLS[, c('IDDD', QualNames, 'UnitName', 'IDDDName'), with = F]
             localNonIDQuals <- setdiff(intersect(names(localXLS), NonIDQuals), setdiff(IDQuals, NonIDQuals))
+
             for (col in localNonIDQuals) {
                 
-                if (any(localXLS[[col]] == '.')) next
+                #if (any(localXLS[[col]] == '.')) next
                 localXLS[, IDDDName := paste(IDDDName, get(col), sep = '_')]
                 
             }
-            
             localXLS[, IDDDName := paste0(IDDD, IDDDName)]
-            localXLS <- localXLS[IDDDName %in% IDDDNames | ExtractNames(IDDDName) %in% IDDDNames][, c('UnitName', 'IDDDName'), with = F]
+            localXLS <- localXLS[, c('UnitName', 'IDDDName'), with = F]
+            #localXLS <- localXLS[IDDDName %in% IDDDNames | ExtractNames(IDDDName) %in% IDDDNames][, c('UnitName', 'IDDDName'), with = F]
+            #IDDD_aux <- localXLS[grep('\\.\\.', localXLS[['IDDDName']]), 'IDDDName']
+            #IDDD_aux <- strsplit(t(IDDD_aux), '\\.\\.')
+            #IDDD_aux <- unlist(lapply(IDDD_aux, function(x){x[1]}))
+            #IDDD_aux <- unlist(lapply(IDDD_aux, function(name){localXLS[grep(name, localXLS[['IDDDName']]), 'IDDDName'][['IDDDName']]}))
+            #localXLS <- localXLS[IDDDName %in% IDDDNames | ExtractNames(IDDDName) %in% IDDDNames| IDDDName %in% IDDD_aux][, c('UnitName', 'IDDDName'), with = F]
             return(localXLS)
             
         })
-        UnitNames <- rbindlist(UnitNames)
+        names(UnitNames) <- NotBlankIDDDNames
+
+        if (dim(Suffixes)[1] != 0){
+            
+            outList <- lapply(1:(dim(Suffixes)[1]), function(IDDDNamesRoot.index){
+                        IDDDNamesRoot <- Suffixes[IDDDNamesRoot.index][['IDDD']]
+                        Suffix <- Suffixes[IDDDNamesRoot.index][['Suffix']]
+                        out <- copy(UnitNames[[IDDDNamesRoot]])
+                        out[, IDDDName := gsub('..', Suffix, IDDDName, fixed = TRUE)]
+                        out[, UnitName := gsub('\\[.+\\]', Suffix, UnitName)]
+                        out <- out[IDDDName %in% IDDDNames | ExtractNames(IDDDName) %in% IDDDNames]
+                        return(out)
+            })
+            
+        } else {
+            
+            outList <- UnitNames
+            
+        }
+        UnitNames <- rbindlist(outList)
+
         IDQualXLS <- XLS[IDQual != '']
         IDQualXLS[, IDDDName := IDQual]
         IDQualXLS <- IDQualXLS[, c('UnitName', 'IDDDName'), with = F]

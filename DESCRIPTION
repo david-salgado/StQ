@@ -1,6 +1,6 @@
 Package: StQ
 Title: Tools to manage metadata-incorporated key-value pair datasets
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: c(
     person("David", "Salgado", email = "david.salgado.fernandez@gmail.com", role = c("cre", "aut")),
     person("Elisa", "Esteban", email = "elisa.esteban.segurado@gmail.com", role = "aut"),
@@ -37,6 +37,7 @@ Collate:
     'rawStQ-class.R'
     'rawStQList-class.R'
     'BuildrawStQList.R'
+    'CorrelativeN-class.R'
     'getDD.R'
     'getIDDD.R'
     'getNonIDQual.R'
@@ -60,6 +61,7 @@ Collate:
     'getDotQual.R'
     'plus.VNCdt.R'
     'IDDDToUnitNames.R'
+    'ParseUnitName.R'
     'VarNamesToDT.R'
     'getData.R'
     'StQListToStQ.R'
@@ -74,6 +76,7 @@ Collate:
     'extract.rawStQList.R'
     'getAggWeights.R'
     'getAggregates.R'
+    'getDoubleDotQual.R'
     'getEditNames.R'
     'getID.R'
     'getOtherDD.R'
