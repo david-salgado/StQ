@@ -182,7 +182,7 @@ setMethod(
         })
         names(UnitNames) <- NotBlankIDDDNames
 
-        if (dim(Suffixes)[1] != 0){
+        if (any(Suffixes[['Suffix']] != '')){
             
             outList <- lapply(1:(dim(Suffixes)[1]), function(IDDDNamesRoot.index){
                         IDDDNamesRoot <- Suffixes[IDDDNamesRoot.index][['IDDD']]
@@ -200,7 +200,6 @@ setMethod(
             
         }
         UnitNames <- rbindlist(outList)
-
         IDQualXLS <- XLS[IDQual != '']
         IDQualXLS[, IDDDName := IDQual]
         IDQualXLS <- IDQualXLS[, c('UnitName', 'IDDDName'), with = F]

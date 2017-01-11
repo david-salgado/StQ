@@ -37,7 +37,6 @@ Collate:
     'rawStQ-class.R'
     'rawStQList-class.R'
     'BuildrawStQList.R'
-    'CorrelativeN-class.R'
     'getDD.R'
     'getIDDD.R'
     'getNonIDQual.R'
