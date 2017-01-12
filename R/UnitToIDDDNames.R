@@ -143,6 +143,7 @@ setMethod(
                                    with = F]
             XLS <- XLS[IDDD != '']
             XLS <- XLS[, setdiff(names(XLS), getIDQual(Correspondence)), with = F]
+
             XLS.list <- split(XLS, XLS[['IDDD']])
 
             XLS.list <- lapply(XLS.list, function(xls){
@@ -172,10 +173,9 @@ setMethod(
             output <- rbindlist(list(output, XLS.Quals), fill = TRUE)
             aux <- output[, c('UnitName', 'IDDDName'), with = FALSE]
 
-            # Patterns in UnitNames : [mm], [aa], [aaaa], etc.
+            # Patterns in UnitNames : [mm], [aa], [aaaa], [n], etc.
             UnitNames_aux <- unique(aux[['UnitName']])
             patrones <- UnitNames_aux[grep('[[]', UnitNames_aux)]
-            
             UnitToIDDDNames.local <- function(UnitNamesLocal){
                 
                 outputNewName <- UnitNamesLocal[!UnitNamesLocal %in% output[['UnitName']]]
@@ -188,6 +188,8 @@ setMethod(
                     patron_aux <- patron
                     patron <- gsub('\\[mm\\]', '(([0][1-9])|([1][0-2]))', patron)
                     patron <- gsub('\\[aa\\]', '[0-9]{2}', patron)
+                    patron <- gsub('\\[n\\]', '[0-9]+', patron)
+                    patron <- gsub('\\[varGestion\\]', '.*', patron)
                     Var <- lapply(outputNewName, function(name){
                       out <- regexpr(patron, name)
                       out <- regmatches(name, out)
@@ -214,8 +216,6 @@ setMethod(
                   outputMetaVar <- data.table()
                   #outputNew <- outputNewName
                 }
-    
-              
                 
                 #outputNew <- data.table(UnitName = outputNew, IDDDName = outputNew)
                 output <- output[which(output[['UnitName']] %in% UnitNamesLocal), 
@@ -226,7 +226,6 @@ setMethod(
                 out <- out[UnitNamesLocal]
                 return(out)
             }
-          
             VNCNames <- unique(VNC[['UnitName']])
             UnitNamesLocal <- intersect(UnitNames, VNCNames)
             UnitNamesLocalNewName <- setdiff(UnitNames, UnitNamesLocal)
@@ -235,13 +234,19 @@ setMethod(
             outDT <- data.table(Unit = names(namesLocal), IDDD = namesLocal)
             outDT <- outDT[Unit %in% UnitNames]
             return(outDT)
-            
-                    
         })
-
         outDT <- rbindlist(output.list)
         setkeyv(outDT, names(outDT))
         outDT <- outDT[!duplicated(outDT, by = key(outDT))]
+        outDT[, Suffixes := gsub('([A-Za-z]+_)((\\[.*)|(.*))','\\2', Unit)]
+        outDT.list <- split(outDT, outDT[['Suffixes']])
+        outDT.list <- lapply(outDT.list, function(DT){
+            
+            DT[, IDDD := gsub('..', unique(Suffixes), IDDD, fixed = TRUE)]
+            DT[, Suffixes := NULL]
+            return(DT)
+        })
+        outDT <- rbindlist(outDT.list)
         outVector <- outDT[['IDDD']]
         names(outVector) <- outDT[['Unit']]
         outVector <- outVector[UnitNames]

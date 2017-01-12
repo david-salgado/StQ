@@ -127,11 +127,6 @@ setMethod(
                                                 drop = TRUE,
                                                 value.var = 'Value')
 
-            if (length(MissingQuals) > 0) {
-
-                aux[, (MissingQuals) := NULL]
-
-            }
             outNames <- sort(names(out))
             for (col in outNames){
               if (all(is.na(out[[col]]))) out[, (col) := NULL]
