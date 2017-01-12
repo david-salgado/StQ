@@ -22,10 +22,9 @@
 #'
 #' @examples
 #' data(ExampleDM)
-#' ExampleDM <- ExampleDM[ID != '']
 #' data(ExampleDD)
-#' Q <- melt_StQ(ExampleDM, ExampleDD)
-#' Q
+#' melt_StQ(ExampleDM, ExampleDD)
+#'
 #'
 #' @seealso \code{\link{dcast_StQ}}, \code{\link[data.table]{dcast.data.table}},
 #' \code{\link[data.table]{melt.data.table}}, \code{\link[reshape2]{melt}},
@@ -39,7 +38,7 @@
 #' 
 #' @export
 melt_StQ <- function(DataMatrix, DD){
-
+    
     # Función que elimina carácter blanco al principio y al final
     trim <- function (x) gsub("^\\s+|\\s+$", "", x, useBytes = T)
     
@@ -48,24 +47,24 @@ melt_StQ <- function(DataMatrix, DD){
         
         out <- ifelse(is.na(y) | y == '', paste0(x, ''), paste(x, y, sep = "_"))
         return(out)
-    
+        
     }
     
     DM <- copy(DataMatrix)
     DMnames <- names(DM)
     for (col in DMnames){
-      
-      if (all(DM[[col]] == '')){
         
-        DM <- DM[, setdiff(names(DM), col), with = FALSE]
-      }
+        if (all(DM[[col]] == '')){
+            
+            DM <- DM[, setdiff(names(DM), col), with = FALSE]
+        }
     }
-
+    
     setnames(DM, UnitToIDDDNames(names(DM), DD))
-
+    
     #Construimos un objeto DD auxiliar
     slots <- setdiff(names(getVNC(DD)), 'VarSpec')
-
+    
     out <- lapply(slots, function(VNCName){
         
         DDdtlocal <- slot(DD, ExtractNames(VNCName))
@@ -75,7 +74,7 @@ melt_StQ <- function(DataMatrix, DD){
         IDQual <- DDdtlocal[Sort == 'IDQual', Variable]
         NonIDQual <- DDdtlocal[Sort == 'NonIDQual', Variable]
         IDDD <- DDdtlocal[Sort == 'IDDD', Variable]
-    
+        
         # Calificadores ID, calificadores NonID y variables IDDD en la matriz de datos
         DM.Names <- names(DM)
         DM.IDQual <- DM.Names[DM.Names %in% IDQual]
@@ -97,19 +96,19 @@ melt_StQ <- function(DataMatrix, DD){
             auxDDdt[, (col) := ifelse(is.na(get(col)), '', get(col))]
             
         }
-
+        
         auxMeasureVar <- split(auxDDdt[['Variable']], auxDDdt[['Qual']])
         if (length(auxMeasureVar) == 0) return(data.table(NULL))
-
+        
         moltenData <- lapply(names(auxMeasureVar), function(QualName){
             
             indexCol <- ExtractNames(names(DM)) %in% auxMeasureVar[[QualName]]
             LocalQuals <- strsplit(QualName, ' ')[[1]]
-
+            
             ColNames <- c(LocalQuals, names(DM)[indexCol])
-
+            
             localDM <- DM[, intersect(ColNames, names(DM)), with = F]
-
+            
             for (col in names(localDM)){
                 
                 localDM[, (col) := as.character(get(col))]
@@ -123,10 +122,10 @@ melt_StQ <- function(DataMatrix, DD){
                                                value.name = 'Value',
                                                variable.factor = FALSE,
                                                value.factor = FALSE)
-
+            
             out <- out[Value != '']
             LocalNonIDQual <- setdiff(LocalQuals, IDQual)
-
+            
             if (dim(out)[1] != 0){
                 
                 if (length(LocalNonIDQual) > 0) {
@@ -141,9 +140,9 @@ melt_StQ <- function(DataMatrix, DD){
                     if (length(auxIDDD) == 1){
                         
                         outLocal <- as.data.table(t(as.matrix(auxIDDD[[1]])))
-                    
+                        
                     } else {
-                    
+                        
                         ColNames <- c('IDDD', LocalNonIDQual)
                         outLocal <- out[, setdiff(names(out), ColNames), with = F]
                         for (index.col in seq(along = ColNames)){
@@ -157,31 +156,31 @@ melt_StQ <- function(DataMatrix, DD){
                     
                     outLocal <- out
                 }
-
+                
             } else {
                 
                 outLocal <- data.table(NULL)
                 
             }
             return(outLocal)
-
+            
         })
         names(moltenData) <- names(auxMeasureVar)
-
+        
         moltenData <- rbindlist(moltenData, fill = TRUE)
         
         return(moltenData)
         
     })
-
+    
     out <- rbindlist(out, fill = TRUE)
-  
+    
     if (all(dim(out) == c(0, 0))) {
         
         output.StQ <- new(Class = 'StQ')
-    
+        
     } else {
-    
+        
         out[is.nan(Value) | Value == 'NaN', Value := '']
         setkeyv(out, setdiff(names(out), 'Value'))
         out <- out[!duplicated(out, by = key(out))]
@@ -192,10 +191,10 @@ melt_StQ <- function(DataMatrix, DD){
             out[is.na(get(col)), (col) := '']
         }
         
-
+        
         out <- new(Class = 'Datadt', out)
         output.StQ <- new(Class = 'StQ', Data = out, DD = DD)
-    
+        
     }
     return(output.StQ)
 }

@@ -107,7 +107,7 @@ setMethod(
         
         if (missing(IDDDNames)) stop('[StQ::IDDDToUnitNames] A character vector of IDDDNames must be specified.\n')
         if (missing(Correspondence)) stop('[StQ::IDDDToUnitNames] A correspondence object (DD or StQ) must be specified.\n')
-        
+        IDDDNames_Orig <- IDDDNames
         IDDDNames <- setdiff(IDDDNames, getDotQual(Correspondence))
         Suffixes <- VarNamesToDT(IDDDNames, Correspondence)
         CommonDDQual <- intersect(names(Suffixes), getDoubleDotQual(Correspondence))
@@ -136,7 +136,7 @@ setMethod(
             DDdt <- DDdt + slot(Correspondence, DDslot)
             
         }
-        RootNames <- unique(ExtractNames(IDDDNames))
+        RootNames <- unique(ExtractNames(IDDDNames_Orig))
         DotQual <- getDotQual(Correspondence)
 
         Quals.list <- lapply(RootNames, function(IDDDName){
@@ -149,14 +149,13 @@ setMethod(
         })
         
         names(Quals.list) <- RootNames
-        
+
         XLS <- XLS[IDDD %in% RootNames | IDQual %in% RootNames | NonIDQual %in% RootNames]
         
         NotBlankIDDDNames <- XLS[['IDDD']]
         NotBlankIDDDNames <- unique(NotBlankIDDDNames[NotBlankIDDDNames != ''])
         IDQuals <- getIDQual(Correspondence)
         NonIDQuals <- getNonIDQual(Correspondence)
-        
         UnitNames <- lapply(NotBlankIDDDNames, function(IDDDname){
             
             localXLS <- XLS[IDDD == IDDDname & IDDD != '']
@@ -200,7 +199,9 @@ setMethod(
             outList <- UnitNames
             
         }
+
         UnitNames <- rbindlist(outList)
+        
         IDQualXLS <- XLS[IDQual != '']
         IDQualXLS[, IDDDName := IDQual]
         IDQualXLS <- IDQualXLS[, c('UnitName', 'IDDDName'), with = F]
@@ -210,11 +211,11 @@ setMethod(
         NonIDQualXLS <- NonIDQualXLS[, c('UnitName', 'IDDDName'), with = F]
         
         UnitNames <- rbindlist(list(IDQualXLS, NonIDQualXLS, UnitNames))
-        IDDDNamesDT <- data.table(IDDDName = IDDDNames)
+        IDDDNamesDT <- data.table(IDDDName = IDDDNames_Orig)
         outDT <- merge(UnitNames, IDDDNamesDT, by = 'IDDDName', all.y = TRUE)
         out <- outDT[['UnitName']]
         names(out) <- outDT[['IDDDName']]
-        out <- out[IDDDNames]
+        out <- out[IDDDNames_Orig]
         return(out)
     }
 )
