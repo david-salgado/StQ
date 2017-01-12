@@ -95,7 +95,7 @@ setGeneric("IDDDToUnitNames", function(IDDDNames, Correspondence){standardGeneri
 
 #' @rdname IDDDToUnitNames
 #'
-#' @include DD-class.R VarNameCorresp-class.R DatadtToDT.R getVNC.R plus.VNCdt.R getDotQual.R
+#' @include DD-class.R VarNameCorresp-class.R DatadtToDT.R getVNC.R plus.VNCdt.R getDotQual.R getDoubleDotQual.R
 #'
 #' @import data.table
 #' 
@@ -108,6 +108,7 @@ setMethod(
         if (missing(IDDDNames)) stop('[StQ::IDDDToUnitNames] A character vector of IDDDNames must be specified.\n')
         if (missing(Correspondence)) stop('[StQ::IDDDToUnitNames] A correspondence object (DD or StQ) must be specified.\n')
         
+        IDDDNames <- setdiff(IDDDNames, getDotQual(Correspondence))
         Suffixes <- VarNamesToDT(IDDDNames, Correspondence)
         CommonDDQual <- intersect(names(Suffixes), getDoubleDotQual(Correspondence))
         Suffixes <- Suffixes[, c('IDDD', CommonDDQual), with = FALSE]
