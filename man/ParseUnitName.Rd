@@ -16,7 +16,8 @@ ParseUnitName(UnitNames, MetaValues)
 \arguments{
 \item{UnitNames}{Character vector with the names of the files to parse.}
 
-\item{TimePeriods}{Character vector with the time periods.}
+\item{MetaValues}{Object of the appropriate class (\linkS4class{RepoTimeInt}, 
+\linkS4class{integer}, ...) with the values of the metacharacters to be parsed.}
 }
 \value{
 Return a vector with each component of the input vector \code{UnitNames} parsed according
@@ -29,7 +30,8 @@ This function parses each component of a vector of file names with a pattern fil
 \examples{
 library(RepoTime)
 ParseUnitName(c('dat[mm][aa].sas7bdat'), newRepoTime(c('MM122015', 'MM012016', 'MM022016')))
-ParseUnitName(c('dat[mm][aa].sas7bdat', 'in[aaaa][mm].txt'), c('MM122015', 'MM012016', 'MM022016'))
+ParseUnitName(c('dat[mm][aa].sas7bdat', 'in[aaaa][mm].txt'), 
+              newRepoTime(c('MM122015', 'MM012016', 'MM022016')))
       
 }
 
