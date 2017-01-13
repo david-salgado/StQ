@@ -95,7 +95,7 @@ setGeneric("IDDDToUnitNames", function(IDDDNames, Correspondence){standardGeneri
 
 #' @rdname IDDDToUnitNames
 #'
-#' @include DD-class.R VarNameCorresp-class.R DatadtToDT.R getVNC.R plus.VNCdt.R getDotQual.R getDoubleDotQual.R
+#' @include DD-class.R VarNameCorresp-class.R DatadtToDT.R getVNC.R plus.VNCdt.R getDotQual.R getDoubleDotQual.R VarNamesToDT.R
 #'
 #' @import data.table
 #' 
@@ -107,22 +107,31 @@ setMethod(
         
         if (missing(IDDDNames)) stop('[StQ::IDDDToUnitNames] A character vector of IDDDNames must be specified.\n')
         if (missing(Correspondence)) stop('[StQ::IDDDToUnitNames] A correspondence object (DD or StQ) must be specified.\n')
+      
         IDDDNames_Orig <- IDDDNames
         IDDDNames <- setdiff(IDDDNames, getDotQual(Correspondence))
-        Suffixes <- VarNamesToDT(IDDDNames, Correspondence)
-        CommonDDQual <- intersect(names(Suffixes), getDoubleDotQual(Correspondence))
-        Suffixes <- Suffixes[, c('IDDD', CommonDDQual), with = FALSE]
-        # OJO: ESTAMOS SUPONIENDO QUE SOLO SE TIENE UN CALIFICADOR .. (LO CONTRARIO SERIA UNA 
-        # LOCURA PARA LLAMAR A LAS VARIABLES; ESTAMOS POR TANTO ESTE COMPORTAMIENTO EN LA 
-        # CONSTRUCCION DE NOMBRES DE VARIABLES)
-        Suffixes[, Suffix := '']
-        colSuffixes <- names(Suffixes)
-        for (col in setdiff(colSuffixes, 'IDDD')){
+        if (length(IDDDNames) > 0){
+          
+          Suffixes <- VarNamesToDT(IDDDNames, Correspondence)
+          CommonDDQual <- intersect(names(Suffixes), getDoubleDotQual(Correspondence))
+          Suffixes <- Suffixes[, c('IDDD', CommonDDQual), with = FALSE]
+          # OJO: ESTAMOS SUPONIENDO QUE SOLO SE TIENE UN CALIFICADOR .. (LO CONTRARIO SERIA UNA 
+          # LOCURA PARA LLAMAR A LAS VARIABLES; ESTAMOS POR TANTO ESTE COMPORTAMIENTO EN LA 
+          # CONSTRUCCION DE NOMBRES DE VARIABLES)
+          Suffixes[, Suffix := '']
+          colSuffixes <- names(Suffixes)
+          for (col in setdiff(colSuffixes, 'IDDD')){
             
             Suffixes[, Suffix := ifelse(Suffix == '', get(col), Suffix)]
             
+          }
+          Suffixes <- Suffixes[, c('IDDD', 'Suffix'), with = F] 
+          
+        } else {
+          
+          Suffixes <- data.table(IDDD = character(0), Suffix = character(0))
         }
-        Suffixes <- Suffixes[, c('IDDD', 'Suffix'), with = F] 
+
         
         VNC <- getVNC(Correspondence)
         XLS <- Reduce(`+`, VNC, init = VNC[[1]])
