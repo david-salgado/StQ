@@ -141,36 +141,40 @@ setMethod(
             XLS.Quals[NonIDQual != '', IDDDName := NonIDQual]
             XLS.Quals <- XLS.Quals[, c('IDQual', 'NonIDQual', 'UnitName', 'IDDDName', 'InFiles'), 
                                    with = F]
+            IDQual <- XLS.Quals[IDQual != '']
+            IDQual <- IDQual[IDQual != '']
+            
             XLS <- XLS[IDDD != '']
-            XLS <- XLS[, setdiff(names(XLS), getIDQual(Correspondence)), with = F]
-
+            XLS <- XLS[, setdiff(names(XLS), IDQual), with = F]
             XLS.list <- split(XLS, XLS[['IDDD']])
-
+            
             XLS.list <- lapply(XLS.list, function(xls){
-              
-              ColNames <- names(xls)
-              NotEmptyCols <- c()
-              for (col in ColNames){
                 
-                if (!all(is.na(xls[[col]]) | xls[[col]] == '')) NotEmptyCols <- c(NotEmptyCols, col)
-                
-              }
-              xls <- xls[, NotEmptyCols, with = F]
-              ColsNotUnit <- setdiff(names(xls), c('IDDD', 'UnitName', 'IDDDName', 'InFiles'))
-    
-              ColsNotUnit <- intersect(names(VNC), ColsNotUnit)
-              for (col in ColsNotUnit) {
-                
-                #if (all(xls[[col]] == '.') | all(is.na(xls[[col]]))) next
-                if (any(xls[[col]] == '.')) next
-                xls[, IDDDName := paste(IDDDName, get(col), sep = '_')]
-                
-              }    
-              return(xls)
-            })
+                ColNames <- names(xls)
+                NotEmptyCols <- c()
+                for (col in ColNames){
+                    
+                    if (!all(is.na(xls[[col]]) | xls[[col]] == '')) NotEmptyCols <- c(NotEmptyCols, col)
+                    
+                }
+                xls <- xls[, NotEmptyCols, with = F]
 
+                ColsNotUnit <- setdiff(names(xls), c('IDDD', 'UnitName', 'IDDDName', 'InFiles'))
+                
+                ColsNotUnit <- intersect(names(VNC), ColsNotUnit)
+                for (col in ColsNotUnit) {
+                    
+                    #if (all(xls[[col]] == '.') | all(is.na(xls[[col]]))) next
+                    if (any(xls[[col]] == '.')) next
+                    xls[, IDDDName := paste(IDDDName, get(col), sep = '_')]
+                    
+                }    
+                return(xls)
+            })
+            
             output <- rbindlist(XLS.list, fill = TRUE)
             output <- rbindlist(list(output, XLS.Quals), fill = TRUE)
+
             aux <- output[, c('UnitName', 'IDDDName'), with = FALSE]
 
             # Patterns in UnitNames : [mm], [aa], [aaaa], [n], etc.
@@ -180,41 +184,41 @@ setMethod(
                 
                 outputNewName <- UnitNamesLocal[!UnitNamesLocal %in% output[['UnitName']]]
                 
-    
+                
                 if (length(outputNewName) > 0 & length(patrones) > 0){
-                  
-                  metaVar <- lapply(patrones, function(patron){
                     
-                    patron_aux <- patron
-                    patron <- gsub('\\[mm\\]', '(([0][1-9])|([1][0-2]))', patron)
-                    patron <- gsub('\\[aa\\]', '[0-9]{2}', patron)
-                    patron <- gsub('\\[n\\]', '[0-9]+', patron)
-                    patron <- gsub('\\[varGestion\\]', '.*', patron)
-                    Var <- lapply(outputNewName, function(name){
-                      out <- regexpr(patron, name)
-                      out <- regmatches(name, out)
-                      names(out) <- rep(aux[UnitName %in% patron_aux][['IDDDName']], length(out))
-                      return(out)
+                    metaVar <- lapply(patrones, function(patron){
+                        
+                        patron_aux <- patron
+                        patron <- gsub('\\[mm\\]', '(([0][1-9])|([1][0-2]))', patron)
+                        patron <- gsub('\\[aa\\]', '[0-9]{2}', patron)
+                        patron <- gsub('\\[n\\]', '[0-9]+', patron)
+                        patron <- gsub('\\[varGestion\\]', '.*', patron)
+                        Var <- lapply(outputNewName, function(name){
+                            out <- regexpr(patron, name)
+                            out <- regmatches(name, out)
+                            names(out) <- rep(aux[UnitName %in% patron_aux][['IDDDName']], length(out))
+                            return(out)
+                        })
+                        
+                        return(Var)
                     })
                     
-                    return(Var)
-                  })
-      
-                  metaVar <- unlist(metaVar)
-                  #outputNew <- setdiff(outputNewName, metaVar)
-                  if (length(metaVar) > 0) {
-                      
-                      outputMetaVar <- data.table(UnitName = metaVar, IDDDName = names(metaVar))
-                  
-                  } else {
-                  
-                      outputMetaVar <- data.table()           
-                      
-                  }
+                    metaVar <- unlist(metaVar)
+                    #outputNew <- setdiff(outputNewName, metaVar)
+                    if (length(metaVar) > 0) {
+                        
+                        outputMetaVar <- data.table(UnitName = metaVar, IDDDName = names(metaVar))
+                        
+                    } else {
+                        
+                        outputMetaVar <- data.table()           
+                        
+                    }
                 } else {
-                  
-                  outputMetaVar <- data.table()
-                  #outputNew <- outputNewName
+                    
+                    outputMetaVar <- data.table()
+                    #outputNew <- outputNewName
                 }
                 
                 #outputNew <- data.table(UnitName = outputNew, IDDDName = outputNew)
@@ -235,6 +239,7 @@ setMethod(
             outDT <- outDT[Unit %in% UnitNames]
             return(outDT)
         })
+
         outDT <- rbindlist(output.list)
         setkeyv(outDT, names(outDT))
         outDT <- outDT[!duplicated(outDT, by = key(outDT))]

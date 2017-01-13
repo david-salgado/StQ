@@ -5,7 +5,8 @@
 #' 
 #' @param UnitNames Character vector with the names of the files to parse.
 #' 
-#' @param TimePeriods Character vector with the time periods.
+#' @param MetaValues Object of the appropriate class (\linkS4class{RepoTimeInt}, 
+#' \linkS4class{integer}, ...) with the values of the metacharacters to be parsed.
 #' 
 #' @return Return a vector with each component of the input vector \code{UnitNames} parsed according
 #'  to the input parameter \code{TimePeriods}.
@@ -13,7 +14,8 @@
 #' @examples
 #' library(RepoTime)
 #' ParseUnitName(c('dat[mm][aa].sas7bdat'), newRepoTime(c('MM122015', 'MM012016', 'MM022016')))
-#' ParseUnitName(c('dat[mm][aa].sas7bdat', 'in[aaaa][mm].txt'), c('MM122015', 'MM012016', 'MM022016'))
+#' ParseUnitName(c('dat[mm][aa].sas7bdat', 'in[aaaa][mm].txt'), 
+#'               newRepoTime(c('MM122015', 'MM012016', 'MM022016')))
 #'       
 #' @export
 setGeneric("ParseUnitName", function(UnitNames, MetaValues){standardGeneric("ParseUnitName")})
