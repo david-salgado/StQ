@@ -62,7 +62,6 @@ setMethod(
                 DDlocal <- slot(DD, DDslot)
                 IDQual <- DDlocal[Sort == 'IDQual', Variable]
                 NonIDQual <- DDlocal[Sort == 'NonIDQual', Variable]
-                
                 Quals <- names(DDlocal)[grep('Qual', names(DDlocal))]
                 auxDD <- DDlocal[Variable == ExtractNames(VarNames), c('Variable', Quals), with = F]
                 auxDD[, LHS := '']

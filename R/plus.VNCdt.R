@@ -99,7 +99,6 @@ setMethod(
                     outVar[, (col) := ifelse(is.na(get(col)), '', get(col))]
                     
             }
-        
         setkeyv(outVar, setdiff(names(outVar), c('UnitName', 'InFiles')))
 
         outVar <- outVar[!duplicated(outVar, by = key(outVar))]
