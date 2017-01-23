@@ -185,12 +185,12 @@ setMethod(
     }
     DataNames <- names(object@Data)
     setcolorder(output, DataNames)
-    Cols <- sort(names(output))
-    for (col in Cols){
-      
-      if (all(output[[col]] == '')) output[, (col) := NULL]
-      
-    }
+    #Cols <- sort(names(output))
+    #for (col in Cols){
+    #  
+    #  if (all(output[[col]] == '')) output[, (col) := NULL]
+    #  
+    #}
 
     NotPresent <- VarNames[which(!ExtractNames(VarNames) %in% unique(getData(object)[['IDDD']]))]
    
