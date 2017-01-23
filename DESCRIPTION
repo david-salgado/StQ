@@ -12,7 +12,7 @@ Depends:
     R (>= 3.3.0)
 Imports:
     methods (>= 3.3.0),
-    data.table (>= 1.9.4),
+    data.table (>= 1.10.0),
     formula.tools (>= 1.5.4),
     RepoTime (>= 0.1.0),
     stringr (>= 1.0.0),
@@ -57,12 +57,12 @@ Collate:
     'ExampleVNC.R'
     'ExamplerawKey.R'
     'ExamplerawStQ.R'
+    'VarNamesToDT.R'
     'getDoubleDotQual.R'
     'getDotQual.R'
     'plus.VNCdt.R'
     'IDDDToUnitNames.R'
     'ParseUnitName.R'
-    'VarNamesToDT.R'
     'getData.R'
     'StQListToStQ.R'
     'StQTorawStQ.R'
