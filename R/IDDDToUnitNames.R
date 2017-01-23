@@ -110,7 +110,7 @@ setMethod(
       
         IDDDNames_Orig <- IDDDNames
         IDDDNames <- setdiff(IDDDNames, getDotQual(Correspondence))
-        IDQualsGlobal <- getIDQual(DD)
+        IDQualsGlobal <- getIDQual(Correspondence)
         if (length(IDDDNames) > 0){
           
           Suffixes <- VarNamesToDT(IDDDNames, Correspondence)
