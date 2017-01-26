@@ -35,7 +35,8 @@ setMethod(
     mc <- match.call()
     mc[['x']] <- getData(x)
     output <- x
-    Datadt <- new(Class = 'Datadt', eval(mc, envir = parent.frame()))
+    x.subsetted <- eval(mc, envir = parent.frame())
+    Datadt <- new(Class = 'Datadt', x.subsetted)
     setData(output) <- new(Class = 'Datadt', Datadt)
     validObject(output)
     return(output)

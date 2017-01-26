@@ -52,16 +52,16 @@ melt_StQ <- function(DataMatrix, DD){
     
     DM <- copy(DataMatrix)
     DMnames <- names(DM)
-    for (col in DMnames){
-        
-        if (all(DM[[col]] == '')){
-            
-            DM <- DM[, setdiff(names(DM), col), with = FALSE]
-        }
-    }
+     for (col in DMnames){
+         
+         if (all(DM[[col]] == '')){
+             
+             DM <- DM[, setdiff(names(DM), col), with = FALSE]
+         }
+     }
     
     setnames(DM, UnitToIDDDNames(names(DM), DD))
-    
+
     #Construimos un objeto DD auxiliar
     slots <- setdiff(names(getVNC(DD)), 'VarSpec')
     
@@ -99,22 +99,23 @@ melt_StQ <- function(DataMatrix, DD){
         
         auxMeasureVar <- split(auxDDdt[['Variable']], auxDDdt[['Qual']])
         if (length(auxMeasureVar) == 0) return(data.table(NULL))
-        
+
         moltenData <- lapply(names(auxMeasureVar), function(QualName){
             
             indexCol <- ExtractNames(names(DM)) %in% auxMeasureVar[[QualName]]
             LocalQuals <- strsplit(QualName, ' ')[[1]]
             
             ColNames <- c(LocalQuals, names(DM)[indexCol])
-            
+
             localDM <- DM[, intersect(ColNames, names(DM)), with = F]
-            
+
             for (col in names(localDM)){
                 
                 localDM[, (col) := as.character(get(col))]
                 
             }
             IDQual <- intersect(IDQual, names(localDM))
+
             out <- data.table::melt.data.table(localDM,
                                                id.vars = IDQual,
                                                measure.vars= setdiff(names(localDM), IDQual),
@@ -125,7 +126,6 @@ melt_StQ <- function(DataMatrix, DD){
             
             out <- out[Value != '']
             LocalNonIDQual <- setdiff(LocalQuals, IDQual)
-            
             if (dim(out)[1] != 0){
                 
                 if (length(LocalNonIDQual) > 0) {
@@ -142,7 +142,7 @@ melt_StQ <- function(DataMatrix, DD){
                         outLocal <- as.data.table(t(as.matrix(auxIDDD[[1]])))
                         
                     } else {
-                        
+#######################################################################                        
                         ColNames <- c('IDDD', LocalNonIDQual)
                         outLocal <- out[, setdiff(names(out), ColNames), with = F]
                         for (index.col in seq(along = ColNames)){
@@ -150,6 +150,7 @@ melt_StQ <- function(DataMatrix, DD){
                             outLocal[, (ColNames[index.col]) := ExtractCol(index.col)]
                         }
                         setcolorder(outLocal, c(IDQual, LocalNonIDQual, 'IDDD', 'Value'))
+
                     }
                     
                 } else {
@@ -166,13 +167,14 @@ melt_StQ <- function(DataMatrix, DD){
             
         })
         names(moltenData) <- names(auxMeasureVar)
+
         
         moltenData <- rbindlist(moltenData, fill = TRUE)
         
         return(moltenData)
         
     })
-    
+
     out <- rbindlist(out, fill = TRUE)
     
     if (all(dim(out) == c(0, 0))) {

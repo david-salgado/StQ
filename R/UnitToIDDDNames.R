@@ -129,6 +129,7 @@ setMethod(
     signature = c("character", "VarNameCorresp"),
     function(UnitNames, Correspondence){
         
+        IDQualsGlobal <- getIDQual(Correspondence)
         output.list <- lapply(Correspondence, function(VNC){
             
             XLS <- slot(VNC, '.Data')
@@ -147,21 +148,21 @@ setMethod(
             XLS <- XLS[IDDD != '']
             XLS <- XLS[, setdiff(names(XLS), IDQual), with = F]
             XLS.list <- split(XLS, XLS[['IDDD']])
-            
             XLS.list <- lapply(XLS.list, function(xls){
                 
-                ColNames <- names(xls)
+                ColNames <- setdiff(names(xls), IDQualsGlobal)
                 NotEmptyCols <- c()
                 for (col in ColNames){
                     
                     if (!all(is.na(xls[[col]]) | xls[[col]] == '')) NotEmptyCols <- c(NotEmptyCols, col)
                     
                 }
-                xls <- xls[, NotEmptyCols, with = F]
 
-                ColsNotUnit <- setdiff(names(xls), c('IDDD', 'UnitName', 'IDDDName', 'InFiles'))
+                xls <- xls[, NotEmptyCols, with = F]
                 
+                ColsNotUnit <- setdiff(names(xls), c('IDDD', 'UnitName', 'IDDDName', 'InFiles'))
                 ColsNotUnit <- intersect(names(VNC), ColsNotUnit)
+
                 for (col in ColsNotUnit) {
                     
                     #if (all(xls[[col]] == '.') | all(is.na(xls[[col]]))) next
@@ -171,7 +172,7 @@ setMethod(
                 }    
                 return(xls)
             })
-            
+
             output <- rbindlist(XLS.list, fill = TRUE)
             output <- rbindlist(list(output, XLS.Quals), fill = TRUE)
 
@@ -239,6 +240,7 @@ setMethod(
             outDT <- outDT[Unit %in% UnitNames]
             return(outDT)
         })
+
 
         outDT <- rbindlist(output.list)
         setkeyv(outDT, names(outDT))

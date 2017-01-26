@@ -1,6 +1,6 @@
 Package: StQ
 Title: Tools to manage metadata-incorporated key-value pair datasets
-Version: 0.3.4
+Version: 0.3.5
 Authors@R: c(
     person("David", "Salgado", email = "david.salgado.fernandez@gmail.com", role = c("cre", "aut")),
     person("Elisa", "Esteban", email = "elisa.esteban.segurado@gmail.com", role = "aut"),
@@ -12,7 +12,7 @@ Depends:
     R (>= 3.3.0)
 Imports:
     methods (>= 3.3.0),
-    data.table (>= 1.9.4),
+    data.table (>= 1.10.0),
     formula.tools (>= 1.5.4),
     RepoTime (>= 0.1.0),
     stringr (>= 1.0.0),

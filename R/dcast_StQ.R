@@ -97,6 +97,7 @@ setMethod(
 
         # Se asocia a cada fórmula su correspondiente data.table dcasted
         auxData <- split(auxDD[['Variable']], auxDD[['Form']])
+
         dcastData <- lapply(names(auxData), function(Form){
 
             #Preparamos la data.table aux que vamos a reformatear con dcast.data.table
@@ -135,6 +136,7 @@ setMethod(
             return(out)
         })
         names(dcastData) <- names(auxData)
+
 
         # Eliminamos componentes NULL de la lista de data.tables transformadas
         for (i in names(dcastData)){

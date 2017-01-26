@@ -95,7 +95,7 @@ setGeneric("IDDDToUnitNames", function(IDDDNames, Correspondence){standardGeneri
 
 #' @rdname IDDDToUnitNames
 #'
-#' @include DD-class.R VarNameCorresp-class.R DatadtToDT.R getVNC.R plus.VNCdt.R getDotQual.R getDoubleDotQual.R VarNamesToDT.R
+#' @include DD-class.R VarNameCorresp-class.R DatadtToDT.R getVNC.R plus.VNCdt.R getDotQual.R getDoubleDotQual.R VarNamesToDT.R getIDQual.R
 #'
 #' @import data.table
 #' 
@@ -110,6 +110,7 @@ setMethod(
       
         IDDDNames_Orig <- IDDDNames
         IDDDNames <- setdiff(IDDDNames, getDotQual(Correspondence))
+        IDQualsGlobal <- getIDQual(Correspondence)
         if (length(IDDDNames) > 0){
           
           Suffixes <- VarNamesToDT(IDDDNames, Correspondence)
@@ -154,6 +155,7 @@ setMethod(
             Quals <- t(QualsDT)[, 1]
             Quals <- Quals[Quals != '']
             Quals <- Quals[!Quals %in% DotQual]
+            Quals <- setdiff(Quals, IDQualsGlobal)
             return(Quals)
         })
         
@@ -170,6 +172,7 @@ setMethod(
             localXLS <- XLS[IDDD == IDDDname & IDDD != '']
             QualNames <- Quals.list[[IDDDname]]
             localXLS <- localXLS[, c('IDDD', QualNames, 'UnitName', 'IDDDName'), with = F]
+
             localNonIDQuals <- setdiff(intersect(names(localXLS), NonIDQuals), setdiff(IDQuals, NonIDQuals))
 
             for (col in localNonIDQuals) {
