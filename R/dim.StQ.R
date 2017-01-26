@@ -12,9 +12,6 @@
 #' @examples
 #' data(ExampleStQ)
 #' dim(ExampleStQ)
-#' 
-#' data(ExamplerawStQ)
-#' dim(ExamplerawStQ)
 #'
 #' @include StQ-class.R getData.R 
 #'
@@ -24,26 +21,6 @@
 setMethod(
     f = "dim",
     signature = c("StQ"),
-    function(x){
-        
-        mc <- match.call()
-        mc[['x']] <- getData(x)
-        output <- eval(mc, envir = parent.frame())
-        return(output)
-        
-    }
-)
-
-#' @rdname dim
-#'
-#' @include rawStQ-class.R getData.R 
-#'
-#' @import data.table
-#'
-#' @export
-setMethod(
-    f = "dim",
-    signature = c("rawStQ"),
     function(x){
         
         mc <- match.call()
