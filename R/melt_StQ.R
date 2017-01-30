@@ -52,13 +52,13 @@ melt_StQ <- function(DataMatrix, DD){
     
     DM <- copy(DataMatrix)
     DMnames <- names(DM)
-     for (col in DMnames){
-         
-         if (all(DM[[col]] == '')){
-             
-             DM <- DM[, setdiff(names(DM), col), with = FALSE]
-         }
-     }
+     # for (col in DMnames){
+     #     
+     #     if (all(DM[[col]] == '')){
+     #         
+     #         DM <- DM[, setdiff(names(DM), col), with = FALSE]
+     #     }
+     # }
     
     setnames(DM, UnitToIDDDNames(names(DM), DD))
 
@@ -142,7 +142,7 @@ melt_StQ <- function(DataMatrix, DD){
                         outLocal <- as.data.table(t(as.matrix(auxIDDD[[1]])))
                         
                     } else {
-#######################################################################                        
+                     
                         ColNames <- c('IDDD', LocalNonIDQual)
                         outLocal <- out[, setdiff(names(out), ColNames), with = F]
                         for (index.col in seq(along = ColNames)){
