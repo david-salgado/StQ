@@ -16,6 +16,7 @@
 #' ParseUnitName(c('dat[mm][aa].sas7bdat'), newRepoTime(c('MM122015', 'MM012016', 'MM022016')))
 #' ParseUnitName(c('dat[mm][aa].sas7bdat', 'in[aaaa][mm].txt'), 
 #'               newRepoTime(c('MM122015', 'MM012016', 'MM022016')))
+#' ParseUnitName(c('PONALI_[ccaa]'), c(paste0(0, 1:9), 10:12))
 #'       
 #' @export
 setGeneric("ParseUnitName", function(UnitNames, MetaValues){standardGeneric("ParseUnitName")})
@@ -49,6 +50,7 @@ setMethod(
                 
                 outLocal <- gsub('[aaaa + 1]', year4 + 1, UnitName, fixed = TRUE)
                 outLocal <- gsub('[aaaa]', year4, outLocal, fixed = TRUE)
+                outLocal <- gsub('[aaaa - 1]', year4 - 1, UnitName, fixed = TRUE)
                 return(outLocal)
             }))
             year2 <- unlist(as.integer(substr(TimePeriod, 7, 8)))
@@ -56,6 +58,7 @@ setMethod(
                 
                 outLocal <- gsub('[aa + 1]', year2 + 1, UnitName, fixed = TRUE)
                 outLocal <- gsub('[aa]', year2, outLocal, fixed = TRUE)
+                outLocal <- gsub('[aa - 1]', year2 - 1, UnitName, fixed = TRUE)
                 return(outLocal)
             }))
         }))
@@ -69,6 +72,7 @@ setMethod(
                 
                 outLocal <- gsub('[aaaa + 1]', year4 + 1, UnitName, fixed = TRUE)
                 outLocal <- gsub('[aaaa]', year4, outLocal, fixed = TRUE)
+                outLocal <- gsub('[aaaa - 1]', year4 - 1, UnitName, fixed = TRUE)
                 return(outLocal)
             }))
             year2 <- unlist(as.integer(substr(TimePeriod, 5, 6)))
@@ -76,6 +80,7 @@ setMethod(
                 
                 outLocal <- gsub('[aa + 1]', year2 + 1, UnitName, fixed = TRUE)
                 outLocal <- gsub('[aa]', year2, outLocal, fixed = TRUE)
+                outLocal <- gsub('[aa - 1]', year2 - 1, UnitName, fixed = TRUE)
                 return(outLocal)
             }))
         }))
@@ -97,6 +102,7 @@ setMethod(
                 
                 outLocal <- gsub('[aaaa + 1]', year4 + 1, UnitName, fixed = TRUE)
                 outLocal <- gsub('[aaaa]', year4, outLocal, fixed = TRUE)
+                outLocal <- gsub('[aaaa - 1]', year4 - 1, UnitName, fixed = TRUE)
                 return(outLocal)
             }))
             year2 <- unlist(as.integer(substr(TimePeriod, 6, 7)))
@@ -104,6 +110,7 @@ setMethod(
                 
                 outLocal <- gsub('[aa + 1]', year2 + 1, UnitName, fixed = TRUE)
                 outLocal <- gsub('[aa]', year2, outLocal, fixed = TRUE)
+                outLocal <- gsub('[aa - 1]', year2 - 1, UnitName, fixed = TRUE)
                 return(outLocal)
             }))
         }))
@@ -134,4 +141,27 @@ setMethod(
         
         return(output)
     }
+)
+
+#' @rdname ParseUnitName
+#' 
+#' @import data.table RepoTime
+#' 
+#' @export
+setMethod(
+  f = "ParseUnitName",
+  signature = c("character", "character"),
+  function(UnitNames, MetaValues){
+    
+    IntChars <- MetaValues
+    output <- unlist(lapply(IntChars, function(IntChars){
+      
+      outLocal <- gsub('[ccaa]', IntChars, UnitNames, fixed = TRUE)
+      return(outLocal)
+      
+      
+    }))
+    
+    return(output)
+  }
 )
