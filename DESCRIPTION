@@ -20,7 +20,7 @@ Imports:
 License: file LICENSE
 LazyData: true
 Encoding: UTF-8
-Collate: 
+Collate:
     'Datadt-class.R'
     'DDdt-class.R'
     'VNCdt-class.R'
@@ -118,7 +118,6 @@ Collate:
     'subset.StQList.R'
     'subset.VNCdt.R'
     'subset.rawKey.R'
-    'subset.rawStQ.R'
     'subset.rawStQList.R'
 RoxygenNote: 6.0.1
 URL: https://github.com/david-salgado/StQ
