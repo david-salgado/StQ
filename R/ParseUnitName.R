@@ -50,7 +50,7 @@ setMethod(
                 
                 outLocal <- gsub('[aaaa + 1]', year4 + 1, UnitName, fixed = TRUE)
                 outLocal <- gsub('[aaaa]', year4, outLocal, fixed = TRUE)
-                outLocal <- gsub('[aaaa - 1]', year4 - 1, UnitName, fixed = TRUE)
+                outLocal <- gsub('[aaaa - 1]', year4 - 1, outLocal, fixed = TRUE)
                 return(outLocal)
             }))
             year2 <- unlist(as.integer(substr(TimePeriod, 7, 8)))
@@ -58,7 +58,7 @@ setMethod(
                 
                 outLocal <- gsub('[aa + 1]', year2 + 1, UnitName, fixed = TRUE)
                 outLocal <- gsub('[aa]', year2, outLocal, fixed = TRUE)
-                outLocal <- gsub('[aa - 1]', year2 - 1, UnitName, fixed = TRUE)
+                outLocal <- gsub('[aa - 1]', year2 - 1, outLocal, fixed = TRUE)
                 return(outLocal)
             }))
         }))
@@ -72,7 +72,7 @@ setMethod(
                 
                 outLocal <- gsub('[aaaa + 1]', year4 + 1, UnitName, fixed = TRUE)
                 outLocal <- gsub('[aaaa]', year4, outLocal, fixed = TRUE)
-                outLocal <- gsub('[aaaa - 1]', year4 - 1, UnitName, fixed = TRUE)
+                outLocal <- gsub('[aaaa - 1]', year4 - 1, outLocal, fixed = TRUE)
                 return(outLocal)
             }))
             year2 <- unlist(as.integer(substr(TimePeriod, 5, 6)))
@@ -80,7 +80,7 @@ setMethod(
                 
                 outLocal <- gsub('[aa + 1]', year2 + 1, UnitName, fixed = TRUE)
                 outLocal <- gsub('[aa]', year2, outLocal, fixed = TRUE)
-                outLocal <- gsub('[aa - 1]', year2 - 1, UnitName, fixed = TRUE)
+                outLocal <- gsub('[aa - 1]', year2 - 1, outLocal, fixed = TRUE)
                 return(outLocal)
             }))
         }))
@@ -102,7 +102,7 @@ setMethod(
                 
                 outLocal <- gsub('[aaaa + 1]', year4 + 1, UnitName, fixed = TRUE)
                 outLocal <- gsub('[aaaa]', year4, outLocal, fixed = TRUE)
-                outLocal <- gsub('[aaaa - 1]', year4 - 1, UnitName, fixed = TRUE)
+                outLocal <- gsub('[aaaa - 1]', year4 - 1, outLocal, fixed = TRUE)
                 return(outLocal)
             }))
             year2 <- unlist(as.integer(substr(TimePeriod, 6, 7)))
@@ -110,7 +110,7 @@ setMethod(
                 
                 outLocal <- gsub('[aa + 1]', year2 + 1, UnitName, fixed = TRUE)
                 outLocal <- gsub('[aa]', year2, outLocal, fixed = TRUE)
-                outLocal <- gsub('[aa - 1]', year2 - 1, UnitName, fixed = TRUE)
+                outLocal <- gsub('[aa - 1]', year2 - 1, outLocal, fixed = TRUE)
                 return(outLocal)
             }))
         }))
