@@ -195,6 +195,7 @@ setMethod(
                         patron <- gsub('\\[aa\\]', '[0-9]{2}', patron)
                         patron <- gsub('\\[n\\]', '[0-9]+', patron)
                         patron <- gsub('\\[varGestion\\]', '.*', patron)
+                        patron <- gsub('\\[ccaa\\]', '[0-9]{2}', patron)
                         Var <- lapply(outputNewName, function(name){
                             out <- regexpr(patron, name)
                             out <- regmatches(name, out)

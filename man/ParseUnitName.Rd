@@ -4,6 +4,7 @@
 \name{ParseUnitName}
 \alias{ParseUnitName}
 \alias{ParseUnitName,character,RepoTimeInt-method}
+\alias{ParseUnitName,character,character-method}
 \alias{ParseUnitName,character,integer-method}
 \title{Produce a vector of file names parsed out of a pattern and a sequence of time period names}
 \usage{
@@ -12,6 +13,8 @@ ParseUnitName(UnitNames, MetaValues)
 \S4method{ParseUnitName}{character,RepoTimeInt}(UnitNames, MetaValues)
 
 \S4method{ParseUnitName}{character,integer}(UnitNames, MetaValues)
+
+\S4method{ParseUnitName}{character,character}(UnitNames, MetaValues)
 }
 \arguments{
 \item{UnitNames}{Character vector with the names of the files to parse.}
@@ -32,6 +35,7 @@ library(RepoTime)
 ParseUnitName(c('dat[mm][aa].sas7bdat'), newRepoTime(c('MM122015', 'MM012016', 'MM022016')))
 ParseUnitName(c('dat[mm][aa].sas7bdat', 'in[aaaa][mm].txt'), 
               newRepoTime(c('MM122015', 'MM012016', 'MM022016')))
+ParseUnitName(c('PONALI_[ccaa]'), c(paste0(0, 1:9), 10:12))
       
 }
 
