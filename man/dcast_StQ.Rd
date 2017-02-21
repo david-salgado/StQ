@@ -16,9 +16,9 @@ dcast_StQ(object, VarNames = NULL)
 \item{VarNames}{\code{Character} vector with names of the output variables.}
 }
 \value{
-Returns a \linkS4class{data.table} with data from slot \code{Data} of the input 
-\linkS4class{StQ} object with statistical units by rows and variables by columns. Only variables 
-in \code{VarNames} will be output. If no variable name is specified, all variables in the input 
+Returns a \linkS4class{data.table} with data from slot \code{Data} of the input
+\linkS4class{StQ} object with statistical units by rows and variables by columns. Only variables
+in \code{VarNames} will be output. If no variable name is specified, all variables in the input
 object will be output.
 }
 \description{
@@ -32,7 +32,7 @@ parameter \code{VarNames} by columns.
 To distinguish between variables and qualifiers this function makes use of the slot \code{DD} of
 input \linkS4class{StQ} variable.
 
-This method is indeed a wrapper for the function \code{\link[data.table]{dcast.data.table}} of 
+This method is indeed a wrapper for the function \code{\link[data.table]{dcast.data.table}} of
 the package \linkS4class{data.table}, adapted to the structure of object \linkS4class{StQ}.
 }
 \examples{
