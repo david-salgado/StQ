@@ -1,6 +1,6 @@
 Package: StQ
 Title: Tools to manage metadata-incorporated key-value pair datasets
-Version: 0.3.5
+Version: 0.3.9
 Authors@R: c(
     person("David", "Salgado", email = "david.salgado.fernandez@gmail.com", role = c("cre", "aut")),
     person("Elisa", "Esteban", email = "elisa.esteban.segurado@gmail.com", role = "aut"),
@@ -71,6 +71,8 @@ Collate:
     'setData.R'
     'subset.StQ.R'
     'dcast_StQ.R'
+    'dim.StQ.R'
+    'dim.rawStQ.R'
     'getPeriods.R'
     'extract.StQList.R'
     'extract.rawStQList.R'
