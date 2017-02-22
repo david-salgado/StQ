@@ -10,16 +10,16 @@
 #' To distinguish between variables and qualifiers this function makes use of the slot \code{DD} of
 #' input \linkS4class{StQ} variable.
 #'
-#' This method is indeed a wrapper for the function \code{\link[data.table]{dcast.data.table}} of 
+#' This method is indeed a wrapper for the function \code{\link[data.table]{dcast.data.table}} of
 #' the package \linkS4class{data.table}, adapted to the structure of object \linkS4class{StQ}.
 #'
 #' @param object Object of class \linkS4class{StQ} whose slot \code{Data} will be converted.
 #'
 #' @param VarNames \code{Character} vector with names of the output variables.
 #'
-#' @return Returns a \linkS4class{data.table} with data from slot \code{Data} of the input 
-#' \linkS4class{StQ} object with statistical units by rows and variables by columns. Only variables 
-#' in \code{VarNames} will be output. If no variable name is specified, all variables in the input 
+#' @return Returns a \linkS4class{data.table} with data from slot \code{Data} of the input
+#' \linkS4class{StQ} object with statistical units by rows and variables by columns. Only variables
+#' in \code{VarNames} will be output. If no variable name is specified, all variables in the input
 #' object will be output.
 #'
 #' @examples
@@ -29,7 +29,7 @@
 #' str(Mat)
 #'
 #' dcast_StQ(ExampleStQ, VarNames = 'Employees')
-#' 
+#'
 #' dcast_StQ(ExampleStQ[ID != ''])
 #'
 #' @seealso \code{\link{melt_StQ}}, \code{\link[data.table]{dcast.data.table}},
@@ -73,13 +73,13 @@ setMethod(
         Quals <- c(IDQual, NonIDQual)
         Quals <- intersect(VarNames, Quals)
         if (length(Quals) == 1){
-            
+
             stop(paste0('[StQ::dcast_StQ] The input variable name ', Quals, ' is a qualifier in the input object. Please, remove it from the call.\n'))
-        
+
         } else if (length(Quals) > 1){
-            
+
             stop(paste0('[StQ::dcast_StQ] The input variable names ', Quals, ' are qualifiers in the input object. Please, remove them from the call.\n'))
-        } 
+        }
 
         if (is.null(VarNames)) {
 
@@ -109,7 +109,7 @@ setMethod(
             setkeyv(aux, setdiff(ColNames, 'Value'))
             Dup <- aux[duplicated(aux, by = key(aux))]
             if (dim(Dup)[[1]] > 0) {
-                
+
               warning(paste0('[StQ::dcast_StQ] There exist duplicated rows in the component ',
                              Form,
                              '.\n The table will be reformatted with the default agg.fun function (length).\n'))
@@ -143,7 +143,7 @@ setMethod(
           if (is.null(dcastData[[i]])) dcastData[[i]] <- NULL
           next
         }
-        
+
         # Combinamos las data.tables de la lista en una sola data.table
         output <- Reduce(
             function(x, y){
@@ -165,7 +165,7 @@ setMethod(
                 }
                 return(out)
             },
-            dcastData, 
+            dcastData,
             init = dcastData[[1]])
 
         # Asignamos los tipos a cada variable sustituyendo blancos por NA

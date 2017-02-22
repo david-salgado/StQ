@@ -116,6 +116,7 @@ melt_StQ <- function(DataMatrix, DD){
                 localDM[, (col) := as.character(get(col))]
 
             }
+            
             IDQual <- intersect(IDQual, names(localDM))
 
             out <- data.table::melt.data.table(localDM,
@@ -127,7 +128,7 @@ melt_StQ <- function(DataMatrix, DD){
                                                value.factor = FALSE)
 
             out <- out[Value != '']
-            LocalNonIDQual <- setdiff(LocalQuals, IDQual)
+            LocalNonIDQual <- setdiff(intersect(LocalQuals, NonIDQual), IDQual)
             if (dim(out)[1] != 0){
 
                 if (length(LocalNonIDQual) > 0) {

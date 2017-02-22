@@ -37,7 +37,7 @@ getIDQual(object, CompNames = names(object))
 Character vector with all the unit qualifier names.
 }
 \description{
-\code{getIDQual} returns a character vector with all unit qualifier names (IDQual) 
+\code{getIDQual} returns a character vector with all unit qualifier names (IDQual)
 contained in the input object.
 }
 \details{

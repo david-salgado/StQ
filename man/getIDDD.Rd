@@ -35,8 +35,8 @@ getIDDD(object, CompNames = names(object))
 which the IDDD identifiers are requested.}
 }
 \value{
-Returns a character vector with the IDDD identifiers from the components specified in 
-CompNames. If no CompNames parameter is specified, it returns the IDDD identifiers from all the 
+Returns a character vector with the IDDD identifiers from the components specified in
+CompNames. If no CompNames parameter is specified, it returns the IDDD identifiers from all the
 components of the input object.
 }
 \description{

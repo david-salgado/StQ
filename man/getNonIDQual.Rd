@@ -37,7 +37,7 @@ getNonIDQual(object, CompNames = names(object))
 Character vector with all the non-unit qualifier names.
 }
 \description{
-\code{getNonIDQual} returns a character vector with all non-unit qualifier names 
+\code{getNonIDQual} returns a character vector with all non-unit qualifier names
 (NonIDQual) contained in the input object.
 }
 \details{
