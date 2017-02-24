@@ -122,7 +122,6 @@ setMethod(
                 aux[, (MissingQuals) := '']
             }
             aux <- aux[, c(FormVars, 'Value'), with = F]
-
             out <- data.table::dcast.data.table(data = aux,
                                                 formula = as.formula(Form),
                                                 drop = TRUE,
@@ -136,7 +135,6 @@ setMethod(
             return(out)
         })
         names(dcastData) <- names(auxData)
-
 
         # Eliminamos componentes NULL de la lista de data.tables transformadas
         for (i in names(dcastData)){
