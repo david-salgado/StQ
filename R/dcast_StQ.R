@@ -101,7 +101,7 @@ setMethod(
         dcastData <- lapply(names(auxData), function(Form){
 
             #Preparamos la data.table aux que vamos a reformatear con dcast.data.table
-            aux <- DatadtToDT(getData(object)[IDDD %in% auxData[[Form]]])
+            aux <- DatadtToDT(getData(object))[IDDD %in% auxData[[Form]]]
             if (dim(aux)[[1]] == 0) return(NULL)
 
             ColNames <- names(aux)
@@ -170,7 +170,7 @@ setMethod(
         outCols <- names(output)
         for (col in outCols){
 
-            colClass <- copy(DDdt)[Variable == ExtractNames(col)][['Class']]
+            colClass <- DatadtToDT(DDdt)[Variable == ExtractNames(col)][['Class']]
             output[, (col) := as(get(col), colClass)]
             output[get(col) == '', (col) := NA]
 
