@@ -22,7 +22,7 @@
 #' ExampleStQ[3:4]
 #' ExampleStQ[ID == '00021']
 #'
-#' @include StQ-class.R getData.R setData.R Datadt-class.R
+#' @include StQ-class.R getData.R setData.R Datadt-class.R DatadtToDT.R
 #'
 #' @import data.table
 #'
@@ -33,7 +33,7 @@ setMethod(
   function(x, i, j, ..., drop = TRUE){
 
     mc <- match.call()
-    mc[['x']] <- getData(x)
+    mc[['x']] <- DatadtToDT(getData(x))
     output <- x
     x.subsetted <- eval(mc, envir = parent.frame())
     Datadt <- new(Class = 'Datadt', x.subsetted)

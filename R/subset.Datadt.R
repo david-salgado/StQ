@@ -23,7 +23,7 @@
 #' 
 #' Ddt[IDDD == 'Turnover']                       
 #'
-#' @include Datadt-class.R
+#' @include Datadt-class.R DatadtToDT.R
 #'
 #' @import data.table
 #'
@@ -33,12 +33,17 @@ setMethod(
     signature = c("Datadt"),
     function(x, i, j, ..., drop = TRUE){
         
+        #mc <- match.call()
+        #New.x <- x@.Data
+        #names(New.x) <- x@names
+        #New.x <- setDT(New.x)
+        #mc[['x']] <- New.x
+        #output <- eval(mc, envir = parent.frame())
         mc <- match.call()
-        New.x <- x@.Data
-        names(New.x) <- x@names
-        New.x <- setDT(New.x)
+        New.x <- DatadtToDT(x)
         mc[['x']] <- New.x
         output <- eval(mc, envir = parent.frame())
+        output <- new(Class = 'Datadt', output)
         
         return(output)
     }

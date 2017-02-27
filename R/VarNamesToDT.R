@@ -28,7 +28,7 @@
 #' data(ExampleDD)
 #' VarNamesToDT(c('Employees_1.'), ExampleDD)
 #'
-#' @include ExtractNames.R getVariables.R
+#' @include ExtractNames.R getVariables.R DatadtToDT.R
 #'
 #' @import data.table
 #'
@@ -62,7 +62,7 @@ VarNamesToDT <- function(VarNames, DD){
                 Names.DT[, ValueRegExp := NULL]
 
                 ParsedNames <- strsplit(VarNames, '_')[[1]]
-                IDQual <- DDlocal[Sort == 'IDQual'][['Variable']]
+                IDQual <- DatadtToDT(DDlocal)[Sort == 'IDQual'][['Variable']]
                 IDQualCounter <- 0
 
                 ColNames <- setdiff(names(Names.DT), 'IDDD')
