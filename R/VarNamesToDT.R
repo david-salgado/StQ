@@ -47,7 +47,7 @@ VarNamesToDT <- function(VarNames, DD){
 
             DDlocal <- slot(DD, DDslot)
 
-            Names.DT <- DDlocal[Variable == ExtractNames(VarNames)]
+            Names.DT <- DatadtToDT(DDlocal)[Variable == ExtractNames(VarNames)]
             if(dim(Names.DT)[1] == 0) {
 
                 out <- data.table(IDDD = character(0))

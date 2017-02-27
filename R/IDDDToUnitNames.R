@@ -151,7 +151,7 @@ setMethod(
 
         Quals.list <- lapply(RootNames, function(IDDDName){
             
-            QualsDT <- DDdt[Variable == IDDDName, names(DDdt)[grep('Qual', names(DDdt))], with = F]
+            QualsDT <- DatadtToDT(DDdt)[Variable == IDDDName, names(DDdt)[grep('Qual', names(DDdt))], with = F]
             Quals <- t(QualsDT)[, 1]
             Quals <- Quals[Quals != '']
             Quals <- Quals[!Quals %in% DotQual]
