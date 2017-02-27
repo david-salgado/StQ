@@ -36,7 +36,7 @@
 #' # Notice that only the slot Data appears on screen, but the object is not a Datadt data.table:
 #' str(Q)
 #'
-#' @include DD-class.R Datadt-class.R
+#' @include DD-class.R Datadt-class.R DatadtToDT.R
 #'
 #' @import data.table
 #'
@@ -84,7 +84,7 @@ setClass(Class = "StQ",
              DDslotNames <- setdiff(slotNames(object@DD), 'VarNameCorresp')
              for (DDslot in DDslotNames){
                  
-                 DDlocal <- slot(object@DD, DDslot)
+                 DDlocal <- DatadtToDT(slot(object@DD, DDslot))
                  QualinDD <- unique(c(QualinDD, DDlocal[Sort != 'IDDD'][['Variable']]))
                  IDDDinDD <- unique(c(IDDDinDD, DDlocal[Sort == 'IDDD'][['Variable']]))
              }

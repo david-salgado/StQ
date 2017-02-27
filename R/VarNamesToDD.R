@@ -19,7 +19,7 @@
 #' VarNames <- c('ID', 'Turnover', 'EmplType', 'Employees')
 #' VarNamesToDD(VarNames, ExampleDD)                     
 #' 
-#' @include ExtractNames.R setVNC.R getVNC.R DDdt-class.R getVariables.R
+#' @include ExtractNames.R setVNC.R getVNC.R DDdt-class.R getVariables.R DatadtToDT.R
 #'
 #' @import data.table
 #'
@@ -38,6 +38,7 @@ VarNamesToDD <- function(VarNames, DD){
         for (DDslot in DDSlotNames) {
             
             DDdtlocal <- slot(DD, DDslot)
+            DDdtlocal <- DatadtToDT(DDdtlocal)
             Names.DT <- DDdtlocal[Variable == ExtractNames(VarNames)]
 
             if (dim(Names.DT)[1] != 0) {
