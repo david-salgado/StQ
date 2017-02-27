@@ -38,6 +38,7 @@ VarNamesToDD <- function(VarNames, DD){
         for (DDslot in DDSlotNames) {
             
             DDdtlocal <- slot(DD, DDslot)
+            DDdtlocal <- DatadtToDT(DDdtlocal)
             Names.DT <- DDdtlocal[Variable == ExtractNames(VarNames)]
 
             if (dim(Names.DT)[1] != 0) {
