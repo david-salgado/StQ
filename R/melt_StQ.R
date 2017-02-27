@@ -118,7 +118,6 @@ melt_StQ <- function(DataMatrix, DD){
             }
             
             IDQual <- intersect(IDQual, names(localDM))
-
             out <- data.table::melt.data.table(localDM,
                                                id.vars = IDQual,
                                                measure.vars= setdiff(names(localDM), IDQual),
@@ -169,6 +168,7 @@ melt_StQ <- function(DataMatrix, DD){
             return(outLocal)
 
         })
+
         names(moltenData) <- names(auxMeasureVar)
 
 

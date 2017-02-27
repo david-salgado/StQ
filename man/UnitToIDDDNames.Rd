@@ -5,12 +5,9 @@
 \alias{UnitToIDDDNames}
 \alias{UnitToIDDDNames,character,DD-method}
 \alias{UnitToIDDDNames,character,StQ-method}
-\alias{UnitToIDDDNames,character,VarNameCorresp-method}
 \title{Convert production unit names into their corresponding statistical variable names (IDDD)}
 \usage{
 UnitToIDDDNames(UnitNames, Correspondence)
-
-\S4method{UnitToIDDDNames}{character,VarNameCorresp}(UnitNames, Correspondence)
 
 \S4method{UnitToIDDDNames}{character,DD}(UnitNames, Correspondence)
 
@@ -22,12 +19,12 @@ UnitToIDDDNames(UnitNames, Correspondence)
 \item{Correspondence}{Object with the IDDD variable name.}
 }
 \value{
-Returns a \linkS4class{data.table} with all the corresponding IDDD variable names. For 
+Returns a \linkS4class{data.table} with all the corresponding IDDD variable names. For
 objects the classes \linkS4class{DD} and \linkS4class{StQ} it returns the IDDD the slot VarNameCorresp of the
 corresponding DD object.
 }
 \description{
-\code{UnitToIDDDNames} returns a \linkS4class{data.table} with the statistical 
+\code{UnitToIDDDNames} returns a \linkS4class{data.table} with the statistical
 variable name (IDDD + Qualifiers) corresponding to the production unit variable name specified as
 input argument.
 }
@@ -45,7 +42,7 @@ VarList <- list(ID = new(Class = 'VNCdt',
                                             IDDD = c('', 'Name', 'Surname', 'PostalAddr',
                                                      'PhoneNo'),
                                             NumIdEst = c('', rep('.', 4)),
-                                            UnitName = c('numidest', 'nombre', 'apellidos', 
+                                            UnitName = c('numidest', 'nombre', 'apellidos',
                                                       'direccion', 'telefono'),
                                             InFiles = rep('FF', 5))),
                 MicroData = new(Class = 'VNCdt',
@@ -80,7 +77,7 @@ VarList <- list(ID = new(Class = 'VNCdt',
 VNC <- new(Class = 'VarNameCorresp', .Data = VarList)
 
 ### We build the specification data.tables
-IDdt <- new(Class = "DDdt", 
+IDdt <- new(Class = "DDdt",
             .Data = data.table(
                      Variable = c('NumIdEst', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
                      Sort = c('IDQual', rep('IDDD', 4)),
@@ -88,7 +85,7 @@ IDdt <- new(Class = "DDdt",
                      Length = c('11', '25', '25', '50', '9'),
                      Qual1 = c('', rep('NumIdEst', 4)),
                      ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}')))
-Microdt <- new(Class = "DDdt", 
+Microdt <- new(Class = "DDdt",
             .Data = data.table(
                      Variable = c('NumIdEst', 'Market', 'NewOrders'),
                      Sort = c('IDQual', 'NonIDQual', 'IDDD'),
@@ -105,10 +102,10 @@ Paradt <- new(Class = "DDdt",
                      Length = c('11', '4', '10'),
                      Qual1 = c(rep('', 2), 'NumIdEst'),
                      Qual2 = c(rep('', 2), 'Action'),
-                     ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 
+                     ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation',
                      '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')
 ))
-Aggdt <- new(Class = "DDdt", 
+Aggdt <- new(Class = "DDdt",
             .Data = data.table(
                      Variable = c('Province', 'NACE09', 'Turnover'),
                      Sort = c(rep('IDQual', 2), 'IDDD'),
@@ -118,10 +115,10 @@ Aggdt <- new(Class = "DDdt",
                      Qual2 = c(rep('', 2), 'NACE09'),
                      ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])', '([0-9]{1, 15}| )')))
 
-DD <- new(Class = 'DD', 
-          VarNameCorresp = VNC, 
-          ID = IDdt, 
-          MicroData = Microdt, 
+DD <- new(Class = 'DD',
+          VarNameCorresp = VNC,
+          ID = IDdt,
+          MicroData = Microdt,
           ParaData = Paradt,
           Aggregates = Aggdt)
 
