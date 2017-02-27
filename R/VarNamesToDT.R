@@ -34,7 +34,7 @@
 #'
 #' @export
 VarNamesToDT <- function(VarNames, DD){
-    
+
     NotPresentVar  <- setdiff(ExtractNames(VarNames), getVariables(DD))
     if (length(NotPresentVar) > 0) stop(paste0('[StQ::VarNamesToDD] The following variables are not contained in the DD slot: ', NotPresentVar, '.\n'))
     # Para una sola variable
@@ -60,7 +60,7 @@ VarNamesToDT <- function(VarNames, DD){
                 Names.DT[, Class := NULL]
                 Names.DT[, Length := NULL]
                 Names.DT[, ValueRegExp := NULL]
-                
+
                 ParsedNames <- strsplit(VarNames, '_')[[1]]
                 IDQual <- DDlocal[Sort == 'IDQual'][['Variable']]
                 IDQualCounter <- 0
@@ -68,17 +68,17 @@ VarNamesToDT <- function(VarNames, DD){
                 ColNames <- setdiff(names(Names.DT), 'IDDD')
                 if (length(ColNames) > 0){
                     for (i in seq(along = ColNames)){
-                        
+
                         if (Names.DT[[paste0('Qual', i)]] %in% IDQual) {
-                            
+
                             Names.DT[, (paste0('Qual', i)) := NULL]
                             IDQualCounter <- IDQualCounter + 1
                             next
                         }
-                        
+
                         auxName <- Names.DT[[paste0('Qual', i)]]
                         if (auxName == '') {
-                            
+
                             Names.DT[, (paste0('Qual', i)) := NULL]
                             next
                         }
@@ -96,7 +96,7 @@ VarNamesToDT <- function(VarNames, DD){
                 }
 
                 output[[DDslot]] <- Names.DT
-                
+
             }
         }
         outputGlobal <- Reduce(function(x, y){
@@ -110,17 +110,17 @@ VarNamesToDT <- function(VarNames, DD){
         out.list <- lapply(as.list(VarNames), VarNamesToDT, DD = DD)
 
         out <- Reduce(function(x, y){
-                            merge(x, y, all = TRUE, by = intersect(names(x), names(y)))}, 
-                      out.list, 
+                            merge(x, y, all = TRUE, by = intersect(names(x), names(y)))},
+                      out.list,
                       out.list[[1L]])
 
         # Pasamos NA a '' y eliminamos columnas vacías
         Cols <- sort(names(out))
         for (col in Cols){
-            
+
             out[, (col) := ifelse(is.na(get(col)), '', get(col))]
             if (all(out[[col]] == '')) out[, (col) := NULL]
-        
+
         }
         return(out)
     }
