@@ -88,7 +88,7 @@
 setGeneric("getData", function(object, VarNames, DDslot = 'MicroData'){standardGeneric("getData")})
 #' @rdname getData
 #' 
-#' @include DD-class.R
+#' @include DD-class.R DatadtToDT.R
 #' 
 #' @export
 setMethod(
@@ -155,7 +155,7 @@ setMethod(
         NameQuals <- c()
         for (Qual in Quals){
             
-            NameQuals <- c(NameQuals, Varslot[Variable == ExtractNames(VarName)][[Qual]])
+            NameQuals <- c(NameQuals, DatadtToDT(Varslot)[Variable == ExtractNames(VarName)][[Qual]])
         }
          
         nonIDQuals <- getNonIDQual(Varslot)

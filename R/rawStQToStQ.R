@@ -18,7 +18,7 @@
 setGeneric("rawStQToStQ", function(rawQ){standardGeneric("rawStQToStQ")})
 #' @rdname rawStQToStQ
 #'
-#' @include rawStQ-class.R Datadt-class.R StQ-class.R getDD.R getData.R
+#' @include rawStQ-class.R Datadt-class.R StQ-class.R getDD.R getData.R DatadtToDT.R
 #'
 #' @importFrom stringi stri_sub stri_trim_right
 #'
