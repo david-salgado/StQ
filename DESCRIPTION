@@ -1,6 +1,6 @@
 Package: StQ
 Title: Tools to manage metadata-incorporated key-value pair datasets
-Version: 0.3.15
+Version: 0.3.16
 Authors@R: c(
     person("David", "Salgado", email = "david.salgado.fernandez@gmail.com", role = c("cre", "aut")),
     person("Elisa", "Esteban", email = "elisa.esteban.segurado@gmail.com", role = "aut"),
@@ -21,6 +21,7 @@ License: file LICENSE
 LazyData: true
 Encoding: UTF-8
 Collate:
+    'DatadtToDT.R'
     'Datadt-class.R'
     'DDdt-class.R'
     'VNCdt-class.R'
@@ -38,7 +39,6 @@ Collate:
     'rawStQList-class.R'
     'BuildrawStQList.R'
     'getDD.R'
-    'DatadtToDT.R'
     'getIDDD.R'
     'getNonIDQual.R'
     'getIDQual.R'

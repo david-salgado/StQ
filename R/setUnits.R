@@ -37,7 +37,7 @@ setReplaceMethod(
     function(object, value){
 
         Data <- getData(object)
-        Data <- merge(Data, value, by = names(value))
+        Data <- merge(Data, value, by = names(value), all.y = TRUE)
         Data <- new(Class = 'Datadt', Data)
         setData(object) <- Data
         return(object)
