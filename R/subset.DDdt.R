@@ -2,7 +2,7 @@
 #'
 #' @description \code{[} extracts parts of an object of class \linkS4class{DDdt}.
 #'
-#' It is indeed the method \code{[} for the class \linkS4class{DDdt}. 
+#' It is indeed the method \code{[} for the class \linkS4class{DDdt}.
 #'
 #' @param x Object of class \linkS4class{DDdt}.
 #'
@@ -27,7 +27,7 @@ setMethod(
    f = "[",
    signature = c("DDdt"),
    function(x, i, j, ..., drop = TRUE){
-    
+
        #mc <- match.call()
        #New.x <- x@.Data
        #names(New.x) <- x@names
@@ -37,7 +37,7 @@ setMethod(
        mc <- match.call()
        New.x <- DatadtToDT(x)
        mc[['x']] <- New.x
-       output <- eval(mc, envir = parent.frame())
+       output <- eval(mc, envir = parent.frame(), enclos = New.x)
        output <- new(Class = 'DDdt', output)
        return(output)
    }
