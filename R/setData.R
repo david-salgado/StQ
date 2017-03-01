@@ -37,9 +37,10 @@ setReplaceMethod(
     f = "setData",
     signature = c("StQ", "Datadt"),
     function(object, value){
-
+        
+        value <- DatadtToDT(value)
         setkeyv(value, setdiff(names(value), 'Value'))
-        object@Data <- value
+        object@Data <- new(Class = 'Datadt', value)
         validObject(object)
         return(object)
     }

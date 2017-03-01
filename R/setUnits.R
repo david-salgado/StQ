@@ -26,7 +26,7 @@
 setGeneric("setUnits<-", function(object, value){standardGeneric("setUnits<-")})
 #' @rdname setUnits
 #'
-#' @include StQ-class.R getData.R setData.R
+#' @include StQ-class.R getData.R setData.R DatadtToDT.R
 #'
 #' @import data.table
 #'
@@ -36,8 +36,12 @@ setReplaceMethod(
     signature = c("StQ", "data.table"),
     function(object, value){
 
-        Data <- getData(object)
+        Data <- DatadtToDT(getData(object))
         Data <- merge(Data, value, by = names(value), all.y = TRUE)
+        colData <- names(Data)
+        for (col in colData){
+            Data[is.na(get(col)), (col) := '']
+        }
         Data <- new(Class = 'Datadt', Data)
         setData(object) <- Data
         return(object)

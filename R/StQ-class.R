@@ -54,12 +54,12 @@ setClass(Class = "StQ",
              colData <- names(Datadt)
              colsData <- c('IDDD', 'Value')
              Data <- DatadtToDT(Datadt)
-             for (col in setdiff(colData, colsData)){
+             #for (col in setdiff(colData, colsData)){
                  
-                 if (all(Data[[col]] == '')) Data[, (col) := NULL]
-             }
+             #    if (all(Data[[col]] == '')) Data[, (col) := NULL]
+             #}
              
-             object@Data <- new(Class = 'Datadt', Data)
+             #object@Data <- new(Class = 'Datadt', Data)
              colData <- names(Data)
             
              
@@ -96,7 +96,7 @@ setClass(Class = "StQ",
              
              # Comparamos las variables en los slots Data y DD: Todas las variables en Data deben estar definidas en algún slot de DD
              IDDDinData <- unique(Data[['IDDD']])
-             NotinDD <- setdiff(IDDDinData, IDDDinDD)
+             NotinDD <- setdiff(IDDDinData, c(IDDDinDD, ''))
              if (length(NotinDD) > 0) {
                  stop(paste0('\n[StQ::validity StQ] The following variables in the column IDDD of slot "Data" are not defined in slot DD: \n',
                              paste0(NotinDD, collapse = ', '), '.\n'))
