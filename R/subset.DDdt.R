@@ -18,14 +18,14 @@
 #' data(ExampleDDdt)
 #' ExampleDDdt[Sort == 'IDQual']
 #'
-#' @include DDdt-class.R
+#' @include DDdt-class.R DatadtToDT.R
 #'
 #' @import data.table
 #'
 #' @export
 setMethod(
    f = "[",
-   signature = c("DDdt"),
+   signature = c("DDdt", "ANY", "ANY"),
    function(x, i, j, ..., drop = TRUE){
 
        #mc <- match.call()
@@ -34,6 +34,8 @@ setMethod(
        #New.x <- setDT(New.x)
        #mc[['x']] <- New.x
        #output <- eval(mc, envir = parent.frame())
+
+
        mc <- match.call()
        New.x <- DatadtToDT(x)
        mc[['x']] <- New.x

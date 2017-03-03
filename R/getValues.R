@@ -18,7 +18,9 @@
 #' getValues(ExampleStQ, 'Employees_1.')
 #' getValues(ExampleStQ, 'Turnover')
 #'
-#' @import data.table
+#' @include StQ-class.R getData.R getDD.R DDslotWith.R getNonIDQual.R VarNamesToDD.R VarNamesToDT.R ExtractNames.R DatadtToDT.R
+#'
+#' @import data.table RepoTime
 #'
 #' @export
 setGeneric("getValues", 
@@ -27,10 +29,6 @@ setGeneric("getValues",
                standardGeneric("getValues")})
 
 #' @rdname getValues
-#'
-#' @include StQ-class.R getData.R getDD.R DDslotWith.R getNonIDQual.R VarNamesToDD.R VarNamesToDT.R ExtractNames.R
-#'
-#' @import data.table RepoTime
 #' 
 #' @export
 setMethod(
@@ -65,7 +63,7 @@ setMethod(
         }
         NonIDQuals <- setdiff(VarQuals, getIDQual(slot(DD, VarNameSlot)))
         IDQuals <- getIDQual(object, VarNameSlot)
-        output <- getData(object, VarName, VarNameSlot)
+        output <- DatadtToDT(getData(object, VarName, VarNameSlot))
         if (dim(output)[1] == 0) stop(paste0('[StQ::getValues] The input parameter ', VarName, ' is not present in the input StQ object.\n'))
         for (NonIDQual in NonIDQuals){
             

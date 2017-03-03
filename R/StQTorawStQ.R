@@ -18,7 +18,7 @@
 setGeneric("StQTorawStQ", function(Q){standardGeneric("StQTorawStQ")})
 #' @rdname StQTorawStQ
 #' 
-#' @include StQ-class.R rawKey-class.R rawDatadt-class.R rawStQ-class.R getDD.R getData.R
+#' @include StQ-class.R rawKey-class.R rawDatadt-class.R rawStQ-class.R getDD.R getData.R DatadtToDT.R
 #' 
 #' @importFrom stringr str_pad
 #' 
@@ -38,14 +38,14 @@ setMethod(
         DDdt.list <- setdiff(slotNames(DD), 'VarNameCorresp')
         DDdt.list <- lapply(DDdt.list, function(Name){slot(DD, Name)})
         DDdt <- Reduce('+', DDdt.list, init = DDdt.list[[1]])
-        IDDDNames <- DDdt[Sort == 'IDDD'][['Variable']]
+        IDDDNames <- DatadtToDT(DDdt)[Sort == 'IDDD'][['Variable']]
 
         QData <- DatadtToDT(getData(Q))
         setnames(QData, 'IDDD', 'IDDDKey')
         ColNames <- setdiff(names(QData), c('IDDDKey', 'Value'))
         for (col in ColNames){
    
-            Width <- DDdt[Variable == col][['Length']]
+            Width <- DatadtToDT(DDdt)[Variable == col][['Length']]
             QData[, (col) := stringr::str_pad(get(col), Width, 'right', ' ')]
             
         }
@@ -55,7 +55,7 @@ setMethod(
         
         QData.list <- lapply(names(QData.list), function(VarName){
      
-            QualsDT <- DDdt[Variable == VarName, names(DDdt)[grep('Qual', names(DDdt))], with = F]
+            QualsDT <- DatadtToDT(DDdt)[Variable == VarName, names(DDdt)[grep('Qual', names(DDdt))], with = F]
             Quals <- t(QualsDT)[, 1]
             Quals <- Quals[Quals != '']
             out <- QData.list[[VarName]][, c('IDDDKey', Quals, 'Value'), with = F]

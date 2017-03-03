@@ -107,8 +107,6 @@
 #'
 #' StQ <- new(Class = 'StQ', Data = new(Class = 'Datadt'), DD = DD)
 #'
-#' UnitToIDDDNames(VNC, UnitNames = 'cp09')
-#'
 #' UnitToIDDDNames(DD, UnitNames = c('cn01', 'cp09'))
 #'
 #' UnitToIDDDNames(StQ, UnitNames = c('cn01', 'provincia', 'cp09'))
@@ -119,7 +117,7 @@ setGeneric("UnitToIDDDNames", function(UnitNames, Correspondence){standardGeneri
 
 #' @rdname UnitToIDDDNames
 #'
-#' @include VNCdt-class.R getIDQual.R VarNameCorresp-class.R
+#' @include VNCdt-class.R getIDQual.R VarNameCorresp-class.R DatadtToDT.R
 #'
 #' @import data.table
 #'
@@ -168,7 +166,7 @@ setMethod(
 
                 #ColsNotUnit <- setdiff(names(xls), c('IDDD', 'UnitName', 'IDDDName', 'InFiles'))
                 #ColsNotUnit <- intersect(names(VNC), ColsNotUnit)
-                auxDT <- slot(DD, nameVNC)[Variable == unique(xls[['IDDDName']])]
+                auxDT <- DatadtToDT(slot(DD, nameVNC))[Variable == unique(xls[['IDDDName']])]
                 ColsNotUnit <- t(as.matrix(auxDT[, names(auxDT)[grep('Qual', names(auxDT))], with = FALSE]))[,1]
                 ColsNotUnit <- setdiff(ColsNotUnit, IDQual)
                 ColsNotUnit <- ColsNotUnit[ColsNotUnit != '']

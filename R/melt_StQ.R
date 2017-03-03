@@ -30,7 +30,7 @@
 #' \code{\link[data.table]{melt.data.table}}, \code{\link[reshape2]{melt}},
 #' \code{\link[reshape2]{dcast}}
 #'
-#' @include Datadt-class.R StQ-class.R ExtractNames.R getVNC.R UnitToIDDDNames.R
+#' @include Datadt-class.R StQ-class.R ExtractNames.R getVNC.R UnitToIDDDNames.R DatadtToDT.R
 #'
 #' @import data.table
 #'
@@ -69,7 +69,7 @@ melt_StQ <- function(DataMatrix, DD){
 
     out <- lapply(slots, function(VNCName){
 
-        DDdtlocal <- slot(DD, ExtractNames(VNCName))
+        DDdtlocal <- DatadtToDT(slot(DD, ExtractNames(VNCName)))
         VNClocal <- getVNC(DD)[[VNCName]]
         nQual <- length(grep('Qual', names(DDdtlocal)))
         auxDDdt <- copy(DDdtlocal)[, c('Variable', paste0('Qual', 1:nQual)), with = F]

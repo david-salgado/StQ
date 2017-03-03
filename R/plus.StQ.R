@@ -46,7 +46,7 @@
 #' Q2 <- ExampleStQ
 #' Q1 + Q2
 #'
-#' @include StQ-class.R DD-class.R getDD.R getData.R getUnits.R
+#' @include StQ-class.R DD-class.R getDD.R getData.R getUnits.R DatadtToDT.R
 #'
 #' @import data.table
 #'
@@ -66,20 +66,20 @@ setMethod(
   
     if (length(NewCol.e2) > 0){
         
-        Datae1 <- getData(e1)[, (NewCol.e2) := character(.N)]
+        Datae1 <- DatadtToDT(getData(e1))[, (NewCol.e2) := character(.N)]
         
     } else {
         
-        Datae1 <- getData(e1)
+        Datae1 <- DatadtToDT(getData(e1))
     }
 
     if (length(NewCol.e1) > 0){
         
-        Datae2 <- getData(e2)[, (NewCol.e1) := character(.N)]
+        Datae2 <- DatadtToDT(getData(e2))[, (NewCol.e1) := character(.N)]
 
     } else {
         
-        Datae2 <- getData(e2)
+        Datae2 <- DatadtToDT(getData(e2))
     }
     
     # Unimos los slots Data con rbindlist eliminando los duplicados

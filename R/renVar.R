@@ -24,7 +24,7 @@ setGeneric("renVar",
            function(object, VarNames, NewVarNames){standardGeneric("renVar")})
 #' @rdname renVar
 #'
-#' @include StQ-class.R getData.R getDD.R getVNC.R Datadt-class.R DD-class.R
+#' @include StQ-class.R getData.R getDD.R getVNC.R Datadt-class.R DD-class.R DatadtToDT.R
 #'
 #' @import data.table
 #'
@@ -43,15 +43,14 @@ setMethod(
 
         stop('[StQ::renVar] VarNames and NewVarNames must be character vectors with the same length.')
     }
-
-    Data.VarNames <- unique(getData(object)[['IDDD']])
+    
+    outputData <- DatadtToDT(getData(object))
+    Data.VarNames <- unique(outputData[['IDDD']])
     NotPresentVar <- setdiff(ExtractNames(VarNames), Data.VarNames)
     if (length(NotPresentVar) != 0) {
       stop(paste0('[StQ::renVar] Variable(s) ',
            paste0(NotPresentVar, collapse = ', '), ' is(are) not in the input object.'))
     }
-
-    outputData <- getData(object)
     auxData <- outputData[['IDDD']]
     for (indexVar in seq(along = VarNames)){
         
@@ -60,7 +59,7 @@ setMethod(
 
     outputDD <- list()
     for (DDslot in setdiff(slotNames(getDD(object)), 'VarNameCorresp')){
-        outputDD[[DDslot]] <- slot(getDD(object), DDslot)
+        outputDD[[DDslot]] <- DatadtToDT(slot(getDD(object), DDslot))
         setkeyv(outputDD[[DDslot]], 'Variable')
         for (indexVar in seq(along = VarNames)){
           
@@ -70,21 +69,24 @@ setMethod(
     
     outputDD[['VarNameCorresp']] <- getVNC(object)
     for (VNCSlot in names(outputDD[['VarNameCorresp']])){
+        
         for (indexVar in seq(along = VarNames)){
             
-            outputDD[['VarNameCorresp']][[VNCSlot]][IDDD == VarNames[indexVar], IDDD := NewVarNames[indexVar]]
+            auxDT <- outputDD[['VarNameCorresp']][[VNCSlot]]
+            auxDT <- auxDT[IDDD == VarNames[indexVar], IDDD := NewVarNames[indexVar]]
+            outputDD[['VarNameCorresp']][[VNCSlot]] <- new(Class = 'VNCdt', auxDT)
         }
     }
-    
+
     outputData <- new(Class = 'Datadt', outputData[, IDDD := auxData])
     outputDD <- new(Class = 'DD', 
                     VarNameCorresp = outputDD[['VarNameCorresp']],
-                    ID = outputDD[['ID']],
-                    MicroData = outputDD[['MicroData']],
-                    ParaData = outputDD[['ParaData']],
-                    Aggregates = outputDD[['Aggregates']], 
-                    AggWeights = outputDD[['AggWeights']],
-                    Other = outputDD[['Other']])
+                    ID = new(Class = 'DDdt', outputDD[['ID']]),
+                    MicroData = new(Class = 'DDdt', outputDD[['MicroData']]),
+                    ParaData = new(Class = 'DDdt', outputDD[['ParaData']]),
+                    Aggregates = new(Class = 'DDdt', outputDD[['Aggregates']]), 
+                    AggWeights = new(Class = 'DDdt', outputDD[['AggWeights']]),
+                    Other = new(Class = 'DDdt', outputDD[['Other']]))
     output <- new(Class = 'StQ', Data = outputData, DD = outputDD)
     
     return(output)

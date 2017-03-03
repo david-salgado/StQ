@@ -124,8 +124,6 @@ DD <- new(Class = 'DD',
 
 StQ <- new(Class = 'StQ', Data = new(Class = 'Datadt'), DD = DD)
 
-UnitToIDDDNames(VNC, UnitNames = 'cp09')
-
 UnitToIDDDNames(DD, UnitNames = c('cn01', 'cp09'))
 
 UnitToIDDDNames(StQ, UnitNames = c('cn01', 'provincia', 'cp09'))
