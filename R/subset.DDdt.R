@@ -37,6 +37,7 @@ setMethod(
 
 
        mc <- match.call()
+       #mc[[1L]] <- data.table:::`[.data.table`
        New.x <- DatadtToDT(x)
        mc[['x']] <- New.x
        output <- eval(mc, envir = New.x, enclos = parent.frame())
