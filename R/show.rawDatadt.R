@@ -15,9 +15,9 @@
 #'
 #' show(getData(ExamplerawStQ))
 #' 
-#' @include DDdt-class.R
+#' @include DDdt-class.R DatadtToDT.R
 #'
-#' @import data.table
+#' @import data.table 
 #'
 #' @export
 setMethod(
@@ -25,11 +25,12 @@ setMethod(
     signature = c("rawDatadt"),
     function(object){
         
-        mc <- match.call()
-        New.object <- object@.Data
-        names(New.object) <- object@names
-        New.object <- setDT(New.object)
-        show(New.object)
+        show(DatadtToDT(object))
+        #mc <- match.call()
+        #New.object <- object@.Data
+        #names(New.object) <- object@names
+        #New.object <- setDT(New.object)
+        #show(New.object)
         return(invisible(NULL))
             
     }

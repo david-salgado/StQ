@@ -43,7 +43,6 @@ setClass(Class = "DDdt",
          validity = function(object){
              
              NCol <- dim(object)[2]
-             
              if (NCol < 6) {
                  
                  stop(paste0('[StQ:: Validity DDdt] The object must be a data.table with at least five columns named "Variable", "Sort", "Class", "Length", "Qual1" and "ValueRegExp".\n'))   
@@ -63,7 +62,6 @@ setClass(Class = "DDdt",
                  stop('[StQ:: Validity DDdt] No duplicate variable is allowed.\n')
                  
              }
-             
              NQual <- max(0, NCol - 6)
              if (NQual > 0) {
                  
@@ -75,7 +73,7 @@ setClass(Class = "DDdt",
              
              }
              ColNames <- c('Variable', 'Sort', 'Class', 'Length', 'ValueRegExp', Quals)
-            
+
              if (!all(names(object) %in% ColNames)) {
                  
                  stop('[StQ:: Validity DDdt] The names of a DDdt object must be: Variable, Sort, Class, Length, Qual1-Qualj, ValueRegExp.\n')

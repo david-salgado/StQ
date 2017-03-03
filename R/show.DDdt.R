@@ -33,7 +33,7 @@
 #'                                         ValueRegExp = '[0-9]{9}SS'))
 #' show(DDdt2)
 #' 
-#' @include DDdt-class.R
+#' @include DDdt-class.R DatadtToDT.R
 #'
 #' @import data.table
 #'
@@ -48,18 +48,19 @@ setMethod(
         NumCol <- length(NamesCol) 
         if (NumCol <= ColMax) {
             
-            mc <- match.call()
-            New.object <- object@.Data
-            names(New.object) <- object@names
-            New.object <- setDT(New.object)
-            show(New.object)
+            show(DatadtToDT(object))
+            #mc <- match.call()
+            #New.object <- object@.Data
+            #names(New.object) <- object@names
+            #New.object <- setDT(New.object)
+            #show(New.object)
             return(invisible(NULL))
             
         } else {
 
             NumCols <- min(NumCol, ColMax)
             NamesShowCol <- NamesCol[c(1:(ColMax - 2), (NumCol - 1):NumCol)]
-            show(object[, NamesShowCol, with = F])
+            show(DatadtToDT(object)[, NamesShowCol, with = F])
             cat('\n\n')
             cat(paste(rep('=', 40)), '\n\n')
             cat(paste0('The following columns have been omitted for clarity:\n ', paste0(setdiff(NamesCol, NamesShowCol), collapse = ', '),'\n'))

@@ -33,9 +33,10 @@ setMethod(
   function(x, i, j, ..., drop = TRUE){
 
     mc <- match.call()
-    mc[['x']] <- DatadtToDT(getData(x))
+    auxDT <- DatadtToDT(getData(x))
+    mc[['x']] <- auxDT
     output <- x
-    x.subsetted <- eval(mc, envir = parent.frame())
+    x.subsetted <- eval(mc, envir = auxDT, enclos = parent.frame())
     Datadt <- new(Class = 'Datadt', x.subsetted)
     setData(output) <- new(Class = 'Datadt', Datadt)
     validObject(output)

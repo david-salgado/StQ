@@ -42,7 +42,7 @@ setMethod(
      mc <- match.call()
      DataList <- getData(x)
      mc[['x']] <- DataList
-     DataList <- eval(mc, envir = parent.frame())
+     DataList <- eval(mc, envir = DataList, enclos = parent.frame())
      Periods <- names(DataList)
 
      output <- new(Class = 'StQList', Data = DataList, Periods = newRepoTime(Periods))

@@ -35,17 +35,23 @@ setMethod(
     mc <- match.call()
     for (DDslot in DDslotNames){
         output[[DDslot]] <- mc
-        output[[DDslot]][['x']] <- slot(x, DDslot)
-        output[[DDslot]] <- eval(output[[DDslot]], envir = parent.frame())
+        LocalSlot <- slot(x, DDslot)
+        output[[DDslot]][['x']] <- LocalSlot
+        output[[DDslot]] <- eval(output[[DDslot]], envir = LocalSlot, enclos = parent.frame())
     }
     VNC <- getVNC(x)
 
     output <- new(Class = 'DD',
                   VarNameCorresp = VNC,
-                  ID = if(is.null(output[['ID']])){
+                  ID = if (is.null(output[['ID']])) {
+                      
                             new(Class = 'DDdt')
-                       } else {
-                            new(Class = 'DDdt', output[['ID']])},
+                       
+                      } else {
+                          
+                            new(Class = 'DDdt', output[['ID']])
+                          
+                      },
                   MicroData = if(is.null(output[['MicroData']])){
                             new(Class = 'DDdt')
                        } else {

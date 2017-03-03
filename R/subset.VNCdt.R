@@ -47,7 +47,7 @@ setMethod(
        mc <- match.call()
        New.x <- DatadtToDT(x)
        mc[['x']] <- New.x
-       output <- eval(mc, envir = parent.frame())
+       output <- eval(mc, envir = New.x, enclos = parent.frame())
        output <- new(Class = 'VNCdt', output)
        return(output)
    }
