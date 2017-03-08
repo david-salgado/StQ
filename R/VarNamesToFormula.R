@@ -36,11 +36,7 @@ setGeneric("VarNamesToFormula",
            function(VarNames, DD){standardGeneric("VarNamesToFormula")})
 #' @rdname VarNamesToFormula
 #'
-<<<<<<< HEAD
 #' @include VNC.R DD.R ExtractNames.R getVariables.R
-=======
-#' @include DD-class.R ExtractNames.R getVariables.R
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #'
 #' @import data.table
 #'
@@ -63,19 +59,11 @@ setMethod(
             output <- list()
             for (DDslot in DDSlotNames){
 
-<<<<<<< HEAD
                 DDlocal <- DD[[DDslot]]
                 IDQual <- DDlocal[Sort == 'IDQual', Variable]
                 NonIDQual <- DDlocal[Sort == 'NonIDQual', Variable]
                 Quals <- names(DDlocal)[grep('Qual', names(DDlocal))]
                 auxDD <- DDlocal[Variable == ExtractNames(VarNames), c('Variable', Quals), with = F]
-=======
-                DDlocal <- slot(DD, DDslot)
-                IDQual <- DatadtToDT(DDlocal)[Sort == 'IDQual', Variable]
-                NonIDQual <- DatadtToDT(DDlocal)[Sort == 'NonIDQual', Variable]
-                Quals <- names(DDlocal)[grep('Qual', names(DDlocal))]
-                auxDD <- DatadtToDT(DDlocal)[Variable == ExtractNames(VarNames), c('Variable', Quals), with = F]
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
                 auxDD[, LHS := '']
                 auxDD[, RHS := '']
 

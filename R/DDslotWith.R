@@ -17,11 +17,8 @@
 #' @examples
 #' data(ExampleDD)
 #' DDslotWith(ExampleDD, 'Turnover')
-<<<<<<< HEAD
 #' 
 #' @include DD.R VarNamesToDD.R ExtractNames.R
-=======
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #'
 #' @import data.table
 #'
@@ -31,11 +28,6 @@ setGeneric("DDslotWith",
 
 #' @rdname DDslotWith
 #'
-<<<<<<< HEAD
-=======
-#' @include DD-class.R VarNamesToDD.R ExtractNames.R
-#'
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #' @import data.table
 #' 
 #' @export
@@ -53,17 +45,10 @@ setMethod(
         DDVar <- VarNamesToDD(VarName, object)
 
         Varslot <- c()
-<<<<<<< HEAD
         for (DDvarslot in setdiff(names(DDVar), 'VNC')){
             
             DDlocal <- DDVar[[DDvarslot]]
             if (dim(DDlocal)[1] != 0) {
-=======
-        for (DDvarslot in setdiff(slotNames(DDVar), 'VarNameCorresp')){
-            
-            DDlocal <- slot(DDVar, DDvarslot)
-            if(dim(DDlocal)[1] != 0){
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
                 
                 Varslot <- c(Varslot, DDvarslot)
             }
@@ -74,11 +59,7 @@ setMethod(
             stop('[StQ::DDslotWith] Variable ', ExtractNames(VarName), ' is not defined in slot ', DDslot, ' of the input object.')
         }
         
-<<<<<<< HEAD
         output <- object[[DDslot]]
-=======
-        output <- slot(object, DDslot)
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
         
         return(output)
     }

@@ -18,22 +18,14 @@
 #' @examples
 #' data(ExampleStQ)
 #' renVar(ExampleStQ, 'Stocks', 'NewStocks')
-<<<<<<< HEAD:R/renVar.R
 #'
 #' @include StQ.R getData.R getDD.R getVNC.R DD.R
-=======
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8:R/renVar.R
 #'
 #' @export
 setGeneric("renVar",
            function(object, VarNames, NewVarNames){standardGeneric("renVar")})
 #' @rdname renVar
 #'
-<<<<<<< HEAD:R/renVar.R
-=======
-#' @include StQ-class.R getData.R getDD.R getVNC.R Datadt-class.R DD-class.R DatadtToDT.R
-#'
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8:R/renVar.R
 #' @import data.table
 #'
 #' @export
@@ -52,11 +44,7 @@ setMethod(
         stop('[StQ::renVar] VarNames and NewVarNames must be character vectors with the same length.')
     }
     
-<<<<<<< HEAD:R/renVar.R
     outputData <- getData(object)
-=======
-    outputData <- DatadtToDT(getData(object))
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8:R/renVar.R
     Data.VarNames <- unique(outputData[['IDDD']])
     NotPresentVar <- setdiff(ExtractNames(VarNames), Data.VarNames)
     if (length(NotPresentVar) != 0) {
@@ -70,14 +58,9 @@ setMethod(
     }
 
     outputDD <- list()
-<<<<<<< HEAD:R/renVar.R
     DD <- getDD(object)
     for (DDslot in setdiff(names(DD), 'VNC')){
         outputDD[[DDslot]] <- DD[[DDslot]]
-=======
-    for (DDslot in setdiff(slotNames(getDD(object)), 'VarNameCorresp')){
-        outputDD[[DDslot]] <- DatadtToDT(slot(getDD(object), DDslot))
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8:R/renVar.R
         setkeyv(outputDD[[DDslot]], 'Variable')
         for (indexVar in seq(along = VarNames)){
           
@@ -85,7 +68,6 @@ setMethod(
         }
     }
     
-<<<<<<< HEAD:R/renVar.R
     outputDD[['VNC']] <- getVNC(object)
     for (VNCSlot in names(outputDD[['VNC']])){
         
@@ -105,29 +87,6 @@ setMethod(
                    AggWeights = outputDD[['AggWeights']],
                    Other = outputDD[['Other']])
     output <- StQ(Data = outputData, DD = outputDD)
-=======
-    outputDD[['VarNameCorresp']] <- getVNC(object)
-    for (VNCSlot in names(outputDD[['VarNameCorresp']])){
-        
-        for (indexVar in seq(along = VarNames)){
-            
-            auxDT <- outputDD[['VarNameCorresp']][[VNCSlot]]
-            auxDT <- auxDT[IDDD == VarNames[indexVar], IDDD := NewVarNames[indexVar]]
-            outputDD[['VarNameCorresp']][[VNCSlot]] <- new(Class = 'VNCdt', auxDT)
-        }
-    }
-
-    outputData <- new(Class = 'Datadt', outputData[, IDDD := auxData])
-    outputDD <- new(Class = 'DD', 
-                    VarNameCorresp = outputDD[['VarNameCorresp']],
-                    ID = new(Class = 'DDdt', outputDD[['ID']]),
-                    MicroData = new(Class = 'DDdt', outputDD[['MicroData']]),
-                    ParaData = new(Class = 'DDdt', outputDD[['ParaData']]),
-                    Aggregates = new(Class = 'DDdt', outputDD[['Aggregates']]), 
-                    AggWeights = new(Class = 'DDdt', outputDD[['AggWeights']]),
-                    Other = new(Class = 'DDdt', outputDD[['Other']]))
-    output <- new(Class = 'StQ', Data = outputData, DD = outputDD)
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8:R/renVar.R
     
     return(output)
 

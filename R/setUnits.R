@@ -28,11 +28,6 @@
 setGeneric("setUnits<-", function(object, value){standardGeneric("setUnits<-")})
 #' @rdname setUnits
 #'
-<<<<<<< HEAD
-=======
-#' @include StQ-class.R getData.R setData.R DatadtToDT.R
-#'
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #' @import data.table
 #'
 #' @export
@@ -41,20 +36,12 @@ setReplaceMethod(
     signature = c("StQ", "data.table"),
     function(object, value){
 
-<<<<<<< HEAD
         Data <- getData(object)
-=======
-        Data <- DatadtToDT(getData(object))
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
         Data <- merge(Data, value, by = names(value), all.y = TRUE)
         colData <- names(Data)
         for (col in colData){
             Data[is.na(get(col)), (col) := '']
         }
-<<<<<<< HEAD
-=======
-        Data <- new(Class = 'Datadt', Data)
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
         setData(object) <- Data
         return(object)
     }

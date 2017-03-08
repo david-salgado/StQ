@@ -31,20 +31,12 @@ setGeneric("setData<-", function(object, value){standardGeneric("setData<-")})
 
 #' @rdname setData
 #'
-<<<<<<< HEAD
-=======
-#' @include StQ-class.R 
-#'
-#' @import data.table
-#'
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #' @export
 setReplaceMethod(
     f = "setData",
-    signature = c("StQ", "Datadt"),
+    signature = c("StQ", "data.table"),
     function(object, value){
         
-<<<<<<< HEAD
         object$Data <- value
         return(object)
     }
@@ -59,12 +51,6 @@ setReplaceMethod(
     function(object, value){
         
         object$Data <- value
-=======
-        value <- DatadtToDT(value)
-        setkeyv(value, setdiff(names(value), 'Value'))
-        object@Data <- new(Class = 'Datadt', value)
-        validObject(object)
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
         return(object)
     }
 )

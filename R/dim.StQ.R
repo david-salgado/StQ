@@ -13,16 +13,11 @@
 #' data(ExampleStQ)
 #' dim(ExampleStQ)
 #'
-<<<<<<< HEAD
 #' @include StQ.R getData.R 
-=======
-#' @include StQ-class.R getData.R 
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #'
 #' @import data.table
 #'
 #' @export
-<<<<<<< HEAD
 `dim.StQ` <- function(x){
     
     output <- dim(getData(x))
@@ -30,17 +25,3 @@
         
 }
 
-=======
-setMethod(
-    f = "dim",
-    signature = c("StQ"),
-    function(x){
-        
-        mc <- match.call()
-        mc[['x']] <- getData(x)
-        output <- eval(mc, envir = parent.frame())
-        return(output)
-        
-    }
-)
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8

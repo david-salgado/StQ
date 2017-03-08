@@ -19,11 +19,7 @@
 #' VarNames <- c('ID', 'Turnover', 'EmplType', 'Employees')
 #' VarNamesToDD(VarNames, ExampleDD)                     
 #' 
-<<<<<<< HEAD
 #' @include ExtractNames.R setVNC.R getVNC.R DD.R getVariables.R setID.R setMicroData.R setAggregates.R setAggWeights.R setOther.R 
-=======
-#' @include ExtractNames.R setVNC.R getVNC.R DDdt-class.R getVariables.R DatadtToDT.R
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #'
 #' @import data.table
 #'
@@ -32,29 +28,16 @@ VarNamesToDD <- function(VarNames, DD){
     
     NotPresentVar  <- setdiff(ExtractNames(VarNames), getVariables(DD))
     if (length(NotPresentVar) > 0) stop(paste0('[StQ::VarNamesToDD] The following variables are not contained in the DD slot: ', NotPresentVar, '.\n'))
-<<<<<<< HEAD
     outputDD <- DD()
-=======
-    outputDD <- new(Class = 'DD')
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
     setVNC(outputDD) <- getVNC(DD)
 
     # Para una sola variable
     if (is.character(VarNames) & length(VarNames) == 1) {
-<<<<<<< HEAD
                
         DDSlotNames <- setdiff(names(DD), 'VNC')
         for (DDslot in DDSlotNames) {
 
             DDdtlocal <- DD[[DDslot]]
-=======
-        
-        DDSlotNames <- setdiff(slotNames(DD), 'VarNameCorresp')
-        for (DDslot in DDSlotNames) {
-            
-            DDdtlocal <- slot(DD, DDslot)
-            DDdtlocal <- DatadtToDT(DDdtlocal)
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
             Names.DT <- DDdtlocal[Variable == ExtractNames(VarNames)]
 
             if (dim(Names.DT)[1] != 0) {
@@ -79,7 +62,6 @@ VarNamesToDD <- function(VarNames, DD){
             }
             #Construimos el objecto DD por Slots
             if (DDslot == 'ID') {
-<<<<<<< HEAD
 
                 setID(outputDD) <- Names.DT
 
@@ -102,31 +84,6 @@ VarNamesToDD <- function(VarNames, DD){
             } else {
                 
                 setOther(outputDD) <- Names.DT
-=======
-                
-                outputDD@ID <- new(Class = 'DDdt', Names.DT)
-
-            } else if (DDslot == 'MicroData') {
-                
-                outputDD@MicroData <- new(Class = 'DDdt', Names.DT)
-                
-                
-            } else if (DDslot == 'ParaData') {
-                
-                outputDD@ParaData <- new(Class = 'DDdt', Names.DT)
-                
-            } else if (DDslot == 'Aggregates') {
-                
-                outputDD@Aggregates <- new(Class = 'DDdt', Names.DT)
-                
-            } else if (DDslot == 'AggWeights') {
-                
-                outputDD@AggWeights <- new(Class = 'DDdt', Names.DT)
-                
-            } else {
-                
-                outputDD@Other <- new(Class = 'DDdt', Names.DT)
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
                 
             }
             

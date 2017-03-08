@@ -36,22 +36,12 @@
 #' \code{\link[data.table]{melt.data.table}}, \code{\link[reshape2]{melt}},
 #' \code{\link[reshape2]{dcast}}
 #'
-<<<<<<< HEAD
 #' @include StQ.R DDslotWith.R getNonIDQual.R getDD.R getData.R getVNC.R getIDQual.R VarNamesToFormula.R sub.StQ.R getIDDD.R ExtractNames.R
 #' 
-=======
-#' @export
-setGeneric("dcast_StQ",
-           function(object, VarNames = NULL){standardGeneric("dcast_StQ")})
-
-#' @rdname dcast_StQ
-#'
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #' @importFrom formula.tools lhs.vars
 #'
 #' @importFrom stats as.formula
 #'
-<<<<<<< HEAD
 #' @import data.table
 #'
 #' @export
@@ -59,11 +49,6 @@ setGeneric("dcast_StQ",
            function(object, VarNames = NULL){standardGeneric("dcast_StQ")})
 
 #' @rdname dcast_StQ
-=======
-#' @import data.table methods
-#'
-#' @include StQ-class.R DDslotWith.R getNonIDQual.R getDD.R getData.R getVNC.R getIDQual.R getNonIDQual.R VarNamesToFormula.R subset.StQ.R getIDDD.R ExtractNames.R DatadtToDT.R
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #'
 #' @export
 setMethod(
@@ -71,34 +56,20 @@ setMethod(
     signature = c("StQ"),
     function(object, VarNames = NULL){
 
-<<<<<<< HEAD
         DD <- getDD(object)
         VNC <- getVNC(DD)
         
         DDdt.list <- setdiff(names(DD), 'VNC')
         DDdt.list <- lapply(DDdt.list, function(Name){DD[[Name]]})
         DDdt <- rbindlist(DDdt.list, fill = TRUE)
-=======
-        VNC <- getVNC(object)
-        DD <- getDD(object)
-
-        DDdt.list <- setdiff(slotNames(DD), 'VarNameCorresp')
-        DDdt.list <- lapply(DDdt.list, function(Name){slot(DD, Name)})
-        DDdt <- Reduce('+', DDdt.list, init = DDdt.list[[1]])
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 
         for (VarName in VarNames){
 
             if (VarName != ExtractNames(VarName)) stop('[StQ::dcast_StQ] Only variable names without qualifiers are allowed in VarNames. If you are interested in a particular column, subset the output dcasted data.table.\n')
         }
 
-<<<<<<< HEAD
         IDQual <- getIDQual(DD)
         NonIDQual <- getNonIDQual(DD)
-=======
-        IDQual <- getIDQual(DDdt)
-        NonIDQual <- getNonIDQual(DDdt)
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
         Quals <- c(IDQual, NonIDQual)
         Quals <- intersect(VarNames, Quals)
         if (length(Quals) == 1){
@@ -130,11 +101,7 @@ setMethod(
         dcastData <- lapply(names(auxData), function(Form){
 
             #Preparamos la data.table aux que vamos a reformatear con dcast.data.table
-<<<<<<< HEAD
             aux <- getData(object)[IDDD %in% auxData[[Form]]]
-=======
-            aux <- DatadtToDT(getData(object))[IDDD %in% auxData[[Form]]]
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
             if (dim(aux)[[1]] == 0) return(NULL)
 
             ColNames <- names(aux)
@@ -146,7 +113,6 @@ setMethod(
                              Form,
                              '.\n The table will be reformatted with the default agg.fun function (length).\n'))
             }
-<<<<<<< HEAD
 
             FormVars <- all.vars(as.formula(Form))
             MissingQuals <- setdiff(FormVars, ColNames)
@@ -155,16 +121,6 @@ setMethod(
                 aux[, (MissingQuals) := '']
             }
 
-=======
-
-            FormVars <- all.vars(as.formula(Form))
-            MissingQuals <- setdiff(FormVars, ColNames)
-            if (length(MissingQuals) > 0) {
-
-                aux[, (MissingQuals) := '']
-            }
-
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
             aux <- aux[, c(FormVars, 'Value'), with = F]
             out <- data.table::dcast.data.table(data = aux,
                                                 formula = as.formula(Form),
@@ -214,11 +170,7 @@ setMethod(
         outCols <- names(output)
         for (col in outCols){
 
-<<<<<<< HEAD
             colClass <- unique(DDdt[Variable == ExtractNames(col)][['Class']])
-=======
-            colClass <- DatadtToDT(DDdt)[Variable == ExtractNames(col)][['Class']]
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
             output[, (col) := as(get(col), colClass)]
             output[get(col) == '', (col) := NA]
 

@@ -18,11 +18,7 @@
 #' @examples
 #' data(ExampleStQ)
 #' rmVar(ExampleStQ)
-<<<<<<< HEAD
 #' rmVar(ExampleStQ, 'TotalEmpl')
-=======
-#' rmVar(ExampleStQ, 'IASSTame')
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #'
 #' @export
 setGeneric("rmVar",
@@ -66,44 +62,3 @@ setMethod(
         }
     }
 )
-
-#' @rdname rmVar
-#'
-#' @import data.table
-#'
-#' @include StQ-class.R ExtractNames.R getData.R setData.R
-#'
-#' @export
-setMethod(
-    f = "rmVar",
-    signature = c("Datadt"),
-    function(object, VarNames = character(0)){
-        
-        
-        if (length(VarNames) == 0) {
-            cat('[Datadt::rmVar] No variable specified. The input object is returned.\n')
-            return(object)
-        }
-        
-        Data.VarNames <- unique(object[['IDDD']])
-        NotPresentVar <- setdiff(ExtractNames(VarNames), Data.VarNames)
-        if (length(NotPresentVar) != 0) {
-            cat('[Datadt::rmVar] The following variables are not present in the slot Data:\n')
-            print(paste0(paste0(NotPresentVar, collapse = ', '), '.\n'))
-        }
-        
-        PresentVar <- intersect(ExtractNames(VarNames), Data.VarNames)
-        
-        if (length(PresentVar) == 0) {
-            cat('[Datadt::rmVar] No specified variables in slot Data. No variable will be removed.\n')
-            return(object)
-            
-        } else {
-            
-            object <- object[!IDDD %in% PresentVar]
-            
-            return(object)
-        }
-    }
-)
-

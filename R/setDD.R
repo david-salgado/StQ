@@ -12,11 +12,7 @@
 #' @examples
 #' # We build an empty StQ object:
 #' library(data.table)
-<<<<<<< HEAD
 #' Q <- StQ()
-=======
-#' Q <- new(Class = 'StQ')
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #'
 #' # We use an DD object previously created:
 #' data(ExampleDD)
