@@ -1,10 +1,6 @@
 Package: StQ
 Title: Tools to manage metadata-incorporated key-value pair datasets
-<<<<<<< HEAD
 Version: 0.4.0
-=======
-Version: 0.3.18
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 Authors@R: c(
     person("David", "Salgado", email = "david.salgado.fernandez@gmail.com", role = c("cre", "aut")),
     person("Elisa", "Esteban", email = "elisa.esteban.segurado@gmail.com", role = "aut"),
@@ -18,14 +14,14 @@ Imports:
     methods (>= 3.3.0),
     data.table (>= 1.10.0),
     formula.tools (>= 1.5.4),
-    RepoTime (>= 0.1.0),
+    RepoTime (>= 0.2.0),
     stringr (>= 1.0.0),
     stringi (>= 1.1.1)
 License: file LICENSE
 LazyData: true
 Encoding: UTF-8
 Collate:
-<<<<<<< HEAD
+    'VarNameCorresp-class.R'
     'VNC.R'
     'BuildVNC.R'
     'DD.R'
@@ -33,92 +29,61 @@ Collate:
     'StQ.R'
     'StQList.R'
     'BuildStQList.R'
+    'rawStQList-class.R'
+    'rawStQ-class.R'
     'rawStQ.R'
     'rawStQList.R'
     'BuildrawStQList.R'
-    'ExtractNames.R'
-    'getData.R'
-    'getIDDD.R'
-    'getNonIDQual.R'
-    'getIDQual.R'
-    'DDdtToVNC.R'
+    'VNCdt-class.R'
+    'StQList-class.R'
     'getPeriods.R'
     'getDD.R'
+    'StQ-class.R'
+    'DD-class.R'
+    'DatadtToDT.R'
+    'DDdt-class.R'
+    'ExtractNames.R'
+    'rawDatadt-class.R'
+    'getVariables.R'
+    'VarNamesToDT.R'
+    'getNonIDQual.R'
     'getVNC.R'
+    'setVNC.R'
     'setOther.R'
     'setAggWeights.R'
     'plus.VNC.R'
     'getAggregates.R'
-    'setVNC.R'
     'setAggregates.R'
     'setMicroData.R'
     'setID.R'
-    'getVariables.R'
     'VarNamesToDD.R'
     'DDslotWith.R'
-    'ExampleDD.R'
-    'ExampleDM.R'
-    'ExampleStQ.R'
-    'ExampleVNC.R'
-    'ExamplerawStQ.R'
-    'VarNamesToDT.R'
-    'getDoubleDotQual.R'
-    'getDotQual.R'
-    'IDDDToUnitNames.R'
-    'ParseUnitName.R'
-    'setParaData.R'
-    'plus.DD.R'
-=======
-    'DatadtToDT.R'
     'Datadt-class.R'
-    'DDdt-class.R'
-    'VNCdt-class.R'
-    'VarNameCorresp-class.R'
-    'ExtractNames.R'
-    'DD-class.R'
-    'StQ-class.R'
-    'StQList-class.R'
-    'BuildStQList.R'
-    'BuildVNC.R'
-    'rawKey-class.R'
-    'BuildrawDatadt.R'
-    'rawDatadt-class.R'
-    'rawStQ-class.R'
-    'rawStQList-class.R'
-    'BuildrawStQList.R'
-    'getDD.R'
+    'getData.R'
     'getIDDD.R'
-    'getNonIDQual.R'
     'getIDQual.R'
     'DDdtToVNC.R'
-    'getVariables.R'
-    'getVNC.R'
-    'setVNC.R'
-    'VarNamesToDD.R'
-    'DDslotWith.R'
     'ExampleDD.R'
-    'ExampleDDdt.R'
     'ExampleDM.R'
-    'ExampleDTkey.R'
-    'ExampleDatadt.R'
     'ExampleStQ.R'
     'ExampleVNC.R'
-    'ExamplerawKey.R'
     'ExamplerawStQ.R'
-    'VarNamesToDT.R'
     'getDoubleDotQual.R'
     'getDotQual.R'
     'plus.VNCdt.R'
     'IDDDToUnitNames.R'
     'ParseUnitName.R'
-    'getData.R'
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
+    'setParaData.R'
+    'plus.VarNameCorresp.R'
+    'plus.DDdt.R'
+    'plus.DD.R'
     'StQListToStQ.R'
+    'rawKey-class.R'
     'StQTorawStQ.R'
     'UnitToIDDDNames.R'
     'VarNamesToFormula.R'
     'setData.R'
-<<<<<<< HEAD
+    'subset.StQ.R'
     'sub.StQ.R'
     'dcast_StQ.R'
     'dim.StQ.R'
@@ -126,56 +91,26 @@ Collate:
     'extract.StQList.R'
     'extract.rawStQList.R'
     'getAggWeights.R'
-    'getID.R'
-    'getOther.R'
-=======
-    'subset.StQ.R'
-    'dcast_StQ.R'
-    'dim.StQ.R'
-    'dim.rawStQ.R'
-    'getPeriods.R'
-    'extract.StQList.R'
-    'extract.rawStQList.R'
-    'getAggWeights.R'
-    'getAggregates.R'
     'getEditNames.R'
     'getID.R'
+    'getOther.R'
     'getOtherDD.R'
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
     'getParaData.R'
     'getUnits.R'
     'getValues.R'
     'melt_StQ.R'
-<<<<<<< HEAD
-=======
-    'plus.VarNameCorresp.R'
-    'plus.DDdt.R'
-    'plus.DD.R'
     'plus.Datadt.R'
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
     'plus.StQ.R'
     'rawStQToStQ.R'
     'renVar.R'
     'rmVar.R'
-<<<<<<< HEAD
     'setDD.R'
-=======
-    'setAggWeights.R'
-    'setAggregates.R'
-    'setDD.R'
-    'setID.R'
-    'setMicroData.R'
     'setOtherDD.R'
-    'setParaData.R'
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
     'setUnits.R'
     'setValues.R'
     'show.DD.R'
-    'show.DDdt.R'
-    'show.Datadt.R'
     'show.StQ.R'
     'show.StQList.R'
-<<<<<<< HEAD
     'show.VNC.R'
     'show.rawStQ.R'
     'sub.DD.R'
@@ -183,20 +118,9 @@ Collate:
     'sub.VNC.R'
     'sub.rawStQ.R'
     'sub.rawStQList.R'
-=======
-    'show.VNCdt.R'
-    'show.VarNameCorresp.R'
-    'show.rawDatadt.R'
-    'show.rawKey.R'
-    'show.rawStQ.R'
     'subset.DD.R'
-    'subset.DDdt.R'
-    'subset.Datadt.R'
     'subset.StQList.R'
-    'subset.VNCdt.R'
-    'subset.rawKey.R'
     'subset.rawStQList.R'
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 RoxygenNote: 5.0.1
 URL: https://github.com/david-salgado/StQ
 BugReports: https://github.com/david-salgado/StQ/issues
