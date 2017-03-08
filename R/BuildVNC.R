@@ -72,10 +72,10 @@ BuildVNC <- function(Data = list(ID = data.table(IDQual = character(0),
                                                         InFiles = character(0))
     
     if (!'MicroData' %in% RootCompNames) Data$MicroData <- data.table(IDQual = character(0), 
-                                                                     NonIDQual = character(0), 
-                                                                     IDDD = character(0),
-                                                                     UnitName = character(0),
-                                                                     InFiles = character(0))
+                                                                      NonIDQual = character(0), 
+                                                                      IDDD = character(0),
+                                                                      UnitName = character(0),
+                                                                      InFiles = character(0))
     if (!'ParaData' %in% RootCompNames) Data$ParaData <- data.table(IDQual = character(0), 
                                                                     NonIDQual = character(0), 
                                                                     IDDD = character(0),
@@ -85,7 +85,7 @@ BuildVNC <- function(Data = list(ID = data.table(IDQual = character(0),
     ParaDataNames <- names(Data)[grep('ParaData', names(Data))]
     
     Data <- Data[c('ID', 'MicroData', ParaDataNames, setdiff(names(Data), c('ID', 'MicroData', ParaDataNames)))]
-
+    
     out <- do.call(VNC, Data)
     return(out)    
 }
