@@ -2,13 +2,13 @@
 % Please edit documentation in R/DDdtToVNC.R
 \name{DDdtToVNC}
 \alias{DDdtToVNC}
-\title{Returns the corresponding object of class \linkS4class{VarNameCorresp} according to the
- DDdt input object}
+\title{Returns the corresponding object of class \linkS4class{VNC} according to the input 
+\linkS4class{data.table}}
 \usage{
 DDdtToVNC(DDdt, NameVNC, InFiles = rep("", dim(DDdt)[1]))
 }
 \arguments{
-\item{DDdt}{Object of class \linkS4class{DDdt}.}
+\item{DDdt}{Object of class \linkS4class{data.table}.}
 
 \item{NameVNC}{character vector with the name of the element in VNC which is being build.}
 
@@ -20,7 +20,7 @@ Returns the corresponding object of class \linkS4class{VarNameCorresp}.
 }
 \description{
 \code{DDdtToVNC} returns the corresponding object of class 
-\linkS4class{VarNameCorresp} according to the \linkS4class{DDdt} input object.
+\linkS4class{VNC} according to the input \linkS4class{data.table}.
 }
 \examples{
 library(data.table)
@@ -28,7 +28,6 @@ AggWeights <- data.table(Variable = c('ID', 'Pond1'), Sort = c('IDQual', 'IDDD')
                          Class = c('character', 'character'),
                          Length = c('11', '7'),
                          Qual1 = c('', 'ID'), ValueRegExp = c('', ''))
-AggWeights <- new(Class = 'DDdt', AggWeights)
 DDdtToVNC(AggWeights, 'AggWeights', rep('FA', 2))
 
 }

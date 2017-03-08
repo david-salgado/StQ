@@ -14,11 +14,13 @@
 #' data(ExampleStQ)
 #' StQTorawStQ(ExampleStQ)
 #'  
+#' @include StQ.R rawStQ.R getDD.R getData.R
+#' 
+#'  
 #' @export
 setGeneric("StQTorawStQ", function(Q){standardGeneric("StQTorawStQ")})
+
 #' @rdname StQTorawStQ
-#' 
-#' @include StQ-class.R rawKey-class.R rawDatadt-class.R rawStQ-class.R getDD.R getData.R
 #' 
 #' @importFrom stringr str_pad
 #' 
@@ -30,21 +32,28 @@ setMethod(
         
         if (dim(getData(Q))[1] == 0){
           
-          rawQ <- new(Class = 'rawStQ')
+          rawQ <- rawStQ(rawData = data.table(IDDDKey = character(0),
+                                              QualKey = character(0),
+                                              Value = character(0)),
+                         DD = getDD(Q))
           return(rawQ)
         }
       
         DD <- getDD(Q)
-        DDdt.list <- setdiff(slotNames(DD), 'VarNameCorresp')
-        DDdt.list <- lapply(DDdt.list, function(Name){slot(DD, Name)})
-        DDdt <- Reduce('+', DDdt.list, init = DDdt.list[[1]])
+        DDdt.list <- setdiff(names(DD), 'VNC')
+        DDdt.list <- lapply(DDdt.list, function(Name){DD[[Name]]})
+        names(DDdt.list) <- setdiff(names(DD), 'VNC')
+        DDdt <- rbindlist(DDdt.list, fill = TRUE)
+        setkeyv(DDdt, names(DDdt))
+        DDdt <- DDdt[!duplicated(DDdt, by = key(DDdt))]
         IDDDNames <- DDdt[Sort == 'IDDD'][['Variable']]
 
-        QData <- DatadtToDT(getData(Q))
+        QData <- getData(Q)
         setnames(QData, 'IDDD', 'IDDDKey')
         ColNames <- setdiff(names(QData), c('IDDDKey', 'Value'))
+
         for (col in ColNames){
-   
+
             Width <- DDdt[Variable == col][['Length']]
             QData[, (col) := stringr::str_pad(get(col), Width, 'right', ' ')]
             
@@ -52,13 +61,14 @@ setMethod(
 
         QData.list <- split(QData, QData[['IDDDKey']])
         QData.list <- QData.list[intersect(names(QData.list), IDDDNames)]
-        
+
         QData.list <- lapply(names(QData.list), function(VarName){
-     
+
             QualsDT <- DDdt[Variable == VarName, names(DDdt)[grep('Qual', names(DDdt))], with = F]
             Quals <- t(QualsDT)[, 1]
-            Quals <- Quals[Quals != '']
+            Quals <- Quals[Quals != '' & !is.na(Quals)]
             out <- QData.list[[VarName]][, c('IDDDKey', Quals, 'Value'), with = F]
+            
             if (length(Quals) == 1){
                 
                 out[, QualKey := get(Quals)]
@@ -80,14 +90,11 @@ setMethod(
         QData <- rbindlist(QData.list)
         setkeyv(QData, names(QData))
         QData <- QData[!duplicated(QData, by = key(QData))]
-        rawDatadt <- new(Class = 'rawDatadt', .Data = QData)
-        rawQ <- new(Class = 'rawStQ', Data = rawDatadt, DD = DD)
+        rawQ <- rawStQ(rawData = QData, DD = DD)
         return(rawQ)
     }
 )
 #' @rdname StQTorawStQ
-#' 
-#' @include StQList-class.R rawKey-class.R rawDatadt-class.R rawStQ-class.R rawStQList-class.R getDD.R getData.R
 #' 
 #' @importFrom stringr str_pad
 #' 
@@ -101,7 +108,7 @@ setMethod(
         QList <- getData(Q)
         Periods <- getRepo(Q)
         rawQData <- lapply(QList, StQTorawStQ)
-        rawQList <- new(Class = 'rawStQList', Data = rawQData, Periods = Periods)
+        rawQList <- rawStQList(Data = rawQData, Periods = Periods)
         return(rawQList)
     }
 )

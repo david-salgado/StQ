@@ -13,12 +13,12 @@
 #' data(ExamplerawStQ)
 #' StQ <- rawStQToStQ(ExamplerawStQ)
 #' str(StQ)
+#' 
+#' @include rawStQ.R StQ.R getDD.R getData.R
 #'
 #' @export
 setGeneric("rawStQToStQ", function(rawQ){standardGeneric("rawStQToStQ")})
 #' @rdname rawStQToStQ
-#'
-#' @include rawStQ-class.R Datadt-class.R StQ-class.R getDD.R getData.R DatadtToDT.R
 #'
 #' @importFrom stringi stri_sub stri_trim_right
 #'
@@ -29,12 +29,11 @@ setMethod(
     function(rawQ){
 
         DD <- getDD(rawQ)
-        DDdt.list <- setdiff(slotNames(DD), 'VarNameCorresp')
-        DDdt.list <- lapply(DDdt.list, function(Name){slot(DD, Name)})
-        DDdt <- Reduce('+', DDdt.list, init = DDdt.list[[1]])
-        DDdt <- DatadtToDT(DDdt)
+        DDdt.list <- setdiff(names(DD), 'VNC')
+        DDdt.list <- lapply(DDdt.list, function(Name){DD[[Name]]})
+        DDdt <- rbindlist(DDdt.list, fill = TRUE)
 
-        rawDT <- DatadtToDT(getData(rawQ))
+        rawDT <- getData(rawQ)
         setnames(rawDT, 'IDDDKey', 'IDDD')
         rawData.list <- split(rawDT, rawDT[['IDDD']])
 
@@ -42,8 +41,16 @@ setMethod(
 
                 QualsDT <- DDdt[Variable == VarName, names(DDdt)[grep('Qual', names(DDdt))], with = F]
                 Quals <- t(QualsDT)[, 1]
-                Quals <- Quals[Quals != '']
-                Lengths <- unlist(lapply(Quals, function(Qual){DDdt[Variable == Qual][['Length']]}))
+                Quals <- Quals[Quals != '' & !is.na(Quals)]
+
+                Lengths <- lapply(unique(Quals), function(Qual){
+
+                    LocalOut <- DDdt[Variable == Qual]
+                    LocalOut <- unique(LocalOut[['Length']])
+                    return(LocalOut)
+                })
+
+                Lengths <- unlist(Lengths)
                 names(Quals) <- Lengths
                 return(Quals)
             })
@@ -77,15 +84,14 @@ setMethod(
 
             Data[is.na(get(col)), (col) := '']
         }
-        Datadt <- new(Class = 'Datadt', Data)
-        Q <- new(Class = 'StQ', Data = Datadt, DD = DD)
-
+        #Datadt <- new(Class = 'Datadt', Data)
+        #Q <- new(Class = 'StQ', Data = Datadt, DD = DD)
+        Q <- StQ(Data, DD)
+        
         return(Q)
     }
 )
 #' @rdname rawStQToStQ
-#'
-#' @include rawStQList-class.R Datadt-class.R StQ-class.R StQList-class.R getDD.R getData.R
 #'
 #' @importFrom stringi stri_sub
 #'

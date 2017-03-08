@@ -25,7 +25,7 @@ the input object.
 \examples{
 # We build an empty StQ object:
 library(data.table)
-Q <- new(Class = 'StQ')
+Q <- StQ()
 
 # We use an DD object previously created:
 data(ExampleDD)

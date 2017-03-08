@@ -36,19 +36,19 @@
 #' \code{\link[data.table]{melt.data.table}}, \code{\link[reshape2]{melt}},
 #' \code{\link[reshape2]{dcast}}
 #'
+#' @include StQ.R DDslotWith.R getNonIDQual.R getDD.R getData.R getVNC.R getIDQual.R VarNamesToFormula.R sub.StQ.R getIDDD.R ExtractNames.R
+#' 
+#' @importFrom formula.tools lhs.vars
+#'
+#' @importFrom stats as.formula
+#'
+#' @import data.table
+#'
 #' @export
 setGeneric("dcast_StQ",
            function(object, VarNames = NULL){standardGeneric("dcast_StQ")})
 
 #' @rdname dcast_StQ
-#'
-#' @importFrom formula.tools lhs.vars
-#'
-#' @importFrom stats as.formula
-#'
-#' @import data.table methods
-#'
-#' @include StQ-class.R DDslotWith.R getNonIDQual.R getDD.R getData.R getVNC.R getIDQual.R getNonIDQual.R VarNamesToFormula.R subset.StQ.R getIDDD.R ExtractNames.R DatadtToDT.R
 #'
 #' @export
 setMethod(
@@ -56,20 +56,20 @@ setMethod(
     signature = c("StQ"),
     function(object, VarNames = NULL){
 
-        VNC <- getVNC(object)
         DD <- getDD(object)
-
-        DDdt.list <- setdiff(slotNames(DD), 'VarNameCorresp')
-        DDdt.list <- lapply(DDdt.list, function(Name){slot(DD, Name)})
-        DDdt <- Reduce('+', DDdt.list, init = DDdt.list[[1]])
+        VNC <- getVNC(DD)
+        
+        DDdt.list <- setdiff(names(DD), 'VNC')
+        DDdt.list <- lapply(DDdt.list, function(Name){DD[[Name]]})
+        DDdt <- rbindlist(DDdt.list, fill = TRUE)
 
         for (VarName in VarNames){
 
             if (VarName != ExtractNames(VarName)) stop('[StQ::dcast_StQ] Only variable names without qualifiers are allowed in VarNames. If you are interested in a particular column, subset the output dcasted data.table.\n')
         }
 
-        IDQual <- getIDQual(DDdt)
-        NonIDQual <- getNonIDQual(DDdt)
+        IDQual <- getIDQual(DD)
+        NonIDQual <- getNonIDQual(DD)
         Quals <- c(IDQual, NonIDQual)
         Quals <- intersect(VarNames, Quals)
         if (length(Quals) == 1){
@@ -101,7 +101,7 @@ setMethod(
         dcastData <- lapply(names(auxData), function(Form){
 
             #Preparamos la data.table aux que vamos a reformatear con dcast.data.table
-            aux <- DatadtToDT(getData(object))[IDDD %in% auxData[[Form]]]
+            aux <- getData(object)[IDDD %in% auxData[[Form]]]
             if (dim(aux)[[1]] == 0) return(NULL)
 
             ColNames <- names(aux)
@@ -170,7 +170,7 @@ setMethod(
         outCols <- names(output)
         for (col in outCols){
 
-            colClass <- DatadtToDT(DDdt)[Variable == ExtractNames(col)][['Class']]
+            colClass <- unique(DDdt[Variable == ExtractNames(col)][['Class']])
             output[, (col) := as(get(col), colClass)]
             output[get(col) == '', (col) := NA]
 

@@ -13,30 +13,24 @@
 #' DD <- getDD(ExampleStQ)
 #' DD
 #' str(DD)
-#'
-#' @export
-setGeneric("getDD", function(object) {standardGeneric("getDD")})
-#'
-#' @rdname getDD
-#'
-#' @include StQ-class.R
+#' 
+#' @include DD.R StQ.R rawStQ.R getPeriods.R
 #'
 #' @import data.table
+
+#' @export
+setGeneric("getDD", function(object) {standardGeneric("getDD")})
+
+#' @rdname getDD
 #'
 #' @export
 setMethod(
   f = "getDD",
   signature = c("StQ"),
-  function(object){
-
-     return(copy(object@DD))
-
-  }
+  function(object){object$DD}
 )
 
 #' @rdname getDD
-#'
-#' @include rawStQ-class.R
 #'
 #' @import data.table
 #'
@@ -44,45 +38,21 @@ setMethod(
 setMethod(
     f = "getDD",
     signature = c("rawStQ"),
-    function(object){
-        
-        return(copy(object@DD))
-        
-    }
+    function(object){object$DD}
 )
+
 #' @rdname getDD
-#' 
-#' @include StQList-class.R
-#' 
+#'
 #' @import data.table
-#' 
+#'
 #' @export
 setMethod(
     f = "getDD",
     signature = c("StQList"),
     function(object){
         
-        output <- lapply(getData(object), function(x) getDD(x))  
-        
+        output <- lapply(getDD, object$Data)
+        names(output) <- getPeriods(object)
         return(output)
     }
 )
-
-#' @rdname getDD
-#' 
-#' @include rawStQList-class.R
-#' 
-#' @import data.table
-#' 
-#' @export
-setMethod(
-    f = "getDD",
-    signature = c("rawStQList"),
-    function(object){
-        
-        output <- lapply(getData(object), function(x) getDD(x))  
-        
-        return(output)
-    }
-)
-

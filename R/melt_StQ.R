@@ -30,7 +30,7 @@
 #' \code{\link[data.table]{melt.data.table}}, \code{\link[reshape2]{melt}},
 #' \code{\link[reshape2]{dcast}}
 #'
-#' @include Datadt-class.R StQ-class.R ExtractNames.R getVNC.R UnitToIDDDNames.R
+#' @include StQ.R ExtractNames.R getVNC.R UnitToIDDDNames.R
 #'
 #' @import data.table
 #'
@@ -61,18 +61,19 @@ melt_StQ <- function(DataMatrix, DD){
      #     }
      # }
     
-
-    setnames(DM, UnitToIDDDNames(names(DM), DD))
+    DMnames <- UnitToIDDDNames(names(DM), DD)
+    if (is.null(DMnames)) DMnames <- names(DM)
+    setnames(DM, DMnames)
 
     #Construimos un objeto DD auxiliar
     slots <- setdiff(names(getVNC(DD)), 'VarSpec')
 
     out <- lapply(slots, function(VNCName){
 
-        DDdtlocal <- slot(DD, ExtractNames(VNCName))
+        DDdtlocal <- DD[[ExtractNames(VNCName)]]
         VNClocal <- getVNC(DD)[[VNCName]]
         nQual <- length(grep('Qual', names(DDdtlocal)))
-        auxDDdt <- copy(DDdtlocal)[, c('Variable', paste0('Qual', 1:nQual)), with = F]
+        auxDDdt <- DDdtlocal[, c('Variable', paste0('Qual', 1:nQual)), with = F]
         IDQual <- DDdtlocal[Sort == 'IDQual', Variable]
         NonIDQual <- DDdtlocal[Sort == 'NonIDQual', Variable]
         IDDD <- DDdtlocal[Sort == 'IDDD', Variable]
@@ -182,7 +183,7 @@ melt_StQ <- function(DataMatrix, DD){
 
     if (all(dim(out) == c(0, 0))) {
 
-        output.StQ <- new(Class = 'StQ')
+        output.StQ <- StQ()
 
     } else {
 
@@ -196,9 +197,7 @@ melt_StQ <- function(DataMatrix, DD){
             out[is.na(get(col)), (col) := '']
         }
 
-
-        out <- new(Class = 'Datadt', out)
-        output.StQ <- new(Class = 'StQ', Data = out, DD = DD)
+        output.StQ <- StQ(Data = out, DD = DD)
 
     }
     return(output.StQ)

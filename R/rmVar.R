@@ -10,7 +10,7 @@
 #'
 #' @param VarNames Character vector with the variable names to remove.
 #'
-#' @include StQ-class.R
+#' @include StQ.R ExtractNames.R getData.R setData.R
 #'
 #' @return Object with the same class as the input object but where the variables in \code{VarNames}
 #' have been removed. Variables are removed only from slot \code{Data}.
@@ -18,7 +18,7 @@
 #' @examples
 #' data(ExampleStQ)
 #' rmVar(ExampleStQ)
-#' rmVar(ExampleStQ, 'IASSTame')
+#' rmVar(ExampleStQ, 'TotalEmpl')
 #'
 #' @export
 setGeneric("rmVar",
@@ -27,7 +27,6 @@ setGeneric("rmVar",
 #'
 #' @import data.table
 #'
-#' @include StQ-class.R ExtractNames.R getData.R setData.R
 #'
 #' @export
 setMethod(
@@ -63,44 +62,3 @@ setMethod(
         }
     }
 )
-
-#' @rdname rmVar
-#'
-#' @import data.table
-#'
-#' @include StQ-class.R ExtractNames.R getData.R setData.R
-#'
-#' @export
-setMethod(
-    f = "rmVar",
-    signature = c("Datadt"),
-    function(object, VarNames = character(0)){
-        
-        
-        if (length(VarNames) == 0) {
-            cat('[Datadt::rmVar] No variable specified. The input object is returned.\n')
-            return(object)
-        }
-        
-        Data.VarNames <- unique(object[['IDDD']])
-        NotPresentVar <- setdiff(ExtractNames(VarNames), Data.VarNames)
-        if (length(NotPresentVar) != 0) {
-            cat('[Datadt::rmVar] The following variables are not present in the slot Data:\n')
-            print(paste0(paste0(NotPresentVar, collapse = ', '), '.\n'))
-        }
-        
-        PresentVar <- intersect(ExtractNames(VarNames), Data.VarNames)
-        
-        if (length(PresentVar) == 0) {
-            cat('[Datadt::rmVar] No specified variables in slot Data. No variable will be removed.\n')
-            return(object)
-            
-        } else {
-            
-            object <- object[!IDDD %in% PresentVar]
-            
-            return(object)
-        }
-    }
-)
-

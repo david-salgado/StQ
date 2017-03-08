@@ -22,27 +22,29 @@
 #' mm <- c(paste0('0', 1:9), 10:12)
 #' TimePer <- paste0('MM', mm, '2015')
 #' PeriodList <- newRepoTime(TimePer)
-#' EmptyQ <- new(Class = 'StQ')
+#' EmptyQ <- StQ()
 #' EmptyQList <- vector('list', 12)
 #' EmptyQList <- lapply(EmptyQList, function(x) EmptyQ)
-#' QList <- new(Class = 'StQList', Data = EmptyQList, Periods = PeriodList)
+#' QList <- StQList(Data = EmptyQList, Periods = PeriodList)
 #' QList[['MM092015']]
 #' QList[[2]]
 #'
-#' @include StQList-class.R getPeriods.R
+#' @include StQList.R getPeriods.R getData.R
 #'
-#' @import data.table
+#' @import data.table 
 #'
 #' @export
-setMethod(
-  f = "[[",
-  signature = c("StQList"),
-  function(x, i, j, ..., exact = TRUE){
-
-    Data <- x@Data
-    names(Data) <- getPeriods(x)
-    output <- Data[[i]]
+`[[.StQList` <- function(x, i, j, ..., exact = TRUE){
+    
+    
+    mc <- match.call()
+    New.x <- x$Data
+    Periods <- getPeriods(x)
+    names(New.x) <- Periods
+    mc[[1L]] <- `[[`
+    mc[['x']] <- New.x
+    output <- eval(mc)
     return(output)
 
-  }
-)
+}
+

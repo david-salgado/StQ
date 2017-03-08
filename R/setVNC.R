@@ -5,8 +5,7 @@
 #'
 #' @param object Object containing slot \code{VarNameCorresp} to be set.
 #'
-#' @param value List of \linkS4class{data.table}s to be assigned to the slot 
-#' \linkS4class{VarNameCorresp}.
+#' @param value Object of class \linkS4class{VarNameCorresp}.
 #'
 #' @return Object with slot \linkS4class{VarNameCorresp} updated.
 #'
@@ -16,26 +15,25 @@
 #' MicroDataDD <- data.table(Variable = 'IEPEntradaPed', Sort = 'IDDD', Class = 'numeric',
 #'                           Length = '8',
 #'                           Qual1 = 'NumIdEst', Qual2 = 'Market', ValueRegExp = '')
-#' MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
-#' VarList <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','',''),
-#'                                                           NonIDQual = c('', 'Market', 'Cod', ''),
-#'                                                           IDDD = c('', '', '' ,'IEPEntradaPed'),
-#'                                                           NumIdEst = c('', '', '', '.'),
-#'                                                           Market = c('', '', '', '1.'),
-#'                                                           Cod = rep('', 4),
-#'                                                           UnitName = c('', '', '', 'cp02'),
-#'                                                           InFiles = rep('FF', 4))))
+#' VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','',''),
+#'                                        NonIDQual = c('', 'Market', 'Cod', ''),
+#'                                        IDDD = c('', '', '' ,'IEPEntradaPed'),
+#'                                        NumIdEst = c('', '', '', '.'),
+#'                                        Market = c('', '', '', '1.'),
+#'                                        Cod = rep('', 4),
+#'                                        UnitName = c('', '', '', 'cp02'),
+#'                                        InFiles = rep('FF', 4)))
 #' VNC <- BuildVNC(VarList)
-#' DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = MicroDataDD)
+#' DD <- DD(list(VNC = VNC, MicroData = MicroDataDD))
 #' 
-#' VarListAdd <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','',''),
-#'                                                           NonIDQual = c('','Market','Cod', ''),
-#'                                                           IDDD = c('', '', '' , 'IEPEntradaPed'),
-#'                                                           NumIdEst = c('', '', '', '.'),
-#'                                                           Market = c('', '', '', '2.'),
-#'                                                           Cod = rep('', 4),
-#'                                                           UnitName = c('', '', '', 'cp02'),
-#'                                                           InFiles = rep('FF', 4))))
+#' VarListAdd <- list(MicroData = data.table(IDQual = c('NumIdEst','','',''),
+#'                                           NonIDQual = c('','Market','Cod', ''),
+#'                                           IDDD = c('', '', '' , 'IEPEntradaPed'),
+#'                                           NumIdEst = c('', '', '', '.'),
+#'                                           Market = c('', '', '', '2.'),
+#'                                           Cod = rep('', 4),
+#'                                           UnitName = c('', '', '', 'cp02'),
+#'                                           InFiles = rep('FF', 4)))
 #' VNCAdd <- BuildVNC(VarListAdd)
 #' setVNC(DD) <- VNCAdd
 #' DD
@@ -80,35 +78,31 @@ setGeneric("setVNC<-", function(object, value){standardGeneric("setVNC<-")})
 
 #' @rdname setVNC
 #'
-#' @include DD-class.R
+#' @include DD.R VNC.R StQ.R
 #'
 #' @import data.table
 #'
 #' @export
 setReplaceMethod(
     f = "setVNC",
-    signature = c("DD", "VarNameCorresp"),
+    signature = c("DD", "VNC"),
     function(object, value){
         
-        object@VarNameCorresp <- value
-        validObject(object)
+        object[['VNC']] <- value
         return(object)
     }
 )
 #' @rdname setVNC
 #'
-#' @include StQ-class.R
-#'
 #' @import data.table
 #'
 #' @export
 setReplaceMethod(
     f = "setVNC",
-    signature = c("StQ", "VarNameCorresp"),
+    signature = c("StQ", "VNC"),
     function(object, value){
         
-        setVNC(object@DD) <- value
-        validObject(object)
+        setVNC(object[['DD']]) <- value
         return(object)
     }
 )

@@ -20,7 +20,7 @@ setGeneric("getUnits", function(object, DDslot = 'MicroData') {standardGeneric("
 
 #' @rdname getUnits
 #'
-#' @include StQ-class.R getData.R getDD.R DatadtToDT.R
+#' @include StQ.R getData.R getDD.R getIDQual.R
 #'
 #' @import data.table
 #'
@@ -31,11 +31,11 @@ setMethod(
   function(object, DDslot = 'MicroData'){
     
     if (length(DDslot) != 1) stop('[StQ::getUnits] The input parameter DDslot must be of length 1.\n')
-    ValidComp <- setdiff(slotNames(getDD(object)), 'VarNameCorresp')
-    NotValidComp <- DDslot[!DDslot %in% ValidComp]
+    ValidComp <- setdiff(names(getDD(object)), 'VNC')
+    NotValidComp <- DDslot[!DDslot %chin% ValidComp]
     if(!DDslot %in% ValidComp) stop(paste0('[StQ::getUnits] The input parameter ', NotValidComp, ' is not a valid DD slot in the input StQ object.\n'))
     IDQual <- getIDQual(object, DDslot)
-    output <- DatadtToDT(getData(object))[, IDQual, with = F]
+    output <- getData(object)[, IDQual, with = F]
     if (dim(output)[1] == 0) return(output)
     setkeyv(output, IDQual)
     output <- output[!duplicated(output, by = key(output))]

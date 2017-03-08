@@ -12,7 +12,7 @@
 #' @examples
 #' # We build an empty StQ object:
 #' library(data.table)
-#' Q <- new(Class = 'StQ')
+#' Q <- StQ()
 #'
 #' # We use an DD object previously created:
 #' data(ExampleDD)
@@ -21,12 +21,12 @@
 #' str(Q)
 #'
 #' @rdname setDD
+#' 
+#' @include StQ.R
 #'
 #' @export
 setGeneric("setDD<-", function(object, value){standardGeneric("setDD<-")})
 #' @rdname setDD
-#'
-#' @include StQ-class.R
 #'
 #' @import data.table
 #'
@@ -36,8 +36,7 @@ setReplaceMethod(
     signature = c("StQ", "DD"),
     function(object, value){
 
-        object@DD <- value
-        validObject(object)
+        object[['DD']] <- value
         return(object)
     }
 )

@@ -13,23 +13,21 @@
 #' MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
 #'                           Length = '8',
 #'                           Qual1 = 'NumIdEst', Qual2 = 'Market', ValueRegExp = '')
-#' MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
-#' VarList <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','',''),
-#'                                                           NonIDQual = c('', 'Market', 'Cod', ''),
-#'                                                           IDDD = c('', '', '' ,'NewOrders'),
-#'                                                           NumIdEst = c('', '', '', '.'),
-#'                                                           Market = c('', '', '', '1.'),
-#'                                                           Cod = rep('', 4),
-#'                                                           UnitName = c('', '', '', 'cp02'),
-#'                                                           InFiles = rep('FF', 4))))
+#' VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','',''),
+#'                                        NonIDQual = c('', 'Market', 'Cod', ''),
+#'                                        IDDD = c('', '', '' ,'NewOrders'),
+#'                                        NumIdEst = c('', '', '', '.'),
+#'                                        Market = c('', '', '', '1.'),
+#'                                        Cod = rep('', 4),
+#'                                        UnitName = c('', '', '', 'cp02'),
+#'                                        InFiles = rep('FF', 4)))
 #' VNC <- BuildVNC(VarList)
-#' DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = MicroDataDD)
+#' DD <- DD(VNC = VNC, MicroData = MicroDataDD)
 #' 
 #' AggWeights <- data.table(Variable = c('ID', 'Pond1'), Sort = c('IDQual', 'IDDD'),
 #'                          Class = c('character', 'character'),
 #'                          Length = c('11', '8'),
 #'                          Qual1 = c('', 'ID'), ValueRegExp = c('', ''))
-#' AggWeights <- new(Class = 'DDdt', AggWeights)
 #' 
 #' setAggWeights(DD) <- AggWeights
 #' DD
@@ -37,46 +35,43 @@
 #' @rdname setAggWeights
 #'
 #' @import data.table
+#' 
+#' @include VNC.R DD.R getVNC.R DDdtToVNC.R
 #'
 #' @export
 setGeneric("setAggWeights<-", function(object, value){standardGeneric("setAggWeights<-")})
+
 #' @rdname setAggWeights
-#'
-#' @include DD-class.R getVNC.R DDdtToVNC.R
 #'
 #' @import data.table
 #'
 #' @export
 setReplaceMethod(
     f = "setAggWeights",
-    signature = c("DD", "DDdt"),
+    signature = c("VNC", "data.table"),
     function(object, value){
         
-        setkeyv(value, setdiff(names(value), 'Value'))
-
-        VNCaux <- getVNC(object)
-        VNCaux[['AggWeights']] <- new(Class = 'VNCdt')
-        
-        setVNC(object) <- DDdtToVNC(value, 'AggWeights') + VNCaux
-        object@AggWeights <- value
-        validObject(object)
+        VNCValue <- try(BuildVNC(value))
+        if (inherits(VNCValue, "try-error")) stop('[StQ::setAggWeights] Value does not have the correct format.\n')
+        object[['AggWeights']] <- value
         return(object)
     }
 )
 #' @rdname setAggWeights
 #'
-#' @include StQ-class.R
-#'
 #' @import data.table
 #'
 #' @export
 setReplaceMethod(
     f = "setAggWeights",
-    signature = c("StQ", "DDdt"),
+    signature = c("DD", "data.table"),
     function(object, value){
         
-        setAggWeights(object@DD) <- value
-        validObject(object)
+        newVNC <- DDdtToVNC(value, NameVNC = 'AggWeights', InFiles = 'FF')
+        DDValue <- try(BuildDD(list(VNC = newVNC, AggWeights = value)))
+        if (inherits(DDValue, "try-error")) stop('[StQ::Aggregates] Value does not have the correct format.\n')
+        object[['VNC']] <- object[['VNC']] + newVNC
+        object[['AggWeights']] <- value
         return(object)
     }
 )

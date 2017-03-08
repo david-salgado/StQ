@@ -30,16 +30,16 @@ mm <- c(paste0('0', 1:9), 10:12)
 TimePer <- paste0('MM', mm, '2015')
 PeriodList <- newRepoTime(TimePer)
 
-EmptyrawQ <- new(Class = 'rawStQ')
+EmptyrawQ <- rawStQ())
 EmptyrawQList <- vector('list', 12)
 EmptyrawQList <- lapply(EmptyrawQList, function(x) EmptyrawQ)
-rawQList <- new(Class = 'rawStQList', Data = EmptyrawQList, Periods = PeriodList)
+rawQList <- rawStQList(Data = EmptyrawQList, Periods = PeriodList)
 getPeriods(rawQList)
 
 EmptyQ <- new(Class = 'StQ')
 EmptyQList <- vector('list', 12)
 EmptyQList <- lapply(EmptyQList, function(x) EmptyQ)
-QList <- new(Class = 'StQList', Data = EmptyQList, Periods = PeriodList)
+QList <- StQList(Data = EmptyQList, Periods = PeriodList)
 getPeriods(QList)
 
 }
