@@ -36,54 +36,31 @@ the IDDD identifier and each consecutive qualifier with an underscore _.
 # An example for VNC and DD objects:
 library(data.table)
 ### We build the VNC object
-<<<<<<< HEAD
 VarList <- list(ID = data.table(IDQual = c('NumIdEst', rep('', 4)),
-=======
-VarList <- list(ID = new(Class = 'VNCdt',
-                         .Data = data.table(IDQual = c('NumIdEst', rep('', 4)),
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
                                             NonIDQual = c(rep('',5)),
                                             IDDD = c('', 'Name', 'Surname', 'PostalAddr',
                                                      'PhoneNo'),
                                             NumIdEst = c('', rep('.', 4)),
                                             UnitName = c('numidest', 'nombre', 'apellidos',
                                                       'direccion', 'telefono'),
-<<<<<<< HEAD
                                             InFiles = rep('FF', 5)),
                 MicroData = data.table(
-=======
-                                            InFiles = rep('FF', 5))),
-                MicroData = new(Class = 'VNCdt',
-                                .Data = data.table(
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
                                         IDQual = c('NumIdEst', rep('', 2)),
                                         NonIDQual = c('', 'Market', ''),
                                         IDDD = c(rep('', 2), 'NewOrders'),
                                         NumIdEst = c(rep('', 2), '.'),
                                         Market = c(rep('', 2), '2.'),
                                         UnitName = c('numidest', '', 'cp09'),
-<<<<<<< HEAD
                                         InFiles = rep('FF', 3)),
                 ParaData = data.table(
-=======
-                                        InFiles = rep('FF', 3))),
-                ParaData = new(Class = 'VNCdt',
-                                .Data = data.table(
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
                                         IDQual = c('NumIdEst', rep('', 2)),
                                         NonIDQual = c('', 'Action', ''),
                                         IDDD = c(rep('', 2), 'Date'),
                                         NumIdEst = c(rep('', 2), '.'),
                                         Action = c(rep('', 2), 'Imputation'),
                                         UnitName = c('numidest', '', 'FechaImput'),
-<<<<<<< HEAD
                                         InFiles = rep('FP', 3)),
                 Aggregates = data.table(
-=======
-                                        InFiles = rep('FP', 3))),
-                Aggregates = new(Class = 'VNCdt',
-                                 .Data = data.table(
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
                                          IDQual = c('Province', 'NACE09', '', ''),
                                          NonIDQual = c(rep('', 2), 'Market', ''),
                                          IDDD = c('', '', '', 'Turnover'),
@@ -91,34 +68,19 @@ VarList <- list(ID = new(Class = 'VNCdt',
                                          NACE09 = c('', '', '', '.'),
                                          Market = c('', '', '', '3.'),
                                          UnitName = c('provincia', 'actividad', '', 'cn01'),
-<<<<<<< HEAD
                                          InFiles = rep('FA', 4)))
 
 VNC <- BuildVNC(VarList)
 
 ### We build the specification data.tables
 IDdt <- new(data.table(
-=======
-                                         InFiles = rep('FA', 4))))
-
-VNC <- new(Class = 'VarNameCorresp', .Data = VarList)
-
-### We build the specification data.tables
-IDdt <- new(Class = "DDdt",
-            .Data = data.table(
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
                      Variable = c('NumIdEst', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
                      Sort = c('IDQual', rep('IDDD', 4)),
                      Class = rep('character', 5),
                      Length = c('11', '25', '25', '50', '9'),
                      Qual1 = c('', rep('NumIdEst', 4)),
                      ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}')))
-<<<<<<< HEAD
 Microdt <- data.table(
-=======
-Microdt <- new(Class = "DDdt",
-            .Data = data.table(
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
                      Variable = c('NumIdEst', 'Market', 'NewOrders'),
                      Sort = c('IDQual', 'NonIDQual', 'IDDD'),
                      Class = c(rep('character', 2), 'numeric'),
@@ -126,12 +88,7 @@ Microdt <- new(Class = "DDdt",
                      Qual1 = c(rep('', 2), 'NumIdEst'),
                      Qual2 = c(rep('', 2), 'Market'),
                      ValueRegExp = c('[0-9]{9}PP', '(0|1| )', '([0-9]{1, 10}| )')))
-<<<<<<< HEAD
 Paradt <- data.table(
-=======
-Paradt <- new(Class = "DDdt",
-            .Data = data.table(
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
                      Variable = c('NumIdEst', 'Action', 'Date'),
                      Sort = c('IDQual', 'NonIDQual', 'IDDD'),
                      Class = rep('character', 3),
@@ -141,28 +98,16 @@ Paradt <- new(Class = "DDdt",
                      ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation',
                      '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')
 ))
-<<<<<<< HEAD
 Aggdt <- data.table(
-=======
-Aggdt <- new(Class = "DDdt",
-            .Data = data.table(
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
                      Variable = c('Province', 'NACE09', 'Turnover'),
                      Sort = c(rep('IDQual', 2), 'IDDD'),
                      Class = c(rep('character', 2), 'numeric'),
                      Length = c('25', '4', '12'),
                      Qual1 = c(rep('', 2), 'Province'),
                      Qual2 = c(rep('', 2), 'NACE09'),
-<<<<<<< HEAD
                      ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])', '([0-9]{1, 15}| )'))
 
 DD <- DD(VNC = VNC,
-=======
-                     ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])', '([0-9]{1, 15}| )')))
-
-DD <- new(Class = 'DD',
-          VarNameCorresp = VNC,
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
           ID = IDdt,
           MicroData = Microdt,
           ParaData = Paradt,
@@ -174,9 +119,5 @@ UnitToIDDDNames(DD, UnitNames = c('cn01', 'cp09'))
 
 UnitToIDDDNames(StQ, UnitNames = c('cn01', 'provincia', 'cp09'))
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 }
 

@@ -3,26 +3,15 @@
 \docType{methods}
 \name{setParaData<-}
 \alias{setParaData<-}
-<<<<<<< HEAD
 \alias{setParaData<-,DD,data.table-method}
 \alias{setParaData<-,VNC,data.table-method}
-=======
-\alias{setParaData<-,DD,DDdt-method}
-\alias{setParaData<-,StQ,DDdt-method}
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 \title{Set value of slot \code{ParaData}}
 \usage{
 setParaData(object) <- value
 
-<<<<<<< HEAD
 \S4method{setParaData}{VNC,data.table}(object) <- value
 
 \S4method{setParaData}{DD,data.table}(object) <- value
-=======
-\S4method{setParaData}{DD,DDdt}(object) <- value
-
-\S4method{setParaData}{StQ,DDdt}(object) <- value
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 }
 \arguments{
 \item{object}{Object whose slot \code{ParaData} is to be assigned.}
@@ -41,7 +30,6 @@ library(data.table)
 MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
                           Length = '8',
                           Qual1 = 'NumIdEst', Qual2 = 'Market', ValueRegExp = '')
-<<<<<<< HEAD
 VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','',''),
                                        NonIDQual = c('', 'Market', 'Cod', ''),
                                        IDDD = c('', '', '' ,'NewOrders'),
@@ -52,19 +40,6 @@ VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','',''),
                                        InFiles = rep('FF', 4)))
 VNC <- BuildVNC(VarList)
 DD <- DD(VNC = VNC, MicroData = MicroDataDD)
-=======
-MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
-VarList <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','',''),
-                                                          NonIDQual = c('', 'Market', 'Cod', ''),
-                                                          IDDD = c('', '', '' ,'NewOrders'),
-                                                          NumIdEst = c('', '', '', '.'),
-                                                          Market = c('', '', '', '1.'),
-                                                          Cod = rep('', 4),
-                                                          UnitName = c('', '', '', 'cp02'),
-                                                          InFiles = rep('FF', 4))))
-VNC <- BuildVNC(VarList)
-DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = MicroDataDD)
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
           
 Paradt <- data.table(
              Variable = c('NumIdEst', 'Date'),
@@ -74,10 +49,6 @@ Paradt <- data.table(
              Qual1 = c('', 'NumIdEst'),
              ValueRegExp = c('[0-9]{9}PP', 
                              '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )'))       
-<<<<<<< HEAD
-=======
-Paradt <- new(Class = 'DDdt', Paradt)          
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 setParaData(DD) <- Paradt
 DD
 

@@ -7,22 +7,12 @@
 \alias{getValues,StQList,character-method}
 \title{Return the values of a variable of specified statistical units}
 \usage{
-<<<<<<< HEAD
 getValues(object, VarName, Units = getUnits(object))
 
 \S4method{getValues}{StQ,character}(object, VarName, Units = getUnits(object))
 
 \S4method{getValues}{StQList,character}(object, VarName,
   Units = getUnits(object))
-=======
-getValues(object, VarName, Units = getUnits(object, "MicroData"))
-
-\S4method{getValues}{StQ,character}(object, VarName, Units = getUnits(object,
-  "MicroData"))
-
-\S4method{getValues}{StQList,character}(object, VarName,
-  Units = getUnits(object, "MicroData"))
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 }
 \arguments{
 \item{object}{Object of class \linkS4class{StQ} or \linkS4class{StQList}.}
@@ -43,11 +33,7 @@ those statistical units also specified as an input parameter of the input object
 \examples{
 library(data.table)
 getValues(ExampleStQ, 'Employees_1.')
-<<<<<<< HEAD
 getValues(ExampleStQ, 'Turnover', Units = data.table(ID = c('00001', '00002')))
-=======
-getValues(ExampleStQ, 'Turnover')
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 
 }
 

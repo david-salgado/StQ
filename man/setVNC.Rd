@@ -3,36 +3,20 @@
 \docType{methods}
 \name{setVNC<-}
 \alias{setVNC<-}
-<<<<<<< HEAD
 \alias{setVNC<-,DD,VNC-method}
 \alias{setVNC<-,StQ,VNC-method}
-=======
-\alias{setVNC<-,DD,VarNameCorresp-method}
-\alias{setVNC<-,StQ,VarNameCorresp-method}
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 \title{Set value of slot \linkS4class{VarNameCorresp}}
 \usage{
 setVNC(object) <- value
 
-<<<<<<< HEAD
 \S4method{setVNC}{DD,VNC}(object) <- value
 
 \S4method{setVNC}{StQ,VNC}(object) <- value
-=======
-\S4method{setVNC}{DD,VarNameCorresp}(object) <- value
-
-\S4method{setVNC}{StQ,VarNameCorresp}(object) <- value
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 }
 \arguments{
 \item{object}{Object containing slot \code{VarNameCorresp} to be set.}
 
-<<<<<<< HEAD
 \item{value}{Object of class \linkS4class{VarNameCorresp}.}
-=======
-\item{value}{List of \linkS4class{data.table}s to be assigned to the slot 
-\linkS4class{VarNameCorresp}.}
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 }
 \value{
 Object with slot \linkS4class{VarNameCorresp} updated.
@@ -47,7 +31,6 @@ library(data.table)
 MicroDataDD <- data.table(Variable = 'IEPEntradaPed', Sort = 'IDDD', Class = 'numeric',
                           Length = '8',
                           Qual1 = 'NumIdEst', Qual2 = 'Market', ValueRegExp = '')
-<<<<<<< HEAD
 VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','',''),
                                        NonIDQual = c('', 'Market', 'Cod', ''),
                                        IDDD = c('', '', '' ,'IEPEntradaPed'),
@@ -67,28 +50,6 @@ VarListAdd <- list(MicroData = data.table(IDQual = c('NumIdEst','','',''),
                                           Cod = rep('', 4),
                                           UnitName = c('', '', '', 'cp02'),
                                           InFiles = rep('FF', 4)))
-=======
-MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
-VarList <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','',''),
-                                                          NonIDQual = c('', 'Market', 'Cod', ''),
-                                                          IDDD = c('', '', '' ,'IEPEntradaPed'),
-                                                          NumIdEst = c('', '', '', '.'),
-                                                          Market = c('', '', '', '1.'),
-                                                          Cod = rep('', 4),
-                                                          UnitName = c('', '', '', 'cp02'),
-                                                          InFiles = rep('FF', 4))))
-VNC <- BuildVNC(VarList)
-DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = MicroDataDD)
-
-VarListAdd <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','',''),
-                                                          NonIDQual = c('','Market','Cod', ''),
-                                                          IDDD = c('', '', '' , 'IEPEntradaPed'),
-                                                          NumIdEst = c('', '', '', '.'),
-                                                          Market = c('', '', '', '2.'),
-                                                          Cod = rep('', 4),
-                                                          UnitName = c('', '', '', 'cp02'),
-                                                          InFiles = rep('FF', 4))))
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 VNCAdd <- BuildVNC(VarListAdd)
 setVNC(DD) <- VNCAdd
 DD

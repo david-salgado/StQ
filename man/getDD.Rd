@@ -6,10 +6,6 @@
 \alias{getDD,StQ-method}
 \alias{getDD,StQList-method}
 \alias{getDD,rawStQ-method}
-<<<<<<< HEAD
-=======
-\alias{getDD,rawStQList-method}
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 \title{Return slot DD from the input object}
 \usage{
 getDD(object)
@@ -19,11 +15,6 @@ getDD(object)
 \S4method{getDD}{rawStQ}(object)
 
 \S4method{getDD}{StQList}(object)
-<<<<<<< HEAD
-=======
-
-\S4method{getDD}{rawStQList}(object)
->>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 }
 \arguments{
 \item{object}{Object of class \linkS4class{StQ}, \linkS4class{rawStQ}, \linkS4class{StQList} or 
