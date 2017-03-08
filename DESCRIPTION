@@ -21,6 +21,7 @@ License: file LICENSE
 LazyData: true
 Encoding: UTF-8
 Collate:
+    'DatadtToDT.R'
     'Datadt-class.R'
     'DDdt-class.R'
     'VNCdt-class.R'
@@ -38,7 +39,6 @@ Collate:
     'rawStQList-class.R'
     'BuildrawStQList.R'
     'getDD.R'
-    'DatadtToDT.R'
     'getIDDD.R'
     'getNonIDQual.R'
     'getIDQual.R'
