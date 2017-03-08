@@ -1,72 +1,108 @@
 Package: StQ
-Title: Construction of Standard Questionnaires
-Version: 0.3.2.9000
-Author: David Salgado
-Maintainer: David Salgado <david.salgado.fernandez@gmail.com>
-Description: This package contains the definition of the class StQ for
-    standard business-statistics questionnaires and the methods to manage them
-    (show, subsetting, ...)
+Title: Tools to manage metadata-incorporated key-value pair datasets
+Version: 0.4.0
+Authors@R: c(
+    person("David", "Salgado", email = "david.salgado.fernandez@gmail.com", role = c("cre", "aut")),
+    person("Elisa", "Esteban", email = "elisa.esteban.segurado@gmail.com", role = "aut"),
+    person("Soledad", "Saldaña", email = "soledad.saldana.diaz@gmail.com", role = "aut"))
+Description: This package contains the definition of the class StQ to implement
+    metadata-incorporated key-value pair datasets and the methods to manage them
+    (show, subsetting, reshaping,...)
 Depends:
-    R (>= 3.2.0)
+    R (>= 3.3.0)
 Imports:
-    methods,
-    data.table (>= 1.9.4),
+    methods (>= 3.3.0),
+    data.table (>= 1.10.0),
     formula.tools (>= 1.5.4),
-    RepoTime (>= 0.1.0)
+    RepoTime (>= 0.1.0),
+    stringr (>= 1.0.0),
+    stringi (>= 1.1.1)
 License: file LICENSE
 LazyData: true
 Encoding: UTF-8
 Collate:
-    'VarNameCorresp-class.R'
+    'VNC.R'
+    'BuildVNC.R'
+    'DD.R'
+    'BuildDD.R'
+    'StQ.R'
+    'StQList.R'
+    'BuildStQList.R'
+    'rawStQ.R'
+    'rawStQList.R'
+    'BuildrawStQList.R'
     'ExtractNames.R'
-    'DD-class.R'
+    'getData.R'
+    'getIDDD.R'
+    'getNonIDQual.R'
+    'getIDQual.R'
+    'DDdtToVNC.R'
+    'getPeriods.R'
+    'getDD.R'
+    'getVNC.R'
+    'setOther.R'
+    'setAggWeights.R'
+    'plus.VNC.R'
+    'getAggregates.R'
+    'setVNC.R'
+    'setAggregates.R'
+    'setMicroData.R'
+    'setID.R'
+    'getVariables.R'
+    'VarNamesToDD.R'
+    'DDslotWith.R'
     'ExampleDD.R'
     'ExampleDM.R'
-    'ExampleQ.R'
-    'StQ-class.R'
-    'StQList-class.R'
-    'StQList.constructor.R'
-    'getDD.R'
-    'VarNamesToDD.R'
-    'getData.R'
-    'getUnits.R'
-    'plus.StQ.R'
-    'VarNamesToFormula.R'
-    'getVNC.R'
+    'ExampleStQ.R'
+    'ExampleVNC.R'
+    'ExamplerawStQ.R'
+    'VarNamesToDT.R'
+    'getDoubleDotQual.R'
+    'getDotQual.R'
+    'IDDDToUnitNames.R'
+    'ParseUnitName.R'
+    'setParaData.R'
     'plus.DD.R'
-    'dcast_StQ.R'
+    'StQListToStQ.R'
+    'StQTorawStQ.R'
+    'UnitToIDDDNames.R'
+    'VarNamesToFormula.R'
     'setData.R'
-    'setDD.R'
-    'setVar.R'
-    'Substitute.R'
-    'XLS.R'
-    'getPeriods.StQList.R'
+    'sub.StQ.R'
+    'dcast_StQ.R'
+    'dim.StQ.R'
+    'dim.rawStQ.R'
     'extract.StQList.R'
+    'extract.rawStQList.R'
     'getAggWeights.R'
-    'getAggr.R'
-    'getEditNames.R'
-    'getOtherDD.R'
-    'getVar.R'
+    'getID.R'
+    'getOther.R'
+    'getParaData.R'
+    'getUnits.R'
+    'getValues.R'
     'melt_StQ.R'
-    'plus.VarNameCorresp.R'
-    'renVar.StQ.R'
+    'plus.StQ.R'
+    'rawStQToStQ.R'
+    'renVar.R'
     'rmVar.R'
+    'setDD.R'
     'setUnits.R'
-    'setVNC.R'
+    'setValues.R'
     'show.DD.R'
     'show.StQ.R'
     'show.StQList.R'
-    'show.VarNameCorresp.R'
-    'subset.DD.R'
-    'subset.StQ.R'
-    'subset.StQList.R'
+    'show.VNC.R'
+    'show.rawStQ.R'
+    'sub.DD.R'
+    'sub.StQList.R'
+    'sub.VNC.R'
+    'sub.rawStQ.R'
+    'sub.rawStQList.R'
 RoxygenNote: 5.0.1
 URL: https://github.com/david-salgado/StQ
 BugReports: https://github.com/david-salgado/StQ/issues
 Suggests:
     knitr,
     rmarkdown,
-    RepoReadWrite,
-    stringr,
     testthat
 VignetteBuilder: knitr

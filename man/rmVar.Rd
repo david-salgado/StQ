@@ -16,22 +16,21 @@ rmVar(object, VarNames = character(0))
 \item{VarNames}{Character vector with the variable names to remove.}
 }
 \value{
-Object with the same class as the input object but where the
-variables in \code{VarNames} have been removed. Variables are removed only
-from slot \code{Data}.
+Object with the same class as the input object but where the variables in \code{VarNames}
+have been removed. Variables are removed only from slot \code{Data}.
 }
 \description{
-\code{rmVar} removes from the input object those values for variable names in
-the input parameter \code{VarNames}.
+\code{rmVar} removes from the input object those values for variable names in the input parameter
+\code{VarNames}.
 }
 \details{
-This method returns the same input object with those variables specified in
-the input parameter \code{VarNames} removed from the data set.
+This method returns the same input object with those variables specified in the input parameter
+\code{VarNames} removed from the data set.
 }
 \examples{
-data(ExampleQ)
-rmVar(ExampleQ)
-rmVar(ExampleQ, 'IASSTame')
+data(ExampleStQ)
+rmVar(ExampleStQ)
+rmVar(ExampleStQ, 'TotalEmpl')
 
 }
 

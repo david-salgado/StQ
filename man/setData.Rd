@@ -4,34 +4,37 @@
 \name{setData<-}
 \alias{setData<-}
 \alias{setData<-,StQ,data.table-method}
+\alias{setData<-,rawStQ,data.table-method}
 \title{Set value of slot \code{Data}}
 \usage{
 setData(object) <- value
 
 \S4method{setData}{StQ,data.table}(object) <- value
+
+\S4method{setData}{rawStQ,data.table}(object) <- value
 }
 \arguments{
 \item{object}{Object whose slot \code{Data} is to be assigned.}
 
-\item{value}{\linkS4class{data.table} to be assigned to the slot \code{Data}.}
+\item{value}{\linkS4class{Datadt} to be assigned to the slot \code{Data}.}
 }
 \value{
 Object with slot Data updated.
 }
 \description{
-\code{setData} assigns a \linkS4class{data.table} to the slot
-\code{Data} of the input object.
+\code{setData} assigns a \linkS4class{Datadt} to the slot \code{Data} of the input
+object.
 }
 \examples{
 # We build an empty data.table:
 library(data.table)
-Data <- data.table(IDDD = character(0), Value = numeric(0))
+Data <- new(Class = 'Datadt', data.table(IDDD = character(0), Value = numeric(0)))
 
-# We assign this data.table to the slot Data of object NewExampleQ:
-data(ExampleQ)
-NewExampleQ <- ExampleQ
-setData(NewExampleQ) <- Data
-NewExampleQ
+# We assign this data.table to the slot Data of object NewExampleStQ:
+data(ExampleStQ)
+NewExampleStQ <- ExampleStQ
+setData(NewExampleStQ) <- Data
+NewExampleStQ
 
 }
 

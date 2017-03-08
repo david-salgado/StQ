@@ -5,7 +5,7 @@
 \alias{getVNC}
 \alias{getVNC,DD-method}
 \alias{getVNC,StQ-method}
-\title{Return slot \code{VarNameCorresp} from an object}
+\title{Return slot \code{VNC} from an object}
 \usage{
 getVNC(object)
 
@@ -14,31 +14,45 @@ getVNC(object)
 \S4method{getVNC}{StQ}(object)
 }
 \arguments{
-\item{Object}{of class \linkS4class{DD} or \linkS4class{StQ}.}
+\item{object}{Object of class \linkS4class{DD} or \linkS4class{StQ}.}
 }
 \value{
-Object of class \linkS4class{VarNameCorresp} of the input parameter.
+Object of class \linkS4class{VarNameCorresp} of the input object.
 }
 \description{
-\code{getVNC} extracts slot \code{VarNameCorresp} from an object
- of class \linkS4class{DD} or class \linkS4class{StQ}.
+\code{getVNC} extracts slot \code{VarNameCorresp} from an object of class 
+\linkS4class{DD} or class \linkS4class{StQ}.
 
-This method returns an object of class \linkS4class{VarNameCorresp} from an 
-object of class \linkS4class{DD} or \linkS4class{StQ} specified as input 
-argument.
+This method returns an object of class \linkS4class{VarNameCorresp} from an object of class 
+\linkS4class{DD} or \linkS4class{StQ} specified as input argument.
 }
 \examples{
-# From an object of class DD
-data(ExampleDD)
-VNC <- getVNC(ExampleDD)
-VNC
-str(VNC)
-
-# From an object of class StQ
-data(ExampleQ)
-VNC <- getVNC(ExampleQ)
-VNC
-str(VNC)
+library(data.table)
+VarList <- list(
+  ID = data.table(IDQual = c('NumIdEst', rep('', 4)),
+                  NonIDQual = rep('', 5),
+                  IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
+                  NumIdEst = c('', rep('.', 4)),
+                  UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'),
+                  InFiles = rep('FI', 5)),
+  MicroData = data.table(IDQual = c('NumIdEst', rep('', 2)),
+                         NonIDQual = c('', 'Market', ''),
+                         IDDD = c(rep('', 2), 'NewOrders'),
+                         NumIdEst = c(rep('', 2), '.'),
+                         Market = c(rep('', 2), '1.'),
+                         UnitName = c('numidest', '', 'cp09'),
+                         InFiles = rep('FF, FD, FG', 3)),
+ Aggregates_Total = data.table(IDQual = c('Province', 'NACE', 'Market', ''),
+                               NonIDQual = rep('', 4),
+                               IDDD = c('', '', '', 'TotalTurnover'),
+                               Province = c('', '', '', '.'),
+                               NACE = c('', '', '', '.'),
+                               Market = c('', '', '', '1.'),
+                               UnitName = c('provincia', 'actividad', '', 'cn01'),
+                               InFiles = rep('FP', 4)))
+                     
+VNC <- BuildVNC(VarList)
+getVNC(VNC)
 
 }
 

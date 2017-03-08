@@ -3,88 +3,87 @@
 \docType{methods}
 \name{setVNC<-}
 \alias{setVNC<-}
-\alias{setVNC<-,DD,list-method}
-\alias{setVNC<-,StQ,list-method}
-\alias{setVNC<-,VarNameCorresp,list-method}
-\title{Set value of slot \code{VarNameCorresp}}
+\alias{setVNC<-,DD,VNC-method}
+\alias{setVNC<-,StQ,VNC-method}
+\title{Set value of slot \linkS4class{VarNameCorresp}}
 \usage{
 setVNC(object) <- value
 
-\S4method{setVNC}{VarNameCorresp,list}(object) <- value
+\S4method{setVNC}{DD,VNC}(object) <- value
 
-\S4method{setVNC}{DD,list}(object) <- value
-
-\S4method{setVNC}{StQ,list}(object) <- value
+\S4method{setVNC}{StQ,VNC}(object) <- value
 }
 \arguments{
-\item{object}{Object containing slot \code{VarNameCorresp} to be assigned.}
+\item{object}{Object containing slot \code{VarNameCorresp} to be set.}
 
-\item{value}{List of \linkS4class{data.table}s to be assigned to the slot 
-\code{VarNameCorresp}.}
+\item{value}{Object of class \linkS4class{VarNameCorresp}.}
 }
 \value{
-Object with slot \code{VarNameCorresp} updated.
+Object with slot \linkS4class{VarNameCorresp} updated.
 }
 \description{
-\code{setVNC} assigns a list of \linkS4class{data.table}s to the
- slot \code{VarNameCorresp} of the input object.
+\code{setVNC} assigns a  \linkS4class{VarNameCorresp} object to the slot 
+\code{VarNameCorresp} of the input object.
 }
 \examples{
-# On an empty object of class VarNameCorresp:
-VNC <- new(Class = 'VarNameCorresp')
-VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','','',''),
-                                       NonIDQual = c('EsMercNac', 
-                                                     'EsMercEuro', 
-                                                     'EsMercRM',
-                                                     'Cod',
-                                                     ''),
-                                       IDDD = c('', '', '' ,'' ,
-                                                'IEPEntradaPed'),
-                                       Unit1 = c('', '', '', '', 'cp02')))
-setVNC(VNC) <- VarList
-VNC
-str(VNC)
-
 # On an object of class DD:
-MicroDataDD <- data.table(Variable = 'IEPEntradaPed', 
-                          Sort = 'IDDD', 
-                          Class = 'numeric',
-                          Qual1 = 'NOrden')
-DD <- new(Class = 'DD', MicroData = MicroDataDD)
-VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','','',''),
-                                       NonIDQual = c('EsMercNac', 
-                                                     'EsMercEuro', 
-                                                     'EsMercRM',
-                                                     'Cod',
-                                                     ''),
-                                       IDDD = c('', '', '' ,'' ,
-                                                'IEPEntradaPed'),
-                                       Unit1 = c('', '', '', '', 'cp02')))
-setVNC(DD) <- VarList
+library(data.table)
+MicroDataDD <- data.table(Variable = 'IEPEntradaPed', Sort = 'IDDD', Class = 'numeric',
+                          Length = '8',
+                          Qual1 = 'NumIdEst', Qual2 = 'Market', ValueRegExp = '')
+VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','',''),
+                                       NonIDQual = c('', 'Market', 'Cod', ''),
+                                       IDDD = c('', '', '' ,'IEPEntradaPed'),
+                                       NumIdEst = c('', '', '', '.'),
+                                       Market = c('', '', '', '1.'),
+                                       Cod = rep('', 4),
+                                       UnitName = c('', '', '', 'cp02'),
+                                       InFiles = rep('FF', 4)))
+VNC <- BuildVNC(VarList)
+DD <- DD(list(VNC = VNC, MicroData = MicroDataDD))
+
+VarListAdd <- list(MicroData = data.table(IDQual = c('NumIdEst','','',''),
+                                          NonIDQual = c('','Market','Cod', ''),
+                                          IDDD = c('', '', '' , 'IEPEntradaPed'),
+                                          NumIdEst = c('', '', '', '.'),
+                                          Market = c('', '', '', '2.'),
+                                          Cod = rep('', 4),
+                                          UnitName = c('', '', '', 'cp02'),
+                                          InFiles = rep('FF', 4)))
+VNCAdd <- BuildVNC(VarListAdd)
+setVNC(DD) <- VNCAdd
 DD
-str(DD)
 
 # On an object of class StQ:
-MicroDataDD <- data.table(Variable = 'IEPEntradaPed', 
-                          Sort = 'IDDD', 
-                          Class = 'numeric',
-                          Qual1 = 'NOrden')
-DD <- new(Class = 'DD', MicroData = MicroDataDD)
-StQ <- new(Class = 'StQ', 
-           Data = data.table(IDDD = character(0), Value = character(0)), 
-           DD = DD)
-VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','','',''),
-                                       NonIDQual = c('EsMercNac', 
-                                                     'EsMercEuro', 
-                                                     'EsMercRM',
-                                                     'Cod',
-                                                     ''),
-                                       IDDD = c('', '', '' ,'' ,
-                                                'IEPEntradaPed'),
-                                       Unit1 = c('', '', '', '', 'cp02')))
-setVNC(StQ) <- VarList
-StQ
-str(StQ)
+library(data.table)
+MicroDataDD <- data.table(Variable = 'IEPEntradaPed', Sort = 'IDDD', Class = 'numeric',
+                          Length = '8', Qual1 = 'NOrden', ValueRegExp = '')
+MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
+VarList <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','',''),
+                                                          NonIDQual = c('', 'Market', 'Cod', ''),
+                                                          IDDD = c('', '', '' ,'IEPEntradaPed'),
+                                                          NumIdEst = c('', '', '', '.'),
+                                                          Market = c('', '', '', '1.'),
+                                                          Cod = rep('', 4),
+                                                          UnitName = c('', '', '', 'cp02'),
+                                                          InFiles = rep('FF', 4))))
+VNC <- BuildVNC(VarList)
+DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = MicroDataDD)  
+StQ <- new(Class = 'StQ', Data = new(Class = 'Datadt',
+                                     data.table(IDDD = character(0), Value = character(0))),
+                          DD = DD)
+             
+VarListAdd <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','',''),
+                                                          NonIDQual = c('','Market','Cod', ''),
+                                                          IDDD = c('', '', '' , 'IEPEntradaPed'),
+                                                          NumIdEst = c('', '', '', '.'),
+                                                          Market = c('', '', '', '2.'),
+                                                          Cod = rep('', 4),
+                                                          UnitName = c('', '', '', 'cp02'),
+                                                          InFiles = rep('FF', 4))))
+VNCAdd <- BuildVNC(VarListAdd)                                                    
+setVNC(StQ) <- VNCAdd
+getDD(StQ)
 
 }
 

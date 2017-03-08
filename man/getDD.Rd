@@ -4,30 +4,32 @@
 \name{getDD}
 \alias{getDD}
 \alias{getDD,StQ-method}
-\title{Return slot \code{DD} from an object of class \linkS4class{StQ}}
+\alias{getDD,StQList-method}
+\alias{getDD,rawStQ-method}
+\title{Return slot DD from the input object}
 \usage{
 getDD(object)
 
 \S4method{getDD}{StQ}(object)
+
+\S4method{getDD}{rawStQ}(object)
+
+\S4method{getDD}{StQList}(object)
 }
 \arguments{
-\item{Object}{of class \linkS4class{StQ}.}
+\item{object}{Object of class \linkS4class{StQ}, \linkS4class{rawStQ}, \linkS4class{StQList} or 
+\linkS4class{rawStQList}.}
 }
 \value{
-Object of class \linkS4class{DD} corresponding to the slot \code{DD}
-of the input parameter.
+Object of class \linkS4class{DD} corresponding to the slot \code{DD} of the input 
+parameter.
 }
 \description{
-\code{getDD} extracts slot \code{DD} from an object of class
- \linkS4class{StQ}.
-
-This method returns the \linkS4class{data.table} corresponding to slot
-\code{DD} from an object of class \linkS4class{StQ} specified as input
-argument.
+\code{getDD} extracts the slot \code{DD} of the input object.
 }
 \examples{
-data(ExampleQ)
-DD <- getDD(ExampleQ)
+data(ExampleStQ)
+DD <- getDD(ExampleStQ)
 DD
 str(DD)
 

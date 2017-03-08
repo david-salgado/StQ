@@ -2,44 +2,30 @@
 % Please edit documentation in R/VarNamesToDD.R
 \name{VarNamesToDD}
 \alias{VarNamesToDD}
-\title{Return root names and NonID-qualifier values of compound variable
-names}
+\title{Return a reduced \linkS4class{DD} involving the input variable names}
 \usage{
 VarNamesToDD(VarNames, DD)
 }
 \arguments{
 \item{VarNames}{Character vector with the compound variable names.}
 
-\item{DD}{Object of class \linkS4class{DD} with the definition and properties
-of the variables.}
+\item{DD}{Object of class \linkS4class{DD} with the definition and properties of the variables.}
 }
 \value{
-\linkS4class{data.table} with as many rows as the length of
-\code{VarNames}, with the column \code{IDDD} containing the root name and
-one more column for each suffix in the compound input name under the
-corresponding qualifier name. The resulting \linkS4class{data.table} contains
-the values of each qualifier for each input variable name.
+\linkS4class{DD} involving only the compound variable names specified in the input 
+parameter \code{VarNames}.
 }
 \description{
-\code{VarNamesToDD} returns a \linkS4class{data.table}
-identifying those qualifiers corresponding to the values appearing in the
-compound variable names specified in the input parameter \code{VarNames}.
-
-This function is designed for variable names with suffixes appending
-qualifier values with underscores _.
-
-The function determines the correspondind qualifier names for the values
-contained in the compound variable names using the information from the
-\linkS4class{DD} object specified as the second input parameter.
-
-\code{VarNamesToDD} has been designed fundamentally for internal use in the
-construction of editing strategies, but it can also be of utility in some
-scripts.
+\code{VarNamesToDD} returns a \linkS4class{DD} object including only the variable 
+names specified in the input parameter \code{VarNames}.
 }
 \examples{
-# We load RepoReadWrite to obtain the included example DD object
-data(ExampleDD)
-VarNamesToDD(c('IASSEmpleo_1_1', 'IASSEmpleo_0', 'IASSEmpleo_1_2'), ExampleDD)
+VarNames <- c('Turnover')
+data(ExampleDD)          
+VarNamesToDD(VarNames, ExampleDD)
+ 
+VarNames <- c('ID', 'Turnover', 'EmplType', 'Employees')
+VarNamesToDD(VarNames, ExampleDD)                     
 
 }
 

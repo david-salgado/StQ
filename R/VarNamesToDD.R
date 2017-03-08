@@ -1,131 +1,102 @@
-#' @title Return root names and NonID-qualifier values of compound variable
-#' names
+#' @title Return a reduced \linkS4class{DD} involving the input variable names
 #'
-#' @description \code{VarNamesToDD} returns a \linkS4class{data.table}
-#' identifying those qualifiers corresponding to the values appearing in the
-#' compound variable names specified in the input parameter \code{VarNames}.
-#'
-#' This function is designed for variable names with suffixes appending
-#' qualifier values with underscores _.
-#'
-#' The function determines the correspondind qualifier names for the values
-#' contained in the compound variable names using the information from the
-#' \linkS4class{DD} object specified as the second input parameter.
-#'
-#' \code{VarNamesToDD} has been designed fundamentally for internal use in the
-#' construction of editing strategies, but it can also be of utility in some
-#' scripts.
+#' @description \code{VarNamesToDD} returns a \linkS4class{DD} object including only the variable 
+#' names specified in the input parameter \code{VarNames}.
 #'
 #' @param VarNames Character vector with the compound variable names.
 #'
-#' @param DD Object of class \linkS4class{DD} with the definition and properties
-#' of the variables.
+#' @param DD Object of class \linkS4class{DD} with the definition and properties of the variables.
 #'
-#' @return \linkS4class{data.table} with as many rows as the length of
-#' \code{VarNames}, with the column \code{IDDD} containing the root name and
-#' one more column for each suffix in the compound input name under the
-#' corresponding qualifier name. The resulting \linkS4class{data.table} contains
-#' the values of each qualifier for each input variable name.
+#' @return \linkS4class{DD} involving only the compound variable names specified in the input 
+#' parameter \code{VarNames}.
 #'
 #'
 #' @examples
-#' # We load RepoReadWrite to obtain the included example DD object
-#' data(ExampleDD)
-#' VarNamesToDD(c('IASSEmpleo_1_1', 'IASSEmpleo_0', 'IASSEmpleo_1_2'), ExampleDD)
-#'
-#' @include ExtractNames.R
+#' VarNames <- c('Turnover')
+#' data(ExampleDD)          
+#' VarNamesToDD(VarNames, ExampleDD)
+#'  
+#' VarNames <- c('ID', 'Turnover', 'EmplType', 'Employees')
+#' VarNamesToDD(VarNames, ExampleDD)                     
+#' 
+#' @include ExtractNames.R setVNC.R getVNC.R DD.R getVariables.R setID.R setMicroData.R setAggregates.R setAggWeights.R setOther.R 
 #'
 #' @import data.table
 #'
 #' @export
 VarNamesToDD <- function(VarNames, DD){
+    
+    NotPresentVar  <- setdiff(ExtractNames(VarNames), getVariables(DD))
+    if (length(NotPresentVar) > 0) stop(paste0('[StQ::VarNamesToDD] The following variables are not contained in the DD slot: ', NotPresentVar, '.\n'))
+    outputDD <- DD()
+    setVNC(outputDD) <- getVNC(DD)
 
     # Para una sola variable
-    if (is.character(VarNames) & length(VarNames) == 1){
+    if (is.character(VarNames) & length(VarNames) == 1) {
+               
+        DDSlotNames <- setdiff(names(DD), 'VNC')
+        for (DDslot in DDSlotNames) {
 
-        DDSlotNames <- setdiff(slotNames(DD), 'VarNameCorresp')
+            DDdtlocal <- DD[[DDslot]]
+            Names.DT <- DDdtlocal[Variable == ExtractNames(VarNames)]
 
-        output <- list()
-        for (DDslot in DDSlotNames){
-            
-            DDlocal <- slot(DD, DDslot)
+            if (dim(Names.DT)[1] != 0) {
+                QualNames <- setdiff(names(Names.DT), 
+                                    c('Variable', 'Sort', 'Class', 'Length', 'Qual1', 'ValueRegExp'))
+                for (col in QualNames) {
+                    
+                    if (all(Names.DT[[col]] == '')) Names.DT[, (col) := NULL]
+                    
+                }
+                ColNames.DT <- names(Names.DT)
+                nQual <- length(grep('Qual', ColNames.DT)) 
+                
+                if (nQual >1) {
+                    
+                    setnames(Names.DT, c('Variable', 'Sort', 'Class', 'Length', paste0('Qual', 1:nQual), 'ValueRegExp'))
+                
+                } else {
+                    
+                    setnames(Names.DT, c('Variable', 'Sort', 'Class', 'Length', 'Qual1', 'ValueRegExp'))
+                }
+            }
+            #Construimos el objecto DD por Slots
+            if (DDslot == 'ID') {
 
-            Names.DT <- DDlocal[Variable == ExtractNames(VarNames)]
-            if(dim(Names.DT)[1] == 0) {
+                setID(outputDD) <- Names.DT
 
-                out <- data.table(IDDD = character(0))
-                output[[DDslot]] <- out
-
+            } else if (DDslot == 'MicroData') {
+                
+                setMicroData(outputDD) <- Names.DT
+                
+            } else if (DDslot == 'ParaData') {
+                
+                setParaData(outputDD) <- Names.DT
+                
+            } else if (DDslot == 'Aggregates') {
+                
+                setAggregates(outputDD) <- Names.DT
+                
+            } else if (DDslot == 'AggWeights') {
+                
+                setAggWeights(outputDD) <- Names.DT
+                
             } else {
-
-                setnames(Names.DT, 'Variable', 'IDDD')
-                Names.DT[, Sort := NULL]
-                Names.DT[, Class := NULL]
-
-                ParsedNames <- strsplit(VarNames, '_')[[1]]
-                IDQual <- DDlocal[Sort == 'IDQual'][['Variable']]
-                IDQualCounter <- 0
-
-                for (i in seq(along = setdiff(names(Names.DT), 'IDDD'))){
-
-                    if (Names.DT[[paste0('Qual', i)]] %in% IDQual) {
-
-                        Names.DT[, paste0('Qual', i) := NULL, with = F]
-                        IDQualCounter <- IDQualCounter + 1
-                        next
-                    }
-
-                    auxName <- Names.DT[[paste0('Qual', i)]]
-                    if (auxName == '') {
-
-                        Names.DT[, paste0('Qual', i) := NULL, with = F]
-                        next
-                    }
-                    setnames(Names.DT, paste0('Qual', i), auxName)
-                    Names.DT[, auxName := ParsedNames[i - IDQualCounter + 1],
-                             with = F]
-                }
-
-                # Eliminamos columnas vacías
-                for (col in names(Names.DT)){
-
-                  Names.DT[is.na(get(col)), col := '', with = F]
-
-                }
-
-                output[[DDslot]] <- Names.DT
+                
+                setOther(outputDD) <- Names.DT
                 
             }
+            
         }
-        outputGlobal <- Reduce(function(x, y){
-                                merge(x, y, all = TRUE,
-                                      by = intersect(names(x), names(y)))},
-                                output)
-        return(outputGlobal)
-
-    } else { # Ahora para varias variables de entrada
-
+     
+        return(outputDD)
+        
+    } else {# Ahora para varias variables de entrada
+        
         out.list <- lapply(as.list(VarNames), VarNamesToDD, DD = DD)
 
-        if (length(out.list) == 1){
-
-            out <- out.list[[1L]]
-
-        } else {
-
-            out <- Reduce(
-                function(x, y){merge(x, y,
-                                     all = TRUE,
-                                     by = intersect(names(x), names(y)))},
-                out.list)
-        }
-
-        # Pasamos NA a '' y eliminamos columnas vacías
-        Cols <- sort(names(out))
-        for (col in Cols){
-            out[, col := ifelse(is.na(get(col)), '', get(col)), with = F]
-            if(all(out[[col]] == '')) out[, col := NULL, with = F]
-        }
+        out <- Reduce(`+`, out.list, out.list[[1L]])
+        
         return(out)
     }
 }

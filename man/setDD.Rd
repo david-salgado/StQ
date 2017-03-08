@@ -11,38 +11,26 @@ setDD(object) <- value
 \S4method{setDD}{StQ,DD}(object) <- value
 }
 \arguments{
-\item{object}{Object whose slot \code{DD} is to be assigned.}
+\item{object}{Object whose slot \code{DD} is to be set.}
 
-\item{value}{Object of class \linkS4class{DD} to be assigned to the input
-object.}
+\item{value}{Object of class \linkS4class{DD} to be assigned to the input object.}
 }
 \value{
 Object of class \linkS4class{StQ} with slot DD updated.
 }
 \description{
-\code{setDD} assigns an object of class \linkS4class{DD} to the
- slot \code{DD} of the input object.
+\code{setDD} assigns an object of class \linkS4class{DD} to the slot \code{DD} of 
+the input object.
 }
 \examples{
 # We build an empty StQ object:
 library(data.table)
-Q <- new(Class = 'StQ')
+Q <- StQ()
 
-# We build a trivial DD object with three variables (one unit qualifier, one
-# variable qualifier and one variable):
-DDData <- data.table(Variable = c('NOrden', 'CCAA', 'CifraNeg'),
-                     Sort = c('IDQual', 'NonIDQual', 'IDDD'),
-                     Class = c('character', 'character', 'numeric'),
-                     Qual1 = c('', '', 'NOrden'))
-VarList <- list(data.table(IDQual = c('NOrden','','','',''),
-                           NonIDQual = c('EsMercNac', 'EsMercEuro', 'EsMercRM', 
-                                         'Cod',''),
-                           IDDD = c('','','','','CifraNeg'),
-                           Unit1 = c('','','','','')))
-VNC <- new(Class = 'VarNameCorresp', VarNameCorresp = VarList)
-DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = DDData)
+# We use an DD object previously created:
+data(ExampleDD)
 # We assign this DD object to slot DD of the preceding StQ object:
-setDD(Q) <- DD
+setDD(Q) <- ExampleDD
 str(Q)
 
 }

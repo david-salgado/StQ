@@ -1,32 +1,32 @@
-#' @title Restrict slot \code{Data} of the input object to specified units
+#' @title Return the input object with slot \code{Data} restricted to the specified units
 #'
-#' @description \code{setUnits} restricts slot \code{Data} to those units
-#' specified as input parameter.
+#' @description \code{setUnits} returns the input object with slot \code{Data} restricted to the 
+#' specified units.
 #'
-#' @param object Objeto whose slot \code{Data} is to be restricted.
+#' @param object Object whose slot \code{Data} is to be restricted.
 #'
-#' @param value \linkS4class{data.table} with the values of the unit qualifiers
-#' identifying the restricted units.
+#' @param value \linkS4class{data.table} with the values of the unit qualifiers identifying the 
+#' restricted units.
 #'
-#' @return Object with the same class as the input object with slot Data
-#' restricted to the specified units.
+#' @return Object with the same class as the input object with slot Data restricted to the specified
+#' units.
 #'
 #' @examples
 #' library(data.table)
 #' library(stringr)
-#' data(ExampleQ)
-#' NewExampleQ <- ExampleQ
-#' Units <- data.table(NOrden = str_pad(1:5, 11, 'left', '0'))
-#' setUnits(NewExampleQ) <- Units
-#' NewExampleQ
+#' data(ExampleStQ)
+#' NewExampleStQ <- ExampleStQ
+#' Units <- data.table(ID = str_pad(1:5, 5, 'left', '0'))
+#' setUnits(NewExampleStQ) <- Units
+#' NewExampleStQ
 #'
 #' @rdname setUnits
+#' 
+#' @include StQ.R getData.R setData.R
 #'
 #' @export
 setGeneric("setUnits<-", function(object, value){standardGeneric("setUnits<-")})
 #' @rdname setUnits
-#'
-#' @include StQ-class.R getData.R setData.R
 #'
 #' @import data.table
 #'
@@ -37,7 +37,11 @@ setReplaceMethod(
     function(object, value){
 
         Data <- getData(object)
-        Data <- merge(Data, value, by = names(value))
+        Data <- merge(Data, value, by = names(value), all.y = TRUE)
+        colData <- names(Data)
+        for (col in colData){
+            Data[is.na(get(col)), (col) := '']
+        }
         setData(object) <- Data
         return(object)
     }
