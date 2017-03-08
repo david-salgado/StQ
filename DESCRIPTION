@@ -92,7 +92,6 @@ Collate:
     'renVar.R'
     'rmVar.R'
     'setDD.R'
-    'setOtherDD.R'
     'setUnits.R'
     'setValues.R'
     'show.DD.R'
