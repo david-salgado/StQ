@@ -1,0 +1,71 @@
+#' @title Show an object of class \linkS4class{VarNameCorresp}
+#'
+#' @description The method \code{show} shows the slots of an object \linkS4class{VarNameCorresp}
+#' limiting the number of columns on screen up to 10.
+#'
+#' It is indeed the method \link[methods]{show} adapted to the class \linkS4class{VarNameCorresp}.
+#'
+#' @param object Object of class \linkS4class{VarNameCorresp}.
+#'
+#' @return Invisible object of class \code{\link{NULL}}.
+#'
+#' @examples
+#' # A trivial example
+#' show(new(Class = 'VarNameCorresp'))
+#'
+#' # A more elaborate example
+#' library(data.table)
+#' VarList <- list(
+#'   ID = new(Class = 'VNCdt', 
+#'            .Data = data.table(
+#'                  IDQual = c('NumIdEst', rep('', 4)),
+#'                  NonIDQual = rep('', 5),
+#'                  IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
+#'                  NumIdEst = c('', rep('.', 4)),
+#'                  UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'),
+#'                  InFiles = rep('FI', 5))),
+#'   MicroData = new(Class = 'VNCdt', 
+#'                   .Data = data.table(
+#'                       IDQual = c('NumIdEst', rep('', 2)),
+#'                       NonIDQual = c('', 'Market', ''),
+#'                       IDDD = c(rep('', 2), 'NewOrders'),
+#'                       NumIdEst = c(rep('', 2), '.'),
+#'                       Market = c(rep('', 2), '1.'),
+#'                       UnitName = c('numidest', '', 'cp09'),
+#'                       InFiles = rep('FF', 3))),
+#'  ParaData = new(Class = 'VNCdt'),
+#'  Aggregates = new(Class = 'VNCdt', 
+#'                   .Data = data.table(
+#'                      IDQual = c('Province', 'NACE', 'Market', ''),
+#'                      NonIDQual = rep('', 4),
+#'                      IDDD = c('', '', '', 'TotalTurnover'),
+#'                      Province = c('', '', '', '.'),
+#'                      NACE = c('', '', '', '.'),
+#'                      Market = c('', '', '', '2.'),
+#'                      UnitName = c('provincia', 'actividad', '', 'cn01'),
+#'                      InFiles = rep('FA', 4))))
+#' VNC <- new(Class = 'VarNameCorresp', .Data= VarList)
+#' show(VNC)
+#'
+#' @include VarNameCorresp-class.R
+#'
+#' @import data.table
+#' 
+#' @export
+setMethod(
+    f = "show",
+    signature = c("VarNameCorresp"),
+    function(object){
+        
+        lapply(names(object), function(Name){
+            
+            NamesCol <- names(Name)
+            cat(paste('\n', Name, '\n\n'))    
+            show(object[[Name]])    
+        }
+        )
+        
+        invisible(NULL)            
+    }
+    
+)

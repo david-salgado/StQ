@@ -1,0 +1,58 @@
+#' @title S4 class to implement a named list of objects of class \linkS4class{rawStQ}
+#'
+#' @description Definition of an S4 class of name \code{rawStQList} with a list of objects of class
+#' \linkS4class{rawStQ}. Instead of an atomic vector as a name, we associate with it an object of
+#' class \linkS4class{RepoTimeInt} containing the names of the time periods corresponding to each
+#' \linkS4class{rawStQ} object.
+#'
+#' The structure of this S4 class \code{rawStQList} comprises 2 attributes:
+#'
+#' \itemize{
+#'
+#' \item the attribute \code{Data}, which is a \code{list} of objects of class \linkS4class{rawStQ};
+#'
+#' \item  the attribute \code{Periods}, which is an object of class \linkS4class{RepoTimeInt}.
+#' }
+#'
+#' @slot Data \code{List} of objects of class \linkS4class{rawStQ};
+#'
+#' @slot Periods An object of class \linkS4class{RepoTimeInt};
+#'
+#' @examples
+#' library(RepoTime)
+#' mm <- c(paste0('0', 1:9), 10:12)
+#' TimePer <- paste0('MM', mm, '2015')
+#' PeriodList <- newRepoTime(TimePer)
+#' EmptyrawQ <- new(Class = 'rawStQ')
+#' EmptyrawQList <- vector('list', 12)
+#' EmptyrawQList <- lapply(EmptyrawQList, function(x) EmptyrawQ)
+#' rawQList <- new(Class = 'rawStQList', Data = EmptyrawQList, Periods = PeriodList)
+#' rawQList
+#' str(rawQList)
+#'
+#' @include rawStQ-class.R
+#' 
+#' @import RepoTime
+#' 
+#' @export
+setClass(Class = "rawStQList",
+         slots = c(Data = 'list',
+                   Periods ='RepoTimeInt'),
+         validity = function(object){
+             
+             DataClass <- unique(unlist(lapply(object@Data, class)))
+             if (!identical(DataClass, 'rawStQ')) {
+                 
+                 stop('[rawStQList::validity] Every component of slot Data must be of class rawStQ.')
+             }
+             
+             PeriodClass <- object@Periods
+             if (length(object@Data) != length(PeriodClass@Repo)) {
+                 
+                 stop('[rawStQList::validity] The lenght of both slots must be equal.')
+             }
+             return(TRUE)
+             
+         }
+)
+

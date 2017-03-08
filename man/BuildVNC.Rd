@@ -4,6 +4,7 @@
 \alias{BuildVNC}
 \title{Constructor of objects of class \linkS4class{VarNameCorresp}}
 \usage{
+<<<<<<< HEAD
 BuildVNC(Data = list(ID = data.table(IDQual = character(0), NonIDQual =
   character(0), IDDD = character(0), UnitName = character(0), InFiles =
   character(0)), MicroData = data.table(IDQual = character(0), NonIDQual =
@@ -23,10 +24,28 @@ This constructor returns an object of class \linkS4class{VNC}.
 The input parameter is a named \code{list} of objects of class \linkS4class{data.table}. Notice 
 that the names of this \code{list} must be any of 'ID', 'MicroData', 'ParaData', 'Aggregates', 
 'AggWeights', 'Other' or compound names with these roots (e.g. ParaData_Editing).
+=======
+BuildVNC(Data)
+}
+\arguments{
+\item{Data}{A named \code{list} of objects of class \linkS4class{VNCdt}.}
+}
+\value{
+An object of class \linkS4class{VarNameCorresp} with components 
+specified in the input parameter Data. Components 'ID', 'MicroData' and/or 'ParaData' 
+not being specified are set as an empty \linkS4class{VNCdt} object.
+}
+\description{
+This constructor returns an object of class \linkS4class{VarNameCorresp}.
+The input parameter is a named \code{list} of objects of class \linkS4class{VNCdt}. Notice that
+the names of this \code{list} must be any of 'ID', 'MicroData', 'ParaData', 'Aggregates', 
+'AggWeights', 'Other'.
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 }
 \examples{
 library(data.table)
 VarList <- list(
+<<<<<<< HEAD
   ID = data.table(IDQual = c('NumIdEst', rep('', 4)),
                   NonIDQual = rep('', 5),
                   IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
@@ -48,6 +67,35 @@ VarList <- list(
                          Market = c('', '', '', '1.'),
                          UnitName = c('provincia', 'actividad', '', 'cn01'),
                          InFiles = rep('FP', 4)))
+=======
+  ID = new(Class = 'VNCdt', 
+           .Data = data.table(
+                 IDQual = c('NumIdEst', rep('', 4)),
+                 NonIDQual = rep('', 5),
+                 IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
+                 NumIdEst = c('', rep('.', 4)),
+                 UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'),
+                 InFiles = rep('FI', 5))),
+  MicroData = new(Class = 'VNCdt', 
+                  .Data = data.table(
+                      IDQual = c('NumIdEst', rep('', 2)),
+                      NonIDQual = c('', 'Market', ''),
+                      IDDD = c(rep('', 2), 'NewOrders'),
+                      NumIdEst = c(rep('', 2), '.'),
+                      Market = c(rep('', 2), '1.'),
+                      UnitName = c('numidest', '', 'cp09'),
+                      InFiles = rep('FF, FD, FG', 3))),
+ Aggregates = new(Class = 'VNCdt', 
+                  .Data = data.table(
+                     IDQual = c('Province', 'NACE', 'Market', ''),
+                     NonIDQual = rep('', 4),
+                     IDDD = c('', '', '', 'TotalTurnover'),
+                     Province = c('', '', '', '.'),
+                     NACE = c('', '', '', '.'),
+                     Market = c('', '', '', '1.'),
+                     UnitName = c('provincia', 'actividad', '', 'cn01'),
+                     InFiles = rep('FP', 4))))
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
                      
 VNC <- BuildVNC(VarList)
 VNC

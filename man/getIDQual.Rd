@@ -4,18 +4,43 @@
 \name{getIDQual}
 \alias{getIDQual}
 \alias{getIDQual,DD-method}
+<<<<<<< HEAD
 \alias{getIDQual,StQ-method}
 \alias{getIDQual,VNC-method}
+=======
+\alias{getIDQual,DDdt-method}
+\alias{getIDQual,StQ-method}
+\alias{getIDQual,VNCdt-method}
+\alias{getIDQual,VarNameCorresp-method}
+\alias{getIDQual,rawStQ-method}
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 \title{Return unit qualifiers from an object}
 \usage{
 getIDQual(object, CompNames = names(object))
 
+<<<<<<< HEAD
 \S4method{getIDQual}{VNC}(object, CompNames = names(object))
 
 \S4method{getIDQual}{DD}(object, CompNames = setdiff(names(object), "VNC"))
 
 \S4method{getIDQual}{StQ}(object,
   CompNames = setdiff(slotNames(getDD(object)), "VNC"))
+=======
+\S4method{getIDQual}{VNCdt}(object, CompNames = names(object))
+
+\S4method{getIDQual}{VarNameCorresp}(object, CompNames = names(object))
+
+\S4method{getIDQual}{DDdt}(object, CompNames = names(object))
+
+\S4method{getIDQual}{DD}(object, CompNames = setdiff(slotNames(object),
+  "VarNameCorresp"))
+
+\S4method{getIDQual}{StQ}(object,
+  CompNames = setdiff(slotNames(getDD(object)), "VarNameCorresp"))
+
+\S4method{getIDQual}{rawStQ}(object,
+  CompNames = setdiff(slotNames(getDD(object)), "VarNameCorresp"))
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 }
 \arguments{
 \item{object}{Object with the unit qualifiers (IDQual) to be queried.}
@@ -33,6 +58,7 @@ contained in the input object.
 Unit qualifiers are those qualifiers identifying statistical units.
 }
 \examples{
+<<<<<<< HEAD
 # An example:
 library(data.table)
 ### We build the VNC object
@@ -68,6 +94,45 @@ VNC <- BuildVNC(VarList)
 
 getIDQual(VNC)
 getIDQual(VNC, 'ParaData')
+=======
+library(data.table)
+VarList <- list(ID = new(Class = 'VNCdt',
+                data.table(IDQual = c('NumIdEst', rep('', 4)),
+                           NonIDQual = c('','','','',''),
+                           IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
+                           NumIdEst = c('', rep('.', 4)),
+                           UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'),
+                           InFiles = rep('FI', 5))),
+MicroData =new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
+                                           NonIDQual = c('', 'Market', ''),
+                                           IDDD = c(rep('', 2), 'NewOrders'),
+                                           NumIdEst = c(rep('', 2), '.'),
+                                           Market = c(rep('', 2), '1.'),
+                                           UnitName = c('numidest', '', 'cp09'),
+                                           InFiles = rep('FF, FD, FG', 3))),
+ParaData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
+                                           NonIDQual = c('', 'Action', ''),
+                                           IDDD = c(rep('', 2), 'Date'),
+                                           NumIdEst = c(rep('', 2), '.'),
+                                           Action = c(rep('', 2), 'Imputation'),
+                                           UnitName = c('numidest', '', 'FechaImput'),
+                                           InFiles = rep('FP', 3))),
+AggWeights = new(Class = 'VNCdt', data.table(IDQual = c('CCAA', 'NACE09', ''),
+                                           NonIDQual = rep('', 3),
+                                           IDDD = c('', '', 'Ponderacion'),
+                                           CCAA = c('', '', '.'),
+                                           NACE09 = c('', '', '.'),
+                                           UnitName = c('Provincia', '', ''),
+                                           InFiles = rep('FA', 3))))
+VNC <- new(Class = 'VarNameCorresp', .Data = VarList)
+getIDQual(VNC)
+
+getIDQual(ExampleDD)
+getIDQual(ExampleDD, 'MicroData')
+
+getIDQual(ExampleStQ)
+getIDQual(ExampleStQ, 'Aggregates')
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 
 }
 

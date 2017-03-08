@@ -3,12 +3,15 @@
 \docType{methods}
 \name{rmVar}
 \alias{rmVar}
+\alias{rmVar,Datadt-method}
 \alias{rmVar,StQ-method}
 \title{Remove variables from an object}
 \usage{
 rmVar(object, VarNames = character(0))
 
 \S4method{rmVar}{StQ}(object, VarNames = character(0))
+
+\S4method{rmVar}{Datadt}(object, VarNames = character(0))
 }
 \arguments{
 \item{object}{Input object to remove the variables from.}
@@ -30,7 +33,11 @@ This method returns the same input object with those variables specified in the 
 \examples{
 data(ExampleStQ)
 rmVar(ExampleStQ)
+<<<<<<< HEAD
 rmVar(ExampleStQ, 'TotalEmpl')
+=======
+rmVar(ExampleStQ, 'IASSTame')
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 
 }
 

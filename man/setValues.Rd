@@ -56,6 +56,7 @@ the new variable in some circunstamces.
 \examples{
 library(data.table)
 data(ExampleStQ)
+<<<<<<< HEAD
 newVNCVar <- data.table(IDQual = '', NonIDQual = '', IDDD = 'lTurnover',
                             UnitName = '', InFiles = 'FF')
 newVNC <- BuildVNC(list(MicroData = newVNCVar))
@@ -66,6 +67,21 @@ newDD <- DD(VNC = newVNC,
                                    Length = '10',
                                    Qual1 = 'ID',
                                    ValueRegExp = ''))
+=======
+newVNCVar <- new(Class = 'VNCdt',
+                 data.table(IDQual = '', NonIDQual = '', IDDD = 'lTurnover',
+                            UnitName = '', InFiles = 'FF'))
+newVNC <- BuildVNC(list(MicroData = newVNCVar))
+newDD <- new(Class = 'DD',
+             VarNameCorresp = newVNC, 
+             MicroData = new(Class = 'DDdt',
+                             data.table(Variable = 'lTurnover',
+                                        Sort = 'IDDD',
+                                        Class = 'numeric',
+                                        Length = '10',
+                                        Qual1 = 'ID',
+                                        ValueRegExp = '')))
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 NewQ <- setValues(object = ExampleStQ,
                newDD = newDD,
                DDslot = 'MicroData',

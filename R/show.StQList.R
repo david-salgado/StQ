@@ -21,7 +21,11 @@
 #' show(QList)
 #' str(QList)
 #'
+<<<<<<< HEAD
 #' @include StQList.R getPeriods.R
+=======
+#' @include StQList-class.R getPeriods.R
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #'
 #' @import data.table
 #' 
@@ -32,8 +36,13 @@ setMethod(
   signature = c("StQList"),
   function(object){
 
+<<<<<<< HEAD
     OutList <- object$Data
     OutList <- lapply(OutList, function(x) x[['Data']])
+=======
+    OutList <- object@Data
+    OutList <- lapply(OutList, function(x) slot(x, 'Data'))
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
     names(OutList) <- getPeriods(object)
 
     show(OutList)

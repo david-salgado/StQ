@@ -4,14 +4,30 @@
 \name{getDotQual}
 \alias{getDotQual}
 \alias{getDotQual,DD-method}
+<<<<<<< HEAD
 \alias{getDotQual,VNC-method}
+=======
+\alias{getDotQual,StQ-method}
+\alias{getDotQual,VNCdt-method}
+\alias{getDotQual,VarNameCorresp-method}
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 \title{Return non-unit qualifiers not used in compound variable names}
 \usage{
 getDotQual(object, Component = names(object))
 
+<<<<<<< HEAD
 \S4method{getDotQual}{VNC}(object, Component = names(object))
 
 \S4method{getDotQual}{DD}(object, Component = names(getVNC(object)))
+=======
+\S4method{getDotQual}{VNCdt}(object, Component = names(object))
+
+\S4method{getDotQual}{VarNameCorresp}(object, Component = names(object))
+
+\S4method{getDotQual}{DD}(object, Component = names(getVNC(object)))
+
+\S4method{getDotQual}{StQ}(object, Component = names(object))
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 }
 \arguments{
 \item{object}{Object containing the dot qualifiers.}
@@ -28,6 +44,7 @@ specified with a wildcard dot in the VNC component of the input object.
 }
 \examples{
 library(data.table)
+<<<<<<< HEAD
 VarList <- list(ID = data.table(IDQual = c('NumIdEst', rep('', 4)),
                                 NonIDQual = c('','','','',''),
                                 IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
@@ -59,5 +76,39 @@ AggWeights = data.table(IDQual = c('CCAA', 'NACE09', ''),
 VNC <- BuildVNC(VarList)
 getDotQual(VNC)
 
+=======
+VarList <- list(ID = new(Class = 'VNCdt',
+                data.table(IDQual = c('NumIdEst', rep('', 4)),
+                           NonIDQual = c('','','','',''),
+                           IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
+                           NumIdEst = c('', rep('.', 4)),
+                           UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'),
+                           InFiles = rep('FI', 5))),
+MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
+                                            NonIDQual = c('', 'Market', ''),
+                                            IDDD = c(rep('', 2), 'NewOrders'),
+                                            NumIdEst = c(rep('', 2), '.'),
+                                            Market = c(rep('', 2), '1.'),
+                                            UnitName = c('numidest', '', 'cp09'),
+                                            InFiles = rep('FF, FD, FG', 3))),
+ParaData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
+                                           NonIDQual = c('', 'Action', ''),
+                                           IDDD = c(rep('', 2), 'Date'),
+                                           NumIdEst = c(rep('', 2), '.'),
+                                           Action = c(rep('', 2), 'Imputation'),
+                                           UnitName = c('numidest', '', 'FechaImput'),
+                                           InFiles = rep('FP', 3))),
+AggWeights = new(Class = 'VNCdt', data.table(IDQual = c('CCAA', 'NACE09', ''),
+                                           NonIDQual = rep('', 3),
+                                           IDDD = c('', '', 'Ponderacion'),
+                                           CCAA = c('', '', '.'),
+                                           NACE09 = c('', '', '.'),
+                                           UnitName = c('Provincia', '', ''),
+                                           InFiles = rep('FA', 3))))
+VNC <- new(Class = 'VarNameCorresp', .Data = VarList)
+getDotQual(VNC)
+
+
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 }
 

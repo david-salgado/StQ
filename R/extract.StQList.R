@@ -29,11 +29,16 @@
 #' QList[['MM092015']]
 #' QList[[2]]
 #'
+<<<<<<< HEAD
 #' @include StQList.R getPeriods.R getData.R
+=======
+#' @include StQList-class.R getPeriods.R
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #'
 #' @import data.table 
 #'
 #' @export
+<<<<<<< HEAD
 `[[.StQList` <- function(x, i, j, ..., exact = TRUE){
     
     
@@ -44,6 +49,16 @@
     mc[[1L]] <- `[[`
     mc[['x']] <- New.x
     output <- eval(mc)
+=======
+setMethod(
+  f = "[[",
+  signature = c("StQList"),
+  function(x, i, j, ..., exact = TRUE){
+
+    Data <- x@Data
+    names(Data) <- getPeriods(x)
+    output <- Data[[i]]
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
     return(output)
 
 }

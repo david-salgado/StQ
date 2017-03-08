@@ -20,7 +20,7 @@
 
 #' @export
 setGeneric("getDD", function(object) {standardGeneric("getDD")})
-
+#'
 #' @rdname getDD
 #'
 #' @export
@@ -30,6 +30,7 @@ setMethod(
   function(object){object$DD}
 )
 
+<<<<<<< HEAD
 #' @rdname getDD
 #'
 #' @import data.table
@@ -40,6 +41,9 @@ setMethod(
     signature = c("rawStQ"),
     function(object){object$DD}
 )
+=======
+     return(copy(object@DD))
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 
 #' @rdname getDD
 #'
@@ -56,3 +60,56 @@ setMethod(
         return(output)
     }
 )
+
+#' @rdname getDD
+#'
+#' @include rawStQ-class.R
+#'
+#' @import data.table
+#'
+#' @export
+setMethod(
+    f = "getDD",
+    signature = c("rawStQ"),
+    function(object){
+        
+        return(copy(object@DD))
+        
+    }
+)
+#' @rdname getDD
+#' 
+#' @include StQList-class.R
+#' 
+#' @import data.table
+#' 
+#' @export
+setMethod(
+    f = "getDD",
+    signature = c("StQList"),
+    function(object){
+        
+        output <- lapply(getData(object), function(x) getDD(x))  
+        
+        return(output)
+    }
+)
+
+#' @rdname getDD
+#' 
+#' @include rawStQList-class.R
+#' 
+#' @import data.table
+#' 
+#' @export
+setMethod(
+    f = "getDD",
+    signature = c("rawStQList"),
+    function(object){
+        
+        output <- lapply(getData(object), function(x) getDD(x))  
+        
+        return(output)
+    }
+)
+

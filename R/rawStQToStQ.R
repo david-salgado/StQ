@@ -13,13 +13,21 @@
 #' data(ExamplerawStQ)
 #' StQ <- rawStQToStQ(ExamplerawStQ)
 #' str(StQ)
+<<<<<<< HEAD
 #' 
 #' @include rawStQ.R StQ.R getDD.R getData.R
+=======
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #'
 #' @export
 setGeneric("rawStQToStQ", function(rawQ){standardGeneric("rawStQToStQ")})
 #' @rdname rawStQToStQ
 #'
+<<<<<<< HEAD
+=======
+#' @include rawStQ-class.R Datadt-class.R StQ-class.R getDD.R getData.R DatadtToDT.R
+#'
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #' @importFrom stringi stri_sub stri_trim_right
 #'
 #' @export
@@ -29,11 +37,20 @@ setMethod(
     function(rawQ){
 
         DD <- getDD(rawQ)
+<<<<<<< HEAD
         DDdt.list <- setdiff(names(DD), 'VNC')
         DDdt.list <- lapply(DDdt.list, function(Name){DD[[Name]]})
         DDdt <- rbindlist(DDdt.list, fill = TRUE)
 
         rawDT <- getData(rawQ)
+=======
+        DDdt.list <- setdiff(slotNames(DD), 'VarNameCorresp')
+        DDdt.list <- lapply(DDdt.list, function(Name){slot(DD, Name)})
+        DDdt <- Reduce('+', DDdt.list, init = DDdt.list[[1]])
+        DDdt <- DatadtToDT(DDdt)
+
+        rawDT <- DatadtToDT(getData(rawQ))
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
         setnames(rawDT, 'IDDDKey', 'IDDD')
         rawData.list <- split(rawDT, rawDT[['IDDD']])
 
@@ -41,6 +58,7 @@ setMethod(
 
                 QualsDT <- DDdt[Variable == VarName, names(DDdt)[grep('Qual', names(DDdt))], with = F]
                 Quals <- t(QualsDT)[, 1]
+<<<<<<< HEAD
                 Quals <- Quals[Quals != '' & !is.na(Quals)]
 
                 Lengths <- lapply(unique(Quals), function(Qual){
@@ -51,6 +69,10 @@ setMethod(
                 })
 
                 Lengths <- unlist(Lengths)
+=======
+                Quals <- Quals[Quals != '']
+                Lengths <- unlist(lapply(Quals, function(Qual){DDdt[Variable == Qual][['Length']]}))
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
                 names(Quals) <- Lengths
                 return(Quals)
             })
@@ -84,15 +106,26 @@ setMethod(
 
             Data[is.na(get(col)), (col) := '']
         }
+<<<<<<< HEAD
         #Datadt <- new(Class = 'Datadt', Data)
         #Q <- new(Class = 'StQ', Data = Datadt, DD = DD)
         Q <- StQ(Data, DD)
         
+=======
+        Datadt <- new(Class = 'Datadt', Data)
+        Q <- new(Class = 'StQ', Data = Datadt, DD = DD)
+
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
         return(Q)
     }
 )
 #' @rdname rawStQToStQ
 #'
+<<<<<<< HEAD
+=======
+#' @include rawStQList-class.R Datadt-class.R StQ-class.R StQList-class.R getDD.R getData.R
+#'
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #' @importFrom stringi stri_sub
 #'
 #' @import RepoTime

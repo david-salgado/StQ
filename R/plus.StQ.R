@@ -21,12 +21,20 @@
 #' Data1 <- data.table(ID = c('002', '003', '004'),
 #'                     IDDD = c('NewOrders', 'NewOrders', 'NewOrders'),
 #'                     Value = c(32150, 12574, 23896))
+<<<<<<< HEAD
+=======
+#' Data1 <- new(Class = 'Datadt', Data1)
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #' VNC1 <- data.table(IDQual = c('ID', ''),
 #'                    NonIDQual = c('', ''),
 #'                    IDDD = c('', 'NewOrders'),
 #'                    ID = c('', '.'),
 #'                    UnitName = c('numidest', 'cp01'),
 #'                    InFiles = rep('FF', 2))
+<<<<<<< HEAD
+=======
+#' VNC1 <- new(Class = 'VNCdt', VNC1)
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #' VNC1 <- BuildVNC(list(MicroData = VNC1))
 #'
 #' MicroDD1 <- data.table(Variable = c('ID', 'NewOrders'),
@@ -35,6 +43,7 @@
 #'                        Length = c('11', '7'),
 #'                        Qual1 = c('', 'ID'),
 #'                        ValueRegExp = c('[0-9]{9}PP', '([0-9]{1, 10}| )'))
+<<<<<<< HEAD
 #' DD1 <- DD(VNC = VNC1, MicroData = MicroDD1)
 #'
 #' # We build the StQ object, and join it with another previously created in a
@@ -46,6 +55,19 @@
 #'
 #'
 #' @include StQ.R DD.R getDD.R getData.R getUnits.R
+=======
+#' MicroDD1 <- new(Class = 'DDdt', MicroDD1)
+#' DD1 <- new(Class = 'DD', VarNameCorresp = VNC1, MicroData = MicroDD1)
+#'
+#' # We build the StQ object, and join it with another previously created in a
+#' #  single object:
+#' data(ExampleStQ)  
+#' Q1 <- new(Class = 'StQ', Data = Data1, DD = DD1)
+#' Q2 <- ExampleStQ
+#' Q1 + Q2
+#'
+#' @include StQ-class.R DD-class.R getDD.R getData.R getUnits.R DatadtToDT.R
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #'
 #' @import data.table
 #'
@@ -55,6 +77,7 @@
     outputDD <- getDD(e1) + getDD(e2)
 
     #Incluimos las mismas columnas en ambos objetos
+<<<<<<< HEAD
     e1.Data <- getData(e1)
     e2.Data <- getData(e2)
     
@@ -86,6 +109,34 @@
     # Unimos los slots Data con rbindlist eliminando los duplicados
     ColNames <- c(setdiff(names(e1.Data), c('IDDD', 'Value')), 
                   setdiff(names(e2.Data), setdiff(names(e1.Data), c('IDDD', 'Value'))))
+=======
+    ColNames.e1 <- names(getData(e1))
+    ColNames.e2 <- names(getData(e2))
+    NewCol.e2 <- setdiff(ColNames.e2, ColNames.e1)
+    NewCol.e1 <- setdiff(ColNames.e1, ColNames.e2)
+  
+    if (length(NewCol.e2) > 0){
+        
+        Datae1 <- DatadtToDT(getData(e1))[, (NewCol.e2) := character(.N)]
+        
+    } else {
+        
+        Datae1 <- DatadtToDT(getData(e1))
+    }
+
+    if (length(NewCol.e1) > 0){
+        
+        Datae2 <- DatadtToDT(getData(e2))[, (NewCol.e1) := character(.N)]
+
+    } else {
+        
+        Datae2 <- DatadtToDT(getData(e2))
+    }
+    
+    # Unimos los slots Data con rbindlist eliminando los duplicados
+    ColNames <- c(setdiff(names(getData(e1)), c('IDDD', 'Value')), 
+                  setdiff(names(getData(e2)), setdiff(names(getData(e1)), c('IDDD', 'Value'))))
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
     setcolorder(Datae1, ColNames)
     setcolorder(Datae2, ColNames)
     output.Data <- rbindlist(list(Datae1, Datae2))
@@ -98,7 +149,7 @@
           The next rows are duplicated and will be removed:\n\n')
       print(output.Data[DupRows])
     }
-    output.Data <- output.Data[!DupRows]
+    output.Data <- new(Class = 'Datadt', output.Data[!DupRows])
 
     # Generamos el objeto final
     output <- StQ(Data = output.Data, DD = outputDD)

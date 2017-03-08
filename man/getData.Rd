@@ -9,8 +9,9 @@
 \alias{getData,rawStQList-method}
 \title{Return slot \code{Data} from an object possibly subsetted to a set of variables}
 \usage{
-getData(object, VarNames)
+getData(object, VarNames, DDslot = "MicroData")
 
+<<<<<<< HEAD
 \S4method{getData}{StQ}(object, VarNames)
 
 \S4method{getData}{rawStQ}(object, VarNames)
@@ -18,6 +19,17 @@ getData(object, VarNames)
 \S4method{getData}{StQList}(object, VarNames)
 
 \S4method{getData}{rawStQList}(object, VarNames)
+=======
+\S4method{getData}{DD}(object, VarNames, DDslot = "MicroData")
+
+\S4method{getData}{StQ}(object, VarNames, DDslot = "MicroData")
+
+\S4method{getData}{StQList}(object, VarNames, DDslot = "MicroData")
+
+\S4method{getData}{rawStQ}(object, VarNames, DDslot = "MicroData")
+
+\S4method{getData}{rawStQList}(object, VarNames, DDslot = "MicroData")
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 }
 \arguments{
 \item{object}{Object whose (possibly subsetted) slot \code{Data} is queried.}
@@ -41,10 +53,17 @@ returns a list of \linkS4class{StQ}/linkS4class{rawStQ} objects.
 those variables specified as an input parameter. In the case of those variables pertaining to 
 more than one slot of the input object (in particular for \linkS4class{DD} objects), a third 
 parameter \code{DDslot} with default value MicroData must be specified. 
+<<<<<<< HEAD
 
 In the case of objects of class \linkS4class{DD}, it returns the slot \code{MicroData} of the
 input object.
 
+=======
+
+In the case of objects of class \linkS4class{DD}, it returns the slot \code{MicroData} of the
+input object.
+
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 In the case of objects of class \linkS4class{StQ}, it returns a data set restricted to those root
 variable names in the column \code{IDDD} of slot \code{Data} specified in the input parameter
 \code{VarNames}.

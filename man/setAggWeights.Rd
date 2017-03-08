@@ -3,15 +3,26 @@
 \docType{methods}
 \name{setAggWeights<-}
 \alias{setAggWeights<-}
+<<<<<<< HEAD
 \alias{setAggWeights<-,DD,data.table-method}
 \alias{setAggWeights<-,VNC,data.table-method}
+=======
+\alias{setAggWeights<-,DD,DDdt-method}
+\alias{setAggWeights<-,StQ,DDdt-method}
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 \title{Set value of slot \code{AggWeights}}
 \usage{
 setAggWeights(object) <- value
 
+<<<<<<< HEAD
 \S4method{setAggWeights}{VNC,data.table}(object) <- value
 
 \S4method{setAggWeights}{DD,data.table}(object) <- value
+=======
+\S4method{setAggWeights}{DD,DDdt}(object) <- value
+
+\S4method{setAggWeights}{StQ,DDdt}(object) <- value
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 }
 \arguments{
 \item{object}{Object whose slot \code{AggWeights} is to be assigned.}
@@ -29,6 +40,7 @@ library(data.table)
 MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
                           Length = '8',
                           Qual1 = 'NumIdEst', Qual2 = 'Market', ValueRegExp = '')
+<<<<<<< HEAD
 VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','',''),
                                        NonIDQual = c('', 'Market', 'Cod', ''),
                                        IDDD = c('', '', '' ,'NewOrders'),
@@ -39,11 +51,28 @@ VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','',''),
                                        InFiles = rep('FF', 4)))
 VNC <- BuildVNC(VarList)
 DD <- DD(VNC = VNC, MicroData = MicroDataDD)
+=======
+MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
+VarList <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','',''),
+                                                          NonIDQual = c('', 'Market', 'Cod', ''),
+                                                          IDDD = c('', '', '' ,'NewOrders'),
+                                                          NumIdEst = c('', '', '', '.'),
+                                                          Market = c('', '', '', '1.'),
+                                                          Cod = rep('', 4),
+                                                          UnitName = c('', '', '', 'cp02'),
+                                                          InFiles = rep('FF', 4))))
+VNC <- BuildVNC(VarList)
+DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = MicroDataDD)
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 
 AggWeights <- data.table(Variable = c('ID', 'Pond1'), Sort = c('IDQual', 'IDDD'),
                          Class = c('character', 'character'),
                          Length = c('11', '8'),
                          Qual1 = c('', 'ID'), ValueRegExp = c('', ''))
+<<<<<<< HEAD
+=======
+AggWeights <- new(Class = 'DDdt', AggWeights)
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 
 setAggWeights(DD) <- AggWeights
 DD

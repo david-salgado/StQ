@@ -36,11 +36,16 @@
 #'
 #' @import data.table
 #'
+<<<<<<< HEAD
 #' @include StQ.R dcast_StQ.R getData.R getDD.R setData.R getUnits.R plus.StQ.R
+=======
+#' @include StQ-class.R dcast_StQ.R getData.R getDD.R setData.R getUnits.R plus.StQ.R
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #'
 #' @examples
 #' library(data.table)
 #' data(ExampleStQ)
+<<<<<<< HEAD
 #' newVNCVar <- data.table(IDQual = '', NonIDQual = '', IDDD = 'lTurnover',
 #'                             UnitName = '', InFiles = 'FF')
 #' newVNC <- BuildVNC(list(MicroData = newVNCVar))
@@ -51,13 +56,31 @@
 #'                                    Length = '10',
 #'                                    Qual1 = 'ID',
 #'                                    ValueRegExp = ''))
+=======
+#' newVNCVar <- new(Class = 'VNCdt',
+#'                  data.table(IDQual = '', NonIDQual = '', IDDD = 'lTurnover',
+#'                             UnitName = '', InFiles = 'FF'))
+#' newVNC <- BuildVNC(list(MicroData = newVNCVar))
+#' newDD <- new(Class = 'DD',
+#'              VarNameCorresp = newVNC, 
+#'              MicroData = new(Class = 'DDdt',
+#'                              data.table(Variable = 'lTurnover',
+#'                                         Sort = 'IDDD',
+#'                                         Class = 'numeric',
+#'                                         Length = '10',
+#'                                         Qual1 = 'ID',
+#'                                         ValueRegExp = '')))
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #' NewQ <- setValues(object = ExampleStQ,
 #'                newDD = newDD,
 #'                DDslot = 'MicroData',
 #'                Value = expression(log(1 + as.numeric(Turnover))))
 #' getValues(NewQ, 'lTurnover')
+<<<<<<< HEAD
 #' 
 #' @include StQ.R DD.R getData.R getDD.R getUnits.R setDD.R setData.R dcast_StQ.R plus.StQ.R getVNC.R
+=======
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #'
 #' @export
 setGeneric("setValues", function(object,
@@ -69,6 +92,12 @@ setGeneric("setValues", function(object,
 
 #' @rdname setValues
 #'
+<<<<<<< HEAD
+=======
+#' @include StQ-class.R DD-class.R getData.R getDD.R getUnits.R setDD.R setData.R dcast_StQ.R 
+#' plus.StQ.R getVNC.R
+#'
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #' @import data.table
 #'
 #' @export
@@ -98,7 +127,11 @@ setMethod(
         }
         
         
+<<<<<<< HEAD
         if (!DDslot %in% names(newDD)){
+=======
+        if (!DDslot %in% slotNames(newDD)){
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
             
             stop('[StQ::setValues] DDslot is not a component of the slot DD of the input object.')
         }
@@ -117,7 +150,11 @@ setMethod(
         
         pasteNA <- function(x, y){
             
+<<<<<<< HEAD
             out <- ifelse(is.na(y) | y == '', paste0(x, ''), paste(x, y, sep = "_"))
+=======
+            out <- ifelse(is.na(y) | y == '', paste0(x, ''), paste(x, y, sep ="_"))
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
             return(out)
         }
         newVNC <- getVNC(newDD)[[DDslot]]
@@ -137,7 +174,10 @@ setMethod(
         }
 
         DD <- getDD(object)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
         newDD <- DD + newDD
 
         if (class(Value) == 'expression'){
@@ -150,8 +190,13 @@ setMethod(
             }))
             ExprVariables <- ExprVariables[ExprVariables != '']
 
+<<<<<<< HEAD
             Data <- getData(object, ExprVariables) 
             newObject <- StQ(Data = Data, DD = newDD)
+=======
+            Data <- getData(object, ExprVariables, DDslot) 
+            newObject <- new(Class = 'StQ', Data = Data, DD = newDD)
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 
             Data <- dcast_StQ(newObject)
 
@@ -172,7 +217,12 @@ setMethod(
             setcolorder(NewData,
                         c(setdiff(names(NewData), c('Value', 'IDDD')),
                           'IDDD', 'Value'))
+<<<<<<< HEAD
             newObject <- StQ(Data = NewData, DD = newDD)
+=======
+            NewData <- new(Class = 'Datadt', NewData)
+            newObject <- new(Class = 'StQ', Data = NewData, DD = newDD)
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
             output <- object + newObject
 
         } else {
@@ -180,7 +230,12 @@ setMethod(
             NewData[, IDDD := NewVarName]
             NewData[, Value := Value]
             setkeyv(NewData, setdiff(names(NewData), 'Value'))
+<<<<<<< HEAD
             NewObject <- StQ(Data = NewData, DD = newDD)
+=======
+            NewData <- new(Class = 'Datadt', NewData)
+            NewObject <- new(Class = 'StQ', Data = NewData, DD = newDD)
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
             output <- object + NewObject
 
         }
@@ -191,7 +246,11 @@ setMethod(
 
 #' @rdname setValues
 #'
+<<<<<<< HEAD
 #' @include StQList.R BuildStQList.R
+=======
+#' @include StQList-class.R BuildStQList.R
+>>>>>>> 5034523f22c62817420f2f5687369d62b4523cd8
 #'
 #' @import data.table
 #'

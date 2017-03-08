@@ -1,0 +1,161 @@
+#' @title Return slot Other from an object
+#'
+#' @description \code{getOtherDD} returns slot \code{Other} of the input object.
+#' 
+#' @param object An object whose slot \code{Other} is queried.
+#'
+#' @return Returns a \linkS4class{DDdt} object containing the slot \code{Other} of the input object.
+#'
+#' @examples
+#' # An example:
+#' library(data.table)
+#' ### We build the VNC object
+#' VarList <- list(ID = new(Class = 'VNCdt',
+#'                 data.table(IDQual = c('NumIdEst', rep('', 4)),
+#'                            NonIDQual = c('','','','',''),
+#'                            IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
+#'                            NumIdEst = c('', rep('.', 4)),
+#'                            UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'),
+#'                            InFiles = rep('FI', 5))),
+#' MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
+#'                                             NonIDQual = c('', 'Market', ''),
+#'                                             IDDD = c(rep('', 2), 'NewOrders'),
+#'                                             NumIdEst = c(rep('', 2), '.'),
+#'                                             Market = c(rep('', 2), '1.'),
+#'                                             UnitName = c('numidest', '', 'cp09'),
+#'                                             InFiles = rep('FF, FD, FG', 3))),
+#' ParaData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
+#'                                            NonIDQual = c('', 'Action', ''),
+#'                                            IDDD = c(rep('', 2), 'Date'),
+#'                                            NumIdEst = c(rep('', 2), '.'),
+#'                                            Action = c(rep('', 2), 'Imputation'),
+#'                                            UnitName = c('numidest', '', 'FechaImput'),
+#'                                            InFiles = rep('FP', 3))),
+#' AggWeights = new(Class = 'VNCdt', data.table(IDQual = c('CCAA', 'NACE09', ''),
+#'                                              NonIDQual = rep('', 3),
+#'                                              IDDD = c('', '', 'Ponderacion'),
+#'                                              CCAA = c('', '', '.'),
+#'                                              NACE09 = c('', '', '.'),
+#'                                              UnitName = c('Provincia', '', ''),
+#'                                              InFiles = rep('FA', 3))),
+#' Other = new(Class = 'VNCdt', data.table(IDQual = c('CodNACE09', ''),
+#'                                         NonIDQual = rep('', 2),
+#'                                         IDDD = c('', 'VAT'),
+#'                                         CodNACE09 = c('', '3940'),
+#'                                         UnitName = c('codCNAE09', 'IVAAlim'),
+#'                                         InFiles = rep('FF', 2))))
+#' VNC <- new(Class = 'VarNameCorresp', VarList)
+#' 
+#' ### We build the specification data.tables
+#' IDdt <- new(Class = 'DDdt',
+#'   data.table(
+#'     Variable = c('NumIdEst', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
+#'     Sort = c('IDQual', rep('IDDD', 4)),
+#'     Class = rep('character', 5),
+#'     Length = c('11', '15', '15', '20','9'),
+#'     Qual1 = c('', rep('NumIdEst', 4)),
+#'     ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}')))
+#'     
+#' Microdt <- new(Class='DDdt',
+#'   data.table(
+#'     Variable = c('NumIdEst', 'Market', 'NewOrders'),
+#'     Sort = c('IDQual', 'NonIDQual', 'IDDD'),
+#'     Class = c(rep('character', 2), 'numeric'),
+#'     Length = c('11', '2', '7'),
+#'     Qual1 = c(rep('', 2), 'NumIdEst'),
+#'     ValueRegExp = c('[0-9]{9}PP', '.+', '([0-9]{1, 10}| )')))
+#'     
+#' Paradt <-new(Class='DDdt', 
+#'   data.table(
+#'     Variable = c('NumIdEst', 'Action', 'Date'),
+#'     Sort = c('IDQual', 'NonIDQual', 'IDDD'),
+#'     Class = rep('character', 3),
+#'     Length = c('11', '10', '10'),
+#'     Qual1 = c(rep('', 2), 'NumIdEst'),
+#'     Qual2 = c(rep('', 2), 'Action'),
+#'     ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation', 
+#'                     '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')))
+#'                     
+#' Aggdt <- new(Class='DDdt',
+#'   data.table(
+#'     Variable = c('CCAA', 'NACE09', 'Ponderacion'),
+#'     Sort = c(rep('IDQual', 2), 'IDDD'),
+#'     Class = c(rep('character', 2), 'numeric'),
+#'     Length = c('2', '4', '7'),
+#'     Qual1 = c(rep('', 2), 'CCAA'),
+#'     Qual2 = c(rep('', 2), 'NACE09'),
+#'     ValueRegExp = c('[0-9]{4}', '([0-4][0-9])|(5[0-2])', '([0-9]{1, 15}| )')))
+#'     
+#' Otherdt <- new(Class = 'DDdt',
+#'   data.table(
+#'     Variable = c('CodNACE09', 'VAT'),
+#'     Sort = c('IDQual', 'IDDD'),
+#'     Class = c('character', 'numeric'),
+#'     Length = c('4', '5'),
+#'     Qual1 = c('', 'CodNACE09'),
+#'     ValueRegExp = c('[0-9]{4}', '[0-9]+\\.[0-9]{2}')))                                         
+#' 
+#' DD <- new(Class = 'DD', 
+#'           VarNameCorresp = VNC, 
+#'           ID = IDdt, 
+#'           MicroData = Microdt, 
+#'           ParaData = Paradt,
+#'           AggWeights = Aggdt,
+#'           Other = Otherdt)
+#' 
+#' getOtherDD(DD)
+#' 
+#' StQ <- new(Class = 'StQ', Data = new(Class = 'Datadt'), DD = DD)
+#' getOtherDD(StQ)
+#' 
+#' rawStQ <- new(Class = 'rawStQ', Data = new(Class = 'rawDatadt'), DD = DD)
+#' getOtherDD(rawStQ)
+#' 
+#' 
+#' @export
+setGeneric("getOtherDD", function(object){standardGeneric("getOtherDD")})
+
+#' @rdname getOtherDD
+#' 
+#' @include DD-class.R
+#' 
+#' @export
+setMethod(
+    f = "getOtherDD",
+    signature = c("DD"),
+    function(object){
+        
+        out <- copy(object@Other)
+        return(out)
+    }
+)
+
+#' @rdname getOtherDD
+#' 
+#' @include StQ-class.R getDD.R
+#' 
+#' @export
+setMethod(
+    f = "getOtherDD",
+    signature = c("StQ"),
+    function(object){
+        
+        output <- getOtherDD(getDD(object))
+        return(output)
+    }
+)
+
+#' @rdname getOtherDD
+#' 
+#' @include rawStQ-class.R getDD.R
+#' 
+#' @export
+setMethod(
+    f = "getOtherDD",
+    signature = c("rawStQ"),
+    function(object){
+        
+        output <- getOtherDD(getDD(object))
+        return(output)
+    }
+)
