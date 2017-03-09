@@ -68,8 +68,7 @@ setMethod(
         if(!all(CompNames %in% ValidComp)) stop(paste0('[StQ::getIDDD] The following components are not present in the input object: ',
                                                        paste0(NotValidComp, collapse = ', '), '.\n'))
 
-        aux <- lapply(Component, function(Comp){object[[Comp]]})
-        IDDD.list <- lapply(aux, function(DT){
+        IDDD.list <- lapply(object, function(DT){
             LocalOutput <- DT[['IDDD']]
             LocalOutput <- LocalOutput[LocalOutput != '']
             return(LocalOutput)
