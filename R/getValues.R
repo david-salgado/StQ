@@ -72,7 +72,7 @@ setMethod(
             if (length(unique(output[[NonIDQual]])) != 1) stop(paste0('[StQ::getValues] The input parameter ', VarName, ' needs non-unit qualifiers.\n'))
         }
         output <- output[, c(IDQuals, 'Value'), with = FALSE]
-        if (!all(names(Units) %chin% IDQuals)) stop(paste0('[StQ::getValues] There is no variable ', VarName, ' for this set of units.\n'))
+        if (!all(names(Units) %in% IDQuals)) stop(paste0('[StQ::getValues] There is no variable ', VarName, ' for this set of units.\n'))
         output <- merge(output, Units, by = names(Units), all.y = TRUE)
         setnames(output, 'Value', VarName)
         return(output)
