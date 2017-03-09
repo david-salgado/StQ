@@ -5,6 +5,7 @@
 \alias{getIDQual}
 \alias{getIDQual,DD-method}
 \alias{getIDQual,StQ-method}
+\alias{getIDQual,StQList-method}
 \alias{getIDQual,VNC-method}
 \title{Return unit qualifiers from an object}
 \usage{
@@ -16,6 +17,8 @@ getIDQual(object, CompNames = names(object))
 
 \S4method{getIDQual}{StQ}(object, CompNames = setdiff(names(getDD(object)),
   "VNC"))
+
+\S4method{getIDQual}{StQList}(object, CompNames = names(object))
 }
 \arguments{
 \item{object}{Object with the unit qualifiers (IDQual) to be queried.}
