@@ -5,6 +5,7 @@
 \alias{getVariables}
 \alias{getVariables,DD-method}
 \alias{getVariables,StQ-method}
+\alias{getVariables,rawStQ-method}
 \title{Return the set of Variable Names from the DD slot of an object}
 \usage{
 getVariables(object, varSort = c("IDDD", "IDQual", "NonIDQual"),
@@ -14,7 +15,10 @@ getVariables(object, varSort = c("IDDD", "IDQual", "NonIDQual"),
   "NonIDQual"), slots = setdiff(names(object), "VNC"))
 
 \S4method{getVariables}{StQ}(object, varSort = c("IDDD", "IDQual",
-  "NonIDQual"), slots = setdiff(slotNames(getDD(object)), "VarNameCorresp"))
+  "NonIDQual"), slots = setdiff(names(getDD(object)), "VNC"))
+
+\S4method{getVariables}{rawStQ}(object, varSort = c("IDDD", "IDQual",
+  "NonIDQual"), slots = setdiff(names(getDD(object)), "VNC"))
 }
 \arguments{
 \item{object}{Object whose Variable names are queried.}
