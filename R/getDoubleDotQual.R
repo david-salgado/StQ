@@ -94,3 +94,18 @@ setMethod(
         return(output)
     }
 )
+
+
+#' @rdname getDoubleDotQual
+#'
+#' @export
+setMethod(
+    f = "getDoubleDotQual",
+    signature = c("StQ"),
+    function(object, Component = names(getVNC(object))){
+        
+        VNC <- getVNC(object)
+        output <- getDoubleDotQual(VNC, Component)
+        return(output)
+    }
+)
