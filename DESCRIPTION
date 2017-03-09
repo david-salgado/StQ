@@ -98,8 +98,6 @@ Collate:
     'sub.VNC.R'
     'sub.rawStQ.R'
     'sub.rawStQList.R'
-    'Datadt-class.R'
-    'StQ-class.R'
     'subset.rawStQ.R'
 RoxygenNote: 6.0.1
 URL: https://github.com/david-salgado/StQ
