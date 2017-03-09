@@ -44,13 +44,13 @@
 #' getDotQual(VNC)
 #'
 #' @include VNC.R DD.R StQ.R getVNC.R getDD.R
-#' 
+#'
+#' @import data.table
+#'   
 #' @export
 setGeneric("getDotQual", function(object, Component = names(object)){standardGeneric("getDotQual")})
 
 #' @rdname getDotQual
-#'
-#' @import data.table
 #'
 #' @export
 setMethod(
@@ -83,12 +83,25 @@ setMethod(
 
 #' @rdname getDotQual
 #'
-#' @import data.table
-#'
 #' @export
 setMethod(
     f = "getDotQual",
     signature = c("DD"),
+    function(object, Component = names(getVNC(object))){
+        
+        VNC <- getVNC(object)
+        output <- getDotQual(VNC, Component = Component)
+        return(output)
+    }
+)
+
+
+#' @rdname getDotQual
+#'
+#' @export
+setMethod(
+    f = "getDotQual",
+    signature = c("StQ"),
     function(object, Component = names(getVNC(object))){
         
         VNC <- getVNC(object)

@@ -102,7 +102,8 @@ VNC <- function(ID = data.table(IDQual = character(0),
             DT <- DT[rowSums(DT == '') != ncol(DT)]
             object[[CompName]] <- DT
             
-        }    
+        }
+        
         Empty <- TRUE
         for (col in names(DT)){
             
