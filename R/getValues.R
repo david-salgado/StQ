@@ -65,7 +65,9 @@ setMethod(
         IDQuals <- getIDQual(object, VarNameSlot)
         VarNameDT <- VarNamesToDT(VarName, DD)
         output <- getData(object, ExtractNames(VarName))
+return(list(output, VarNameDT))
         output <- merge(output, VarNameDT, by = names(VarNameDT))
+return(output)
         if (dim(output)[1] == 0) stop(paste0('[StQ::getValues] The input parameter ', VarName, ' is not present in the input StQ object.\n'))
         for (NonIDQual in NonIDQuals){
             

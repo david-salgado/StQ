@@ -82,9 +82,11 @@ VarNamesToDT <- function(VarNames, DD){
                             Names.DT[, (paste0('Qual', i)) := NULL]
                             next
                         }
-                        setnames(Names.DT, paste0('Qual', i), auxName)
-                        Names.DT[, (auxName) := ParsedNames[i - IDQualCounter + 1]]
+                        #setnames(Names.DT, paste0('Qual', i), auxName)
+                        #Names.DT[, (auxName) := ParsedNames[i - IDQualCounter + 1]]
+
                     }
+
                 }
 
 
@@ -99,20 +101,15 @@ VarNamesToDT <- function(VarNames, DD){
 
             }
         }
-        outputGlobal <- Reduce(function(x, y){
-                                merge(x, y, all = TRUE,
-                                      by = intersect(names(x), names(y)))},
-                                output)
+
+        outputGlobal <- rbindlist(output, fill = TRUE)
         return(outputGlobal)
 
     } else { # Ahora para varias variables de entrada
 
         out.list <- lapply(as.list(VarNames), VarNamesToDT, DD = DD)
 
-        out <- Reduce(function(x, y){
-                            merge(x, y, all = TRUE, by = intersect(names(x), names(y)))},
-                      out.list,
-                      out.list[[1L]])
+        out <- rbindlist(out.list, fill = TRUE)
 
         # Pasamos NA a '' y eliminamos columnas vacías
         Cols <- sort(names(out))
