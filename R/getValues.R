@@ -18,7 +18,7 @@
 #' getValues(ExampleStQ, 'Employees_1.')
 #' getValues(ExampleStQ, 'Turnover', Units = data.table(ID = c('00001', '00002')))
 #'
-#' @include StQ.R getData.R getDD.R DDslotWith.R getNonIDQual.R VarNamesToDD.R VarNamesToDT.R ExtractNames.R
+#' @include StQ.R getData.R getDD.R DDslotWith.R getNonIDQual.R VarNamesToDD.R VarNamesToDT.R ExtractNames.R getUnits.R
 #'
 #' @import data.table RepoTime
 #'
@@ -32,7 +32,7 @@ setGeneric("getValues",
 setMethod(
     f = "getValues",
     signature = c("StQ", "character"),
-    function(object, VarName, Units){
+    function(object, VarName, Units = getUnits(object)){
         
         if (length(VarName) != 1) {
             
@@ -64,17 +64,10 @@ setMethod(
         NonIDQuals <- setdiff(VarQuals, IDQuals)
         IDQuals <- getIDQual(object, VarNameSlot)
         VarNameDT <- VarNamesToDT(VarName, DD)
-return(VarNameDT)
-        VarQuals <- 'IDDD'
-        for (Col in setdiff(names(VarNameDT), 'IDDD')){
-            
-            VarQuals <- c(VarQuals, VarNameDT[[Col]])
-        }
         output <- getData(object, ExtractNames(VarName))
-        output <- output[, VarQuals, with = F]
+        output <- merge(output, VarNameDT, by = names(VarNameDT))
         if (dim(output)[1] == 0) stop(paste0('[StQ::getValues] The input parameter ', VarName, ' is not present in the input StQ object.\n'))
-return(output)
-         for (NonIDQual in NonIDQuals){
+        for (NonIDQual in NonIDQuals){
             
             if (length(unique(output[[NonIDQual]])) != 1) stop(paste0('[StQ::getValues] The input parameter ', VarName, ' needs non-unit qualifiers.\n'))
         }
@@ -102,9 +95,11 @@ setMethod(
         }
         ListofStQ <- object$Data
         Periods <- getRepo(object$Periods)
+        MissingUnits <- missing(Units)
         output <- lapply(seq(along = ListofStQ), function(indexStQ){
-
+            
             StQ <- ListofStQ[[indexStQ]]
+            if (MissingUnits) Units <- getUnits(StQ)
             out <- getValues(StQ, VarName = VarName, Units = Units)
             out[, Period := Periods[indexStQ]]
             return(out)
