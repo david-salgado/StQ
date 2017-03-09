@@ -74,13 +74,13 @@ setMethod(
         output <- output[, c(IDQuals, 'Value'), with = FALSE]
         if (!all(names(Units) %chin% IDQuals)) stop(paste0('[StQ::getValues] There is no variable ', VarName, ' for this set of units.\n'))
         output <- merge(output, Units, by = names(Units), all.y = TRUE)
+        setnames(output, 'Value', VarName)
         return(output)
     }
 )
 
 #' @rdname getValues
 #'
-#' @import data.table RepoTime
 #'
 #' @export
 setMethod(
@@ -94,14 +94,16 @@ setMethod(
             
         }
         ListofStQ <- object$Data
-        output <- lapply(ListofStQ, function(StQ){
+        Periods <- getRepo(object$Periods)
+        output <- lapply(seq(along = ListofStQ), function(indexStQ){
             
+            StQ <- ListofStQ[[indexStQ]]
             out <- getValues(StQ, VarName = VarName, Units = Units)
+            out[, Period := Periods[indexStQ]]
             return(out)
         })
 
-        output <- Reduce(cbind, output)
-        colnames(output) <- getRepo(object$Periods)
+        output <- rbindlist(output)
         return(output)
     }
 )
