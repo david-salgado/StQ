@@ -43,7 +43,7 @@ setMethod(
         for (DDdt in setdiff(slots, 'VNC')) {
             objectDT <- object[[DDdt]]
             LocalvarSort <- intersect(varSort, objectDT[['Sort']])
-            aux <- objectDT[Sort %in% LocalvarSort][['Variable']]
+            aux <- objectDT[Sort %chin% LocalvarSort][['Variable']]
             output <- c(output, aux)
         }
         
@@ -64,7 +64,25 @@ setMethod(
     signature = c("StQ"),
     function(object, 
              varSort = c('IDDD', 'IDQual', 'NonIDQual'), 
-             slots = setdiff(slotNames(getDD(object)), 'VarNameCorresp')){
+             slots = setdiff(names(getDD(object)), 'VNC')){
+        
+        output <- unique(getVariables(getDD(object), varSort, slots))
+        
+        return(output)
+    }
+)
+
+#' @rdname getVariables
+#' 
+#' @import data.table
+#' 
+#' @export
+setMethod(
+    f = "getVariables",
+    signature = c("rawStQ"),
+    function(object, 
+             varSort = c('IDDD', 'IDQual', 'NonIDQual'), 
+             slots = setdiff(names(getDD(object)), 'VNC')){
         
         output <- unique(getVariables(getDD(object), varSort, slots))
         

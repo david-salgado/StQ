@@ -52,7 +52,7 @@ setGeneric("getParaData", function(object){standardGeneric("getParaData")})
 setMethod(
     f = "getParaData",
     signature = c("VNC"),
-    function(object){object[['ParaData']]}
+    function(object){object$ParaData}
 )
 
 #' @rdname getParaData
@@ -61,5 +61,5 @@ setMethod(
 setMethod(
     f = "getParaData",
     signature = c("DD"),
-    function(object){object[['ParaData']]}
+    function(object){object$ParaData}
 )

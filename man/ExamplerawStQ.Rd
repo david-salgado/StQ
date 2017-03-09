@@ -12,4 +12,3 @@ data(ExamplerawStQ)
 \code{ExamplerawStQ} is an object of class \linkS4class{rawStQ} containing severely 
 perturbed anonymised data from a real official statistical operation.
 }
-

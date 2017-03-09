@@ -44,4 +44,3 @@ QList <- rawStQList(Data = QList, Periods = newRepoTime(TimePer))
 QList[c('MM092015', 'MM102015')]
 
 }
-

@@ -3,8 +3,8 @@
 \docType{methods}
 \name{getPeriods}
 \alias{getPeriods}
-\alias{getPeriods,StQList-method}
 \alias{getPeriods,rawStQList-method}
+\alias{getPeriods,StQList-method}
 \title{Return a vector with the names of the time period intervals}
 \usage{
 getPeriods(object)
@@ -43,4 +43,3 @@ QList <- StQList(Data = EmptyQList, Periods = PeriodList)
 getPeriods(QList)
 
 }
-

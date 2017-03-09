@@ -98,9 +98,9 @@ setMethod(
   function(object, VarNames){
     
     
-    if (missing(VarNames)) return(copy(object[['Data']]))
+    if (missing(VarNames)) return(object$Data)
     
-    return(copy(object[['Data']])[IDDD %chin% VarNames])
+    return(object$Data[IDDD %chin% VarNames])
   }
 )
 
@@ -112,9 +112,9 @@ setMethod(
     signature = c("rawStQ"),
     function(object, VarNames){
         
-        if (missing(VarNames)) return(copy(object[['rawData']]))
+        if (missing(VarNames)) return(object$rawData)
         
-        return(copy(object[['rawData']])[IDDDKey %chin% VarNames])
+        return(object$rawData[IDDDKey %chin% VarNames])
     }
 )
 
@@ -126,8 +126,8 @@ setMethod(
     signature = c("StQList"),
     function(object, VarNames){
         
-        if (missing(VarNames)) return(copy(object[['Data']]))
-        
+        if (missing(VarNames)) return(object$Data)
+
         output <- lapply(object$Data, function(StQObj){
             
             LocalOut <- getData(StQObj, VarNames)
@@ -146,7 +146,7 @@ setMethod(
     signature = c("rawStQList"),
     function(object, VarNames){
         
-        if (missing(VarNames)) return(copy(object[['Data']]))
+        if (missing(VarNames)) return(object$Data)
         
         output <- lapply(object$Data, function(rawStQObj){
             

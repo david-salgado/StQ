@@ -46,6 +46,7 @@
 #' VNC <- BuildVNC(VarList)
 #' 
 #' getIDQual(VNC)
+#' getIDQual(VNC, 'MicroData')
 #' getIDQual(VNC, 'ParaData')
 #'
 #' @export
@@ -53,7 +54,7 @@ setGeneric("getIDQual", function(object, CompNames = names(object)){standardGene
 
 #' @rdname getIDQual
 #'
-#' @include VNC.R DD.R StQ.R
+#' @include VNC.R DD.R StQ.R getDD.R
 #'
 #' @import data.table
 #'
@@ -64,11 +65,13 @@ setMethod(
     function(object, CompNames = names(object)){
 
         ValidComp <- names(object)
-        NotValidComp <- CompNames[!CompNames %in% ValidComp]
+        NotValidComp <- CompNames[!CompNames %chin% ValidComp]
         if(!all(CompNames %in% ValidComp)) stop(paste0('[StQ::getIDQual] The following components are not present in the input object: ',
                                                        paste0(NotValidComp, collapse = ', '), '.\n'))
-
-        IDQual.list <- lapply(object, function(DT) {
+        
+        
+        IDQual.list <- lapply(CompNames, function(CompName) {
+            DT <- object[[CompName]]
             LocalOutput <- DT[['IDQual']]
             LocalOutput <- LocalOutput[LocalOutput != '']
             return(LocalOutput)
@@ -80,8 +83,6 @@ setMethod(
 )
 
 #' @rdname getIDQual
-#'
-#' @import data.table
 #'
 #' @export
 setMethod(
@@ -104,13 +105,11 @@ setMethod(
 
 #' @rdname getIDQual
 #'
-#' @import data.table
-#'
 #' @export
 setMethod(
     f = "getIDQual",
     signature = c("StQ"),
-    function(object, CompNames = setdiff(slotNames(getDD(object)), 'VNC')){
+    function(object, CompNames = setdiff(names(getDD(object)), 'VNC')){
 
         output <- getIDQual(getDD(object), CompNames)
         return(output)

@@ -3,8 +3,8 @@
 \docType{methods}
 \name{getDotQual}
 \alias{getDotQual}
-\alias{getDotQual,DD-method}
 \alias{getDotQual,VNC-method}
+\alias{getDotQual,DD-method}
 \title{Return non-unit qualifiers not used in compound variable names}
 \usage{
 getDotQual(object, Component = names(object))
@@ -60,4 +60,3 @@ VNC <- BuildVNC(VarList)
 getDotQual(VNC)
 
 }
-

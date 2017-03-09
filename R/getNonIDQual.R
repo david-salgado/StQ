@@ -53,15 +53,16 @@
 #' getNonIDQual(ExampleStQ)
 #' getNonIDQual(ExampleStQ, 'Aggregates')
 #'
-#' @include VNC.R DD.R StQ.R
+#' @include VNC.R DD.R StQ.R getDD.R
+#' 
+#' @import data.table
+#'
 #' 
 #' @export
 setGeneric("getNonIDQual",
            function(object, CompNames = names(object)){standardGeneric("getNonIDQual")})
 
 #' @rdname getNonIDQual
-#'
-#' @import data.table
 #'
 #' @export
 setMethod(
@@ -70,12 +71,11 @@ setMethod(
     function(object, CompNames = names(object)){
 
         ValidComp <- names(object)
-        NotValidComp <- CompNames[!CompNames %in% ValidComp]
+        NotValidComp <- CompNames[!CompNames %chin% ValidComp]
         if(!all(CompNames %in% ValidComp)) stop(paste0('[StQ::getNonIDQual] The following components are not present in the input object: ',
                                                        paste0(NotValidComp, collapse = ', '), '.\n'))
 
-        aux <- lapply(Component, function(Comp){object[[Comp]]})
-        NonIDQual.list <- lapply(aux, function(DT){
+        NonIDQual.list <- lapply(object, function(DT){
             LocalOutput <- DT[['NonIDQual']]
             LocalOutput <- LocalOutput[LocalOutput != '']
             return(LocalOutput)
@@ -97,7 +97,7 @@ setMethod(
     signature = c("DD"),
     function(object, CompNames = setdiff(names(object), 'VNC')){
 
-        CompNames <- setdiff(CompNames, 'VarNameCorresp')
+        CompNames <- setdiff(CompNames, 'VNC')
         output <- c()
         for (DDdt in CompNames) {
 
@@ -119,7 +119,7 @@ setMethod(
 setMethod(
     f = "getNonIDQual",
     signature = c("StQ"),
-    function(object, CompNames = setdiff(slotNames(getDD(object)), 'VNC')){
+    function(object, CompNames = setdiff(names(getDD(object)), 'VNC')){
 
         output <- getNonIDQual(getDD(object), CompNames)
         return(output)
