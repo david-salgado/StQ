@@ -97,8 +97,12 @@ VNC <- function(ID = data.table(IDQual = character(0),
     ComponentNames <- lapply(names(object), function(CompName){
 
         DT <- object[[CompName]]
-        DT <- DT[rowSums(DT == '') != ncol(DT)]
-        object[[CompName]] <- DT
+        if (dim(DT)[1] != 0) {
+            
+            DT <- DT[rowSums(DT == '') != ncol(DT)]
+            object[[CompName]] <- DT
+            
+        }
         
         Empty <- TRUE
         for (col in names(DT)){

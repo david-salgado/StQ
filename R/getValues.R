@@ -93,7 +93,7 @@ setMethod(
             stop('[StQ::getValues] Only one variable can be specifed as input.')
             
         }
-        ListofStQ <- object@Data
+        ListofStQ <- object$Data
         output <- lapply(ListofStQ, function(StQ){
             
             out <- getValues(StQ, VarName = VarName, Units = Units)
