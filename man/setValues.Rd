@@ -56,19 +56,16 @@ the new variable in some circunstamces.
 \examples{
 library(data.table)
 data(ExampleStQ)
-newVNCVar <- new(Class = 'VNCdt',
-                 data.table(IDQual = '', NonIDQual = '', IDDD = 'lTurnover',
-                            UnitName = '', InFiles = 'FF'))
+newVNCVar <- data.table(IDQual = '', NonIDQual = '', IDDD = 'lTurnover',
+                            UnitName = '', InFiles = 'FF')
 newVNC <- BuildVNC(list(MicroData = newVNCVar))
-newDD <- new(Class = 'DD',
-             VarNameCorresp = newVNC, 
-             MicroData = new(Class = 'DDdt',
-                             data.table(Variable = 'lTurnover',
-                                        Sort = 'IDDD',
-                                        Class = 'numeric',
-                                        Length = '10',
-                                        Qual1 = 'ID',
-                                        ValueRegExp = '')))
+newDD <- DD(VNC = newVNC, 
+            MicroData = data.table(Variable = 'lTurnover',
+                                   Sort = 'IDDD',
+                                   Class = 'numeric',
+                                   Length = '10',
+                                   Qual1 = 'ID',
+                                   ValueRegExp = ''))
 NewQ <- setValues(object = ExampleStQ,
                newDD = newDD,
                DDslot = 'MicroData',
@@ -76,4 +73,3 @@ NewQ <- setValues(object = ExampleStQ,
 getValues(NewQ, 'lTurnover')
 
 }
-

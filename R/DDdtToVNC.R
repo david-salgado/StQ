@@ -1,10 +1,10 @@
-#' @title Returns the corresponding object of class \linkS4class{VarNameCorresp} according to the
-#'  DDdt input object
+#' @title Returns the corresponding object of class \linkS4class{VNC} according to the input 
+#' \linkS4class{data.table}
 #'
 #' @description \code{DDdtToVNC} returns the corresponding object of class 
-#' \linkS4class{VarNameCorresp} according to the \linkS4class{DDdt} input object.
+#' \linkS4class{VNC} according to the input \linkS4class{data.table}.
 #'
-#' @param DDdt Object of class \linkS4class{DDdt}.
+#' @param DDdt Object of class \linkS4class{data.table}.
 #'
 #' @param NameVNC character vector with the name of the element in VNC which is being build.
 #'
@@ -19,26 +19,36 @@
 #'                          Class = c('character', 'character'),
 #'                          Length = c('11', '7'),
 #'                          Qual1 = c('', 'ID'), ValueRegExp = c('', ''))
-#' AggWeights <- new(Class = 'DDdt', AggWeights)
 #' DDdtToVNC(AggWeights, 'AggWeights', rep('FA', 2))
 #'
-#' @include DDdt-class.R getIDQual.R getNonIDQual.R getIDDD.R BuildVNC.R VNCdt-class.R
+#' @include VNC.R BuildVNC.R DD.R BuildDD.R getIDQual.R getNonIDQual.R getIDDD.R
 #'
-#' @import data.table methods
+#' @import data.table
 #'
 #' @export
 DDdtToVNC <- function(DDdt, NameVNC, InFiles = rep('', dim(DDdt)[1])){
     
+    #auxVarList_DD <- list(VNC = VNC(), New = DDdt)
+    #names(auxVarList_DD) <- c('VNC', NameVNC)
+    #newDD <- try(BuildDD(auxVarList_DD))
+    #if (inherits(newDD, "try-error")) stop('[StQ::DDdtToVNC] DDdt does not have the correct format.\n')
+    
+    
     numVar <- length(DDdt[['Variable']])
+    if (length(InFiles) == 1) InFiles <- rep(InFiles, numVar)
     if (length(InFiles) != numVar) stop('[StQ::DDdtToVNC] InFiles must be a character with as many components as rows in DDdt.\n')
     IDQual <- vector('character', numVar)
     NonIDQual <- vector('character', numVar)
     IDDD <- vector('character', numVar)
     UnitName <- vector('character', numVar)
 
-    IDQualdt <- getIDQual(DDdt)
-    NonIDQualdt <- getNonIDQual(DDdt)
-    IDDDdt <- getIDDD(DDdt)
+    IDQualdt <- DDdt[Sort == 'IDQual'][['Variable']]
+    IDQualdt <- IDQualdt[IDQualdt != '']
+
+    NonIDQualdt <- DDdt[Sort == 'NonIDQual'][['Variable']]
+    NonIDQualdt <- NonIDQualdt[NonIDQualdt != '']
+    IDDDdt <- DDdt[Sort == 'IDDD'][['Variable']]
+    IDDDdt <- IDDDdt[IDDDdt != '']
     
     if (length(IDQualdt) > 0){
 
@@ -59,10 +69,11 @@ DDdtToVNC <- function(DDdt, NameVNC, InFiles = rep('', dim(DDdt)[1])){
 
     if (length(IDDDdt) > 0){
 
-        IDDD[(fin + 1): (fin + length(IDDDdt))] <- IDDDdt
+        IDDD[(fin + 1):(fin + length(IDDDdt))] <- IDDDdt
     }
 
     output <- data.table(IDQual, NonIDQual, IDDD)
+
     Quals <- c(IDQualdt, NonIDQualdt)
     if (length(Quals) >= 1){
 
@@ -74,12 +85,11 @@ DDdtToVNC <- function(DDdt, NameVNC, InFiles = rep('', dim(DDdt)[1])){
 
     }
 
-    output <- cbind(output, UnitName)
-    output <- cbind(output, InFiles)
-    output <- new(Class = 'VNCdt', output)
-    output <- list(output)
-    names(output) <- NameVNC
-    output <- BuildVNC(output)
+    VarList_output <- cbind(output, UnitName)
+    VarList_output <- cbind(VarList_output, InFiles)
+    VarList_VNC <- list(Name = VarList_output)
+    names(VarList_VNC) <- NameVNC
+    output <- BuildVNC(VarList_VNC)
 
     return(output)
 

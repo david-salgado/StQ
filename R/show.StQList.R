@@ -21,9 +21,10 @@
 #' show(QList)
 #' str(QList)
 #'
-#' @include StQList-class.R getPeriods.R
+#' @include StQList.R getPeriods.R
 #'
 #' @import data.table
+#' 
 #'
 #' @export
 setMethod(
@@ -31,8 +32,8 @@ setMethod(
   signature = c("StQList"),
   function(object){
 
-    OutList <- object@Data
-    OutList <- lapply(OutList, function(x) slot(x, 'Data'))
+    OutList <- object$Data
+    OutList <- lapply(OutList, function(x) x[['Data']])
     names(OutList) <- getPeriods(object)
 
     show(OutList)
@@ -40,3 +41,4 @@ setMethod(
     invisible(NULL)
   }
 )
+print.StQList <- function(object){show(object)}

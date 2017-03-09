@@ -17,7 +17,7 @@
 #' show(ExampleStQ)
 #' ExampleStQ
 #'
-#' @include StQ-class.R
+#' @include StQ.R getData.R
 #'
 #' @import data.table
 #'
@@ -51,3 +51,4 @@ setMethod(
     }
 )
 
+print.StQ <- function(object){show(object)}

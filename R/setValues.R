@@ -36,29 +36,28 @@
 #'
 #' @import data.table
 #'
-#' @include StQ-class.R dcast_StQ.R getData.R getDD.R setData.R getUnits.R plus.StQ.R
+#' @include StQ.R dcast_StQ.R getData.R getDD.R setData.R getUnits.R plus.StQ.R
 #'
 #' @examples
 #' library(data.table)
 #' data(ExampleStQ)
-#' newVNCVar <- new(Class = 'VNCdt',
-#'                  data.table(IDQual = '', NonIDQual = '', IDDD = 'lTurnover',
-#'                             UnitName = '', InFiles = 'FF'))
+#' newVNCVar <- data.table(IDQual = '', NonIDQual = '', IDDD = 'lTurnover',
+#'                             UnitName = '', InFiles = 'FF')
 #' newVNC <- BuildVNC(list(MicroData = newVNCVar))
-#' newDD <- new(Class = 'DD',
-#'              VarNameCorresp = newVNC, 
-#'              MicroData = new(Class = 'DDdt',
-#'                              data.table(Variable = 'lTurnover',
-#'                                         Sort = 'IDDD',
-#'                                         Class = 'numeric',
-#'                                         Length = '10',
-#'                                         Qual1 = 'ID',
-#'                                         ValueRegExp = '')))
+#' newDD <- DD(VNC = newVNC, 
+#'             MicroData = data.table(Variable = 'lTurnover',
+#'                                    Sort = 'IDDD',
+#'                                    Class = 'numeric',
+#'                                    Length = '10',
+#'                                    Qual1 = 'ID',
+#'                                    ValueRegExp = ''))
 #' NewQ <- setValues(object = ExampleStQ,
 #'                newDD = newDD,
 #'                DDslot = 'MicroData',
 #'                Value = expression(log(1 + as.numeric(Turnover))))
 #' getValues(NewQ, 'lTurnover')
+#' 
+#' @include StQ.R DD.R getData.R getDD.R getUnits.R setDD.R setData.R dcast_StQ.R plus.StQ.R getVNC.R
 #'
 #' @export
 setGeneric("setValues", function(object,
@@ -69,9 +68,6 @@ setGeneric("setValues", function(object,
                               by = NULL) {standardGeneric("setValues")})
 
 #' @rdname setValues
-#'
-#' @include StQ-class.R DD-class.R getData.R getDD.R getUnits.R setDD.R setData.R dcast_StQ.R 
-#' plus.StQ.R getVNC.R
 #'
 #' @import data.table
 #'
@@ -102,7 +98,7 @@ setMethod(
         }
         
         
-        if (!DDslot %in% slotNames(newDD)){
+        if (!DDslot %in% names(newDD)){
             
             stop('[StQ::setValues] DDslot is not a component of the slot DD of the input object.')
         }
@@ -121,7 +117,7 @@ setMethod(
         
         pasteNA <- function(x, y){
             
-            out <- ifelse(is.na(y) | y == '', paste0(x, ''), paste(x, y, sep ="_"))
+            out <- ifelse(is.na(y) | y == '', paste0(x, ''), paste(x, y, sep = "_"))
             return(out)
         }
         newVNC <- getVNC(newDD)[[DDslot]]
@@ -141,6 +137,7 @@ setMethod(
         }
 
         DD <- getDD(object)
+
         newDD <- DD + newDD
 
         if (class(Value) == 'expression'){
@@ -153,8 +150,8 @@ setMethod(
             }))
             ExprVariables <- ExprVariables[ExprVariables != '']
 
-            Data <- getData(object, ExprVariables, DDslot) 
-            newObject <- new(Class = 'StQ', Data = Data, DD = newDD)
+            Data <- getData(object, ExprVariables) 
+            newObject <- StQ(Data = Data, DD = newDD)
 
             Data <- dcast_StQ(newObject)
 
@@ -175,8 +172,7 @@ setMethod(
             setcolorder(NewData,
                         c(setdiff(names(NewData), c('Value', 'IDDD')),
                           'IDDD', 'Value'))
-            NewData <- new(Class = 'Datadt', NewData)
-            newObject <- new(Class = 'StQ', Data = NewData, DD = newDD)
+            newObject <- StQ(Data = NewData, DD = newDD)
             output <- object + newObject
 
         } else {
@@ -184,8 +180,7 @@ setMethod(
             NewData[, IDDD := NewVarName]
             NewData[, Value := Value]
             setkeyv(NewData, setdiff(names(NewData), 'Value'))
-            NewData <- new(Class = 'Datadt', NewData)
-            NewObject <- new(Class = 'StQ', Data = NewData, DD = newDD)
+            NewObject <- StQ(Data = NewData, DD = newDD)
             output <- object + NewObject
 
         }
@@ -196,7 +191,7 @@ setMethod(
 
 #' @rdname setValues
 #'
-#' @include StQList-class.R BuildStQList.R
+#' @include StQList.R BuildStQList.R
 #'
 #' @import data.table
 #'

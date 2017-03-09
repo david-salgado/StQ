@@ -3,30 +3,19 @@
 \docType{methods}
 \name{getNonIDQual}
 \alias{getNonIDQual}
+\alias{getNonIDQual,VNC-method}
 \alias{getNonIDQual,DD-method}
-\alias{getNonIDQual,DDdt-method}
 \alias{getNonIDQual,StQ-method}
-\alias{getNonIDQual,VNCdt-method}
-\alias{getNonIDQual,VarNameCorresp-method}
-\alias{getNonIDQual,rawStQ-method}
 \title{Return non-unit qualifiers from an object}
 \usage{
 getNonIDQual(object, CompNames = names(object))
 
-\S4method{getNonIDQual}{VNCdt}(object)
+\S4method{getNonIDQual}{VNC}(object, CompNames = names(object))
 
-\S4method{getNonIDQual}{VarNameCorresp}(object, CompNames = names(object))
+\S4method{getNonIDQual}{DD}(object, CompNames = setdiff(names(object), "VNC"))
 
-\S4method{getNonIDQual}{DDdt}(object)
-
-\S4method{getNonIDQual}{DD}(object, CompNames = setdiff(slotNames(object),
-  "VarNameCorresp"))
-
-\S4method{getNonIDQual}{StQ}(object,
-  CompNames = setdiff(slotNames(getDD(object)), "VarNameCorresp"))
-
-\S4method{getNonIDQual}{rawStQ}(object,
-  CompNames = setdiff(slotNames(getDD(object)), "VarNameCorresp"))
+\S4method{getNonIDQual}{StQ}(object, CompNames = setdiff(names(getDD(object)),
+  "VNC"))
 }
 \arguments{
 \item{object}{Object with the non-unit variable qualifiers (NonIDQual) to be queried.}
@@ -44,36 +33,39 @@ Character vector with all the non-unit qualifier names.
 Non-unit qualifiers are those qualifiers used to compose statistical variable names.
 }
 \examples{
+# An example:
 library(data.table)
-VarList <- list(ID = new(Class = 'VNCdt',
-                data.table(IDQual = c('NumIdEst', rep('', 4)),
-                           NonIDQual = c('','','','',''),
-                           IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
-                           NumIdEst = c('', rep('.', 4)),
-                           UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'),
-                           InFiles = rep('FI', 5))),
-MicroData =new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
-                                           NonIDQual = c('', 'Market', ''),
-                                           IDDD = c(rep('', 2), 'NewOrders'),
-                                           NumIdEst = c(rep('', 2), '.'),
-                                           Market = c(rep('', 2), '1.'),
-                                           UnitName = c('numidest', '', 'cp09'),
-                                           InFiles = rep('FF, FD, FG', 3))),
-ParaData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
-                                           NonIDQual = c('', 'Action', ''),
-                                           IDDD = c(rep('', 2), 'Date'),
-                                           NumIdEst = c(rep('', 2), '.'),
-                                           Action = c(rep('', 2), 'Imputation'),
-                                           UnitName = c('numidest', '', 'FechaImput'),
-                                           InFiles = rep('FP', 3))),
-AggWeights = new(Class = 'VNCdt', data.table(IDQual = c('CCAA', 'NACE09', ''),
-                                           NonIDQual = rep('', 3),
-                                           IDDD = c('', '', 'Ponderacion'),
-                                           CCAA = c('', '', '.'),
-                                           NACE09 = c('', '', '.'),
-                                           UnitName = c('Provincia', '', ''),
-                                           InFiles = rep('FA', 3))))
-VNC <- new(Class = 'VarNameCorresp', .Data = VarList)
+### We build the VNC object
+VarList <- list(ID = data.table(IDQual = c('NumIdEst', rep('', 4)),
+                                NonIDQual = c('','','','',''),
+                                IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
+                                NumIdEst = c('', rep('.', 4)),
+                                UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'),
+                                InFiles = rep('FI', 5)),
+MicroData = data.table(IDQual = c('NumIdEst', rep('', 2)),
+                       NonIDQual = c('', 'Market', ''),
+                       IDDD = c(rep('', 2), 'NewOrders'),
+                       NumIdEst = c(rep('', 2), '.'),
+                       Market = c(rep('', 2), '1.'),
+                       UnitName = c('numidest', '', 'cp09'),
+                       InFiles = rep('FF', 3)),
+ParaData = data.table(IDQual = c('NumIdEst', rep('', 2)),
+                      NonIDQual = c('', 'Action', ''),
+                      IDDD = c(rep('', 2), 'Date'),
+                      NumIdEst = c(rep('', 2), '.'),
+                      Action = c(rep('', 2), 'Imputation'),
+                      UnitName = c('numidest', '', 'FechaImput'),
+                      InFiles = rep('FP', 3)),
+AggWeights = data.table(IDQual = c('CCAA', 'NACE09', ''),
+                        NonIDQual = rep('', 3),
+                        IDDD = c('', '', 'Ponderacion'),
+                        CCAA = c('', '', '.'),
+                        NACE09 = c('', '', '.'),
+                        UnitName = c('Provincia', '', ''),
+                        InFiles = rep('FF', 3)))
+
+VNC <- BuildVNC(VarList)
+
 getNonIDQual(VNC)
 
 getNonIDQual(ExampleDD)
@@ -83,4 +75,3 @@ getNonIDQual(ExampleStQ)
 getNonIDQual(ExampleStQ, 'Aggregates')
 
 }
-

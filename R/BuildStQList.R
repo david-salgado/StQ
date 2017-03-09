@@ -20,9 +20,9 @@
 #' #Notice that it is indeed an object with complex structure:
 #' str(QList)
 #'
-#' @include StQ-class.R StQList-class.R
+#' @include StQ.R StQList.R
 #'
-#' @import RepoTime methods
+#' @import RepoTime
 #'
 #' @export
 BuildStQList <- function(Data){
@@ -31,8 +31,7 @@ BuildStQList <- function(Data){
 
     PeriodList <- newRepoTime(names(Data))
 
-    out <- new(Class = 'StQList', Data = Data, Periods = PeriodList)
-    validObject(out)
+    out <- StQList(Data = Data, Periods = PeriodList)
 
     return(out)
 }

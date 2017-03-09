@@ -14,17 +14,16 @@
 #' MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
 #'                           Length = '8',
 #'                           Qual1 = 'NumIdEst', Qual2 = 'Market', ValueRegExp = '')
-#' MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
-#' VarList <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','',''),
-#'                                                           NonIDQual = c('', 'Market', 'Cod', ''),
-#'                                                           IDDD = c('', '', '' ,'NewOrders'),
-#'                                                           NumIdEst = c('', '', '', '.'),
-#'                                                           Market = c('', '', '', '1.'),
-#'                                                           Cod = rep('', 4),
-#'                                                           UnitName = c('', '', '', 'cp02'),
-#'                                                           InFiles = rep('FF', 4))))
+#' VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','',''),
+#'                                        NonIDQual = c('', 'Market', 'Cod', ''),
+#'                                        IDDD = c('', '', '' ,'NewOrders'),
+#'                                        NumIdEst = c('', '', '', '.'),
+#'                                        Market = c('', '', '', '1.'),
+#'                                        Cod = rep('', 4),
+#'                                        UnitName = c('', '', '', 'cp02'),
+#'                                        InFiles = rep('FF', 4)))
 #' VNC <- BuildVNC(VarList)
-#' DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = MicroDataDD)
+#' DD <- DD(VNC = VNC, MicroData = MicroDataDD)
 #'           
 #' Paradt <- data.table(
 #'              Variable = c('NumIdEst', 'Date'),
@@ -34,7 +33,6 @@
 #'              Qual1 = c('', 'NumIdEst'),
 #'              ValueRegExp = c('[0-9]{9}PP', 
 #'                              '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )'))       
-#' Paradt <- new(Class = 'DDdt', Paradt)          
 #' setParaData(DD) <- Paradt
 #' DD
 #' 
@@ -42,45 +40,42 @@
 #'
 #' @import data.table
 #'
+#' @include VNC.R DD.R getVNC.R DDdtToVNC.R
+#'
 #' @export
 setGeneric("setParaData<-", function(object, value){standardGeneric("setParaData<-")})
+
 #' @rdname setParaData
-#'
-#' @include StQ-class.R getVNC.R DDdtToVNC.R
 #'
 #' @import data.table
 #'
 #' @export
 setReplaceMethod(
     f = "setParaData",
-    signature = c("DD", "DDdt"),
+    signature = c("VNC", "data.table"),
     function(object, value){
         
-        setkeyv(value, setdiff(names(value), 'Value'))
-
-        VNCaux <- getVNC(object)
-        VNCaux[['ParaData']] <- new(Class = 'VNCdt')
-        
-        setVNC(object) <- DDdtToVNC(value, 'ParaData') + VNCaux
-        object@ParaData <- value
-        validObject(object)
+        VNCValue <- try(BuildVNC(value))
+        if (inherits(VNCValue, "try-error")) stop('[StQ::setParaData] Value does not have the correct format.\n')
+        object[['ParaData']] <- value
         return(object)
     }
 )
 #' @rdname setParaData
 #'
-#' @include StQ-class.R
-#'
 #' @import data.table
 #'
 #' @export
 setReplaceMethod(
     f = "setParaData",
-    signature = c("StQ", "DDdt"),
+    signature = c("DD", "data.table"),
     function(object, value){
         
-        setParaData(object@DD) <- value
-        validObject(object)
+        newVNC <- DDdtToVNC(value, NameVNC = 'ParaData', InFiles = 'FA')
+        DDValue <- try(BuildDD(list(VNC = newVNC, ParaData = value)))
+        if (inherits(DDValue, "try-error")) stop('[StQ::setParaData] Value does not have the correct format.\n')
+        object[['VNC']] <- object[['VNC']] + newVNC
+        object[['ParaData']] <- value
         return(object)
     }
 )

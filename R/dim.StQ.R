@@ -13,20 +13,15 @@
 #' data(ExampleStQ)
 #' dim(ExampleStQ)
 #'
-#' @include StQ-class.R getData.R 
+#' @include StQ.R getData.R 
 #'
 #' @import data.table
 #'
 #' @export
-setMethod(
-    f = "dim",
-    signature = c("StQ"),
-    function(x){
+`dim.StQ` <- function(x){
+    
+    output <- dim(getData(x))
+    return(output)
         
-        mc <- match.call()
-        mc[['x']] <- getData(x)
-        output <- eval(mc, envir = parent.frame())
-        return(output)
-        
-    }
-)
+}
+

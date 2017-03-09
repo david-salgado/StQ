@@ -4,26 +4,26 @@
 \name{getVariables}
 \alias{getVariables}
 \alias{getVariables,DD-method}
-\alias{getVariables,DDdt-method}
 \alias{getVariables,StQ-method}
+\alias{getVariables,rawStQ-method}
 \title{Return the set of Variable Names from the DD slot of an object}
 \usage{
-getVariables(object, Sort = c("IDDD", "IDQual", "NonIDQual"),
-  slots = setdiff(slotNames(object), "VarNameCorresp"))
+getVariables(object, varSort = c("IDDD", "IDQual", "NonIDQual"),
+  slots = setdiff(names(object), "VNC"))
 
-\S4method{getVariables}{DDdt}(object, Sort = c("IDDD", "IDQual", "NonIDQual"),
-  slots = setdiff(slotNames(object), "VarNameCorresp"))
+\S4method{getVariables}{DD}(object, varSort = c("IDDD", "IDQual",
+  "NonIDQual"), slots = setdiff(names(object), "VNC"))
 
-\S4method{getVariables}{DD}(object, Sort = c("IDDD", "IDQual", "NonIDQual"),
-  slots = setdiff(slotNames(object), "VarNameCorresp"))
+\S4method{getVariables}{StQ}(object, varSort = c("IDDD", "IDQual",
+  "NonIDQual"), slots = setdiff(names(getDD(object)), "VNC"))
 
-\S4method{getVariables}{StQ}(object, Sort = c("IDDD", "IDQual", "NonIDQual"),
-  slots = setdiff(slotNames(getDD(object)), "VarNameCorresp"))
+\S4method{getVariables}{rawStQ}(object, varSort = c("IDDD", "IDQual",
+  "NonIDQual"), slots = setdiff(names(getDD(object)), "VNC"))
 }
 \arguments{
 \item{object}{Object whose Variable names are queried.}
 
-\item{Sort}{Character vector with the Sort of Variables ('IDDD', 'IDQual', 'NonIDQual').}
+\item{varSort}{Character vector with the Sort of Variables ('IDDD', 'IDQual', 'NonIDQual').}
 
 \item{slots}{Character vector with the slot names if object class is \linkS4class{DD} or 
 \linkS4class{StQ}.}
@@ -40,6 +40,4 @@ getVariables(ExampleDD)
 getVariables(ExampleDD, Sort = 'IDDD', slots = 'MicroData')
 getVariables(ExampleStQ, Sort = 'IDDD', slots = 'Aggregates')
 
-
 }
-

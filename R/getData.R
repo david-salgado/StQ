@@ -1,4 +1,4 @@
-#' @title Return slot \code{Data} from an object possibly subsetted to a set of variables
+0#' @title Return slot \code{Data} from an object possibly subsetted to a set of variables
 #'
 #' @description \code{getData} returns slot \code{Data} from the input object possibly subsetted to
 #' those variables specified as an input parameter. In the case of those variables pertaining to
@@ -83,214 +83,72 @@
 #' QList <- BuildStQList(QList)
 #' VarNames <- c('Turnover', 'Employees_2.1')
 #' getData(QList, VarNames)
-#'
-#' @export
-setGeneric("getData", function(object, VarNames, DDslot = 'MicroData'){standardGeneric("getData")})
-#' @rdname getData
 #' 
-#' @include DD-class.R DatadtToDT.R
+#' @include DD.R VNC.R StQ.R rawStQ.R ExtractNames.R StQList.R rawStQList.R
 #' 
 #' @export
-setMethod(
-  f = "getData",
-  signature = c("DD"),
-  function(object, VarNames, DDslot = 'MicroData'){
+setGeneric("getData", function(object, VarNames){standardGeneric("getData")})
 
-    if (length(DDslot) > 1){
-
-        stop('[StQ::getData] The input parameter DDslot must be a character vector of length 1.\n')
-    }
-
-    if (!DDslot %in% slotNames(object)){
-
-        stop('[StQ::getData] The input parameter DDslot is not a component of this DD object.\n')
-    }
-    output <- slot(object, DDslot)
-    if (missing(VarNames)) {
-
-        return(output)
-
-    } else {
-
-        VarNames <- ExtractNames(VarNames)
-        MissingVar <- setdiff(VarNames, output[['Variable']])
-        if (length(MissingVar) > 0) stop(paste0('[StQ::getData] The variable(s) ', paste0(MissingVar, collapse = ', '), ' is/are not present in this DD object.\n'))
-        output <- output[which(output[['Variable']] %in% VarNames)]
-        return(output)
-    }
-  }
-)
 #' @rdname getData
-#'
-#' @include Datadt-class.R StQ-class.R getDD.R DDslotWith.R getNonIDQual.R getData.R ExtractNames.R VarNamesToDT.R getDD.R
-#'
-#' @import data.table
-#'
+#' 
 #' @export
 setMethod(
-  f = "getData",
-  signature = c("StQ"),
-  function(object, VarNames, DDslot = 'MicroData'){
-
-
-    if (missing(VarNames)) return(copy(object@Data))
-
-    if (length(DDslot) > 1){
-
-        stop('[StQ::getData] The input parameter DDslot must be a character vector of length 1.\n')
-    }
-
-    DD <- getDD(object)
-
-    if (!DDslot %in% slotNames(DD)){
-
-        stop('[StQ::getData] The input parameter DDslot is not a component of the slot DD of this StQ object.\n')
-    }
-
-    for (VarName in VarNames){
-
-        Varslot <- DDslotWith(DD, VarName, DDslot)
-        Quals <- setdiff(names(Varslot), c('Variable', 'Sort', 'Class', 'Length', 'ValueRegExp'))
-
-        NameQuals <- c()
-        for (Qual in Quals){
-
-            NameQuals <- c(NameQuals, DatadtToDT(Varslot)[Variable == ExtractNames(VarName)][[Qual]])
-
-        }
-
-        nonIDQuals <- getNonIDQual(Varslot)
-
-
-        if (!all(nonIDQuals %in% NameQuals) & VarName != ExtractNames(VarName)){
-
-            stop('[StQ::getData] Variable ', ExtractNames(VarName), ' has not any non-unit qualifiers, so VarName cannot be ', VarName, '.')
-        }
-    }
-
-    VarNames.DT <- VarNamesToDT(VarNames, getDD(object))
-    ColNames <- sort(names(VarNames.DT))
-    for (col in ColNames){
-
-        if (all(VarNames.DT[[col]] == '')) VarNames.DT[, (col) := NULL]
-
-    }
-
-    output <- merge(getData(object), VarNames.DT, by = names(VarNames.DT))
-
-    if(dim(output)[1] == 0) {
-
-      warning('[StQ::getData] No such variables in this data set.')
-      return(output)
-
-    }
-    DataNames <- names(object@Data)
-    setcolorder(output, DataNames)
-    #Cols <- sort(names(output))
-    #for (col in Cols){
-    #
-    #  if (all(output[[col]] == '')) output[, (col) := NULL]
-    #
-    #}
-
-    NotPresent <- VarNames[which(!ExtractNames(VarNames) %in% unique(getData(object)[['IDDD']]))]
-
-    if (length(NotPresent) > 0){
-
-      warning(paste0('[StQ::getData] The following variables are not present in the data set: ',
-                     paste0(NotPresent, collapse = ', '),
-                     '.\n They are not included in the output data.table.\n'))
-
-    }
-
-    output <- new(Class = 'Datadt', output)
-    return(output)
-  }
-)
-#' @rdname getData
-#'
-#' @include StQ-class.R StQList-class.R
-#'
-#' @import data.table
-#'
-#' @export
-setMethod(
-  f = "getData",
-  signature = c("StQList"),
-  function(object, VarNames, DDslot = 'MicroData'){
-
-      DataList <- object@Data
-      DDList <- lapply(DataList, function(x){x@DD})
-      if (missing(VarNames)){
-
-        DataList <- lapply(DataList, getData, DDslot = DDslot)
-
-      } else {
-
-        DataList <- lapply(DataList, function(x){getData(x, VarNames = VarNames, DDslot = DDslot)})
+    f = "getData",
+    signature = c("StQ"),
+    function(object, VarNames){
+        
+        if (missing(VarNames)) return(object$Data)
+        
+        return(object$Data[IDDD %chin% VarNames])
       }
-
-      output <- lapply(seq(along = DataList), function(index){new(Class = 'StQ', Data = DataList[[index]], DD = DDList[[index]])})
-
-      names(output) <- getPeriods(object)
-
-      return(output)
-  }
 )
+
 #' @rdname getData
-#'
-#' @include rawStQ-class.R rawDatadt-class.R ExtractNames.R DatadtToDT.R
-#'
-#' @import data.table
-#'
 #' @export
 setMethod(
     f = "getData",
     signature = c("rawStQ"),
-    function(object, VarNames, DDslot = 'MicroData'){
-
-
-        if (missing(VarNames)) return(copy(object@Data))
-
-        rootVarNames <- ExtractNames(VarNames)
-
-        output <- DatadtToDT(object@Data)[IDDDKey %in% rootVarNames]
-        return(output)
-
+    function(object, VarNames){
+        
+        if (missing(VarNames)) return(object$rawData)
+        
+        return(object$rawData[IDDDKey %chin% VarNames])
     }
 )
+
 #' @rdname getData
-#'
-#' @include rawStQList-class.R
-#'
-#' @import data.table
-#'
+#' @export
+setMethod(
+    f = "getData",
+    signature = c("StQList"),
+    function(object, VarNames){
+        
+        if (missing(VarNames)) return(object$Data)
+        output <- lapply(object$Data, function(StQObj){
+            
+            LocalOut <- getData(StQObj, VarNames)
+            return(LocalOut)
+            
+        })
+        return(output)
+    }
+)
+
+#' @rdname getData
 #' @export
 setMethod(
     f = "getData",
     signature = c("rawStQList"),
-    function(object, VarNames, DDslot = 'MicroData'){
-
-        DataList <- object@Data
-        DDList <- lapply(DataList, function(x){x@DD})
-        if (missing(VarNames)){
-
-            DataList <- lapply(DataList, getData, DDslot = DDslot)
-
-        } else {
-
-            DataList <- lapply(DataList, function(x){
-
-                DT <- getData(x, VarNames = VarNames, DDslot = DDslot)
-                out <- new(Class = 'rawDatadt', DT)
-                return(out)
-            })
-        }
-
-        output <- lapply(seq(along = DataList), function(index){new(Class = 'rawStQ', Data = DataList[[index]], DD = DDList[[index]])})
-
-        names(output) <- getPeriods(object)
-
+    function(object, VarNames){
+        
+        if (missing(VarNames)) return(object$Data)
+        
+        output <- lapply(object$Data, function(rawStQObj){
+            
+            LocalOut <- getData(rawStQObj, VarNames)
+            return(LocalOut)
+            
+        })
         return(output)
     }
 )

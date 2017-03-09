@@ -30,4 +30,3 @@ ExtractNames(c('ICMCifraNeg.x', 'ICMEmpleo_1..x', 'ICMEmpleo_2.1.x', 'ICMEmpleo_
                'ICMCifraNeg.y', 'ICMEmpleo_1..y', 'ICMEmpleo_2.1.y', 'ICMEmpleo_2.2.y'))
                
 }
-

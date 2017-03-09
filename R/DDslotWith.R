@@ -17,6 +17,8 @@
 #' @examples
 #' data(ExampleDD)
 #' DDslotWith(ExampleDD, 'Turnover')
+#' 
+#' @include DD.R VarNamesToDD.R ExtractNames.R
 #'
 #' @import data.table
 #'
@@ -25,8 +27,6 @@ setGeneric("DDslotWith",
            function(object, VarName, DDslot = 'MicroData'){standardGeneric("DDslotWith")})
 
 #' @rdname DDslotWith
-#'
-#' @include DD-class.R VarNamesToDD.R ExtractNames.R
 #'
 #' @import data.table
 #' 
@@ -45,10 +45,10 @@ setMethod(
         DDVar <- VarNamesToDD(VarName, object)
 
         Varslot <- c()
-        for (DDvarslot in setdiff(slotNames(DDVar), 'VarNameCorresp')){
+        for (DDvarslot in setdiff(names(DDVar), 'VNC')){
             
-            DDlocal <- slot(DDVar, DDvarslot)
-            if(dim(DDlocal)[1] != 0){
+            DDlocal <- DDVar[[DDvarslot]]
+            if (dim(DDlocal)[1] != 0) {
                 
                 Varslot <- c(Varslot, DDvarslot)
             }
@@ -59,7 +59,7 @@ setMethod(
             stop('[StQ::DDslotWith] Variable ', ExtractNames(VarName), ' is not defined in slot ', DDslot, ' of the input object.')
         }
         
-        output <- slot(object, DDslot)
+        output <- object[[DDslot]]
         
         return(output)
     }

@@ -34,4 +34,3 @@ setUnits(NewExampleStQ) <- Units
 NewExampleStQ
 
 }
-

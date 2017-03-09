@@ -4,7 +4,7 @@
 #' 
 #' @param object Object whose Variable names are queried.
 #' 
-#' @param Sort Character vector with the Sort of Variables ('IDDD', 'IDQual', 'NonIDQual').
+#' @param varSort Character vector with the Sort of Variables ('IDDD', 'IDQual', 'NonIDQual').
 #' 
 #' @param slots Character vector with the slot names if object class is \linkS4class{DD} or 
 #' \linkS4class{StQ}.
@@ -17,37 +17,16 @@
 #' getVariables(ExampleDD, Sort = 'IDDD', slots = 'MicroData')
 #' getVariables(ExampleStQ, Sort = 'IDDD', slots = 'Aggregates')
 #' 
+#' @include DD.R VNC.R StQ.R getDD.R
 #' 
 #' @export
 setGeneric("getVariables", function(object, 
-                                    Sort = c('IDDD', 'IDQual', 'NonIDQual'), 
-                                    slots = setdiff(slotNames(object), 'VarNameCorresp')){
+                                    varSort = c('IDDD', 'IDQual', 'NonIDQual'), 
+                                    slots = setdiff(names(object), 'VNC')){
     standardGeneric("getVariables")})
 
 #' @rdname getVariables
 #' 
-#' @include DDdt-class.R DatadtToDT.R
-#' 
-#' @import data.table
-#' 
-#' @export
-setMethod(
-    f = "getVariables",
-    signature = c("DDdt"),
-    function(object, Sort = c('IDDD', 'IDQual', 'NonIDQual'), slots){
-        
-        if (any(!Sort %in% c('IDDD', 'IDQual', 'NonIDQual'))) stop('[StQ::DDdt] The input parameter Sort can only be composed of "IDQual", "NonIDQual", "IDDD".\n')
-        objectDT <- DatadtToDT(object)
-        Sort <- intersect(Sort, objectDT[['Sort']])
-        setkeyv(objectDT, 'Sort')
-        output <- objectDT[Sort][['Variable']]
-        return(output)
-    }
-)
-
-#' @rdname getVariables
-#' 
-#' @include DD-class.R 
 #' 
 #' @import data.table
 #' 
@@ -56,13 +35,15 @@ setMethod(
     f = "getVariables",
     signature = c("DD"),
     function(object, 
-             Sort = c('IDDD', 'IDQual', 'NonIDQual'), 
-             slots = setdiff(slotNames(object), 'VarNameCorresp')){
+             varSort = c('IDDD', 'IDQual', 'NonIDQual'), 
+             slots = setdiff(names(object), 'VNC')){
         
+        if (any(!varSort %in% c('IDDD', 'IDQual', 'NonIDQual'))) stop('[StQ::getVariables] The input parameter Sort can only be composed of "IDQual", "NonIDQual", "IDDD".\n')
         output <- c()
-        for (DDdt in slots) {
-            
-            aux <- getVariables(slot(object, DDdt), Sort)
+        for (DDdt in setdiff(slots, 'VNC')) {
+            objectDT <- object[[DDdt]]
+            LocalvarSort <- intersect(varSort, objectDT[['Sort']])
+            aux <- objectDT[Sort %chin% LocalvarSort][['Variable']]
             output <- c(output, aux)
         }
         
@@ -75,8 +56,6 @@ setMethod(
 
 #' @rdname getVariables
 #' 
-#' @include StQ-class.R getDD.R
-#' 
 #' @import data.table
 #' 
 #' @export
@@ -84,10 +63,28 @@ setMethod(
     f = "getVariables",
     signature = c("StQ"),
     function(object, 
-             Sort = c('IDDD', 'IDQual', 'NonIDQual'), 
-             slots = setdiff(slotNames(getDD(object)), 'VarNameCorresp')){
+             varSort = c('IDDD', 'IDQual', 'NonIDQual'), 
+             slots = setdiff(names(getDD(object)), 'VNC')){
         
-        output <- unique(getVariables(getDD(object), Sort, slots))
+        output <- unique(getVariables(getDD(object), varSort, slots))
+        
+        return(output)
+    }
+)
+
+#' @rdname getVariables
+#' 
+#' @import data.table
+#' 
+#' @export
+setMethod(
+    f = "getVariables",
+    signature = c("rawStQ"),
+    function(object, 
+             varSort = c('IDDD', 'IDQual', 'NonIDQual'), 
+             slots = setdiff(names(getDD(object)), 'VNC')){
+        
+        output <- unique(getVariables(getDD(object), varSort, slots))
         
         return(output)
     }

@@ -3,24 +3,21 @@
 \docType{methods}
 \name{getData}
 \alias{getData}
-\alias{getData,DD-method}
 \alias{getData,StQ-method}
-\alias{getData,StQList-method}
 \alias{getData,rawStQ-method}
+\alias{getData,StQList-method}
 \alias{getData,rawStQList-method}
 \title{Return slot \code{Data} from an object possibly subsetted to a set of variables}
 \usage{
-getData(object, VarNames, DDslot = "MicroData")
+getData(object, VarNames)
 
-\S4method{getData}{DD}(object, VarNames, DDslot = "MicroData")
+\S4method{getData}{StQ}(object, VarNames)
 
-\S4method{getData}{StQ}(object, VarNames, DDslot = "MicroData")
+\S4method{getData}{rawStQ}(object, VarNames)
 
-\S4method{getData}{StQList}(object, VarNames, DDslot = "MicroData")
+\S4method{getData}{StQList}(object, VarNames)
 
-\S4method{getData}{rawStQ}(object, VarNames, DDslot = "MicroData")
-
-\S4method{getData}{rawStQList}(object, VarNames, DDslot = "MicroData")
+\S4method{getData}{rawStQList}(object, VarNames)
 }
 \arguments{
 \item{object}{Object whose (possibly subsetted) slot \code{Data} is queried.}
@@ -109,4 +106,3 @@ VarNames <- c('Turnover', 'Employees_2.1')
 getData(QList, VarNames)
 
 }
-

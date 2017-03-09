@@ -28,7 +28,7 @@
 #' data(ExampleDD)
 #' VarNamesToDT(c('Employees_1.'), ExampleDD)
 #'
-#' @include ExtractNames.R getVariables.R DatadtToDT.R
+#' @include ExtractNames.R getVariables.R 
 #'
 #' @import data.table
 #'
@@ -40,14 +40,14 @@ VarNamesToDT <- function(VarNames, DD){
     # Para una sola variable
     if (is.character(VarNames) & length(VarNames) == 1){
 
-        DDSlotNames <- setdiff(slotNames(DD), 'VarNameCorresp')
+        DDSlotNames <- setdiff(names(DD), 'VNC')
 
         output <- list()
         for (DDslot in DDSlotNames){
 
-            DDlocal <- slot(DD, DDslot)
+            DDlocal <- DD[[DDslot]]
 
-            Names.DT <- DatadtToDT(DDlocal)[Variable == ExtractNames(VarNames)]
+            Names.DT <- DDlocal[Variable == ExtractNames(VarNames)]
             if(dim(Names.DT)[1] == 0) {
 
                 out <- data.table(IDDD = character(0))
@@ -62,7 +62,7 @@ VarNamesToDT <- function(VarNames, DD){
                 Names.DT[, ValueRegExp := NULL]
 
                 ParsedNames <- strsplit(VarNames, '_')[[1]]
-                IDQual <- DatadtToDT(DDlocal)[Sort == 'IDQual'][['Variable']]
+                IDQual <- DDlocal[Sort == 'IDQual'][['Variable']]
                 IDQualCounter <- 0
 
                 ColNames <- setdiff(names(Names.DT), 'IDDD')

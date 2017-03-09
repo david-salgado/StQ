@@ -3,26 +3,26 @@
 \docType{methods}
 \name{setAggregates<-}
 \alias{setAggregates<-}
-\alias{setAggregates<-,DD,DDdt-method}
-\alias{setAggregates<-,StQ,DDdt-method}
+\alias{setAggregates<-,VNC,data.table-method}
+\alias{setAggregates<-,DD,data.table-method}
 \title{Set value of slot \code{Aggregates}}
 \usage{
 setAggregates(object) <- value
 
-\S4method{setAggregates}{DD,DDdt}(object) <- value
+\S4method{setAggregates}{VNC,data.table}(object) <- value
 
-\S4method{setAggregates}{StQ,DDdt}(object) <- value
+\S4method{setAggregates}{DD,data.table}(object) <- value
 }
 \arguments{
 \item{object}{Object whose slot \code{Aggregates} is to be assigned.}
 
-\item{value}{\linkS4class{DDdt} to be assigned to the slot \code{Aggregates}.}
+\item{value}{\linkS4class{data.table} to be assigned to the slot \code{Aggregates}.}
 }
 \value{
 Object with slot Aggregates updated.
 }
 \description{
-\code{setAggregates} assigns a \linkS4class{DDdt} to the slot \code{Aggregates} of 
+\code{setAggregates} assigns a \linkS4class{data.table} to the slot \code{Aggregates} of 
 the input object.
 }
 \examples{
@@ -30,17 +30,16 @@ library(data.table)
 MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
                           Length = '8',
                           Qual1 = 'NumIdEst', Qual2 = 'Market', ValueRegExp = '')
-MicroDataDD <- new(Class = 'DDdt', MicroDataDD)
-VarList <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst','','',''),
-                                                          NonIDQual = c('', 'Market', 'Cod', ''),
-                                                          IDDD = c('', '', '' ,'NewOrders'),
-                                                          NumIdEst = c('', '', '', '.'),
-                                                          Market = c('', '', '', '1.'),
-                                                          Cod = rep('', 4),
-                                                          UnitName = c('', '', '', 'cp02'),
-                                                          InFiles = rep('FF', 4))))
+VarList <- list(MicroData = data.table(IDQual = c('NumIdEst','','',''),
+                                       NonIDQual = c('', 'Market', 'Cod', ''),
+                                       IDDD = c('', '', '' ,'NewOrders'),
+                                       NumIdEst = c('', '', '', '.'),
+                                       Market = c('', '', '', '1.'),
+                                       Cod = rep('', 4),
+                                       UnitName = c('', '', '', 'cp02'),
+                                       InFiles = rep('FF', 4)))
 VNC <- BuildVNC(VarList)
-DD <- new(Class = 'DD', VarNameCorresp = VNC, MicroData = MicroDataDD)
+DD <- BuildDD(list(VNC = VNC, MicroData = MicroDataDD))
           
 Aggdt <- data.table(Variable = c('NACE09', 'Turnover'),
                     Sort = c('IDQual', 'IDDD'),
@@ -48,9 +47,7 @@ Aggdt <- data.table(Variable = c('NACE09', 'Turnover'),
                     Length = c('4', '10'),
                     Qual1 = c('', 'NACE09'),
                     ValueRegExp = c('([0-4][0-9])|(5[0-2])', '([0-9]{1, 15}| )'))  
-Aggdt <- new(Class = 'DDdt', Aggdt)          
 setAggregates(DD) <- Aggdt
 DD
 
 }
-

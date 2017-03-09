@@ -16,21 +16,17 @@
 #' @examples
 #' library(data.table)
 #' getValues(ExampleStQ, 'Employees_1.')
-#' getValues(ExampleStQ, 'Turnover')
+#' getValues(ExampleStQ, 'Turnover', Units = data.table(ID = c('00001', '00002')))
 #'
-#' @import data.table
+#' @include StQ.R getData.R getDD.R DDslotWith.R getNonIDQual.R VarNamesToDD.R VarNamesToDT.R ExtractNames.R
+#'
+#' @import data.table RepoTime
 #'
 #' @export
 setGeneric("getValues", 
-           function(object, VarName, Units = getUnits(object, 'MicroData')){
-               
-               standardGeneric("getValues")})
+           function(object, VarName, Units = getUnits(object)){standardGeneric("getValues")})
 
 #' @rdname getValues
-#'
-#' @include StQ-class.R getData.R getDD.R DDslotWith.R getNonIDQual.R VarNamesToDD.R VarNamesToDT.R ExtractNames.R
-#'
-#' @import data.table RepoTime
 #' 
 #' @export
 setMethod(
@@ -47,25 +43,29 @@ setMethod(
         DD <- getDD(object)
         VarNameDD <- VarNamesToDD(VarName, DD)
         dimSlotsVarNameDD <- c()
-        for (DDvarslot in setdiff(slotNames(VarNameDD), 'VarNameCorresp')){
+        for (DDvarslot in setdiff(names(VarNameDD), 'VNC')){
             
-            DDlocal <- slot(VarNameDD, DDvarslot)
+            DDlocal <- VarNameDD[[DDvarslot]]
             dimSlotsVarNameDD <- c(dimSlotsVarNameDD, dim(DDlocal)[1])
-            if (dim(DDlocal)[1] != 0){VarNameSlot <- DDvarslot}
+            if (dim(DDlocal)[1] != 0) VarNameSlot <- DDvarslot
         }
 
         if (all(dimSlotsVarNameDD == 0)) stop(paste0('[StQ::getValues] The variable ', VarName, ' is not present in the DD slot of the input StQ object.\n'))
         if (missing(Units)) Units <- getUnits(object, VarNameSlot)
-        DDslot <- slot(VarNameDD, VarNameSlot)
+        DDslot <- VarNameDD[[VarNameSlot]]
         VarQuals <- c() 
         QualCols <- names(DDslot)[grep('Qual', names(DDslot))]
         for (col in QualCols){
             
             VarQuals <- c(VarQuals, DDslot[[col]])
         }
-        NonIDQuals <- setdiff(VarQuals, getIDQual(slot(DD, VarNameSlot)))
+        IDQuals <- DD[[VarNameSlot]][Sort == 'IDQual'][['Variable']]
+        IDQuals <- unique(IDQuals[IDQuals != ''])
+        NonIDQuals <- setdiff(VarQuals, IDQuals)
         IDQuals <- getIDQual(object, VarNameSlot)
-        output <- getData(object, VarName, VarNameSlot)
+        VarNameDT <- VarNamesToDT(VarName, DD)
+        output <- getData(object, ExtractNames(VarName))
+        output <- merge(output, VarNameDT, by = names(VarNameDT))
         if (dim(output)[1] == 0) stop(paste0('[StQ::getValues] The input parameter ', VarName, ' is not present in the input StQ object.\n'))
         for (NonIDQual in NonIDQuals){
             
@@ -74,15 +74,13 @@ setMethod(
         output <- output[, c(IDQuals, 'Value'), with = FALSE]
         if (!all(names(Units) %in% IDQuals)) stop(paste0('[StQ::getValues] There is no variable ', VarName, ' for this set of units.\n'))
         output <- merge(output, Units, by = names(Units), all.y = TRUE)
+        setnames(output, 'Value', VarName)
         return(output)
     }
 )
 
 #' @rdname getValues
 #'
-#' @include StQ-class.R getData.R getDD.R VarNamesToDD.R
-#'
-#' @import data.table RepoTime
 #'
 #' @export
 setMethod(
@@ -95,15 +93,17 @@ setMethod(
             stop('[StQ::getValues] Only one variable can be specifed as input.')
             
         }
-        ListofStQ <- object@Data
-        output <- lapply(ListofStQ, function(StQ){
+        ListofStQ <- object$Data
+        Periods <- getRepo(object$Periods)
+        output <- lapply(seq(along = ListofStQ), function(indexStQ){
             
+            StQ <- ListofStQ[[indexStQ]]
             out <- getValues(StQ, VarName = VarName, Units = Units)
+            out[, Period := Periods[indexStQ]]
             return(out)
         })
 
-        output <- Reduce(cbind, output)
-        colnames(output) <- getRepo(object@Periods)
+        output <- rbindlist(output)
         return(output)
     }
 )

@@ -3,12 +3,15 @@
 \docType{methods}
 \name{setData<-}
 \alias{setData<-}
-\alias{setData<-,StQ,Datadt-method}
+\alias{setData<-,StQ,data.table-method}
+\alias{setData<-,rawStQ,data.table-method}
 \title{Set value of slot \code{Data}}
 \usage{
 setData(object) <- value
 
-\S4method{setData}{StQ,Datadt}(object) <- value
+\S4method{setData}{StQ,data.table}(object) <- value
+
+\S4method{setData}{rawStQ,data.table}(object) <- value
 }
 \arguments{
 \item{object}{Object whose slot \code{Data} is to be assigned.}
@@ -34,4 +37,3 @@ setData(NewExampleStQ) <- Data
 NewExampleStQ
 
 }
-

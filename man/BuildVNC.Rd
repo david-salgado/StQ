@@ -4,52 +4,50 @@
 \alias{BuildVNC}
 \title{Constructor of objects of class \linkS4class{VarNameCorresp}}
 \usage{
-BuildVNC(Data)
+BuildVNC(Data = list(ID = data.table(IDQual = character(0), NonIDQual =
+  character(0), IDDD = character(0), UnitName = character(0), InFiles =
+  character(0)), MicroData = data.table(IDQual = character(0), NonIDQual =
+  character(0), IDDD = character(0), UnitName = character(0), InFiles =
+  character(0))))
 }
 \arguments{
-\item{Data}{A named \code{list} of objects of class \linkS4class{VNCdt}.}
+\item{Data}{A named \code{list} of objects of class \linkS4class{data.table}.}
 }
 \value{
-An object of class \linkS4class{VarNameCorresp} with components 
-specified in the input parameter Data. Components 'ID', 'MicroData' and/or 'ParaData' 
-not being specified are set as an empty \linkS4class{VNCdt} object.
+An object of class \linkS4class{VarNameCorresp} with components specified in the input 
+parameter Data. Components 'ID', 'MicroData' and/or 'ParaData' not being specified are set as an 
+empty \linkS4class{data.table}.
 }
 \description{
-This constructor returns an object of class \linkS4class{VarNameCorresp}.
-The input parameter is a named \code{list} of objects of class \linkS4class{VNCdt}. Notice that
-the names of this \code{list} must be any of 'ID', 'MicroData', 'ParaData', 'Aggregates', 
-'AggWeights', 'Other'.
+This constructor returns an object of class \linkS4class{VNC}.
+The input parameter is a named \code{list} of objects of class \linkS4class{data.table}. Notice 
+that the names of this \code{list} must be any of 'ID', 'MicroData', 'ParaData', 'Aggregates', 
+'AggWeights', 'Other' or compound names with these roots (e.g. ParaData_Editing).
 }
 \examples{
 library(data.table)
 VarList <- list(
-  ID = new(Class = 'VNCdt', 
-           .Data = data.table(
-                 IDQual = c('NumIdEst', rep('', 4)),
-                 NonIDQual = rep('', 5),
-                 IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
-                 NumIdEst = c('', rep('.', 4)),
-                 UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'),
-                 InFiles = rep('FI', 5))),
-  MicroData = new(Class = 'VNCdt', 
-                  .Data = data.table(
-                      IDQual = c('NumIdEst', rep('', 2)),
-                      NonIDQual = c('', 'Market', ''),
-                      IDDD = c(rep('', 2), 'NewOrders'),
-                      NumIdEst = c(rep('', 2), '.'),
-                      Market = c(rep('', 2), '1.'),
-                      UnitName = c('numidest', '', 'cp09'),
-                      InFiles = rep('FF, FD, FG', 3))),
- Aggregates = new(Class = 'VNCdt', 
-                  .Data = data.table(
-                     IDQual = c('Province', 'NACE', 'Market', ''),
-                     NonIDQual = rep('', 4),
-                     IDDD = c('', '', '', 'TotalTurnover'),
-                     Province = c('', '', '', '.'),
-                     NACE = c('', '', '', '.'),
-                     Market = c('', '', '', '1.'),
-                     UnitName = c('provincia', 'actividad', '', 'cn01'),
-                     InFiles = rep('FP', 4))))
+  ID = data.table(IDQual = c('NumIdEst', rep('', 4)),
+                  NonIDQual = rep('', 5),
+                  IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
+                  NumIdEst = c('', rep('.', 4)),
+                  UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'),
+                  InFiles = rep('FI', 5)),
+  MicroData = data.table(IDQual = c('NumIdEst', rep('', 2)),
+                         NonIDQual = c('', 'Market', ''),
+                         IDDD = c(rep('', 2), 'NewOrders'),
+                         NumIdEst = c(rep('', 2), '.'),
+                         Market = c(rep('', 2), '1.'),
+                         UnitName = c('numidest', '', 'cp09'),
+                         InFiles = rep('FF, FD, FG', 3)),
+ Aggregates = data.table(IDQual = c('Province', 'NACE', 'Market', ''),
+                         NonIDQual = rep('', 4),
+                         IDDD = c('', '', '', 'TotalTurnover'),
+                         Province = c('', '', '', '.'),
+                         NACE = c('', '', '', '.'),
+                         Market = c('', '', '', '1.'),
+                         UnitName = c('provincia', 'actividad', '', 'cn01'),
+                         InFiles = rep('FP', 4)))
                      
 VNC <- BuildVNC(VarList)
 VNC
@@ -58,4 +56,3 @@ VNC
 str(VNC)
 
 }
-

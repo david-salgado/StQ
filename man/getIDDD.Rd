@@ -3,30 +3,18 @@
 \docType{methods}
 \name{getIDDD}
 \alias{getIDDD}
+\alias{getIDDD,VNC-method}
 \alias{getIDDD,DD-method}
-\alias{getIDDD,DDdt-method}
 \alias{getIDDD,StQ-method}
-\alias{getIDDD,VNCdt-method}
-\alias{getIDDD,VarNameCorresp-method}
-\alias{getIDDD,rawStQ-method}
-\title{Return IDDD identifiers (statistical variable names) from the slot DD of an object}
+\title{Return IDDD identifiers (statistical variable names) from the input object}
 \usage{
 getIDDD(object, CompNames = names(object))
 
-\S4method{getIDDD}{VNCdt}(object, CompNames = names(object))
+\S4method{getIDDD}{VNC}(object, CompNames = names(object))
 
-\S4method{getIDDD}{VarNameCorresp}(object, CompNames = names(object))
+\S4method{getIDDD}{DD}(object, CompNames = setdiff(names(object), "VNC"))
 
-\S4method{getIDDD}{DDdt}(object, CompNames = names(object))
-
-\S4method{getIDDD}{DD}(object, CompNames = setdiff(slotNames(object),
-  "VarNameCorresp"))
-
-\S4method{getIDDD}{StQ}(object, CompNames = setdiff(slotNames(getDD(object)),
-  "VarNameCorresp"))
-
-\S4method{getIDDD}{rawStQ}(object,
-  CompNames = setdiff(slotNames(getDD(object)), "VarNameCorresp"))
+\S4method{getIDDD}{StQ}(object, CompNames = names(object))
 }
 \arguments{
 \item{object}{Object whose IDDD identifiers in the slot \linkS4class{DD} are required.}
@@ -40,43 +28,43 @@ CompNames. If no CompNames parameter is specified, it returns the IDDD identifie
 components of the input object.
 }
 \description{
-\code{getIDDD} returns the IDDD identifiers from the slot DD of the input object.
-Notice that not all returned IDDD identifiers may be present in the input object.
+\code{getIDDD} returns the IDDD identifiers from input object.
 }
 \examples{
+# An example:
 library(data.table)
-VarList <- list(ID = new(Class = 'VNCdt',
-                data.table(IDQual = c('NumIdEst', rep('', 4)),
-                           NonIDQual = c('','','','',''),
-                           IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
-                           NumIdEst = c('', rep('.', 4)),
-                           UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'),
-                           InFiles = rep('FI', 5))),
-MicroData =new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
-                                           NonIDQual = c('', 'Market', ''),
-                                           IDDD = c(rep('', 2), 'NewOrders'),
-                                           NumIdEst = c(rep('', 2), '.'),
-                                           Market = c(rep('', 2), '1.'),
-                                           UnitName = c('numidest', '', 'cp09'),
-                                           InFiles = rep('FF, FD, FG', 3))),
-ParaData = new(Class = 'VNCdt', data.table(IDQual = c('NumIdEst', rep('', 2)),
-                                           NonIDQual = c('', 'Action', ''),
-                                           IDDD = c(rep('', 2), 'Date'),
-                                           NumIdEst = c(rep('', 2), '.'),
-                                           Action = c(rep('', 2), 'Imputation'),
-                                           UnitName = c('numidest', '', 'FechaImput'),
-                                           InFiles = rep('FP', 3))),
-AggWeights = new(Class = 'VNCdt', data.table(IDQual = c('CCAA', 'NACE09', ''),
-                                           NonIDQual = rep('', 3),
-                                           IDDD = c('', '', 'Ponderacion'),
-                                           CCAA = c('', '', '.'),
-                                           NACE09 = c('', '', '.'),
-                                           UnitName = c('Provincia', '', ''),
-                                           InFiles = rep('FA', 3))))
+### We build the VNC object
+VarList <- list(ID = data.table(IDQual = c('NumIdEst', rep('', 4)),
+                                NonIDQual = c('','','','',''),
+                                IDDD = c('', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
+                                NumIdEst = c('', rep('.', 4)),
+                                UnitName = c('numidest', 'nombre', 'apellidos', 'direccion', 'telefono'),
+                                InFiles = rep('FI', 5)),
+MicroData = data.table(IDQual = c('NumIdEst', rep('', 2)),
+                       NonIDQual = c('', 'Market', ''),
+                       IDDD = c(rep('', 2), 'NewOrders'),
+                       NumIdEst = c(rep('', 2), '.'),
+                       Market = c(rep('', 2), '1.'),
+                       UnitName = c('numidest', '', 'cp09'),
+                       InFiles = rep('FF', 3)),
+ParaData = data.table(IDQual = c('NumIdEst', rep('', 2)),
+                      NonIDQual = c('', 'Action', ''),
+                      IDDD = c(rep('', 2), 'Date'),
+                      NumIdEst = c(rep('', 2), '.'),
+                      Action = c(rep('', 2), 'Imputation'),
+                      UnitName = c('numidest', '', 'FechaImput'),
+                      InFiles = rep('FP', 3)),
+AggWeights = data.table(IDQual = c('CCAA', 'NACE09', ''),
+                        NonIDQual = rep('', 3),
+                        IDDD = c('', '', 'Ponderacion'),
+                        CCAA = c('', '', '.'),
+                        NACE09 = c('', '', '.'),
+                        UnitName = c('Provincia', '', ''),
+                        InFiles = rep('FF', 3)))
 
-VNC <- new(Class = 'VarNameCorresp', .Data = VarList)
+VNC <- BuildVNC(VarList)
+
 getIDDD(VNC)
 
 
 }
-

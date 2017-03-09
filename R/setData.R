@@ -21,26 +21,36 @@
 #' NewExampleStQ
 #'
 #' @rdname setData
+#' 
+#' @include StQ.R 
 #'
 #' @import data.table
 #'
 #' @export
 setGeneric("setData<-", function(object, value){standardGeneric("setData<-")})
+
 #' @rdname setData
-#'
-#' @include StQ-class.R 
-#'
-#' @import data.table
 #'
 #' @export
 setReplaceMethod(
     f = "setData",
-    signature = c("StQ", "Datadt"),
+    signature = c("StQ", "data.table"),
     function(object, value){
+        
+        object$Data <- value
+        return(object)
+    }
+)
 
-        setkeyv(value, setdiff(names(value), 'Value'))
-        object@Data <- value
-        validObject(object)
+#' @rdname setData
+#'
+#' @export
+setReplaceMethod(
+    f = "setData",
+    signature = c("rawStQ", "data.table"),
+    function(object, value){
+        
+        object$Data <- value
         return(object)
     }
 )
