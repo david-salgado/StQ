@@ -64,12 +64,17 @@ setMethod(
         NonIDQuals <- setdiff(VarQuals, IDQuals)
         IDQuals <- getIDQual(object, VarNameSlot)
         VarNameDT <- VarNamesToDT(VarName, DD)
+return(VarNameDT)
+        VarQuals <- 'IDDD'
+        for (Col in setdiff(names(VarNameDT), 'IDDD')){
+            
+            VarQuals <- c(VarQuals, VarNameDT[[Col]])
+        }
         output <- getData(object, ExtractNames(VarName))
-return(list(output, VarNameDT))
-        output <- merge(output, VarNameDT, by = names(VarNameDT))
-return(output)
+        output <- output[, VarQuals, with = F]
         if (dim(output)[1] == 0) stop(paste0('[StQ::getValues] The input parameter ', VarName, ' is not present in the input StQ object.\n'))
-        for (NonIDQual in NonIDQuals){
+return(output)
+         for (NonIDQual in NonIDQuals){
             
             if (length(unique(output[[NonIDQual]])) != 1) stop(paste0('[StQ::getValues] The input parameter ', VarName, ' needs non-unit qualifiers.\n'))
         }

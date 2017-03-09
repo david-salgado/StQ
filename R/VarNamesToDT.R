@@ -82,8 +82,8 @@ VarNamesToDT <- function(VarNames, DD){
                             Names.DT[, (paste0('Qual', i)) := NULL]
                             next
                         }
-                        #setnames(Names.DT, paste0('Qual', i), auxName)
-                        #Names.DT[, (auxName) := ParsedNames[i - IDQualCounter + 1]]
+                        setnames(Names.DT, paste0('Qual', i), auxName)
+                        Names.DT[, (auxName) := ParsedNames[i - IDQualCounter + 1]]
 
                     }
 
