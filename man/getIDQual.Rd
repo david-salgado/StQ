@@ -3,9 +3,9 @@
 \docType{methods}
 \name{getIDQual}
 \alias{getIDQual}
+\alias{getIDQual,VNC-method}
 \alias{getIDQual,DD-method}
 \alias{getIDQual,StQ-method}
-\alias{getIDQual,VNC-method}
 \title{Return unit qualifiers from an object}
 \usage{
 getIDQual(object, CompNames = names(object))
@@ -14,8 +14,8 @@ getIDQual(object, CompNames = names(object))
 
 \S4method{getIDQual}{DD}(object, CompNames = setdiff(names(object), "VNC"))
 
-\S4method{getIDQual}{StQ}(object,
-  CompNames = setdiff(slotNames(getDD(object)), "VNC"))
+\S4method{getIDQual}{StQ}(object, CompNames = setdiff(names(getDD(object)),
+  "VNC"))
 }
 \arguments{
 \item{object}{Object with the unit qualifiers (IDQual) to be queried.}
@@ -67,7 +67,7 @@ AggWeights = data.table(IDQual = c('CCAA', 'NACE09', ''),
 VNC <- BuildVNC(VarList)
 
 getIDQual(VNC)
+getIDQual(VNC, 'MicroData')
 getIDQual(VNC, 'ParaData')
 
 }
-

@@ -56,4 +56,3 @@ VNC <- BuildVNC(VarList)
 show(VNC)
 
 }
-

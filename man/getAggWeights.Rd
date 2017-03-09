@@ -3,8 +3,8 @@
 \docType{methods}
 \name{getAggWeights}
 \alias{getAggWeights}
-\alias{getAggWeights,DD-method}
 \alias{getAggWeights,VNC-method}
+\alias{getAggWeights,DD-method}
 \title{Return slot \code{AggWeights} from a \linkS4class{DD} object}
 \usage{
 getAggWeights(object)
@@ -60,4 +60,3 @@ VNC <- BuildVNC(VarList)
 getAggWeights(VNC)
 
 }
-

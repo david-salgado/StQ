@@ -47,7 +47,7 @@ setMethod(
             
             DDlocal <- VarNameDD[[DDvarslot]]
             dimSlotsVarNameDD <- c(dimSlotsVarNameDD, dim(DDlocal)[1])
-            if (dim(DDlocal)[1] != 0) {VarNameSlot <- DDvarslot}
+            if (dim(DDlocal)[1] != 0) VarNameSlot <- DDvarslot
         }
 
         if (all(dimSlotsVarNameDD == 0)) stop(paste0('[StQ::getValues] The variable ', VarName, ' is not present in the DD slot of the input StQ object.\n'))
@@ -74,13 +74,13 @@ setMethod(
         output <- output[, c(IDQuals, 'Value'), with = FALSE]
         if (!all(names(Units) %in% IDQuals)) stop(paste0('[StQ::getValues] There is no variable ', VarName, ' for this set of units.\n'))
         output <- merge(output, Units, by = names(Units), all.y = TRUE)
+        setnames(output, 'Value', VarName)
         return(output)
     }
 )
 
 #' @rdname getValues
 #'
-#' @import data.table RepoTime
 #'
 #' @export
 setMethod(
@@ -95,13 +95,16 @@ setMethod(
         }
         ListofStQ <- object$Data
         output <- lapply(ListofStQ, function(StQ){
-            
+        Periods <- getRepo(object$Periods)
+        output <- lapply(seq(along = ListofStQ), function(indexStQ){
+
+            StQ <- ListofStQ[[indexStQ]]
             out <- getValues(StQ, VarName = VarName, Units = Units)
+            out[, Period := Periods[indexStQ]]
             return(out)
         })
 
-        output <- Reduce(cbind, output)
-        colnames(output) <- getRepo(object@Periods)
+        output <- rbindlist(output)
         return(output)
     }
 )

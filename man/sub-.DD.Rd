@@ -36,4 +36,3 @@ data(ExampleDD)
 ExampleDD[Variable == 'Turnover']
 
 }
-

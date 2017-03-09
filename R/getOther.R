@@ -52,7 +52,7 @@ setGeneric("getOther", function(object){standardGeneric("getOther")})
 setMethod(
     f = "getOther",
     signature = c("VNC"),
-    function(object){object[['Other']]}
+    function(object){object$Other}
 )
 
 #' @rdname getOther
@@ -61,5 +61,5 @@ setMethod(
 setMethod(
     f = "getOther",
     signature = c("DD"),
-    function(object){object[['Other']]}
+    function(object){object$Other}
 )

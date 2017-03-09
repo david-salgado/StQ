@@ -39,7 +39,31 @@ setMethod(
     if (dim(output)[1] == 0) return(output)
     setkeyv(output, IDQual)
     output <- output[!duplicated(output, by = key(output))]
-    for (IDQ in IDQual){output <- output[get(IDQ) != '']}
+    for (IDQ in IDQual) output <- output[get(IDQ) != '']
     return(output)
   }
+)
+#' @rdname getValues
+#'
+#'
+#' @export
+setMethod(
+    f = "getUnits",
+    signature = c("StQList"),
+    function(object, DDslot = 'MicroData'){
+        
+        if (length(DDslot) != 1) stop('[StQ::getUnits] The input parameter DDslot must be of length 1.\n')
+        ListofStQ <- object$Data
+        Periods <- getRepo(object$Periods)
+        output <- lapply(seq(along = ListofStQ), function(indexStQ){
+            
+            StQ <- ListofStQ[[indexStQ]]
+            out <- getUnits(StQ, DDslot = DDslot)
+            out[, Period := Periods[indexStQ]]
+            return(out)
+        })
+        
+        output <- rbindlist(output)
+        return(output)
+    }
 )

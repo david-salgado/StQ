@@ -73,4 +73,3 @@ NewQ <- setValues(object = ExampleStQ,
 getValues(NewQ, 'lTurnover')
 
 }
-

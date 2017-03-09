@@ -31,4 +31,3 @@ StQ <- rawStQToStQ(ExamplerawStQ)
 str(StQ)
 
 }
-
