@@ -94,7 +94,6 @@ setMethod(
             
         }
         ListofStQ <- object$Data
-        output <- lapply(ListofStQ, function(StQ){
         Periods <- getRepo(object$Periods)
         output <- lapply(seq(along = ListofStQ), function(indexStQ){
 

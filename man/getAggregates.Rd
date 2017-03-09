@@ -3,8 +3,8 @@
 \docType{methods}
 \name{getAggregates}
 \alias{getAggregates}
-\alias{getAggregates,VNC-method}
 \alias{getAggregates,DD-method}
+\alias{getAggregates,VNC-method}
 \title{Return slot Aggregates from the input object}
 \usage{
 getAggregates(object)
@@ -60,3 +60,4 @@ VNC <- BuildVNC(VarList)
 getAggregates(VNC)
 
 }
+

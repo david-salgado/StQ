@@ -3,8 +3,8 @@
 \docType{methods}
 \name{setAggregates<-}
 \alias{setAggregates<-}
-\alias{setAggregates<-,VNC,data.table-method}
 \alias{setAggregates<-,DD,data.table-method}
+\alias{setAggregates<-,VNC,data.table-method}
 \title{Set value of slot \code{Aggregates}}
 \usage{
 setAggregates(object) <- value
@@ -51,3 +51,4 @@ setAggregates(DD) <- Aggdt
 DD
 
 }
+
