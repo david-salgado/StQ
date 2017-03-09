@@ -5,6 +5,7 @@
 \alias{getVNC}
 \alias{getVNC,DD-method}
 \alias{getVNC,StQ-method}
+\alias{getVNC,rawStQ-method}
 \title{Return slot \code{VNC} from an object}
 \usage{
 getVNC(object)
@@ -12,6 +13,8 @@ getVNC(object)
 \S4method{getVNC}{DD}(object)
 
 \S4method{getVNC}{StQ}(object)
+
+\S4method{getVNC}{rawStQ}(object)
 }
 \arguments{
 \item{object}{Object of class \linkS4class{DD} or \linkS4class{StQ}.}
@@ -55,4 +58,3 @@ VNC <- BuildVNC(VarList)
 getVNC(VNC)
 
 }
-

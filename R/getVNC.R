@@ -51,7 +51,7 @@ setGeneric("getVNC", function(object) {standardGeneric("getVNC")})
 setMethod(
     f = "getVNC",
     signature = c("DD"),
-    function(object){object[['VNC']]}
+    function(object){object$VNC}
 )
 #' @rdname getVNC
 #'
@@ -59,6 +59,20 @@ setMethod(
 setMethod(
     f = "getVNC",
     signature = c("StQ"),
+    function(object){
+        
+        VNC <- getVNC(getDD(object))
+        return(VNC)
+        
+    }
+)
+
+#' @rdname getVNC
+#'
+#' @export
+setMethod(
+    f = "getVNC",
+    signature = c("rawStQ"),
     function(object){
         
         VNC <- getVNC(getDD(object))

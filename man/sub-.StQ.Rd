@@ -38,4 +38,3 @@ ExampleStQ[3:4]
 ExampleStQ[ID == '00021']
 
 }
-

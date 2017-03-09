@@ -28,6 +28,7 @@ The structure of this S4 class \code{rawStQList} comprises 2 attributes:
 
 \item{\code{Periods}}{An object of class \linkS4class{RepoTimeInt};}
 }}
+
 \examples{
 library(RepoTime)
 mm <- c(paste0('0', 1:9), 10:12)
@@ -41,4 +42,3 @@ rawQList
 str(rawQList)
 
 }
-
