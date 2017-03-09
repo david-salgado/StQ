@@ -14,8 +14,8 @@ getNonIDQual(object, CompNames = names(object))
 
 \S4method{getNonIDQual}{DD}(object, CompNames = setdiff(names(object), "VNC"))
 
-\S4method{getNonIDQual}{StQ}(object,
-  CompNames = setdiff(slotNames(getDD(object)), "VNC"))
+\S4method{getNonIDQual}{StQ}(object, CompNames = setdiff(names(getDD(object)),
+  "VNC"))
 }
 \arguments{
 \item{object}{Object with the non-unit variable qualifiers (NonIDQual) to be queried.}
