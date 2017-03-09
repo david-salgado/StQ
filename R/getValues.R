@@ -47,7 +47,7 @@ setMethod(
             
             DDlocal <- VarNameDD[[DDvarslot]]
             dimSlotsVarNameDD <- c(dimSlotsVarNameDD, dim(DDlocal)[1])
-            if (dim(DDlocal)[1] != 0) {VarNameSlot <- DDvarslot}
+            if (dim(DDlocal)[1] != 0) VarNameSlot <- DDvarslot
         }
 
         if (all(dimSlotsVarNameDD == 0)) stop(paste0('[StQ::getValues] The variable ', VarName, ' is not present in the DD slot of the input StQ object.\n'))
@@ -72,7 +72,7 @@ setMethod(
             if (length(unique(output[[NonIDQual]])) != 1) stop(paste0('[StQ::getValues] The input parameter ', VarName, ' needs non-unit qualifiers.\n'))
         }
         output <- output[, c(IDQuals, 'Value'), with = FALSE]
-        if (!all(names(Units) %in% IDQuals)) stop(paste0('[StQ::getValues] There is no variable ', VarName, ' for this set of units.\n'))
+        if (!all(names(Units) %chin% IDQuals)) stop(paste0('[StQ::getValues] There is no variable ', VarName, ' for this set of units.\n'))
         output <- merge(output, Units, by = names(Units), all.y = TRUE)
         return(output)
     }
@@ -93,7 +93,7 @@ setMethod(
             stop('[StQ::getValues] Only one variable can be specifed as input.')
             
         }
-        ListofStQ <- object@Data
+        ListofStQ <- object$Data
         output <- lapply(ListofStQ, function(StQ){
             
             out <- getValues(StQ, VarName = VarName, Units = Units)
@@ -101,7 +101,7 @@ setMethod(
         })
 
         output <- Reduce(cbind, output)
-        colnames(output) <- getRepo(object@Periods)
+        colnames(output) <- getRepo(object$Periods)
         return(output)
     }
 )
