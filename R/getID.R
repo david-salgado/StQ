@@ -54,7 +54,7 @@ setGeneric("getID", function(object){standardGeneric("getID")})
 setMethod(
     f = "getID",
     signature = c("VNC"),
-    function(object){object[['ID']]}
+    function(object){object$ID}
 )
 
 #' @rdname getID
@@ -64,6 +64,6 @@ setMethod(
 setMethod(
     f = "getID",
     signature = c("DD"),
-    function(object){object[['ID']]}
+    function(object){object$ID}
 )
 
