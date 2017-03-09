@@ -4,6 +4,7 @@
 \name{getDotQual}
 \alias{getDotQual}
 \alias{getDotQual,DD-method}
+\alias{getDotQual,StQ-method}
 \alias{getDotQual,VNC-method}
 \title{Return non-unit qualifiers not used in compound variable names}
 \usage{
@@ -12,6 +13,8 @@ getDotQual(object, Component = names(object))
 \S4method{getDotQual}{VNC}(object, Component = names(object))
 
 \S4method{getDotQual}{DD}(object, Component = names(getVNC(object)))
+
+\S4method{getDotQual}{StQ}(object, Component = names(getVNC(object)))
 }
 \arguments{
 \item{object}{Object containing the dot qualifiers.}
