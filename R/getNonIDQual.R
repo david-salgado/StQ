@@ -53,7 +53,7 @@
 #' getNonIDQual(ExampleStQ)
 #' getNonIDQual(ExampleStQ, 'Aggregates')
 #'
-#' @include VNC.R DD.R StQ.R
+#' @include VNC.R DD.R StQ.R getDD.R
 #' 
 #' @import data.table
 #'
