@@ -71,7 +71,7 @@ setMethod(
     function(object, CompNames = names(object)){
 
         ValidComp <- names(object)
-        NotValidComp <- CompNames[!CompNames %in% ValidComp]
+        NotValidComp <- CompNames[!CompNames %chin% ValidComp]
         if(!all(CompNames %in% ValidComp)) stop(paste0('[StQ::getNonIDQual] The following components are not present in the input object: ',
                                                        paste0(NotValidComp, collapse = ', '), '.\n'))
 
