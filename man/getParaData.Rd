@@ -3,8 +3,8 @@
 \docType{methods}
 \name{getParaData}
 \alias{getParaData}
-\alias{getParaData,VNC-method}
 \alias{getParaData,DD-method}
+\alias{getParaData,VNC-method}
 \title{Return slot ParaData from an object}
 \usage{
 getParaData(object)
@@ -58,3 +58,4 @@ VNC <- BuildVNC(VarList)
 getParaData(VNC)
 
 }
+

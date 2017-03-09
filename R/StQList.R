@@ -26,7 +26,7 @@
 #' EmptyQ <- StQ()
 #' EmptyQList <- vector('list', 12)
 #' EmptyQList <- lapply(EmptyQList, function(x) EmptyQ)
-#' QList <-StQList(Data = EmptyQList, Periods = PeriodList)
+#' QList <- StQList(Data = EmptyQList, Periods = PeriodList)
 #' QList
 #' str(QList)
 #'
