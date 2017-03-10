@@ -28,7 +28,7 @@
 #' data(ExampleDD)
 #' VarNamesToDT(c('Employees_1.'), ExampleDD)
 #'
-#' @include ExtractNames.R getVariables.R 
+#' @include ExtractNames.R getVariables.R
 #'
 #' @import data.table
 #'
@@ -43,6 +43,7 @@ VarNamesToDT <- function(VarNames, DD){
         DDSlotNames <- setdiff(names(DD), 'VNC')
 
         output <- list()
+
         for (DDslot in DDSlotNames){
 
             DDlocal <- DD[[DDslot]]
@@ -84,25 +85,25 @@ VarNamesToDT <- function(VarNames, DD){
                         }
                         setnames(Names.DT, paste0('Qual', i), auxName)
                         Names.DT[, (auxName) := ParsedNames[i - IDQualCounter + 1]]
+                }
+
+
+                    # Eliminamos columnas vacías
+                    for (col in names(Names.DT)){
+
+                        Names.DT[is.na(get(col)), (col) := '']
 
                     }
 
+                    output[[DDslot]] <- Names.DT
                 }
 
-
-                # Eliminamos columnas vacías
-                for (col in names(Names.DT)){
-
-                  Names.DT[is.na(get(col)), (col) := '']
-
-                }
-
-                output[[DDslot]] <- Names.DT
 
             }
         }
 
         outputGlobal <- rbindlist(output, fill = TRUE)
+        outputGlobal <- outputGlobal[!duplicated(outputGlobal, by = names(outputGlobal))]
         return(outputGlobal)
 
     } else { # Ahora para varias variables de entrada
