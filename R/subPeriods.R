@@ -36,17 +36,24 @@
 #' @import data.table RepoTime
 #'
 #' @export
-subPeriods <- function(x, i){
+setGeneric("subPeriods", function(x, i){standardGeneric("subPeriods")})
 
-     mc <- match.call()
+#' @rdname subPeriods
+#'
+#' @export
+setMethod(
+    f = "subPeriods",
+    signature = c("StQList"),
+    function(x, i){
+
      DataList <- getData(x)
 
-     mc[['x']] <- DataList[i]
-     names(mc[['x']]) <- names(DataList[i])
+     output <- DataList[i]
+     names(output) <- names(DataList[i])
 
-     output <- StQList(Data = mc[['x']], Periods = newRepoTime(names(mc[['x']])))
+     output <- StQList(Data = output, Periods = newRepoTime(names(output)))
 
      return(output)
-
-}
+    }
+)
 
