@@ -48,7 +48,7 @@ setMethod(
         DDdt <- DDdt[!duplicated(DDdt, by = key(DDdt))]
         IDDDNames <- DDdt[Sort == 'IDDD'][['Variable']]
 
-        QData <- getData(Q)
+        QData <- copy(getData(Q))
         setnames(QData, 'IDDD', 'IDDDKey')
         ColNames <- setdiff(names(QData), c('IDDDKey', 'Value'))
 
@@ -68,7 +68,7 @@ setMethod(
             Quals <- t(QualsDT)[, 1]
             Quals <- Quals[Quals != '' & !is.na(Quals)]
             out <- QData.list[[VarName]][, c('IDDDKey', Quals, 'Value'), with = F]
-            
+
             if (length(Quals) == 1){
                 
                 out[, QualKey := get(Quals)]
@@ -87,6 +87,7 @@ setMethod(
             return(out)        
             
         })
+
         QData <- rbindlist(QData.list)
         setkeyv(QData, names(QData))
         QData <- QData[!duplicated(QData, by = key(QData))]
