@@ -43,7 +43,7 @@
     names(New.x) <- Periods
     mc[[1L]] <- `[[`
     mc[['x']] <- New.x
-    output <- eval(mc)
+    output <- eval(mc, x, parent.frame())
     return(output)
     
 }

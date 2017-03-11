@@ -31,19 +31,19 @@
 #'
 #' @include StQList.R getPeriods.R getData.R
 #'
-#' @import data.table 
+#' @import data.table
 #'
 #' @export
 `[[.StQList` <- function(x, i, j, ..., exact = TRUE){
-    
-    
+
+
     mc <- match.call()
     New.x <- x$Data
     Periods <- getPeriods(x)
     names(New.x) <- Periods
     mc[[1L]] <- `[[`
     mc[['x']] <- New.x
-    output <- eval(mc)
+    output <- eval(mc, x, parent.frame())
     return(output)
 
 }
