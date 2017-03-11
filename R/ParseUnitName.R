@@ -24,6 +24,8 @@ setGeneric("ParseUnitName", function(UnitNames, MetaValues){standardGeneric("Par
 #' 
 #' @import data.table
 #' 
+#' @importClassesFrom RepoTime RepoTimeInt
+#' 
 #' @export
 setMethod(
     f = "ParseUnitName",
