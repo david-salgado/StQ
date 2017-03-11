@@ -22,14 +22,12 @@
 #'
 #' @include StQ.R StQList.R
 #'
-#' @import RepoTime
-#'
 #' @export
 BuildStQList <- function(Data){
 
     if (is.null(names(Data))) stop('[StQ::BuildStQList] Data must be a named list of StQ objects.\n')
 
-    PeriodList <- newRepoTime(names(Data))
+    PeriodList <- RepoTime::newRepoTime(names(Data))
 
     out <- StQList(Data = Data, Periods = PeriodList)
 
