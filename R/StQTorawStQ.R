@@ -107,7 +107,7 @@ setMethod(
         
         
         QList <- getData(Q)
-        Periods <- getRepo(Q)
+        Periods <- RepoTime::getRepo(Q)
         rawQData <- lapply(QList, StQTorawStQ)
         rawQList <- rawStQList(Data = rawQData, Periods = Periods)
         return(rawQList)

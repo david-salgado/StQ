@@ -54,7 +54,7 @@ setMethod(
         
         if (length(DDslot) != 1) stop('[StQ::getUnits] The input parameter DDslot must be of length 1.\n')
         ListofStQ <- object$Data
-        Periods <- getRepo(object$Periods)
+        Periods <- RepoTime::getRepo(object$Periods)
         output <- lapply(seq(along = ListofStQ), function(indexStQ){
             
             StQ <- ListofStQ[[indexStQ]]

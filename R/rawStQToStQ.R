@@ -95,8 +95,6 @@ setMethod(
 #'
 #' @importFrom stringi stri_sub
 #'
-#' @import RepoTime
-#'
 #' @export
 setMethod(
     f = "rawStQToStQ",
@@ -105,7 +103,7 @@ setMethod(
 
 
         rawQList <- getData(rawQ)
-        Periods <- getRepo(rawQ)
+        Periods <- RepoTime::getRepo(rawQ)
         QData <- lapply(rawQList, rawStQToStQ)
         QList <- new(Class = 'StQList', Data = QData, Periods = Periods)
         return(QList)

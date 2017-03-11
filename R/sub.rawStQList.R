@@ -30,7 +30,7 @@
 #'
 #' @include rawStQList.R getData.R
 #'
-#' @import data.table RepoTime
+#' @import data.table
 #'
 #' @export
 `[.rawStQList` <- function(x, i, j, by, keyby, with=TRUE, nomatch=getOption("datatable.nomatch"), mult="all", roll=FALSE, rollends=if (roll=="nearest") c(TRUE,TRUE) else if (roll>=0) c(FALSE,TRUE) else c(TRUE,FALSE), which=FALSE, .SDcols, verbose=getOption("datatable.verbose"), allow.cartesian=getOption("datatable.allow.cartesian"), drop=NULL, on=NULL){
@@ -41,13 +41,13 @@
         
         Localmc <- mc
         mc[['x']] <- rawStQObj
-        LocalOutput <- eval(mc)
+        LocalOutput <- eval(mc, rawStQObj, parent.frame())
         return(LocalOutput)
         
     })
     Periods <- names(DataList)
     
-    output <- rawStQList(Data = output, Periods = newRepoTime(Periods))
+    output <- rawStQList(Data = output, Periods = RepoTime::newRepoTime(Periods))
     return(output)    
     
 }
