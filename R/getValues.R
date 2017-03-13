@@ -20,7 +20,7 @@
 #'
 #' @include StQ.R getData.R getDD.R DDslotWith.R getNonIDQual.R VarNamesToDD.R VarNamesToDT.R ExtractNames.R getUnits.R
 #'
-#' @import data.table RepoTime
+#' @import data.table
 #'
 #' @export
 setGeneric("getValues", 
@@ -94,7 +94,7 @@ setMethod(
             
         }
         ListofStQ <- object$Data
-        Periods <- getRepo(object$Periods)
+        Periods <- RepoTime::getRepo(object$Periods)
         MissingUnits <- missing(Units)
         output <- lapply(seq(along = ListofStQ), function(indexStQ){
             

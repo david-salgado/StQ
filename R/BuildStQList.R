@@ -10,7 +10,7 @@
 #' @return An object of class \linkS4class{StQList}.
 #'
 #' @examples
-#' EmptyQ <- new(Class = 'StQ')
+#' EmptyQ <- StQ()
 #' EmptyQList <- vector('list', 12)
 #' EmptyQList <- lapply(EmptyQList, function(x) EmptyQ)
 #' mm <- c(paste0('0', 1:9), 10:12)
@@ -22,14 +22,12 @@
 #'
 #' @include StQ.R StQList.R
 #'
-#' @import RepoTime
-#'
 #' @export
 BuildStQList <- function(Data){
 
     if (is.null(names(Data))) stop('[StQ::BuildStQList] Data must be a named list of StQ objects.\n')
 
-    PeriodList <- newRepoTime(names(Data))
+    PeriodList <- RepoTime::newRepoTime(names(Data))
 
     out <- StQList(Data = Data, Periods = PeriodList)
 

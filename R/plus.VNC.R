@@ -106,7 +106,7 @@
 
             setkeyv(outVar, setdiff(names(outVar), c('UnitName', 'InFiles')))
             outVar <- outVar[!duplicated(outVar, by = key(outVar), fromLast = TRUE)]
-            outVar <- outVar[!duplicated(outVar, by = c('IDQual', 'NonIDQual', 'IDDD'), fromLast = TRUE)]
+            outVar <- outVar[!duplicated(outVar, by = c('IDQual', 'NonIDQual', 'IDDD', 'UnitName'), fromLast = TRUE)]
             setkeyv(outVar, setdiff(names(outVar), c('UnitName', 'InFiles')))
             IDQual <- unique(outVar[which(IDQual != "")][['IDQual']])
             NonIDQual <- unique(outVar[which(NonIDQual != "")][['NonIDQual']])

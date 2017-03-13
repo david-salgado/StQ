@@ -21,32 +21,38 @@
 #'
 #' @examples
 #' \dontrun{
-#' library(RepoTime)
 #' mm <- c(paste0('0', 1:9), 10:12)
 #' TimePer <- paste0('MM', mm, '2015')
 #' QList <- vector('list', 12)
 #' QList <- lapply(QList, function(x) ExampleStQ)
 #' names(QList) <- TimePer
-#' StQList <- new(Class = 'StQList', Data = QList, Periods = newRepoTime(TimePer))
+#' StQList <- StQList(Data = QList, Periods = RepoTime::newRepoTime(TimePer))
 #' StQList[c('MM092015', 'MM102015')]
 #' }
 #'
 #' @include StQList.R getData.R sub.StQ.R
 #'
-#' @import data.table RepoTime
+#' @import data.table
 #'
 #' @export
-subPeriods <- function(x, i){
+setGeneric("subPeriods", function(x, i){standardGeneric("subPeriods")})
 
-     mc <- match.call()
+#' @rdname subPeriods
+#'
+#' @export
+setMethod(
+    f = "subPeriods",
+    signature = c("StQList"),
+    function(x, i){
+
      DataList <- getData(x)
 
-     mc[['x']] <- DataList[i]
-     names(mc[['x']]) <- names(DataList[i])
+     output <- DataList[i]
+     names(output) <- names(DataList[i])
 
-     output <- StQList(Data = mc[['x']], Periods = newRepoTime(names(mc[['x']])))
+     output <- StQList(Data = output, Periods = RepoTime::newRepoTime(names(output)))
 
      return(output)
-
-}
+    }
+)
 
