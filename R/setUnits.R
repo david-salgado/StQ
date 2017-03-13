@@ -20,7 +20,7 @@
 #'
 #' @rdname setUnits
 #' 
-#' @include StQ.R getData.R setData.R
+#' @include StQ.R getData.R setData.R StQList.R
 #'
 #' @export
 setGeneric("setUnits<-", function(object, value){standardGeneric("setUnits<-")})
@@ -56,9 +56,10 @@ setReplaceMethod(
     signature = c("StQList", "data.table"),
     function(object, value){
         
-        Data <- getData(object)
-        Data <- lapply(Data, `setUnits<-`, value = value)
-        setData(object) <- Data
-        return(object)
+        DataList <- getData(object)
+        DataList <- lapply(DataList, `setUnits<-`, value = value)
+        Periods <- object$Periods
+        output <- StQList(Data = DataList, Periods = Periods)
+        return(output)
     }
 )
