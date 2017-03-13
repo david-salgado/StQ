@@ -32,3 +32,4 @@ And the columns of component \code{Aggregates} are:
   \item \code{UnitName}: variable name given by the production unit.
 }
 }
+

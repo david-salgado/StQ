@@ -18,11 +18,10 @@
 #' @return Object of class \linkS4class{StQ}.
 #'
 #' @examples
-#' library(RepoTime)
 #' mm <- c(paste0('0', 1:9), 10:12)
 #' TimePer <- paste0('MM', mm, '2015')
-#' PeriodList <- newRepoTime(TimePer)
-#' EmptyQ <- new(Class = 'rawStQ')
+#' PeriodList <- RepoTime::newRepoTime(TimePer)
+#' EmptyQ <- rawStQ()
 #' EmptyQList <- vector('list', 12)
 #' EmptyQList <- lapply(EmptyQList, function(x) EmptyQ)
 #' QList <- new(Class = 'rawStQList', Data = EmptyQList, Periods = PeriodList)
@@ -43,7 +42,7 @@
     names(New.x) <- Periods
     mc[[1L]] <- `[[`
     mc[['x']] <- New.x
-    output <- eval(mc)
+    output <- eval(mc, x, parent.frame())
     return(output)
     
 }

@@ -36,7 +36,7 @@
         Localmc <- mc
         Localmc[[1L]] <- data.table:::`[.data.table`
         Localmc[['x']] <- LocalSlot
-        LocalOutput <- eval(Localmc)
+        LocalOutput <- eval(Localmc, x, parent.frame())
         if (dim(LocalOutput)[1] == 0) { 
             
             return(NULL)

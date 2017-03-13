@@ -51,7 +51,7 @@ setMethod(
     signature = c("StQList"),
     function(object){
         
-        output <- lapply(getDD, object$Data)
+        output <- lapply(object$Data, getDD)
         names(output) <- getPeriods(object)
         return(output)
     }

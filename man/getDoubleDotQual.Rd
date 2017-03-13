@@ -3,8 +3,9 @@
 \docType{methods}
 \name{getDoubleDotQual}
 \alias{getDoubleDotQual}
-\alias{getDoubleDotQual,VNC-method}
 \alias{getDoubleDotQual,DD-method}
+\alias{getDoubleDotQual,StQ-method}
+\alias{getDoubleDotQual,VNC-method}
 \title{Return non-unit qualifiers used in compound variable names}
 \usage{
 getDoubleDotQual(object, Component = names(object))
@@ -12,6 +13,8 @@ getDoubleDotQual(object, Component = names(object))
 \S4method{getDoubleDotQual}{VNC}(object, Component = names(object))
 
 \S4method{getDoubleDotQual}{DD}(object, Component = names(getVNC(object)))
+
+\S4method{getDoubleDotQual}{StQ}(object, Component = names(getVNC(object)))
 }
 \arguments{
 \item{object}{Object containing the dot qualifiers.}
@@ -59,3 +62,4 @@ VNC <- BuildVNC(VarList)
 getDoubleDotQual(VNC)
 
 }
+

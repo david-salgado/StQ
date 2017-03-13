@@ -26,8 +26,8 @@
 #' QList <- vector('list', 12)
 #' QList <- lapply(QList, function(x) ExampleStQ)
 #' names(QList) <- TimePer
-#' QList <- StQList(Data = QList, Periods = RepoTime::newRepoTime(TimePer))
-#' QList[c('MM092015', 'MM102015')]
+#' StQList <- StQList(Data = QList, Periods = RepoTime::newRepoTime(TimePer))
+#' StQList[c('MM092015', 'MM102015')]
 #' }
 #'
 #' @include StQList.R getData.R sub.StQ.R
@@ -35,25 +35,24 @@
 #' @import data.table
 #'
 #' @export
-`[.StQList` <- function(x, i, j, by, keyby, with=TRUE, nomatch=getOption("datatable.nomatch"), mult="all", roll=FALSE, rollends=if (roll=="nearest") c(TRUE,TRUE) else if (roll>=0) c(FALSE,TRUE) else c(TRUE,FALSE), which=FALSE, .SDcols, verbose=getOption("datatable.verbose"), allow.cartesian=getOption("datatable.allow.cartesian"), drop=NULL, on=NULL){
+setGeneric("subPeriods", function(x, i){standardGeneric("subPeriods")})
 
-     mc <- match.call()
+#' @rdname subPeriods
+#'
+#' @export
+setMethod(
+    f = "subPeriods",
+    signature = c("StQList"),
+    function(x, i){
+
      DataList <- getData(x)
 
-     output <- lapply(DataList, function(StQ){
+     output <- DataList[i]
+     names(output) <- names(DataList[i])
 
-         Localmc <- mc
-         Localmc[[1L]] <- `[.StQ`
-         Localmc[['x']] <- StQ
-         LocalOutput <- eval(Localmc, StQ, parent.frame())
-         return(LocalOutput)
+     output <- StQList(Data = output, Periods = RepoTime::newRepoTime(names(output)))
 
-     })
-
-     Periods <- names(DataList)
-
-     output <- StQList(Data = output, Periods = RepoTime::newRepoTime(Periods))
      return(output)
-
-}
+    }
+)
 

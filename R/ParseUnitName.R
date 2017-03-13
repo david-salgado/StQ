@@ -12,10 +12,9 @@
 #'  to the input parameter \code{TimePeriods}.
 #' 
 #' @examples
-#' library(RepoTime)
-#' ParseUnitName(c('dat[mm][aa].sas7bdat'), newRepoTime(c('MM122015', 'MM012016', 'MM022016')))
+#' ParseUnitName(c('dat[mm][aa].sas7bdat'), RepoTime::newRepoTime(c('MM122015', 'MM012016', 'MM022016')))
 #' ParseUnitName(c('dat[mm][aa].sas7bdat', 'in[aaaa][mm].txt'), 
-#'               newRepoTime(c('MM122015', 'MM012016', 'MM022016')))
+#'               RepoTime::newRepoTime(c('MM122015', 'MM012016', 'MM022016')))
 #' ParseUnitName(c('PONALI_[ccaa]'), c(paste0(0, 1:9), 10:12))
 #'       
 #' @export
@@ -23,7 +22,9 @@ setGeneric("ParseUnitName", function(UnitNames, MetaValues){standardGeneric("Par
 
 #' @rdname ParseUnitName
 #' 
-#' @import data.table RepoTime
+#' @import data.table
+#' 
+#' @importClassesFrom RepoTime RepoTimeInt
 #' 
 #' @export
 setMethod(
@@ -31,7 +32,7 @@ setMethod(
     signature = c("character", "RepoTimeInt"),
     function(UnitNames, MetaValues){
     
-    TimePeriods <- getRepo(MetaValues)
+    TimePeriods <- RepoTime::getRepo(MetaValues)
     PeriodType <- unique(substr(TimePeriods, 1, 1))
     if (length(PeriodType) != 1) stop('[RepoReadWrite::ParseUnitName] Only one time period type allowed at a time.')
     
@@ -122,8 +123,6 @@ setMethod(
 
 #' @rdname ParseUnitName
 #' 
-#' @import data.table RepoTime
-#' 
 #' @export
 setMethod(
     f = "ParseUnitName",
@@ -144,8 +143,6 @@ setMethod(
 )
 
 #' @rdname ParseUnitName
-#' 
-#' @import data.table RepoTime
 #' 
 #' @export
 setMethod(

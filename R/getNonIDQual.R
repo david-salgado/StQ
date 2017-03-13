@@ -125,3 +125,22 @@ setMethod(
         return(output)
     }
 )
+
+#' @rdname getNonIDQual
+#'
+#' @export
+setMethod(
+    f = "getNonIDQual",
+    signature = c("StQList"),
+    function(object, CompNames){
+        
+        MissingComp <- missing(CompNames)
+        output <- lapply(object$Data, function(StQ){
+            
+            if (MissingComp) LocalCompNames <- setdiff(names(getDD(StQ)), 'VNC')
+            out <- getNonIDQual(getDD(StQ), CompNames = LocalCompNames)
+            return(out)
+        })
+        return(output)
+    }
+)

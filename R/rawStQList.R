@@ -19,10 +19,9 @@
 #' @slot Periods An object of class \linkS4class{RepoTimeInt};
 #'
 #' @examples
-#' library(RepoTime)
 #' mm <- c(paste0('0', 1:9), 10:12)
 #' TimePer <- paste0('MM', mm, '2015')
-#' PeriodList <- newRepoTime(TimePer)
+#' PeriodList <- RepoTime::newRepoTime(TimePer)
 #' EmptyrawQ <- rawStQ()
 #' EmptyrawQList <- vector('list', 12)
 #' EmptyrawQList <- lapply(EmptyrawQList, function(x) EmptyrawQ)
@@ -31,8 +30,6 @@
 #' str(rawQList)
 #'
 #' @include rawStQ.R
-#' 
-#' @import RepoTime
 #' 
 #' @export
 rawStQList <- function(Data = list(), Periods = new(Class = 'RepoTimeInt')){

@@ -92,7 +92,7 @@
     setkeyv(output.Data, names(output.Data)[-which(names(output.Data) == 'Value')])
     DupRows <- duplicated(output.Data, by = key(output.Data))
     if (sum(DupRows) > 0) {
-      cat('[StQ::+] ATENTION!! Duplicated rows! If you are summing data sets
+      cat('[StQ::+] ATTENTION!! Duplicated rows! If you are summing data sets
           corresponding to two different time periods, make sure that the time
           reference variable is included as unit qualifier (IDQual).\n\n
           The next rows are duplicated and will be removed:\n\n')

@@ -35,7 +35,6 @@ columns \code{IDDDKey}, \code{QualKey} and \code{Value} will be initiated.}
 \code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} and \ code{ValueRegExp} will be 
 initiated.}
 }}
-
 \examples{
 # An empty standardized questionnaire set:
 rawStQ()
@@ -48,3 +47,4 @@ rawData <- data.table(IDDDKey = c('Employees', 'Employees', 'RemEmployees', 'Tur
 rawStQ(rawData, ExampleDD)
 
 }
+

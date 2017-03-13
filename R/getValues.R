@@ -18,9 +18,9 @@
 #' getValues(ExampleStQ, 'Employees_1.')
 #' getValues(ExampleStQ, 'Turnover', Units = data.table(ID = c('00001', '00002')))
 #'
-#' @include StQ.R getData.R getDD.R DDslotWith.R getNonIDQual.R VarNamesToDD.R VarNamesToDT.R ExtractNames.R
+#' @include StQ.R getData.R getDD.R DDslotWith.R getNonIDQual.R VarNamesToDD.R VarNamesToDT.R ExtractNames.R getUnits.R
 #'
-#' @import data.table RepoTime
+#' @import data.table
 #'
 #' @export
 setGeneric("getValues", 
@@ -32,7 +32,7 @@ setGeneric("getValues",
 setMethod(
     f = "getValues",
     signature = c("StQ", "character"),
-    function(object, VarName, Units){
+    function(object, VarName, Units = getUnits(object)){
         
         if (length(VarName) != 1) {
             
@@ -94,10 +94,12 @@ setMethod(
             
         }
         ListofStQ <- object$Data
-        Periods <- getRepo(object$Periods)
+        Periods <- RepoTime::getRepo(object$Periods)
+        MissingUnits <- missing(Units)
         output <- lapply(seq(along = ListofStQ), function(indexStQ){
             
             StQ <- ListofStQ[[indexStQ]]
+            if (MissingUnits) Units <- getUnits(StQ)
             out <- getValues(StQ, VarName = VarName, Units = Units)
             out[, Period := Periods[indexStQ]]
             return(out)
