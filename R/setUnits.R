@@ -12,20 +12,19 @@
 #' units.
 #'
 #' @examples
-#' library(data.table)
-#' library(stringr)
 #' data(ExampleStQ)
 #' NewExampleStQ <- ExampleStQ
-#' Units <- data.table(ID = str_pad(1:5, 5, 'left', '0'))
+#' Units <- data.table::data.table(ID = stringr::str_pad(1:5, 5, 'left', '0'))
 #' setUnits(NewExampleStQ) <- Units
 #' NewExampleStQ
 #'
 #' @rdname setUnits
 #' 
-#' @include StQ.R getData.R setData.R
+#' @include StQ.R getData.R setData.R StQList.R
 #'
 #' @export
 setGeneric("setUnits<-", function(object, value){standardGeneric("setUnits<-")})
+
 #' @rdname setUnits
 #'
 #' @import data.table
@@ -44,5 +43,23 @@ setReplaceMethod(
         }
         setData(object) <- Data
         return(object)
+    }
+)
+
+#' @rdname setUnits
+#'
+#' @import data.table
+#'
+#' @export
+setReplaceMethod(
+    f = "setUnits",
+    signature = c("StQList", "data.table"),
+    function(object, value){
+        
+        DataList <- getData(object)
+        DataList <- lapply(DataList, `setUnits<-`, value = value)
+        Periods <- object$Periods
+        output <- StQList(Data = DataList, Periods = Periods)
+        return(output)
     }
 )
