@@ -27,11 +27,10 @@ It is indeed the method \code{[[} for the class \linkS4class{rawStQList}. This m
 objects of class \linkS4class{StQ} from the slot \code{Data} of the input object \code{x}.
 }
 \examples{
-library(RepoTime)
 mm <- c(paste0('0', 1:9), 10:12)
 TimePer <- paste0('MM', mm, '2015')
-PeriodList <- newRepoTime(TimePer)
-EmptyQ <- new(Class = 'rawStQ')
+PeriodList <- RepoTime::newRepoTime(TimePer)
+EmptyQ <- rawStQ()
 EmptyQList <- vector('list', 12)
 EmptyQList <- lapply(EmptyQList, function(x) EmptyQ)
 QList <- new(Class = 'rawStQList', Data = EmptyQList, Periods = PeriodList)

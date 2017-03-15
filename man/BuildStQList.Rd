@@ -19,7 +19,7 @@ the names of the \code{list} must be valid time period names according to packag
 \link[=RepoTime]{RepoTime}.
 }
 \examples{
-EmptyQ <- new(Class = 'StQ')
+EmptyQ <- StQ()
 EmptyQList <- vector('list', 12)
 EmptyQList <- lapply(EmptyQList, function(x) EmptyQ)
 mm <- c(paste0('0', 1:9), 10:12)

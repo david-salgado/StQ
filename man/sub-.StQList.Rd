@@ -36,14 +36,15 @@ subset of an input object of class \linkS4class{StQList}. Thus it returns an obj
 }
 \examples{
 \dontrun{
-library(RepoTime)
 mm <- c(paste0('0', 1:9), 10:12)
 TimePer <- paste0('MM', mm, '2015')
 QList <- vector('list', 12)
 QList <- lapply(QList, function(x) ExampleStQ)
 names(QList) <- TimePer
-StQList <- new(Class = 'StQList', Data = QList, Periods = newRepoTime(TimePer))
-StQList[c('MM092015', 'MM102015')]
+QList <- new(Class = 'StQList', Data = QList, Periods = newRepoTime(TimePer))
+QList[c('MM092015', 'MM102015')]
+QList <- StQList(Data = QList, Periods = RepoTime::newRepoTime(TimePer))
+QList[c('MM092015', 'MM102015')]
 }
 
 }
