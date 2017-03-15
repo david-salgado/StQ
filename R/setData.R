@@ -22,7 +22,7 @@
 #'
 #' @rdname setData
 #' 
-#' @include StQ.R 
+#' @include StQ.R
 #'
 #' @import data.table
 #'
