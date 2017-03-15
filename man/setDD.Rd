@@ -34,4 +34,3 @@ setDD(Q) <- ExampleDD
 str(Q)
 
 }
-

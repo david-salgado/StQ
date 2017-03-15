@@ -3,8 +3,8 @@
 \docType{methods}
 \name{getPeriods}
 \alias{getPeriods}
-\alias{getPeriods,StQList-method}
 \alias{getPeriods,rawStQList-method}
+\alias{getPeriods,StQList-method}
 \title{Return a vector with the names of the time period intervals}
 \usage{
 getPeriods(object)
@@ -25,10 +25,9 @@ Character vector with the names of the time periods according to the notation of
  object.
 }
 \examples{
-library(RepoTime)
 mm <- c(paste0('0', 1:9), 10:12)
 TimePer <- paste0('MM', mm, '2015')
-PeriodList <- newRepoTime(TimePer)
+PeriodList <- RepoTime::newRepoTime(TimePer)
 
 EmptyrawQ <- rawStQ())
 EmptyrawQList <- vector('list', 12)
@@ -36,11 +35,10 @@ EmptyrawQList <- lapply(EmptyrawQList, function(x) EmptyrawQ)
 rawQList <- rawStQList(Data = EmptyrawQList, Periods = PeriodList)
 getPeriods(rawQList)
 
-EmptyQ <- new(Class = 'StQ')
+EmptyQ <- StQ()
 EmptyQList <- vector('list', 12)
 EmptyQList <- lapply(EmptyQList, function(x) EmptyQ)
 QList <- StQList(Data = EmptyQList, Periods = PeriodList)
 getPeriods(QList)
 
 }
-

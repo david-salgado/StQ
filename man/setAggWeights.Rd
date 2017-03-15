@@ -3,8 +3,8 @@
 \docType{methods}
 \name{setAggWeights<-}
 \alias{setAggWeights<-}
-\alias{setAggWeights<-,DD,data.table-method}
 \alias{setAggWeights<-,VNC,data.table-method}
+\alias{setAggWeights<-,DD,data.table-method}
 \title{Set value of slot \code{AggWeights}}
 \usage{
 setAggWeights(object) <- value
@@ -49,4 +49,3 @@ setAggWeights(DD) <- AggWeights
 DD
 
 }
-

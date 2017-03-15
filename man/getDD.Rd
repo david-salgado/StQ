@@ -4,8 +4,8 @@
 \name{getDD}
 \alias{getDD}
 \alias{getDD,StQ-method}
-\alias{getDD,StQList-method}
 \alias{getDD,rawStQ-method}
+\alias{getDD,StQList-method}
 \title{Return slot DD from the input object}
 \usage{
 getDD(object)
@@ -34,4 +34,3 @@ DD
 str(DD)
 
 }
-

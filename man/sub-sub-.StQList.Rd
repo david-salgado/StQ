@@ -27,10 +27,9 @@ It is indeed the method \code{[[} for the class \linkS4class{StQList}. This meth
 objects of class \linkS4class{StQ} from the slot \code{Data} of the input object \code{x}.
 }
 \examples{
-library(RepoTime)
 mm <- c(paste0('0', 1:9), 10:12)
 TimePer <- paste0('MM', mm, '2015')
-PeriodList <- newRepoTime(TimePer)
+PeriodList <- RepoTime::newRepoTime(TimePer)
 EmptyQ <- StQ()
 EmptyQList <- vector('list', 12)
 EmptyQList <- lapply(EmptyQList, function(x) EmptyQ)
@@ -39,4 +38,3 @@ QList[['MM092015']]
 QList[[2]]
 
 }
-
