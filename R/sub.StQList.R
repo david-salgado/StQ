@@ -45,7 +45,7 @@
          Localmc <- mc
          Localmc[[1L]] <- `[.StQ`
          Localmc[['x']] <- StQ
-         LocalOutput <- eval(Localmc, StQ, parent.frame())
+         LocalOutput <- eval(Localmc)
          return(LocalOutput)
 
      })
