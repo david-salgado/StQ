@@ -50,7 +50,7 @@ setReplaceMethod(
     signature = c("rawStQ", "data.table"),
     function(object, value){
         
-        object$Data <- value
+        object$rawData <- value
         return(object)
     }
 )
