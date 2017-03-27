@@ -112,88 +112,105 @@ setMethod(
             
             stop('[StQ::setValues] Value must be an atomic vector or of class expression.')
         }
-
-        NewData <- getUnits(object)
         
-        pasteNA <- function(x, y){
-            
-            out <- ifelse(is.na(y) | y == '', paste0(x, ''), paste(x, y, sep = "_"))
-            return(out)
-        }
-        newVNC <- getVNC(newDD)[[DDslot]][IDDD != '']
-#        UnitCols <- names(newVNC)[grep('Unit', names(newVNC))] # UnitName
-        NewUnitName <- newVNC[['UnitName']]
-        NewIDDDName <- UnitToIDDDNames(NewUnitName, newDD)
-        NewVardt <- VarNamesToDT(NewIDDDName, newDD)
-
         Data <- getData(object)
-        setkeyv(Data, names(NewVardt))
-        Data <- Data[!NewVardt]
-        DD <- getDD(object)
-        newDD <- DD + newDD
-        
-        #for (col in setdiff(names(newVNC), c('IDQual', 'NonIDQual', UnitCols, 'IDDD', 'InFiles',  'VarNameCorresp'))){
+        if (is.expression(Value)) {
             
-        #    NewVarName <- pasteNA(NewVarName, newVNC[[col]])
+            QuotedValue <- substitute(Value)
+            subQuotedValue <- gsub('-', 'DasH', QuotedValue)
+            subQuotedValue <- gsub('.', 'DoT', subQuotedValue, fixed = TRUE)
+            subQuotedValue <- gsub(':', 'CoLoN', subQuotedValue)
+
+            ExprVariables <- c(all.vars(parse(text = subQuotedValue)), by)
+            ExprVariables <- gsub('DoT', '.', ExprVariables)
+            ExprVariables <- gsub('CoLoN', ':', ExprVariables)
+            ExprVariables <- gsub('DasH', '-', ExprVariables)
+            IDDD <- getIDDD(object)
+            indexVar <- which(ExtractNames(ExprVariables) %in% IDDD)
+            ExprVariables <- ExprVariables[indexVar]
+
+            #ExprVariables <- unlist(lapply(ExprVariables, function(x){
             
-        #}
+            #    ifelse(ExtractNames(x) %in% unique(Data[['IDDD']]), x, NULL)
+            
+            #}))
 
-        #Data <- getData(object)
-        
-        #if (NewVarName %in% Data[['IDDD']]) {
-
-        #    setData(object) <- Data[IDDD != NewVarName]
-        #}
-
-        #DD <- getDD(object)
-
-        #newDD <- DD + newDD
-
-        if (class(Value) == 'expression'){
-
-            ExprVariables <- c(all.vars(Value), by)
-
-            ExprVariables <- unlist(lapply(ExprVariables, function(x){
+            newVNC <- getVNC(newDD)[[DDslot]][IDDD != '']
+            NewUnitName <- newVNC[['UnitName']]
+            NewIDDDName <- UnitToIDDDNames(NewUnitName, newDD)
+            NewVardt <- VarNamesToDT(NewIDDDName, newDD)
+            setkeyv(Data, names(NewVardt))
+            DD <- getDD(object)
+            oldUnitNames <- IDDDToUnitNames(ExprVariables, DD)
+            if (ExtractNames(NewIDDDName) %in% DD[[DDslot]][['Variable']]){
                 
-                ifelse(ExtractNames(x) %in% unique(Data[['IDDD']]), x, '')
+                DD[[DDslot]] <- DD[[DDslot]][!Variable %in% newDD[[DDslot]][Sort == 'IDDD'][['Variable']]]
+                setDD(object) <- DD
                 
-            }))
-            ExprVariables <- ExprVariables[ExprVariables != '']
-            newData <- getData(object, ExtractNames(ExprVariables))
+            }
+            newDD <- DD + newDD
+
+            newExprVariables <- UnitToIDDDNames(oldUnitNames, newDD)
+
+            newUnitNames <- IDDDToUnitNames(newExprVariables, newDD)
+            UnitQuotedValue <- QuotedValue
+            for (indexVar in seq(along = newUnitNames)){
+                
+                UnitQuotedValue <- gsub(ExprVariables[indexVar], newUnitNames[indexVar], UnitQuotedValue)
+                    
+            }
+            
+            newData <- getData(object, unique(ExtractNames(newExprVariables)))
             newObject <- StQ(Data = newData, DD = newDD)
             IDQuals <- getIDQual(newObject, DDslot)
-            newData <- dcast_StQ(newObject)[, c(IDQuals, ExprVariables, by), with = F]
+
+            newData <- dcast_StQ(newObject)[, c(IDQuals, newExprVariables, by), with = F]
+            unitnewExprVariables <- IDDDToUnitNames(newExprVariables, newDD)
+            setnames(newData, newExprVariables, unitnewExprVariables)
+          
+            Value <- parse(text = UnitQuotedValue)
 
             if (is.null(by)){
-
+                
                 newData[, Value := eval(Value)]
-
-
+                
             } else {
-
+                
                 setkeyv(newData, by)
                 newData[, Value := eval(Value), by = eval(by)]
             }
-            newData[, (ExprVariables) := NULL]
+
+            setnames(newData, unitnewExprVariables, newExprVariables)
+            newData[, (newExprVariables) := NULL]
             newData[, IDDD := ExtractNames(NewIDDDName)]
             newData <- merge(newData, NewVardt, all.x = TRUE)
-
             setcolorder(newData,
                         c(setdiff(names(newData), c('Value', 'IDDD')),
                           'IDDD', 'Value'))
             newObject <- StQ(Data = newData, DD = newDD)
             output <- object + newObject
-
+            
         } else {
+            
+            newVNC <- getVNC(newDD)[[DDslot]][IDDD != '']
+            NewUnitName <- newVNC[['UnitName']]
+            NewIDDDName <- UnitToIDDDNames(NewUnitName, newDD)
+            NewVardt <- VarNamesToDT(NewIDDDName, newDD)
+            
+            newData <- getUnits(object)
+            newData[, IDDD := ExtractNames(NewIDDDName)]
+            newData[, Value := Value]
+            setkeyv(newData, 'IDDD')
 
-            NewData[, IDDD := NewVarName]
-            NewData[, Value := Value]
-            setkeyv(NewData, setdiff(names(NewData), 'Value'))
-            NewObject <- StQ(Data = NewData, DD = newDD)
+            newData <- merge(newData, NewVardt, all.x = TRUE)
+            setcolorder(newData,
+                        c(setdiff(names(newData), c('Value', 'IDDD')),
+                          'IDDD', 'Value'))
+            NewObject <- StQ(Data = newData, DD = newDD)
             output <- object + NewObject
-
+            
         }
-
+        
         return(output)
     }
 )
