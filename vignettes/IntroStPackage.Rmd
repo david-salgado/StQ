@@ -37,7 +37,13 @@ Secondly, to further pinpoint the value, we also define as qualifiers (i) the ID
 
 ## General view
 
-The preceding data model is implemented in two versions. In either case, we make heavy use of the package `data.table` [@DowSri17a]. On the one hand, we 
+The preceding data model is implemented in two versions. In either case, we make heavy use of the package `data.table` [@DowSri17a]. On the one hand, we define a raw version of the data model by using two colums of a [data.table](https://CRAN.R-project.org/package=data.table) for the IDDDs and the set of qualifiers in a fixed-width format and a third colum for the values. On the other hand, a more elaborated data.table can be used to implement the data model by parsing the second column containing the set of qualifiers assigning each qualifier to a different columns (thus, the number of columns is variable).
+
+With a functional-paradigm motivation, to understand the contents of each data.table a data dictionary is attached to them specifying the characteristics of each variable. All together, thus, we define the so-called `rawStQ` and `StQ` objects (StQ standing for *St*andardised *Q*uestionnaire).
+
+In the following subsections we introduce classes `VarNameCorresp` and `DD`, which implement the data dictionary. Then we define the classes `StQ` and `rawStQ` and their time-dimensional counterparts `StQList` and `rawStQList`.
+
+As a relevant technical comment, we have chosen the S3 system to implement these classes and their methods. This is strongly conditioned by the data.table class itself and its syntax. 
 
 ## Class **VarNameCorresp**
 
