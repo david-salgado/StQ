@@ -4,11 +4,14 @@
 \name{setUnits<-}
 \alias{setUnits<-}
 \alias{setUnits<-,StQ,data.table-method}
+\alias{setUnits<-,StQList,data.table-method}
 \title{Return the input object with slot \code{Data} restricted to the specified units}
 \usage{
 setUnits(object) <- value
 
 \S4method{setUnits}{StQ,data.table}(object) <- value
+
+\S4method{setUnits}{StQList,data.table}(object) <- value
 }
 \arguments{
 \item{object}{Object whose slot \code{Data} is to be restricted.}
@@ -25,11 +28,9 @@ units.
 specified units.
 }
 \examples{
-library(data.table)
-library(stringr)
 data(ExampleStQ)
 NewExampleStQ <- ExampleStQ
-Units <- data.table(ID = str_pad(1:5, 5, 'left', '0'))
+Units <- data.table::data.table(ID = stringr::str_pad(1:5, 5, 'left', '0'))
 setUnits(NewExampleStQ) <- Units
 NewExampleStQ
 
