@@ -18,9 +18,9 @@ C#' @title Extract parts of an object of class \linkS4class{StQ}
 #'
 #' @examples
 #' data(ExamplerawStQ)
-#' ExamplerawStQ[IDDD == 'Turnover']
+#' ExamplerawStQ[IDDDKey == 'Turnover']
 #' ExamplerawStQ[3:4]
-#' ExamplerawStQ[ID == '00021']
+#' ExamplerawStQ[IDDDKey == '00021']
 #'
 #' @include rawStQ.R getData.R setData.R VNC.R DD.R
 #'
