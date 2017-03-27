@@ -40,4 +40,6 @@ setMethod(
     invisible(NULL)
   }
 )
+
+#' @export
 print.StQList <- function(object){show(object)}

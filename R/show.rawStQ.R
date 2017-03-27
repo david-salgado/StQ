@@ -33,4 +33,5 @@ setMethod(
     }
 )
 
+#' @export
 print.rawStQ <- function(object){show(object)}
