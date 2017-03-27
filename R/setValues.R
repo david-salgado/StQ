@@ -61,11 +61,11 @@
 #'
 #' @export
 setGeneric("setValues", function(object,
-                              newDD,
-                              DDslot = 'MicroData',
-                              Value,
-                              lag = NULL,
-                              by = NULL) {standardGeneric("setValues")})
+                                 newDD,
+                                 DDslot = 'MicroData',
+                                 Value,
+                                 lag = NULL,
+                                 by = NULL) {standardGeneric("setValues")})
 
 #' @rdname setValues
 #'
@@ -87,7 +87,7 @@ setMethod(
             stop("[StQ::setValues] A new DD object for the new variable is needed.")
         }
         
-        if (dim(getVNC(newDD)[[DDslot]])[1] != 1) {
+        if (dim(getVNC(newDD)[[DDslot]][IDDD != ''])[1] != 1) {
 
             stop('[StQ::setValues] Only one new variable at a time.')
         }
@@ -120,59 +120,68 @@ setMethod(
             out <- ifelse(is.na(y) | y == '', paste0(x, ''), paste(x, y, sep = "_"))
             return(out)
         }
-        newVNC <- getVNC(newDD)[[DDslot]]
-        UnitCols <- names(newVNC)[grep('Unit', names(newVNC))]
-        NewVarName <- newVNC[['IDDD']]
-        for (col in setdiff(names(newVNC), c('IDQual', 'NonIDQual', UnitCols, 'IDDD', 'InFiles',  'VarNameCorresp'))){
-            
-            NewVarName <- pasteNA(NewVarName, newVNC[[col]])
-            
-        }
+        newVNC <- getVNC(newDD)[[DDslot]][IDDD != '']
+#        UnitCols <- names(newVNC)[grep('Unit', names(newVNC))] # UnitName
+        NewUnitName <- newVNC[['UnitName']]
+        NewIDDDName <- UnitToIDDDNames(NewUnitName, newDD)
+        NewVardt <- VarNamesToDT(NewIDDDName, newDD)
 
         Data <- getData(object)
-        
-        if (NewVarName %in% Data[['IDDD']]) {
-
-            setData(object) <- Data[IDDD != NewVarName]
-        }
-
+        setkeyv(Data, names(NewVardt))
+        Data <- Data[!NewVardt]
         DD <- getDD(object)
-
         newDD <- DD + newDD
+        
+        #for (col in setdiff(names(newVNC), c('IDQual', 'NonIDQual', UnitCols, 'IDDD', 'InFiles',  'VarNameCorresp'))){
+            
+        #    NewVarName <- pasteNA(NewVarName, newVNC[[col]])
+            
+        #}
+
+        #Data <- getData(object)
+        
+        #if (NewVarName %in% Data[['IDDD']]) {
+
+        #    setData(object) <- Data[IDDD != NewVarName]
+        #}
+
+        #DD <- getDD(object)
+
+        #newDD <- DD + newDD
 
         if (class(Value) == 'expression'){
 
             ExprVariables <- c(all.vars(Value), by)
-            ExprVariables <- unlist(lapply(ExprVariables[[1]], function(x){
+
+            ExprVariables <- unlist(lapply(ExprVariables, function(x){
                 
                 ifelse(ExtractNames(x) %in% unique(Data[['IDDD']]), x, '')
                 
             }))
             ExprVariables <- ExprVariables[ExprVariables != '']
-
-            Data <- getData(object, ExprVariables) 
-            newObject <- StQ(Data = Data, DD = newDD)
-
-            Data <- dcast_StQ(newObject)
+            newData <- getData(object, ExtractNames(ExprVariables))
+            newObject <- StQ(Data = newData, DD = newDD)
+            IDQuals <- getIDQual(newObject, DDslot)
+            newData <- dcast_StQ(newObject)[, c(IDQuals, ExprVariables, by), with = F]
 
             if (is.null(by)){
 
-                Data[, Value := eval(Value)]
+                newData[, Value := eval(Value)]
 
 
             } else {
 
-                setkeyv(Data, by)
-                Data[, Value := eval(Value), by = eval(by)]
+                setkeyv(newData, by)
+                newData[, Value := eval(Value), by = eval(by)]
             }
+            newData[, (ExprVariables) := NULL]
+            newData[, IDDD := ExtractNames(NewIDDDName)]
+            newData <- merge(newData, NewVardt, all.x = TRUE)
 
-            NewData <- Data[, (ExprVariables) := NULL]
-            NewData[, IDDD := NewVarName]
-
-            setcolorder(NewData,
-                        c(setdiff(names(NewData), c('Value', 'IDDD')),
+            setcolorder(newData,
+                        c(setdiff(names(newData), c('Value', 'IDDD')),
                           'IDDD', 'Value'))
-            newObject <- StQ(Data = NewData, DD = newDD)
+            newObject <- StQ(Data = newData, DD = newDD)
             output <- object + newObject
 
         } else {
