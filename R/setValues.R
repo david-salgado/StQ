@@ -57,7 +57,7 @@
 #'                Value = expression(log(1 + as.numeric(Turnover))))
 #' getValues(NewQ, 'lTurnover')
 #' 
-#' @include StQ.R DD.R getData.R getDD.R getUnits.R setDD.R setData.R dcast_StQ.R plus.StQ.R getVNC.R
+#' @include StQ.R DD.R getData.R getDD.R getUnits.R setDD.R setData.R dcast_StQ.R plus.StQ.R getVNC.R IDDDToUnitNames.R UnitToIDDDNames.R ExtractNames.R
 #'
 #' @export
 setGeneric("setValues", function(object,
@@ -217,10 +217,6 @@ setMethod(
 
 #' @rdname setValues
 #'
-#' @include StQList.R BuildStQList.R
-#'
-#' @import data.table
-#'
 #' @export
 setMethod(
     f = "setValues",
@@ -232,9 +228,21 @@ setMethod(
              lag = NULL,
              by = NULL){
         
-        output <- lapply(object@Data, setValues, newDD, DDslot, Value, lag, by)
+        Object.List <- getData(object)
+        mc <- match.call()
+        output <- lapply(names(Object.List), function(PeriodName){
+            
+            cat(paste0('  [StQ::setValues] Setting values for time period ', PeriodName, '... '))
+            Localmc <- mc
+            Localmc[['object']] <- Object.List[[PeriodName]]
+            LocalOutput <- eval(Localmc)
+            cat(' ok.\n')
+            return(LocalOutput)
+        })
+        cat('  [StQ::setValues] Building StQList object ...')
+        names(output) <- names(Object.List)
         output <- BuildStQList(output)
-        
+        cat('   ok.\n')
         return(output)
     }
 )
