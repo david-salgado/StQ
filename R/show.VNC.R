@@ -85,4 +85,5 @@ setMethod(
     
 )
 
+#' @export
 print.VNC <- function(object){show(object)}
