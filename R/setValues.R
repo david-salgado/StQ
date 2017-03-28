@@ -142,6 +142,7 @@ setMethod(
             setkeyv(Data, names(NewVardt))
             DD <- getDD(object)
             oldUnitNames <- IDDDToUnitNames(ExprVariables, DD)
+
             if (ExtractNames(NewIDDDName) %in% DD[[DDslot]][['Variable']]){
                 
                 DD[[DDslot]] <- DD[[DDslot]][!Variable %in% newDD[[DDslot]][Sort == 'IDDD'][['Variable']]]

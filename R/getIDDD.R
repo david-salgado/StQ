@@ -111,6 +111,7 @@ setMethod(
     function(object, CompNames){
 
         output <- unique(getData(object)[['IDDD']])
+        output <- output[output != '']
         return(output)
     }
 )
