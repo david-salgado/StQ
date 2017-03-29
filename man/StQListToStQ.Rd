@@ -24,4 +24,3 @@ objects with a new variable "Period" to take into account the interval period ti
 This method creates a variable with the name \code{Period} in Data slots with the period related
 to each Data and adds this variable to each DD slot of the new StQs objects.
 }
-

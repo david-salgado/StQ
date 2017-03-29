@@ -41,4 +41,3 @@ getVariables(ExampleDD, Sort = 'IDDD', slots = 'MicroData')
 getVariables(ExampleStQ, Sort = 'IDDD', slots = 'Aggregates')
 
 }
-
