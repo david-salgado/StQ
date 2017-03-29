@@ -1,6 +1,6 @@
 Package: StQ
 Title: Tools to manage metadata-incorporated key-value pair datasets
-Version: 0.4.31
+Version: 0.4.32
 Authors@R: c(
     person("David", "Salgado", email = "david.salgado.fernandez@gmail.com", role = c("cre", "aut")),
     person("Elisa", "Esteban", email = "elisa.esteban.segurado@gmail.com", role = "aut"),
@@ -20,7 +20,7 @@ Imports:
 License: file LICENSE
 LazyData: true
 Encoding: UTF-8
-Collate:
+Collate: 
     'VNC.R'
     'BuildVNC.R'
     'DD.R'
@@ -77,6 +77,7 @@ Collate:
     'extract.rawStQList.R'
     'getAggWeights.R'
     'getID.R'
+    'getMicroData.R'
     'getOther.R'
     'getParaData.R'
     'getValues.R'
