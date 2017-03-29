@@ -51,4 +51,5 @@ setMethod(
     }
 )
 
+#' @export
 print.StQ <- function(object){show(object)}

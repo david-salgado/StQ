@@ -57,15 +57,15 @@
 #'                Value = expression(log(1 + as.numeric(Turnover))))
 #' getValues(NewQ, 'lTurnover')
 #' 
-#' @include StQ.R DD.R getData.R getDD.R getUnits.R setDD.R setData.R dcast_StQ.R plus.StQ.R getVNC.R
+#' @include StQ.R DD.R getData.R getDD.R getUnits.R setDD.R setData.R dcast_StQ.R plus.StQ.R getVNC.R IDDDToUnitNames.R UnitToIDDDNames.R ExtractNames.R
 #'
 #' @export
 setGeneric("setValues", function(object,
-                              newDD,
-                              DDslot = 'MicroData',
-                              Value,
-                              lag = NULL,
-                              by = NULL) {standardGeneric("setValues")})
+                                 newDD,
+                                 DDslot = 'MicroData',
+                                 Value,
+                                 lag = NULL,
+                                 by = NULL) {standardGeneric("setValues")})
 
 #' @rdname setValues
 #'
@@ -87,7 +87,7 @@ setMethod(
             stop("[StQ::setValues] A new DD object for the new variable is needed.")
         }
         
-        if (dim(getVNC(newDD)[[DDslot]])[1] != 1) {
+        if (dim(getVNC(newDD)[[DDslot]][IDDD != ''])[1] != 1) {
 
             stop('[StQ::setValues] Only one new variable at a time.')
         }
@@ -112,88 +112,111 @@ setMethod(
             
             stop('[StQ::setValues] Value must be an atomic vector or of class expression.')
         }
-
-        NewData <- getUnits(object)
         
-        pasteNA <- function(x, y){
-            
-            out <- ifelse(is.na(y) | y == '', paste0(x, ''), paste(x, y, sep = "_"))
-            return(out)
-        }
-        newVNC <- getVNC(newDD)[[DDslot]]
-        UnitCols <- names(newVNC)[grep('Unit', names(newVNC))]
-        NewVarName <- newVNC[['IDDD']]
-        for (col in setdiff(names(newVNC), c('IDQual', 'NonIDQual', UnitCols, 'IDDD', 'InFiles',  'VarNameCorresp'))){
-            
-            NewVarName <- pasteNA(NewVarName, newVNC[[col]])
-            
-        }
-
         Data <- getData(object)
-        
-        if (NewVarName %in% Data[['IDDD']]) {
+        if (is.expression(Value)) {
+            
+            QuotedValue <- substitute(Value)
+            subQuotedValue <- gsub('-', 'DasH', QuotedValue)
+            subQuotedValue <- gsub('.', 'DoT', subQuotedValue, fixed = TRUE)
+            subQuotedValue <- gsub(':', 'CoLoN', subQuotedValue)
 
-            setData(object) <- Data[IDDD != NewVarName]
-        }
+            ExprVariables <- c(all.vars(parse(text = subQuotedValue)), by)
+            ExprVariables <- gsub('DoT', '.', ExprVariables)
+            ExprVariables <- gsub('CoLoN', ':', ExprVariables)
+            ExprVariables <- gsub('DasH', '-', ExprVariables)
+            IDDD <- getIDDD(object)
+            indexVar <- which(ExtractNames(ExprVariables) %in% IDDD)
+            ExprVariables <- ExprVariables[indexVar]
 
-        DD <- getDD(object)
+            #ExprVariables <- unlist(lapply(ExprVariables, function(x){
+            
+            #    ifelse(ExtractNames(x) %in% unique(Data[['IDDD']]), x, NULL)
+            
+            #}))
 
-        newDD <- DD + newDD
+            newVNC <- getVNC(newDD)[[DDslot]][IDDD != '']
+            NewUnitName <- newVNC[['UnitName']]
+            NewIDDDName <- UnitToIDDDNames(NewUnitName, newDD)
+            NewVardt <- VarNamesToDT(NewIDDDName, newDD)
+            setkeyv(Data, names(NewVardt))
+            DD <- getDD(object)
+            oldUnitNames <- IDDDToUnitNames(ExprVariables, DD)
 
-        if (class(Value) == 'expression'){
-
-            ExprVariables <- c(all.vars(Value), by)
-            ExprVariables <- unlist(lapply(ExprVariables[[1]], function(x){
+            if (ExtractNames(NewIDDDName) %in% DD[[DDslot]][['Variable']]){
                 
-                ifelse(ExtractNames(x) %in% unique(Data[['IDDD']]), x, '')
+                DD[[DDslot]] <- DD[[DDslot]][!Variable %in% newDD[[DDslot]][Sort == 'IDDD'][['Variable']]]
+                setDD(object) <- DD
                 
-            }))
-            ExprVariables <- ExprVariables[ExprVariables != '']
+            }
+            newDD <- DD + newDD
 
-            Data <- getData(object, ExprVariables) 
-            newObject <- StQ(Data = Data, DD = newDD)
+            newExprVariables <- UnitToIDDDNames(oldUnitNames, newDD)
 
-            Data <- dcast_StQ(newObject)
+            newUnitNames <- IDDDToUnitNames(newExprVariables, newDD)
+            UnitQuotedValue <- QuotedValue
+            for (indexVar in seq(along = newUnitNames)){
+                
+                UnitQuotedValue <- gsub(ExprVariables[indexVar], newUnitNames[indexVar], UnitQuotedValue)
+                    
+            }
+            
+            newData <- getData(object, unique(ExtractNames(newExprVariables)))
+            newObject <- StQ(Data = newData, DD = newDD)
+            IDQuals <- getIDQual(newObject, DDslot)
+
+            newData <- dcast_StQ(newObject)[, c(IDQuals, newExprVariables, by), with = F]
+            unitnewExprVariables <- IDDDToUnitNames(newExprVariables, newDD)
+            setnames(newData, newExprVariables, unitnewExprVariables)
+          
+            Value <- parse(text = UnitQuotedValue)
 
             if (is.null(by)){
-
-                Data[, Value := eval(Value)]
-
-
+                
+                newData[, Value := eval(Value)]
+                
             } else {
-
-                setkeyv(Data, by)
-                Data[, Value := eval(Value), by = eval(by)]
+                
+                setkeyv(newData, by)
+                newData[, Value := eval(Value), by = eval(by)]
             }
 
-            NewData <- Data[, (ExprVariables) := NULL]
-            NewData[, IDDD := NewVarName]
-
-            setcolorder(NewData,
-                        c(setdiff(names(NewData), c('Value', 'IDDD')),
+            setnames(newData, unitnewExprVariables, newExprVariables)
+            newData[, (newExprVariables) := NULL]
+            newData[, IDDD := ExtractNames(NewIDDDName)]
+            newData <- merge(newData, NewVardt, all.x = TRUE)
+            setcolorder(newData,
+                        c(setdiff(names(newData), c('Value', 'IDDD')),
                           'IDDD', 'Value'))
-            newObject <- StQ(Data = NewData, DD = newDD)
+            newObject <- StQ(Data = newData, DD = newDD)
             output <- object + newObject
-
+            
         } else {
+            
+            newVNC <- getVNC(newDD)[[DDslot]][IDDD != '']
+            NewUnitName <- newVNC[['UnitName']]
+            NewIDDDName <- UnitToIDDDNames(NewUnitName, newDD)
+            NewVardt <- VarNamesToDT(NewIDDDName, newDD)
+            
+            newData <- getUnits(object)
+            newData[, IDDD := ExtractNames(NewIDDDName)]
+            newData[, Value := Value]
+            setkeyv(newData, 'IDDD')
 
-            NewData[, IDDD := NewVarName]
-            NewData[, Value := Value]
-            setkeyv(NewData, setdiff(names(NewData), 'Value'))
-            NewObject <- StQ(Data = NewData, DD = newDD)
+            newData <- merge(newData, NewVardt, all.x = TRUE)
+            setcolorder(newData,
+                        c(setdiff(names(newData), c('Value', 'IDDD')),
+                          'IDDD', 'Value'))
+            NewObject <- StQ(Data = newData, DD = newDD)
             output <- object + NewObject
-
+            
         }
-
+        
         return(output)
     }
 )
 
 #' @rdname setValues
-#'
-#' @include StQList.R BuildStQList.R
-#'
-#' @import data.table
 #'
 #' @export
 setMethod(
@@ -206,9 +229,21 @@ setMethod(
              lag = NULL,
              by = NULL){
         
-        output <- lapply(object@Data, setValues, newDD, DDslot, Value, lag, by)
+        Object.List <- getData(object)
+        mc <- match.call()
+        output <- lapply(names(Object.List), function(PeriodName){
+            
+            cat(paste0('  [StQ::setValues] Setting values for time period ', PeriodName, '... '))
+            Localmc <- mc
+            Localmc[['object']] <- Object.List[[PeriodName]]
+            LocalOutput <- eval(Localmc)
+            cat(' ok.\n')
+            return(LocalOutput)
+        })
+        cat('  [StQ::setValues] Building StQList object ...')
+        names(output) <- names(Object.List)
         output <- BuildStQList(output)
-        
+        cat('   ok.\n')
         return(output)
     }
 )

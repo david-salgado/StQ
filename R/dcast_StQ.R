@@ -36,7 +36,7 @@
 #' \code{\link[data.table]{melt.data.table}}, \code{\link[reshape2]{melt}},
 #' \code{\link[reshape2]{dcast}}
 #'
-#' @include StQ.R DDslotWith.R getNonIDQual.R getDD.R getData.R getVNC.R getIDQual.R VarNamesToFormula.R sub.StQ.R getIDDD.R ExtractNames.R
+#' @include StQ.R DDslotWith.R getNonIDQual.R getDD.R getData.R getVNC.R getIDQual.R VarNamesToFormula.R sub.StQ.R getIDDD.R ExtractNames.R getUnits.R
 #' 
 #' @importFrom formula.tools lhs.vars
 #'
@@ -101,9 +101,15 @@ setMethod(
         dcastData <- lapply(names(auxData), function(Form){
 
             #Preparamos la data.table aux que vamos a reformatear con dcast.data.table
-            aux <- getData(object)[IDDD %in% auxData[[Form]]]
-            if (dim(aux)[[1]] == 0) return(NULL)
+            Data <- getData(object)
+            aux <- Data[IDDD %in% auxData[[Form]]]
 
+            if (dim(aux)[[1]] == 0) {
+                
+                return(getUnits(object))
+                
+            }
+            
             ColNames <- names(aux)
             setkeyv(aux, setdiff(ColNames, 'Value'))
             Dup <- aux[duplicated(aux, by = key(aux))]

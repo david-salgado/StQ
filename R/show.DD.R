@@ -102,5 +102,6 @@ setMethod(
     }
 )
 
+#' @export
 print.DD <- function(object){show(object)}
 

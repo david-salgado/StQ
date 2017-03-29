@@ -67,6 +67,8 @@ setMethod(
         output <- getData(object, ExtractNames(VarName))
         output <- merge(output, VarNameDT, by = names(VarNameDT))
         if (dim(output)[1] == 0) stop(paste0('[StQ::getValues] The input parameter ', VarName, ' is not present in the input StQ object.\n'))
+        setkeyv(output, names(output))
+        output <- output[!duplicated(output)]
         for (NonIDQual in NonIDQuals){
             
             if (length(unique(output[[NonIDQual]])) != 1) stop(paste0('[StQ::getValues] The input parameter ', VarName, ' needs non-unit qualifiers.\n'))
