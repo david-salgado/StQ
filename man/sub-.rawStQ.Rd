@@ -33,8 +33,8 @@ The output is an object of the same class \linkS4class{StQ} as the input paramet
 }
 \examples{
 data(ExamplerawStQ)
-ExamplerawStQ[IDDD == 'Turnover']
+ExamplerawStQ[IDDDKey == 'Turnover']
 ExamplerawStQ[3:4]
-ExamplerawStQ[ID == '00021']
+ExamplerawStQ[IDDDKey == '00021']
 
 }
