@@ -83,22 +83,22 @@
 #' QList <- BuildStQList(QList)
 #' VarNames <- c('Turnover', 'Employees_2.1')
 #' getData(QList, VarNames)
-#' 
-#' @include DD.R VNC.R StQ.R rawStQ.R ExtractNames.R StQList.R rawStQList.R
-#' 
+#'
+#' @include StQ.R rawStQ.R  StQList.R rawStQList.R
+#'
 #' @export
 setGeneric("getData", function(object, VarNames){standardGeneric("getData")})
 
 #' @rdname getData
-#' 
+#'
 #' @export
 setMethod(
     f = "getData",
     signature = c("StQ"),
     function(object, VarNames){
-        
+
         if (missing(VarNames)) return(object$Data)
-        
+
         return(object$Data[IDDD %chin% VarNames])
       }
 )
@@ -109,9 +109,9 @@ setMethod(
     f = "getData",
     signature = c("rawStQ"),
     function(object, VarNames){
-        
+
         if (missing(VarNames)) return(object$rawData)
-        
+
         return(object$rawData[IDDDKey %chin% VarNames])
     }
 )
@@ -122,15 +122,12 @@ setMethod(
     f = "getData",
     signature = c("StQList"),
     function(object, VarNames){
-        
+
         if (missing(VarNames)) return(object$Data)
-        output <- lapply(object$Data, function(StQObj){
-            
-            LocalOut <- getData(StQObj, VarNames)
-            return(LocalOut)
-            
-        })
+
+        output <- lapply(object$Data, function(StQObj){StQObj[IDDD %in% VarNames]})
         return(output)
+
     }
 )
 
@@ -140,15 +137,11 @@ setMethod(
     f = "getData",
     signature = c("rawStQList"),
     function(object, VarNames){
-        
+
         if (missing(VarNames)) return(object$Data)
-        
-        output <- lapply(object$Data, function(rawStQObj){
-            
-            LocalOut <- getData(rawStQObj, VarNames)
-            return(LocalOut)
-            
-        })
+
+        output <- lapply(object$Data, function(rawStQObj){rawStQObj[IDDDKey %in% VarNames]})
         return(output)
+
     }
 )

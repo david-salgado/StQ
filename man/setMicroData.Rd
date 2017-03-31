@@ -3,8 +3,8 @@
 \docType{methods}
 \name{setMicroData<-}
 \alias{setMicroData<-}
-\alias{setMicroData<-,VNC,data.table-method}
 \alias{setMicroData<-,DD,data.table-method}
+\alias{setMicroData<-,VNC,data.table-method}
 \title{Set value of slot \code{MicroData} of an object \linkS4class{DD}}
 \usage{
 setMicroData(object) <- value
@@ -51,3 +51,4 @@ setMicroData(DD) <- Microdt
 DD
 
 }
+
