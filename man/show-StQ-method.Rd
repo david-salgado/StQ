@@ -29,4 +29,3 @@ show(ExampleStQ)
 ExampleStQ
 
 }
-

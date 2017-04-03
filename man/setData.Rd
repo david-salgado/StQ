@@ -37,4 +37,3 @@ setData(NewExampleStQ) <- Data
 NewExampleStQ
 
 }
-
