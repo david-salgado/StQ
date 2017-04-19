@@ -58,6 +58,7 @@ setMethod(
             setcolorder(newDDdt.DT, c('Variable', 'Sort', 'Class', 'Length', paste0('Qual', 1:nQual), 'ValueRegExp'))
         })
         names(DDdt.list) <- DDdtNames.list
+
         setID(DD) <- DDdt.list[['ID']]
         setMicroData(DD) <- DDdt.list[['MicroData']]
         setParaData(DD) <- DDdt.list[['ParaData']]

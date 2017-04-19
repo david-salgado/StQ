@@ -71,8 +71,7 @@ setReplaceMethod(
         newVNC <- DDdtToVNC(value, NameVNC = 'ID', InFiles = 'FI')
         DDValue <- try(BuildDD(list(VNC = newVNC, ID = value)))
         if (inherits(DDValue, "try-error")) stop('[StQ::setID] Value does not have the correct format.\n')
-        newVNC <- getVNC(object) + newVNC
-        setVNC(object) <- getVNC(object) + newVNC
+        object[['VNC']] <- object[['VNC']] + newVNC
         object[['ID']] <- value
         return(object)
     }

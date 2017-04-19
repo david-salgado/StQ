@@ -83,6 +83,7 @@ DDdtToVNC <- function(DDdt, NameVNC, InFiles = rep('', dim(DDdt)[1])){
         setnames(output, setdiff(names(output), c('IDQual', 'NonIDQual', 'IDDD'))[i], Quals[i])
       }
 
+      output[['TipoMicrodato']] <- c(rep('05.', length(Quals)), rep('', numVar - length(Quals)))
     }
 
     VarList_output <- cbind(output, UnitName)
