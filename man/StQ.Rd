@@ -34,7 +34,6 @@ their corresponding values. If \code{Data} is not specified as an input paramete
 \code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} and \code{ValueRegExp} will be 
 initiated.}
 }}
-
 \examples{
 library(data.table)
 data(ExampleDD)
@@ -45,3 +44,4 @@ Q
 str(Q)
 
 }
+

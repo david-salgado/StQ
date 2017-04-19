@@ -66,7 +66,7 @@ setMethod(
         setParaData(DD) <- DDdt.list[['ParaData']]
         setAggregates(DD) <- DDdt.list[['Aggregates']]
         setAggWeights(DD) <- DDdt.list[['AggWeights']]
-        setOtherDD(DD) <- DDdt.list[['Other']]
+        setOther(DD) <- DDdt.list[['Other']]
 
         
         getVNC(DD)[['MicroData']][IDDD != "", Period := '.', Period]

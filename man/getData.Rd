@@ -4,8 +4,8 @@
 \name{getData}
 \alias{getData}
 \alias{getData,StQ-method}
-\alias{getData,rawStQ-method}
 \alias{getData,StQList-method}
+\alias{getData,rawStQ-method}
 \alias{getData,rawStQList-method}
 \title{Return slot \code{Data} from an object possibly subsetted to a set of variables}
 \usage{
@@ -106,3 +106,4 @@ VarNames <- c('Turnover', 'Employees_2.1')
 getData(QList, VarNames)
 
 }
+
