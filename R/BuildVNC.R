@@ -85,7 +85,6 @@ BuildVNC <- function(Data = list(ID = data.table(IDQual = character(0),
     ParaDataNames <- names(Data)[grep('ParaData', names(Data))]
     
     Data <- Data[c('ID', 'MicroData', ParaDataNames, setdiff(names(Data), c('ID', 'MicroData', ParaDataNames)))]
-    
     out <- do.call(VNC, Data)
     return(out)    
 }
