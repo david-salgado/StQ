@@ -131,7 +131,7 @@ VNC <- function(ID = data.table(IDQual = character(0),
         IDQuals <- IDQuals[IDQuals != '']
         if (any(duplicated(IDQuals))) {
             
-            stop(paste0('[StQ::Validity VNC] The column "IDQual" of component ', CompName, ' cannot have repeated values.'))
+            stop(paste0('[StQ::Validity VNC] The column IDQual of component ', CompName, ' cannot have repeated values.'))
             
         }
         IDQualCols <- intersect(ColNames, IDQuals)

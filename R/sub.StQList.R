@@ -26,6 +26,8 @@
 #' QList <- vector('list', 12)
 #' QList <- lapply(QList, function(x) ExampleStQ)
 #' names(QList) <- TimePer
+#' QList <- new(Class = 'StQList', Data = QList, Periods = newRepoTime(TimePer))
+#' QList[c('MM092015', 'MM102015')]
 #' QList <- StQList(Data = QList, Periods = RepoTime::newRepoTime(TimePer))
 #' QList[c('MM092015', 'MM102015')]
 #' }
@@ -41,18 +43,19 @@
      DataList <- getData(x)
 
      output <- lapply(DataList, function(StQ){
-
+         
          Localmc <- mc
          Localmc[[1L]] <- `[.StQ`
          Localmc[['x']] <- StQ
          LocalOutput <- eval(Localmc)
          return(LocalOutput)
-
+         
      })
-
+     
      Periods <- names(DataList)
 
      output <- StQList(Data = output, Periods = RepoTime::newRepoTime(Periods))
+
      return(output)
 
 }

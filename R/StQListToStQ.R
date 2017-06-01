@@ -32,7 +32,7 @@ setMethod(
         VNCPer <- BuildVNC(list(MicroData = data.table(IDQual = c('Period'),
                                                        NonIDQual = '',
                                                        IDDD = '',
-                                                       Period = '.',
+                                                       Period = '',
                                                        UnitName = '',
                                                        InFiles = '')))
         NewDDdt <- data.table(Variable = c('Period'),
@@ -41,9 +41,10 @@ setMethod(
                               Length = c('8'),
                               Qual1 = '',
                               ValueRegExp = '.+')
-                                                 
-        
+
+
         DDPer <- DD(VNC = VNCPer, ID = NewDDdt, MicroData = NewDDdt, ParaData = NewDDdt)
+
         DD <- DD + DDPer
 
         
@@ -55,23 +56,28 @@ setMethod(
             
             nQual <- length(grep('Qual', ColnewDDdt.DT)) + 1
             newDDdt.DT[Sort == 'IDDD', (paste0('Qual', nQual)) := 'Period']
+            newDDdt.DT[Sort != 'IDDD', (paste0('Qual', nQual)) := '']
             setcolorder(newDDdt.DT, c('Variable', 'Sort', 'Class', 'Length', paste0('Qual', 1:nQual), 'ValueRegExp'))
         })
         names(DDdt.list) <- DDdtNames.list
+
         setID(DD) <- DDdt.list[['ID']]
         setMicroData(DD) <- DDdt.list[['MicroData']]
         setParaData(DD) <- DDdt.list[['ParaData']]
         setAggregates(DD) <- DDdt.list[['Aggregates']]
         setAggWeights(DD) <- DDdt.list[['AggWeights']]
-        setOtherDD(DD) <- DDdt.list[['Other']]
+        setOther(DD) <- DDdt.list[['Other']]
+
+        
+        getVNC(DD)[['MicroData']][IDDD != "", Period := '.', Period]
 
         IDQual <- getIDQual(DD)
         NonIDQual <- getNonIDQual(DD)
-        DataList <- getData(object)
+        DataList <- lapply(getData(object), getData)
         Periods <- names(DataList)
 
         for (Per in Periods) {
-            set(DataList[[Per]], NULL, 'Period', Per)
+            DataList[[Per]][ , Period:= Per]
             setcolorder(DataList[[Per]], c(intersect(IDQual, names(DataList[[Per]])),
                                            intersect(NonIDQual, names(DataList[[Per]])),
                                            c('IDDD', 'Value')))

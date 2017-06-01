@@ -43,6 +43,8 @@ QList <- lapply(QList, function(x) ExampleStQ)
 names(QList) <- TimePer
 QList <- StQList(Data = QList, Periods = RepoTime::newRepoTime(TimePer))
 QList[c('MM092015', 'MM102015')]
+QList <- StQList(Data = QList, Periods = RepoTime::newRepoTime(TimePer))
+QList[c('MM092015', 'MM102015')]
 }
 
 }

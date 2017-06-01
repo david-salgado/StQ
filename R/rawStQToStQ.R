@@ -29,6 +29,7 @@ setMethod(
     function(rawQ){
 
         DD <- getDD(rawQ)
+
         DDdt.list <- setdiff(names(DD), 'VNC')
         DDdt.list <- lapply(DDdt.list, function(Name){DD[[Name]]})
         DDdt <- rbindlist(DDdt.list, fill = TRUE)
@@ -76,6 +77,7 @@ setMethod(
             out[, Value := rawData.list[[VarName]][['Value']]]
             return(out)
         })
+
         Data <- rbindlist(Data.list, fill = TRUE)
         Names <- intersect(c(getIDQual(getDD(rawQ)), getNonIDQual(getDD(rawQ)), 'IDDD', 'Value'), names(Data))
         setcolorder(Data, Names)
@@ -84,6 +86,7 @@ setMethod(
 
             Data[is.na(get(col)), (col) := '']
         }
+
         #Datadt <- new(Class = 'Datadt', Data)
         #Q <- new(Class = 'StQ', Data = Datadt, DD = DD)
         Q <- StQ(Data, DD)
