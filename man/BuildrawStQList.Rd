@@ -31,4 +31,3 @@ rawQList
 str(rawQList)
 
 }
-

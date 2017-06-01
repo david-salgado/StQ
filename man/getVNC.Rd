@@ -58,4 +58,3 @@ VNC <- BuildVNC(VarList)
 getVNC(VNC)
 
 }
-

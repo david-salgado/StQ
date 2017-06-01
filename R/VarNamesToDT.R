@@ -103,7 +103,7 @@ VarNamesToDT <- function(VarNames, DD){
         }
 
         outputGlobal <- rbindlist(output, fill = TRUE)
-        return(outputGlobal)
+        return(outputGlobal[])
 
     } else { # Ahora para varias variables de entrada
 
@@ -119,6 +119,6 @@ VarNamesToDT <- function(VarNames, DD){
             if (all(out[[col]] == '')) out[, (col) := NULL]
 
         }
-        return(out)
+        return(out[])
     }
 }
