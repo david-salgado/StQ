@@ -4,8 +4,8 @@
 \name{getMicroData,DD-method}
 \alias{getMicroData,DD-method}
 \alias{getParaData}
-\alias{getParaData,DD-method}
 \alias{getParaData,VNC-method}
+\alias{getParaData,DD-method}
 \title{Return slot ParaData from an object}
 \usage{
 \S4method{getMicroData}{DD}(object)
@@ -61,4 +61,3 @@ VNC <- BuildVNC(VarList)
 getParaData(VNC)
 
 }
-
