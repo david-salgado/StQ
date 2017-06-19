@@ -135,6 +135,7 @@ setMethod(
                                    with = F]
             IDQual <- XLS.Quals[IDQual != '']
             IDQual <- IDQual[IDQual != '']
+            DotQual <- getDotQual(Correspondence)
 
             XLS <- XLS[IDDD != '']
             XLS <- XLS[, setdiff(names(XLS), IDQual), with = F]
@@ -156,7 +157,7 @@ setMethod(
                 #ColsNotUnit <- intersect(names(VNC), ColsNotUnit)
                 auxDT <- DD[[nameVNC]][Variable == unique(xls[['IDDDName']])]
                 ColsNotUnit <- t(as.matrix(auxDT[, names(auxDT)[grep('Qual', names(auxDT))], with = FALSE]))[,1]
-                ColsNotUnit <- setdiff(ColsNotUnit, IDQual)
+                ColsNotUnit <- setdiff(ColsNotUnit, c(IDQual, DotQual))
                 ColsNotUnit <- ColsNotUnit[ColsNotUnit != '']
 
                 for (col in ColsNotUnit) {

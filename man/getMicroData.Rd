@@ -55,4 +55,3 @@ VNC <- BuildVNC(VarList)
 getMicroData(VNC)
 
 }
-
