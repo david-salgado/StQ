@@ -159,7 +159,7 @@ setMethod(
                 ColsNotUnit <- t(as.matrix(auxDT[, names(auxDT)[grep('Qual', names(auxDT))], with = FALSE]))[,1]
                 ColsNotUnit <- setdiff(ColsNotUnit, c(IDQual, DotQual))
                 ColsNotUnit <- ColsNotUnit[ColsNotUnit != '']
-
+                
                 for (col in ColsNotUnit) {
 
                     #if (all(xls[[col]] == '.') | all(is.na(xls[[col]]))) next
@@ -190,9 +190,11 @@ setMethod(
                         patron_aux <- patron
                         patron <- gsub('\\[mm\\]', '(([0][1-9])|([1][0-2]))', patron)
                         patron <- gsub('\\[aa\\]', '[0-9]{2}', patron)
+                        patron <- gsub('\\[aaaa\\]', '[0-9]{4}', patron)
                         patron <- gsub('\\[n\\]', '[0-9]+', patron)
                         patron <- gsub('\\[varGestion\\]', '.*', patron)
                         patron <- gsub('\\[ccaa\\]', '[0-9]{2}', patron)
+                        patron <- gsub('\\[IDEdit\\]', '[.]+', patron)
                         Var <- lapply(outputNewName, function(name){
                             out <- regexpr(patron, name)
                             out <- regmatches(name, out)

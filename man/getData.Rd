@@ -31,6 +31,34 @@ slot \code{Data} from the input object with the values of the variables restrict
 names specified in \code{VarNames}. In the case of \linkS4class{StQList}/\linkS4class{rawStQList}
 objects, it returns a list of \linkS4class{StQ}/linkS4class{rawStQ} objects.
 }
+\description{
+\code{getData} returns slot \code{Data} from the input object possibly subsetted to
+those variables specified as an input parameter. 
+
+Input objects can be of class:
+\itemize{
+\item \code{StQ}: The input parameters are an object of class \linkS4class{StQ} and a character
+vector, \code{VarNames}, with variable names. It returns the \code{data.table} corresponding to
+slot \code{Data} of such an object, but only with variables included in \code{VarNames}. If in 
+\code{VarNames} only the roots of variable names in the column \code{IDDD} of slot \code{Data}
+are specified, it returns a data set with all variables which have those roots.
+
+If no variable name is specified in \code{VarNames}, it returns the complete slot \code{Data}.
+
+\item \code{StQList}: The input parameters are an object of class \linkS4class{StQList} and a
+character vector, \code{VarNames}, with variable names. It returns a list of \linkS4class{StQ}
+objects, but only with variables included in \code{VarNames}, as it is explained above.
+
+\item \code{rawStQ}: The input parameters are an object of class \linkS4class{rawStQ} and a
+character vector, \code{VarNames}, with variable names. It returns the \linkS4class{rawDatadt}
+corresponding to slot \code{Data} of such an object, but only with variables included in
+\code{VarNames}.
+
+\item \code{rawStQList}: The input parameters are an object of class \linkS4class{rawStQList} and
+ a character vector, \code{VarNames}, with variable names. It returns a list of
+ \linkS4class{rawStQ} objects, but only with variables included in \code{VarNames}.
+}
+}
 \examples{
 # From an StQ object
 VarNames <- c('Employees_1.')

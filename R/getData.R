@@ -25,7 +25,7 @@
 #' \item \code{rawStQList}: The input parameters are an object of class \linkS4class{rawStQList} and
 #'  a character vector, \code{VarNames}, with variable names. It returns a list of
 #'  \linkS4class{rawStQ} objects, but only with variables included in \code{VarNames}.
-#'
+#' }
 #' @param object Object whose (possibly subsetted) slot \code{Data} is queried.
 #'
 #' @param VarNames \code{Character} vector with the variable names subsetting the data set.
