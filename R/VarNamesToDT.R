@@ -37,6 +37,8 @@ VarNamesToDT <- function(VarNames, DD){
 
     NotPresentVar  <- setdiff(ExtractNames(VarNames), getVariables(DD))
     if (length(NotPresentVar) > 0) stop(paste0('[StQ::VarNamesToDD] The following variables are not contained in the DD slot: ', NotPresentVar, '.\n'))
+    DotQual <- getDotQual(DD)
+    
     # Para una sola variable
     if (is.character(VarNames) & length(VarNames) == 1){
 
@@ -49,6 +51,7 @@ VarNamesToDT <- function(VarNames, DD){
             DDlocal <- DD[[DDslot]]
 
             Names.DT <- DDlocal[Variable == ExtractNames(VarNames)]
+
             if(dim(Names.DT)[1] == 0) {
 
                 out <- data.table(IDDD = character(0))
@@ -63,14 +66,14 @@ VarNamesToDT <- function(VarNames, DD){
                 Names.DT[, ValueRegExp := NULL]
 
                 ParsedNames <- strsplit(VarNames, '_')[[1]]
-                IDQual <- DDlocal[Sort == 'IDQual'][['Variable']]
                 IDQualCounter <- 0
 
                 ColNames <- setdiff(names(Names.DT), 'IDDD')
+
                 if (length(ColNames) > 0){
                     for (i in seq(along = ColNames)){
 
-                        if (Names.DT[[paste0('Qual', i)]] %in% IDQual) {
+                        if (Names.DT[[paste0('Qual', i)]] %in% DotQual) {
 
                             Names.DT[, (paste0('Qual', i)) := NULL]
                             IDQualCounter <- IDQualCounter + 1
