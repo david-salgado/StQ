@@ -3,10 +3,10 @@
 \docType{methods}
 \name{getIDQual}
 \alias{getIDQual}
-\alias{getIDQual,VNC-method}
 \alias{getIDQual,DD-method}
 \alias{getIDQual,StQ-method}
 \alias{getIDQual,StQList-method}
+\alias{getIDQual,VNC-method}
 \title{Return unit qualifiers from an object}
 \usage{
 getIDQual(object, CompNames = names(object))
@@ -74,3 +74,4 @@ getIDQual(VNC, 'MicroData')
 getIDQual(VNC, 'ParaData')
 
 }
+

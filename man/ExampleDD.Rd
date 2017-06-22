@@ -31,3 +31,4 @@ The columns of slots \code{MicroData} and \code{Aggregates} are:
   \item \code{ValueRegExp}: regexp for the variable values (not yet active).
 }
 }
+
