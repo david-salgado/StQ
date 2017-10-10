@@ -30,4 +30,3 @@ QList
 str(QList)
 
 }
-

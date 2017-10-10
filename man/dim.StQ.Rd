@@ -23,4 +23,3 @@ data(ExampleStQ)
 dim(ExampleStQ)
 
 }
-

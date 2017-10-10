@@ -41,4 +41,3 @@ melt_StQ(ExampleDM, ExampleDD)
 \code{\link[data.table]{melt.data.table}}, \code{\link[reshape2]{melt}},
 \code{\link[reshape2]{dcast}}
 }
-

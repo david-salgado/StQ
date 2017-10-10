@@ -273,23 +273,26 @@ DD <- function(VNC = BuildVNC(),
         variablesDD <- c(variablesDD,  SlotNames$Variable[SlotNames$Sort == 'IDDD'])
         variablesDD <- unique(variablesDD)
     }
-
+      
     variablesVNC <- c()
     for (Component in object[['VNC']]){
-                 
-        auxVar <- Component[['IDDD']]
-        auxVar <- auxVar[auxVar != '']
-        variablesVNC <- c(variablesVNC, auxVar)
-    }    
-                 
+      
+      auxVar <- Component[['IDDD']]
+      auxVar <- auxVar[auxVar != '']
+      variablesVNC <- c(variablesVNC, auxVar)
+    }
+    
+    if (length(variablesDD) > 0 & length(variablesVNC) == 0)stop('[StQ:: validity DD] The component VNC must be specified with the variables in the other components')
     varDDnotinVNC <- setdiff(variablesDD, variablesVNC)
     if (length(varDDnotinVNC) > 0) {
+      
+      stop(paste0('[StQ:: Validity DD] The following variables in a column "IDDD" of the slot DD must be variables (IDDD) in the slot VNC:\n',
+                  paste0(varDDnotinVNC, collapse = ', '),
+                  '\n\n Check if object VNC contains all variable names.'))
+      
+    }
+    
 
-        stop(paste0('[StQ:: Validity DD] The following variables in a column "IDDD" of the slot DD must be variables (IDDD) in the slot VNC:\n',
-                    paste0(varDDnotinVNC, collapse = ', '),
-                    '\n\n Check if object VNC contains all variable names.'))
-
-        }
     class(object) <- append("DD", class(object))
     return(object)
     
