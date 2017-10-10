@@ -153,6 +153,11 @@ BuildDD <- function(Data = list(ID = data.table(Variable = character(0),
                                                             Length = character(0),
                                                             Qual1 = character(0),
                                                             ValueRegExp = character(0))
+    flag.data <- unique(unlist(lapply(Data, function(DT){dim(DT)[1]})))
+    flag.data <- max(flag.data) > 0
+    if (!'VNC' %in% RootCompNames & flag.data) stop('[StQ::BuildDD] The input parameter Data must have a component of class VNC.')
+    else Data$VNC <- VNC()
+    
     VarList <- list(VNC = Data[['VNC']], ID = IDdt, MicroData = MicroDatadt, ParaData = ParaDatadt,
                     Aggregates = AggrDatadt, AggWeights = AggWDatadt, Other = OtherDatadt)
     out <- do.call(DD, VarList)
