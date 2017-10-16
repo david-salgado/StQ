@@ -55,6 +55,7 @@ setMethod(
                 names(Quals) <- Lengths
                 return(Quals)
             })
+
         names(Quals.list) <- names(rawData.list)
 
         Data.list <- lapply(names(rawData.list), function(VarName){

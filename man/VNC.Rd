@@ -55,4 +55,3 @@ VNC <- VNC(ID = data.table(IDQual = c('NumIdEst', rep('', 4)),
                                  InFiles = rep('FP', 3)))
 
 }
-

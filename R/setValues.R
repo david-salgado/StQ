@@ -152,7 +152,6 @@ setMethod(
             newDD <- DD + newDD
 
             newExprVariables <- UnitToIDDDNames(oldUnitNames, newDD)
-
             newUnitNames <- IDDDToUnitNames(newExprVariables, newDD)
             UnitQuotedValue <- QuotedValue
             for (indexVar in seq(along = newUnitNames)){
@@ -164,7 +163,6 @@ setMethod(
             newData <- getData(object, unique(ExtractNames(newExprVariables)))
             newObject <- StQ(Data = newData, DD = newDD)
             IDQuals <- getIDQual(newObject, DDslot)
-
             newData <- dcast_StQ(newObject)[, c(IDQuals, newExprVariables, by), with = F]
             unitnewExprVariables <- IDDDToUnitNames(newExprVariables, newDD)
             setnames(newData, newExprVariables, unitnewExprVariables)

@@ -70,4 +70,3 @@ DD <- DD(VNC = VNC, ID = IDdt, MicroData = Microdt, ParaData = Paradt)
 show(DD)
 
 }
-
