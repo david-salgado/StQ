@@ -127,8 +127,8 @@ setMethod(
         MissingComp <- missing(CompNames)
         output <- lapply(object$Data, function(StQ){
             
-            if (MissingComp) LocalCompNames <- setdiff(names(getDD(StQ)), 'VNC')
-            out <- getIDQual(getDD(StQ), CompNames = LocalCompNames)
+            if (MissingComp) CompNames <- setdiff(names(getDD(StQ)), 'VNC')
+            out <- getIDQual(getDD(StQ), CompNames = CompNames)
             return(out)
         })
         return(output)
