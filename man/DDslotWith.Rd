@@ -4,7 +4,7 @@
 \name{DDslotWith}
 \alias{DDslotWith}
 \alias{DDslotWith,DD,character-method}
-\title{Return the slot of the input \linkS4class{DD} object containing the input variable names}
+\title{Return the slot of the input \linkS4class{DD} object containing the input variable name}
 \usage{
 DDslotWith(object, VarName, DDslot = "MicroData")
 
@@ -15,8 +15,8 @@ DDslotWith(object, VarName, DDslot = "MicroData")
 
 \item{VarName}{\code{Character} vector with the name of the variable.}
 
-\item{DDslot}{\code{Character} vector of length 1 with the name of DD slot in which variables in 
-VarName are defined (default value \code{MicroData}).}
+\item{DDslot}{\code{Character} vector of length 1 with the name of DD slot in which variable in 
+VarName is defined (default value \code{MicroData}).}
 }
 \value{
 Returns an object of class \linkS4class{DDdt} containing the input variable.

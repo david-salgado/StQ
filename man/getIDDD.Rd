@@ -14,7 +14,8 @@ getIDDD(object, CompNames = names(object))
 
 \S4method{getIDDD}{DD}(object, CompNames = setdiff(names(object), "VNC"))
 
-\S4method{getIDDD}{StQ}(object, CompNames = names(object))
+\S4method{getIDDD}{StQ}(object, CompNames = setdiff(names(getDD(object)),
+  "VNC"))
 }
 \arguments{
 \item{object}{Object whose IDDD identifiers in the slot \linkS4class{DD} are required.}

@@ -18,7 +18,7 @@ getPeriods(object)
 }
 \value{
 Character vector with the names of the time periods according to the notation of package
-\linkS4class{RepoTimeInt}.
+\linkS4class{RepoTime}.
 }
 \description{
 \code{getPeriods} returns a vector with the names of the time periods from the input
