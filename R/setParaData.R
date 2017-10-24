@@ -1,11 +1,11 @@
 #' @title Set value of slot \code{ParaData}
 #'
-#' @description \code{setParaData} assigns a \linkS4class{DDdt} to the slot \code{ParaData} of the 
-#' input object.
+#' @description \code{setParaData} assigns a \linkS4class{data.table} to the slot \code{ParaData} 
+#' of the input object.
 #'
 #' @param object Object whose slot \code{ParaData} is to be assigned.
 #'
-#' @param value \linkS4class{DDdt} to be assigned to the slot \code{ParaData}.
+#' @param value \linkS4class{data.table} to be assigned to the slot \code{ParaData}.
 #'
 #' @return Object with slot ParaData updated.
 #'

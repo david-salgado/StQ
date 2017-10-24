@@ -281,7 +281,7 @@ DD <- function(VNC = BuildVNC(),
       auxVar <- auxVar[auxVar != '']
       variablesVNC <- c(variablesVNC, auxVar)
     }
-    
+  
     if (length(variablesDD) > 0 & length(variablesVNC) == 0)stop('[StQ:: validity DD] The component VNC must be specified with the variables in the other components')
     varDDnotinVNC <- setdiff(variablesDD, variablesVNC)
     if (length(varDDnotinVNC) > 0) {

@@ -20,12 +20,12 @@ IDDDToUnitNames(IDDDNames, Correspondence)
 \linkS4class{StQ}).}
 }
 \value{
-\linkS4class{data.table} with the IDDD variable names and their corresponding production 
-unit names.
+\code{Character} vector with the production unit names and their corresponding IDDD
+variable names as the names of the vector.
 }
 \description{
-\code{IDDDToUnitNames} returns a data table with the production unit variable name 
-for each IDDD variable name.
+\code{IDDDToUnitNames} returns a character vector with the production unit variable  
+name for each IDDD variable name.
 }
 \examples{
 library(data.table)

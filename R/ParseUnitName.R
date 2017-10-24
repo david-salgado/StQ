@@ -1,7 +1,7 @@
 #' @title Produce a vector of file names parsed out of a pattern and a sequence of time period names
 #' 
 #' @description This function parses each component of a vector of file names with a pattern filling
-#'  out the corresponding codes with the input time periods.
+#'  out the corresponding codes with the input metavalues.
 #' 
 #' @param UnitNames Character vector with the names of the files to parse.
 #' 
@@ -9,7 +9,7 @@
 #' \linkS4class{integer}, ...) with the values of the metacharacters to be parsed.
 #' 
 #' @return Return a vector with each component of the input vector \code{UnitNames} parsed according
-#'  to the input parameter \code{TimePeriods}.
+#'  to the input parameter \code{MetaValues}.
 #' 
 #' @examples
 #' ParseUnitName(c('dat[mm][aa].sas7bdat'), RepoTime::newRepoTime(c('MM122015', 'MM012016', 'MM022016')))

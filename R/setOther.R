@@ -1,11 +1,11 @@
 #' @title Set value of slot \code{Other}
 #'
-#' @description \code{setOtherDD} assigns a \linkS4class{DDdt} to the slot \code{Other} of the input
-#'  object.
+#' @description \code{setOtherDD} assigns a \linkS4class{data.table} to the slot \code{Other} of the
+#' input object.
 #'
 #' @param object Object whose slot \code{Other} is to be assigned.
 #'
-#' @param value \linkS4class{DDdt} to be assigned to the slot \code{Other}.
+#' @param value \linkS4class{data.table} to be assigned to the slot \code{Other}.
 #'
 #' @return Object with slot \code{Other} updated.
 #'

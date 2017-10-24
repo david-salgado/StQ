@@ -24,11 +24,11 @@ ParseUnitName(UnitNames, MetaValues)
 }
 \value{
 Return a vector with each component of the input vector \code{UnitNames} parsed according
- to the input parameter \code{TimePeriods}.
+ to the input parameter \code{MetaValues}.
 }
 \description{
 This function parses each component of a vector of file names with a pattern filling
- out the corresponding codes with the input time periods.
+ out the corresponding codes with the input metavalues.
 }
 \examples{
 ParseUnitName(c('dat[mm][aa].sas7bdat'), RepoTime::newRepoTime(c('MM122015', 'MM012016', 'MM022016')))

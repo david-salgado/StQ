@@ -16,19 +16,19 @@ setData(object) <- value
 \arguments{
 \item{object}{Object whose slot \code{Data} is to be assigned.}
 
-\item{value}{\linkS4class{Datadt} to be assigned to the slot \code{Data}.}
+\item{value}{\linkS4class{data.table} to be assigned to the slot \code{Data}.}
 }
 \value{
 Object with slot Data updated.
 }
 \description{
-\code{setData} assigns a \linkS4class{Datadt} to the slot \code{Data} of the input
-object.
+\code{setData} assigns a \linkS4class{data.table} to the slot \code{Data} of the 
+input object.
 }
 \examples{
 # We build an empty data.table:
 library(data.table)
-Data <- new(Class = 'Datadt', data.table(IDDD = character(0), Value = numeric(0)))
+Data <- data.table(IDDD = character(0), Value = numeric(0))
 
 # We assign this data.table to the slot Data of object NewExampleStQ:
 data(ExampleStQ)
