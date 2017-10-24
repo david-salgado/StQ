@@ -9,8 +9,8 @@
 #' \linkS4class{data.table}.
 #'
 #' @return An object of class \linkS4class{DD} with components specified in the input parameter 
-#' \code{Data}. Components 'ID', 'MicroData' and/or 'ParaData' not being specified are set as an 
-#' empty \linkS4class{data.table}.
+#' \code{Data}. Components 'ID' and/or 'MicroData' not being specified are set as an empty
+#' \linkS4class{data.table}.
 #' 
 #'
 #' @examples
@@ -29,12 +29,12 @@
 #'                          Market = c(rep('', 2), '1.'),
 #'                          UnitName = c('numidest', '', 'cp09'),
 #'                          InFiles = rep('FF, FD, FG', 3)),
-#'  Aggregates = data.table(IDQual = c('Province', 'NACE', 'Market', ''),
+#'  Aggregates = data.table(IDQual = c('Province', 'NACE', 'MarketR', ''),
 #'                          NonIDQual = rep('', 4),
 #'                          IDDD = c('', '', '', 'TotalTurnover'),
 #'                          Province = c('', '', '', '.'),
 #'                          NACE = c('', '', '', '.'),
-#'                          Market = c('', '', '', '1.'),
+#'                          MarketR = c('', '', '', '1.'),
 #'                          UnitName = c('provincia', 'actividad', '', 'cn01'),
 #'                          InFiles = rep('FP', 4)))
 #'                      
@@ -156,7 +156,7 @@ BuildDD <- function(Data = list(ID = data.table(Variable = character(0),
     flag.data <- unique(unlist(lapply(Data, function(DT){dim(DT)[1]})))
     flag.data <- max(flag.data) > 0
     if (!'VNC' %in% RootCompNames & flag.data) stop('[StQ::BuildDD] The input parameter Data must have a component of class VNC.')
-    else Data$VNC <- VNC()
+    if (!'VNC' %in% RootCompNames & !flag.data) Data$VNC <- VNC()
     
     VarList <- list(VNC = Data[['VNC']], ID = IDdt, MicroData = MicroDatadt, ParaData = ParaDatadt,
                     Aggregates = AggrDatadt, AggWeights = AggWDatadt, Other = OtherDatadt)
