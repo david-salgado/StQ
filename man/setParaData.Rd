@@ -16,14 +16,14 @@ setParaData(object) <- value
 \arguments{
 \item{object}{Object whose slot \code{ParaData} is to be assigned.}
 
-\item{value}{\linkS4class{DDdt} to be assigned to the slot \code{ParaData}.}
+\item{value}{\linkS4class{data.table} to be assigned to the slot \code{ParaData}.}
 }
 \value{
 Object with slot ParaData updated.
 }
 \description{
-\code{setParaData} assigns a \linkS4class{DDdt} to the slot \code{ParaData} of the 
-input object.
+\code{setParaData} assigns a \linkS4class{data.table} to the slot \code{ParaData} 
+of the input object.
 }
 \examples{
 library(data.table)

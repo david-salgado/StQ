@@ -6,7 +6,7 @@
 #' \code{VarNames} renamed with the names in the input parameter \code{NewVarNames}. Variables are
 #' renamed in all slots. Old names are dropped out.
 #'
-#' @param object Input object.
+#' @param object Input object of class \linkS4class{StQ}.
 #'
 #' @param VarNames Character vector with the variable names to be renamed.
 #'

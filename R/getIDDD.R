@@ -108,10 +108,9 @@ setMethod(
 setMethod(
     f = "getIDDD",
     signature = c("StQ"),
-    function(object, CompNames){
+    function(object, CompNames = setdiff(names(getDD(object)), 'VNC')){
 
-        output <- unique(getData(object)[['IDDD']])
-        output <- output[output != '']
+        output <- getIDDD(getDD(object), CompNames)
         return(output)
     }
 )

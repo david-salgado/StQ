@@ -15,7 +15,7 @@ Invisible object of class \code{\link{NULL}}.
 }
 \description{
 The method \code{show} shows the slots of an object \linkS4class{VNC}
-limiting the number of columns on screen up to 10.
+limiting the number of columns on screen up to 8.
 
 It is indeed the method \link[methods]{show} adapted to the class \linkS4class{VNC}.
 }

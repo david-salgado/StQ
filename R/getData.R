@@ -18,7 +18,7 @@
 #' objects, but only with variables included in \code{VarNames}, as it is explained above.
 #'
 #' \item \code{rawStQ}: The input parameters are an object of class \linkS4class{rawStQ} and a
-#' character vector, \code{VarNames}, with variable names. It returns the \linkS4class{rawDatadt}
+#' character vector, \code{VarNames}, with variable names. It returns the \code{data.table}
 #' corresponding to slot \code{Data} of such an object, but only with variables included in
 #' \code{VarNames}.
 #'
@@ -31,10 +31,10 @@
 #' @param VarNames \code{Character} vector with the variable names subsetting the data set.
 #'
 #' @return In the case of \linkS4class{StQ}/\linkS4class{rawStQ} objects, it returns a
-#' \linkS4class{data.table}/\linkS4class{rawDatadt} with key-value pair structure corresponding to
-#' slot \code{Data} from the input object with the values of the variables restricted to variable
-#' names specified in \code{VarNames}. In the case of \linkS4class{StQList}/\linkS4class{rawStQList}
-#' objects, it returns a list of \linkS4class{StQ}/linkS4class{rawStQ} objects.
+#' \linkS4class{data.table} with key-value pair structure corresponding to slot \code{Data} from the
+#' input object with the values of the variables restricted to variable names specified in
+#' \code{VarNames}. In the case of \linkS4class{StQList}/\linkS4class{rawStQList} objects, it
+#' returns a list of \linkS4class{StQ}/linkS4class{rawStQ} objects.
 #'
 #' @examples
 #' # From an StQ object

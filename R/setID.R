@@ -1,10 +1,11 @@
 #' @title Set value of slot \code{ID} of an object \linkS4class{DD}
 #'
-#' @description \code{setID} assigns a \linkS4class{DDdt} to the slot \code{ID} of the input object.
+#' @description \code{setID} assigns a \linkS4class{data.table} to the slot \code{ID} of the input
+#' object.
 #'
 #' @param object Object containing slot \code{ID} to be assigned.
 #'
-#' @param value \linkS4class{DDdt} to be assigned to the slot \code{ID}.
+#' @param value \linkS4class{data.table} to be assigned to the slot \code{ID}.
 #'
 #' @return Object \linkS4class{DD} with slot \code{ID} updated.
 #'

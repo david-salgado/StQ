@@ -6,7 +6,7 @@
 #' @param object Object of class \linkS4class{rawStQList} or \linkS4class{StQList}.
 #'
 #' @return Character vector with the names of the time periods according to the notation of package
-#' \linkS4class{RepoTimeInt}.
+#' \linkS4class{RepoTime}.
 #'   
 #' @examples
 #' mm <- c(paste0('0', 1:9), 10:12)

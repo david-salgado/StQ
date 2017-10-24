@@ -6,14 +6,14 @@
 #' This method returns the same input object with those variables specified in the input parameter
 #' \code{VarNames} removed from the data set.
 #'
-#' @param object Input object to remove the variables from.
+#' @param object Input object of class \linkS4class{StQ} to remove the variables from.
 #'
 #' @param VarNames Character vector with the variable names to remove.
 #'
-#' @include StQ.R ExtractNames.R getData.R setData.R
-#'
 #' @return Object with the same class as the input object but where the variables in \code{VarNames}
 #' have been removed. Variables are removed only from slot \code{Data}.
+#' 
+#' @include StQ.R ExtractNames.R getData.R setData.R
 #'
 #' @examples
 #' data(ExampleStQ)

@@ -1,15 +1,15 @@
 #' @title Convert IDDD variable names into their corresponding production unit names
 #'
-#' @description \code{IDDDToUnitNames} returns a data table with the production unit variable name 
-#' for each IDDD variable name.
+#' @description \code{IDDDToUnitNames} returns a character vector with the production unit variable  
+#' name for each IDDD variable name.
 #' 
 #' @param IDDDNames Character vector with the IDDD variables.
 #' 
 #' @param Correspondence Object with the IDDD variable identifiers (of class \linkS4class{DD} or 
 #' \linkS4class{StQ}).
 #' 
-#' @return \linkS4class{data.table} with the IDDD variable names and their corresponding production 
-#' unit names.
+#' @return \code{Character} vector with the production unit names and their corresponding IDDD
+#' variable names as the names of the vector.
 #'
 #' @examples
 #' library(data.table)

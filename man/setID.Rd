@@ -16,13 +16,14 @@ setID(object) <- value
 \arguments{
 \item{object}{Object containing slot \code{ID} to be assigned.}
 
-\item{value}{\linkS4class{DDdt} to be assigned to the slot \code{ID}.}
+\item{value}{\linkS4class{data.table} to be assigned to the slot \code{ID}.}
 }
 \value{
 Object \linkS4class{DD} with slot \code{ID} updated.
 }
 \description{
-\code{setID} assigns a \linkS4class{DDdt} to the slot \code{ID} of the input object.
+\code{setID} assigns a \linkS4class{data.table} to the slot \code{ID} of the input
+object.
 }
 \examples{
 library(data.table)

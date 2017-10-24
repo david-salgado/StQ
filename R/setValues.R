@@ -6,10 +6,10 @@
 #' \code{Value}. If the variable is already present in the input variable, the method overwrites it.
 #'
 #' It is also necessary to provide as input parameter an object of class \linkS4class{DD} named 
-#' \code{DDnl} with the row corresponding to the variable set with this method to be included in the
-#'  slot \code{DD}. This row is specified as a \linkS4class{DDdt} with a single row and columns 
-#'  Variable, Sort, Class, Qual1-Qualn (as many as so many qualifiers are necessary) and ValueRegExp
-#' .
+#' \code{newDD} with the row corresponding to the variable set with this method to be included in
+#' the slot \code{DD}. This row is specified as a \linkS4class{data.table} with a single row and 
+#' columns Variable, Sort, Class, Qual1-Qualn (as many as so many qualifiers are necessary) and
+#' ValueRegExp.
 #'
 #' Input parameters \code{by} and \code{lag} are optional and specify how to compute the values of 
 #' the new variable in some circunstamces.
