@@ -5,8 +5,7 @@
 \alias{StQTorawStQ}
 \alias{StQTorawStQ,StQ-method}
 \alias{StQTorawStQ,StQList-method}
-\title{Generates an object of class \linkS4class{rawStQ} from the input
-\linkS4class{StQ} object.}
+\title{Generates an object of class \linkS4class{rawStQ} from the input \linkS4class{StQ} object.}
 \usage{
 StQTorawStQ(Q)
 
@@ -15,16 +14,15 @@ StQTorawStQ(Q)
 \S4method{StQTorawStQ}{StQList}(Q)
 }
 \arguments{
-\item{Q}{Object of class \linkS4class{StQ} whose slot Data has at least the 
-columns \code{IDDD} and \code{Value}.}
+\item{Q}{Object of class \linkS4class{StQ} whose slot Data has at least the columns \code{IDDD}
+and \code{Value}.}
 }
 \value{
-Object of class \linkS4class{rawStQ} whose slot Data has the
-key-value pair structure.
+Object of class \linkS4class{rawStQ} whose slot Data has the key-value pair structure.
 }
 \description{
-\code{StQTorawStQ} returns an object of class
-\linkS4class{rawStQ} from the input\linkS4class{StQ} object.
+\code{StQTorawStQ} returns an object of class \linkS4class{rawStQ} from the input
+\linkS4class{StQ} object.
 }
 \examples{
 data(ExampleStQ)
