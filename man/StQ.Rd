@@ -12,8 +12,8 @@ Definition of an S4 class named \code{StQ} for sets of standardized questionnair
 
 The structure of the class \code{StQ} comprises 2 attributes:
 \itemize{
-\item The attribute \code{Data}, which is an object of class \linkS4class{Datadt}, that is, a 
-\linkS4class{data.table} with at least the columns \code{IDDD} and \code{Value}.
+\item The attribute \code{Data}, which is an object of class \linkS4class{data.table} with at
+least the columns \code{IDDD} and \code{Value}.
 
 \item The attribute \code{DD}, which is an object of class \linkS4class{DD}. It basically 
 contains the definition and properties of each variable.
@@ -24,10 +24,11 @@ Every variable name in the attribute \code{Data} must be present in the attribut
 \section{Slots}{
 
 \describe{
-\item{\code{Data}}{Object of class \linkS4class{Datadt}. It must have at least two columns: \code{IDDD} 
-and \code{Value}. It contains all statistical variables (including some metadata) together with 
-their corresponding values. If \code{Data} is not specified as an input parameter, an empty
-\linkS4class{Datadt} object with columns \code{IDDD} and \code{Value} will be initiated.}
+\item{\code{Data}}{Object of class \linkS4class{data.table}. It must have at least two columns:
+\code{IDDD} and \code{Value}. It contains all statistical variables (including some metadata) 
+together with their corresponding values. If \code{Data} is not specified as an input parameter,
+an empty \linkS4class{data.table} object with columns \code{IDDD} and \code{Value} will be
+initiated.}
 
 \item{\code{DD}}{Object of class \linkS4class{DD} with the definition and properties of all variables. If
 \code{DD} is not specified as an input parameter, an empty \linkS4class{DD} object with columns 
