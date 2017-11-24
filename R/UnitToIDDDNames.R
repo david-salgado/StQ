@@ -9,8 +9,8 @@
 #' @param Correspondence Object with the IDDD variable name.
 #'
 #' @return Returns a \code{character} vector with all the corresponding IDDD variable names. For
-#' objects the classes \linkS4class{DD} and \linkS4class{StQ} it returns the IDDD in the slot VarNameCorresp of the
-#' corresponding DD object.
+#' objects the classes \link{DD} and \link{StQ} it returns the IDDD in the slot 
+#' VarNameCorresp of the corresponding DD object.
 #'
 #' @details IDDD and qualifiers compose together the so-called IDDDname of the variable by pasting
 #' the IDDD identifier and each consecutive qualifier with an underscore _.
@@ -95,11 +95,12 @@
 #'           ParaData = Paradt,
 #'           Aggregates = Aggdt)
 #'
-#' StQ <- new(Class = 'StQ', Data = new(Class = 'Datadt'), DD = DD)
-#'
 #' UnitToIDDDNames(DD, UnitNames = c('cn01', 'cp09'))
 #'
-#' UnitToIDDDNames(StQ, UnitNames = c('cn01', 'provincia', 'cp09'))
+#' # An example for StQ objects:
+#' data(ExampleStQ)
+#' UnitToIDDDNames(ExampleStQ, UnitNames = c('cnae09','C11','C121','C122' , 'EXISTENCIAS', 'B1'))
+#' 
 #'
 #' @include getIDQual.R VNC.R DD.R BuildVNC.R BuildDD.R StQ.R getDD.R
 #' 

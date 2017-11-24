@@ -1,8 +1,9 @@
-#' @title S4 class with the data dictionary (variable specifications)
+#' @title S3 class with the data dictionary (variable specifications)
 #'
-#' @description Definition of an S4 class named \code{DD} with the specification of each variable.
+#' @description Definition of an S3 class named \code{DD} with the specification of each variable.
 #'
-#' The class \code{DD} comprises a slot of class \linkS4class{VarNameCorresp} and slots of class 
+#' The class \code{DD} comprises a \linkS{list} whose first component is an object of class 
+#' \linkS4class{VarNameCorresp} and name \code{VNC} and the rest of components are objects of class 
 #' \linkS4class{data.table} of names \code{ID}, \code{MicroData}, \code{ParaData}, 
 #' \code{Aggregates}, \code{AggWeights}, \code{Other}.
 #'

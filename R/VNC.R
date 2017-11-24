@@ -1,11 +1,11 @@
 #' @title S3 class object constructor for the correspondence between variable names
 #'
-#' @description Definition of an S3 class named \linkS4class{VarNameCorresp} with the correspondence 
+#' @description Definition of an S3 class named \link{VarNameCorresp} with the correspondence 
 #' between variable names used by the different production unit for a given statistical variable and
 #' variable names according to the key-value pair data model with qualifiers given by statistical 
 #' metadata.
 #'
-#' The class \linkS4class{VarNameCorresp} comprises a \linkS4class{list} whose components are 
+#' The class \link{VarNameCorresp} comprises a \link{list} whose components are 
 #' \linkS4class{data.table}s with a row per each variable and the following columns:
 #'
 #' \itemize{
