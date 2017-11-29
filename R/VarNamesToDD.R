@@ -1,13 +1,13 @@
-#' @title Return a reduced \linkS4class{DD} involving the input variable names
+#' @title Return a reduced \link{DD} involving the input variable names
 #'
-#' @description \code{VarNamesToDD} returns a \linkS4class{DD} object including only the variable 
+#' @description \code{VarNamesToDD} returns a \link{DD} object including only the variable 
 #' names specified in the input parameter \code{VarNames}.
 #'
-#' @param VarNames Character vector with the compound variable names.
+#' @param VarNames Character vector with the compound variable names (IDDD names).
 #'
-#' @param DD Object of class \linkS4class{DD} with the definition and properties of the variables.
+#' @param DD Object of class \link{DD} with the definition and properties of the variables.
 #'
-#' @return \linkS4class{DD} involving only the compound variable names specified in the input 
+#' @return An object of class \linkS{DD} involving only the compound variable names specified in the input 
 #' parameter \code{VarNames}.
 #'
 #'
@@ -16,7 +16,7 @@
 #' data(ExampleDD)          
 #' VarNamesToDD(VarNames, ExampleDD)
 #'  
-#' VarNames <- c('ID', 'Turnover', 'EmplType', 'Employees')
+#' VarNames <- c('Turnover', 'Employees', 'NACE09', 'Stocks')
 #' VarNamesToDD(VarNames, ExampleDD)                     
 #' 
 #' @include ExtractNames.R setVNC.R getVNC.R DD.R getVariables.R setID.R setMicroData.R setAggregates.R setAggWeights.R setOther.R 
@@ -51,7 +51,7 @@ VarNamesToDD <- function(VarNames, DD){
                 ColNames.DT <- names(Names.DT)
                 nQual <- length(grep('Qual', ColNames.DT)) 
                 
-                if (nQual >1) {
+                if (nQual > 1) {
                     
                     setnames(Names.DT, c('Variable', 'Sort', 'Class', 'Length', paste0('Qual', 1:nQual), 'ValueRegExp'))
                 

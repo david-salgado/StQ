@@ -39,7 +39,8 @@ initiated.}
 \examples{
 library(data.table)
 data(ExampleDD)
-data(ExampleDatadt)
+data(ExampleStQ)
+ ExampleData <- getData(ExampleStQ)
 Q <- new(Class = 'StQ', Data = ExampleDatadt, DD = ExampleDD)
 Q
 # Notice that only the slot Data appears on screen, but the object is not a Datadt data.table:

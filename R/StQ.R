@@ -1,34 +1,30 @@
-#' @title S4 class for sets of \emph{St}andarized \emph{Q}uestionnaires
+#' @title S3 class for sets of \emph{St}andarized \emph{Q}uestionnaires
 #'
-#' @description Definition of an S4 class named \code{StQ} for sets of standardized questionnaires.
+#' @description Definition of an S3 class named \code{StQ} for sets of standardized questionnaires.
 #'
-#' The structure of the class \code{StQ} comprises 2 attributes:
+#' The structure of the class \code{StQ} comprises a \linkS4class{list} with 2 components:
 #' \itemize{
-#' \item The attribute \code{Data}, which is an object of class \linkS4class{data.table} with at
-#' least the columns \code{IDDD} and \code{Value}.
+#' \item the component \code{Data}, which is an object of class \linkS4class{data.table} with at
+#' least two columns: \code{IDDD} and \code{Value}. It contains all statistical variables (including 
+#' some metadata) together with their corresponding values. If \code{Data} is not specified as an 
+#' input parameter, an empty \linkS4class{data.table} object with columns \code{IDDD} and 
+#' \code{Value} will be initiated.
 #'
-#' \item The attribute \code{DD}, which is an object of class \linkS4class{DD}. It basically 
-#' contains the definition and properties of each variable.
+#' \item the component \code{DD}, which is an object of class \linkS4class{DD}. with the definition 
+#' and properties of all variables. If \code{DD} is not specified as an input parameter, an empty 
+#' \linkS4class{DD} object with columns \code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} and
+#' \code{ValueRegExp} will be initiated.
 #' }
 #'
-#' Every variable name in the attribute \code{Data} must be present in the attribute \code{DD}.
+#' Every variable name in the component \code{Data} must be present in the component \code{DD}.
 #'
-#' @slot Data Object of class \linkS4class{data.table}. It must have at least two columns:
-#' \code{IDDD} and \code{Value}. It contains all statistical variables (including some metadata) 
-#' together with their corresponding values. If \code{Data} is not specified as an input parameter,
-#' an empty \linkS4class{data.table} object with columns \code{IDDD} and \code{Value} will be
-#' initiated.
-#'
-#' @slot DD Object of class \linkS4class{DD} with the definition and properties of all variables. If
-#'  \code{DD} is not specified as an input parameter, an empty \linkS4class{DD} object with columns 
-#'  \code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} and \code{ValueRegExp} will be 
-#'  initiated.
 #' 
 #' @examples
 #' library(data.table)
 #' data(ExampleDD)
-#' data(ExampleDatadt)
-#' Q <- new(Class = 'StQ', Data = ExampleDatadt, DD = ExampleDD)
+#' data(ExampleStQ)
+#' ExampleData <- getData(ExampleStQ)
+#' Q <- StQ(Data = ExampleData, DD = ExampleDD)
 #' Q
 #' # Notice that only the slot Data appears on screen, but the object is not a Datadt data.table:
 #' str(Q)

@@ -8,9 +8,9 @@
 #'
 #' @param Correspondence Object with the IDDD variable name.
 #'
-#' @return Returns a \linkS4class{data.table} with all the corresponding IDDD variable names. For
-#' objects the classes \linkS4class{DD} and \linkS4class{StQ} it returns the IDDD the slot VarNameCorresp of the
-#' corresponding DD object.
+#' @return Returns a \code{character} vector with all the corresponding IDDD variable names. For
+#' objects the classes \link{DD} and \link{StQ} it returns the IDDD in the slot 
+#' VarNameCorresp of the corresponding DD object.
 #'
 #' @details IDDD and qualifiers compose together the so-called IDDDname of the variable by pasting
 #' the IDDD identifier and each consecutive qualifier with an underscore _.
@@ -56,13 +56,13 @@
 #' VNC <- BuildVNC(VarList)
 #'
 #' ### We build the specification data.tables
-#' IDdt <- new(data.table(
+#' IDdt <- data.table(
 #'                      Variable = c('NumIdEst', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
 #'                      Sort = c('IDQual', rep('IDDD', 4)),
 #'                      Class = rep('character', 5),
 #'                      Length = c('11', '25', '25', '50', '9'),
 #'                      Qual1 = c('', rep('NumIdEst', 4)),
-#'                      ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}')))
+#'                      ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}'))
 #' Microdt <- data.table(
 #'                      Variable = c('NumIdEst', 'Market', 'NewOrders'),
 #'                      Sort = c('IDQual', 'NonIDQual', 'IDDD'),
@@ -70,7 +70,7 @@
 #'                      Length = c('11', '2', '7'),
 #'                      Qual1 = c(rep('', 2), 'NumIdEst'),
 #'                      Qual2 = c(rep('', 2), 'Market'),
-#'                      ValueRegExp = c('[0-9]{9}PP', '(0|1| )', '([0-9]{1, 10}| )')))
+#'                      ValueRegExp = c('[0-9]{9}PP', '(0|1| )', '([0-9]{1, 10}| )'))
 #' Paradt <- data.table(
 #'                      Variable = c('NumIdEst', 'Action', 'Date'),
 #'                      Sort = c('IDQual', 'NonIDQual', 'IDDD'),
@@ -79,8 +79,7 @@
 #'                      Qual1 = c(rep('', 2), 'NumIdEst'),
 #'                      Qual2 = c(rep('', 2), 'Action'),
 #'                      ValueRegExp = c('[0-9]{9}PP', 'Collection|Editing|Imputation',
-#'                      '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )')
-#' ))
+#'                      '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )'))
 #' Aggdt <- data.table(
 #'                      Variable = c('Province', 'NACE09', 'Turnover'),
 #'                      Sort = c(rep('IDQual', 2), 'IDDD'),
@@ -96,11 +95,12 @@
 #'           ParaData = Paradt,
 #'           Aggregates = Aggdt)
 #'
-#' StQ <- new(Class = 'StQ', Data = new(Class = 'Datadt'), DD = DD)
-#'
 #' UnitToIDDDNames(DD, UnitNames = c('cn01', 'cp09'))
 #'
-#' UnitToIDDDNames(StQ, UnitNames = c('cn01', 'provincia', 'cp09'))
+#' # An example for StQ objects:
+#' data(ExampleStQ)
+#' UnitToIDDDNames(ExampleStQ, UnitNames = c('cnae09','C11','C121','C122' , 'EXISTENCIAS', 'B1'))
+#' 
 #'
 #' @include getIDQual.R VNC.R DD.R BuildVNC.R BuildDD.R StQ.R getDD.R
 #' 
