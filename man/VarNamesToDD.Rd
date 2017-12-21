@@ -2,21 +2,21 @@
 % Please edit documentation in R/VarNamesToDD.R
 \name{VarNamesToDD}
 \alias{VarNamesToDD}
-\title{Return a reduced \linkS4class{DD} involving the input variable names}
+\title{Return a reduced \link{DD} involving the input variable names}
 \usage{
 VarNamesToDD(VarNames, DD)
 }
 \arguments{
-\item{VarNames}{Character vector with the compound variable names.}
+\item{VarNames}{Character vector with the compound variable names (IDDD names).}
 
-\item{DD}{Object of class \linkS4class{DD} with the definition and properties of the variables.}
+\item{DD}{Object of class \link{DD} with the definition and properties of the variables.}
 }
 \value{
-\linkS4class{DD} involving only the compound variable names specified in the input 
+An object of class \linkS{DD} involving only the compound variable names specified in the input 
 parameter \code{VarNames}.
 }
 \description{
-\code{VarNamesToDD} returns a \linkS4class{DD} object including only the variable 
+\code{VarNamesToDD} returns a \link{DD} object including only the variable 
 names specified in the input parameter \code{VarNames}.
 }
 \examples{
@@ -24,7 +24,7 @@ VarNames <- c('Turnover')
 data(ExampleDD)          
 VarNamesToDD(VarNames, ExampleDD)
  
-VarNames <- c('ID', 'Turnover', 'EmplType', 'Employees')
+VarNames <- c('Turnover', 'Employees', 'NACE09', 'Stocks')
 VarNamesToDD(VarNames, ExampleDD)                     
 
 }

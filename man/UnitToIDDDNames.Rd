@@ -20,8 +20,8 @@ UnitToIDDDNames(UnitNames, Correspondence)
 }
 \value{
 Returns a \code{character} vector with all the corresponding IDDD variable names. For
-objects the classes \linkS4class{DD} and \linkS4class{StQ} it returns the IDDD in the slot VarNameCorresp of the
-corresponding DD object.
+objects the classes \link{DD} and \link{StQ} it returns the IDDD in the slot 
+VarNameCorresp of the corresponding DD object.
 }
 \description{
 \code{UnitToIDDDNames} returns a \linkS4class{data.table} with the statistical
@@ -112,10 +112,11 @@ DD <- DD(VNC = VNC,
           ParaData = Paradt,
           Aggregates = Aggdt)
 
-StQ <- new(Class = 'StQ', Data = new(Class = 'Datadt'), DD = DD)
-
 UnitToIDDDNames(DD, UnitNames = c('cn01', 'cp09'))
 
-UnitToIDDDNames(StQ, UnitNames = c('cn01', 'provincia', 'cp09'))
+# An example for StQ objects:
+data(ExampleStQ)
+UnitToIDDDNames(ExampleStQ, UnitNames = c('cnae09','C11','C121','C122' , 'EXISTENCIAS', 'B1'))
+
 
 }
