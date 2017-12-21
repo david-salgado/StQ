@@ -24,13 +24,14 @@
 #' 
 #' @param Value Vector of length the number of statistical units in the input object with the values
 #'  of the new variable for each of these units or alternatively an object of class 
-#'  \code{\link{expression}} with a mathematical formula for the computation of these values.
+#'  \code{\link{call}} with a mathematical formula for the computation of these values.
 #'
 #' @param by Character vector with the names of the variables specifying those statistical units 
-#' groups under which the mathematical formula will be applied.
+#' groups under which the mathematical formula will be applied. Its default value is \code{NULL}.
 #'
 #' @param lag Integer vector of length 1 with the lag to use when the input object is of class 
-#' \linkS4class{StQList}.
+#' \linkS4class{StQList}. Its default value is \code{NULL}. If its value is not \code{NULL}, it is
+#' not possible to use an object of class \code{\link{call}} in "Value".
 #'
 #' @return Object of the same class as the input object with the new variable included.
 #'
@@ -108,15 +109,17 @@ setMethod(
             stop('[StQ::setValues] Value must be a vector of values or an object of class expression.')
         }
 
-        if (!class(Value) %in% c('expression', 'integer', 'numeric', 'character', 'logical')){
+        if (!class(Value) %in% c('call', 'integer', 'numeric', 'character', 'logical')){
             
-            stop('[StQ::setValues] Value must be an atomic vector or of class expression.')
+            stop('[StQ::setValues] Value must be an atomic vector or of class call')
         }
         
         Data <- getData(object)
-        if (is.expression(Value)) {
-            
-            QuotedValue <- substitute(Value)
+        
+        if (is.call(Value)){ 
+           
+            QuotedValue <- deparse(Value[[1]])
+            QuotedValue <- gsub('\"', '', QuotedValue)
             subQuotedValue <- gsub('-', 'DasH', QuotedValue)
             subQuotedValue <- gsub('.', 'DoT', subQuotedValue, fixed = TRUE)
             subQuotedValue <- gsub(':', 'CoLoN', subQuotedValue)
@@ -125,16 +128,10 @@ setMethod(
             ExprVariables <- gsub('DoT', '.', ExprVariables)
             ExprVariables <- gsub('CoLoN', ':', ExprVariables)
             ExprVariables <- gsub('DasH', '-', ExprVariables)
+
             IDDD <- getIDDD(object)
             indexVar <- which(ExtractNames(ExprVariables) %in% IDDD)
             ExprVariables <- ExprVariables[indexVar]
-
-            #ExprVariables <- unlist(lapply(ExprVariables, function(x){
-            
-            #    ifelse(ExtractNames(x) %in% unique(Data[['IDDD']]), x, NULL)
-            
-            #}))
-
             newVNC <- getVNC(newDD)[[DDslot]][IDDD != '']
             NewUnitName <- newVNC[['UnitName']]
             NewIDDDName <- UnitToIDDDNames(NewUnitName, newDD)
@@ -156,38 +153,52 @@ setMethod(
             UnitQuotedValue <- QuotedValue
             for (indexVar in seq(along = newUnitNames)){
                 
-                UnitQuotedValue <- gsub(ExprVariables[indexVar], newUnitNames[indexVar], UnitQuotedValue)
+                UnitQuotedValue <- sub(ExprVariables[indexVar], newUnitNames[indexVar], UnitQuotedValue)
                     
             }
             
             newData <- getData(object, unique(ExtractNames(newExprVariables)))
+            
+            
             newObject <- StQ(Data = newData, DD = newDD)
             IDQuals <- getIDQual(newObject, DDslot)
-            newData <- dcast_StQ(newObject)[, c(IDQuals, newExprVariables, by), with = F]
-            unitnewExprVariables <- IDDDToUnitNames(newExprVariables, newDD)
-            setnames(newData, newExprVariables, unitnewExprVariables)
-          
-            Value <- parse(text = UnitQuotedValue)
-
-            if (is.null(by)){
+            
+            newObject.dt <- dcast_StQ(newObject)
+            if (length(intersect(names(newObject.dt), newExprVariables)) == length(newExprVariables)){
+              
+              newData <- newObject.dt[, unique(c(IDQuals, newExprVariables, by)), with = F]
+              unitnewExprVariables <- IDDDToUnitNames(newExprVariables, newDD)
+              setnames(newData, newExprVariables, unitnewExprVariables)
+              
+              Value <- parse(text = UnitQuotedValue)
+              
+              if (is.null(by)){
                 
                 newData[, Value := eval(Value)]
                 
-            } else {
+              } else {
                 
                 setkeyv(newData, by)
                 newData[, Value := eval(Value), by = eval(by)]
+                
+              }
+              
+              setnames(newData, unitnewExprVariables, newExprVariables)
+              newData[, (newExprVariables) := NULL]
+              newData[, IDDD := ExtractNames(NewIDDDName)]
+              newData <- merge(newData, NewVardt, all.x = TRUE)
+              setcolorder(newData,
+                          c(setdiff(names(newData), c('Value', 'IDDD')),
+                            'IDDD', 'Value'))
+              newObject <- StQ(Data = newData, DD = newDD)
+              output <- object + newObject
+              
+            } else {
+              
+              setDD(object) <- newDD
+              output <- object
             }
 
-            setnames(newData, unitnewExprVariables, newExprVariables)
-            newData[, (newExprVariables) := NULL]
-            newData[, IDDD := ExtractNames(NewIDDDName)]
-            newData <- merge(newData, NewVardt, all.x = TRUE)
-            setcolorder(newData,
-                        c(setdiff(names(newData), c('Value', 'IDDD')),
-                          'IDDD', 'Value'))
-            newObject <- StQ(Data = newData, DD = newDD)
-            output <- object + newObject
             
         } else {
             
@@ -229,15 +240,43 @@ setMethod(
         
         Object.List <- getData(object)
         mc <- match.call()
-        output <- lapply(names(Object.List), function(PeriodName){
-            
-            cat(paste0('  [StQ::setValues] Setting values for time period ', PeriodName, '... '))
-            Localmc <- mc
-            Localmc[['object']] <- Object.List[[PeriodName]]
-            LocalOutput <- eval(Localmc)
-            cat(' ok.\n')
-            return(LocalOutput)
+
+        output <- lapply(seq(along = Object.List), function(i){
+          
+         cat(paste0('  [StQ::setValues] Setting values for time period ', names(Object.List)[i], '... '))
+         Localmc <- mc
+          
+         if (!is.null(lag)){
+             
+             if (i <= lag){
+               
+               LocalOutput <- Object.List[[i]]
+               DD.Aux <- getDD(LocalOutput)
+               DD.Aux <- DD.Aux + newDD
+               setDD(LocalOutput) <- DD.Aux
+             } else {
+               
+               LocalOutput.init <- Object.List[[i]]
+               Localmc[['object']] <- Object.List[[(i - lag)]]
+               Localmc[['Value']] <- getValues(Object.List[[(i - lag)]], Value)[[Value]]
+               LocalOutputAux <- eval(Localmc)
+               DD.Aux <- getDD(LocalOutputAux)
+               setDD(LocalOutput.init) <- DD.Aux
+               Var <- newDD[[DDslot]][Sort == 'IDDD'][['Variable']]
+               LocalOutputAux.Data <- getData(LocalOutputAux, c(getIDQual(LocalOutputAux), Var))
+               LocalOutputAux <- StQ(LocalOutputAux.Data, DD.Aux)
+               LocalOutput <- LocalOutput.init + LocalOutputAux
+             }
+           
+         } else {
+           
+           Localmc[['object']] <- Object.List[[i]]
+           LocalOutput <- eval(Localmc)
+         }
+          cat(' ok.\n')
+          return(LocalOutput)
         })
+       
         cat('  [StQ::setValues] Building StQList object ...')
         names(output) <- names(Object.List)
         output <- BuildStQList(output)
