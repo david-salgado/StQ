@@ -6,7 +6,7 @@
 \alias{getDoubleDotQual,VNC-method}
 \alias{getDoubleDotQual,DD-method}
 \alias{getDoubleDotQual,StQ-method}
-\title{Return non-unit qualifiers used in compound variable names}
+\title{Return qualifiers used in compound variable names}
 \usage{
 getDoubleDotQual(object, Component = names(object))
 
@@ -26,7 +26,7 @@ are required.}
 \code{Character} vector with all the double dot qualifier names.
 }
 \description{
-\code{getDoubleDotQual} returns a character vector with all non-unit qualifier names 
+\code{getDoubleDotQual} returns a character vector with all qualifier names 
 specified with a double wildcard dot in the VNC component of the input object.
 }
 \examples{
