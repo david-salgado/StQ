@@ -26,8 +26,8 @@ are required.}
 \code{Character} vector with all the dot qualifier names.
 }
 \description{
-\code{getDotQual} returns a character vector with all non-unit qualifier names 
-specified with a wildcard dot in the VNC component of the input object.
+\code{getDotQual} returns a character vector with all qualifier names specified with
+a wildcard dot in the VNC component of the input object.
 }
 \examples{
 library(data.table)

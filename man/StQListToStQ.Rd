@@ -4,7 +4,7 @@
 \name{StQListToStQ}
 \alias{StQListToStQ}
 \alias{StQListToStQ,StQList-method}
-\title{Method to transform an \linkS4class{StQList} object into a list of StQs objects}
+\title{Method to transform an \linkS4class{StQList} object into a StQ object}
 \usage{
 StQListToStQ(object)
 
@@ -14,13 +14,13 @@ StQListToStQ(object)
 \item{object}{Object of class \linkS4class{StQList} to be transformed.}
 }
 \value{
-a list of objects of class \linkS4class{StQ}.
+object of class \linkS4class{StQ}.
 }
 \description{
-\code{StQListToStQ} transform an \linkS4class{StQList} object into a list of StQs 
-objects with a new variable "Period" to take into account the interval period times related to 
+\code{StQListToStQ} transform an \linkS4class{StQList} object into a StQ object 
+with a new variable "Period" to take into account the interval period times related to 
 \linkS4class{StQList} object.
 
-This method creates a variable with the name \code{Period} in Data slots with the period related
-to each Data and adds this variable to each DD slot of the new StQs objects.
+This method creates a variable with the name \code{Period} in Data slot with the period related
+to each Data and adds this variable to DD slot of the new StQ object.
 }

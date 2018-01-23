@@ -1,7 +1,7 @@
 #' @title Return non-unit qualifiers not used in compound variable names
 #'
-#' @description \code{getDotQual} returns a character vector with all non-unit qualifier names 
-#' specified with a wildcard dot in the VNC component of the input object.
+#' @description \code{getDotQual} returns a character vector with all qualifier names specified with
+#' a wildcard dot in the VNC component of the input object.
 #'
 #' @param object Object containing the dot qualifiers.
 #'

@@ -35,7 +35,9 @@ setMethod(
     NotValidComp <- DDslot[!DDslot %chin% ValidComp]
     if(!DDslot %in% ValidComp) stop(paste0('[StQ::getUnits] The input parameter ', NotValidComp, ' is not a valid DD slot in the input StQ object.\n'))
     IDQual <- getIDQual(object, DDslot)
-    output <- getData(object)[, IDQual, with = F]
+    output <- getData(object)
+    IDQual <- intersect(IDQual, names(output))
+    output <- output[, IDQual, with = F]
     if (dim(output)[1] == 0) return(output)
     setkeyv(output, IDQual)
     output <- output[!duplicated(output, by = key(output))]
