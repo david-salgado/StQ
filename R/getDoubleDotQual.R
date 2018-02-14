@@ -1,6 +1,6 @@
-#' @title Return non-unit qualifiers used in compound variable names
+#' @title Return qualifiers used in compound variable names
 #'
-#' @description \code{getDoubleDotQual} returns a character vector with all non-unit qualifier names 
+#' @description \code{getDoubleDotQual} returns a character vector with all qualifier names 
 #' specified with a double wildcard dot in the VNC component of the input object.
 #'
 #' @param object Object containing the dot qualifiers.
