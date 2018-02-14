@@ -27,13 +27,14 @@ variable is defined. Its default value is \code{MicroData}.}
 
 \item{Value}{Vector of length the number of statistical units in the input object with the values
 of the new variable for each of these units or alternatively an object of class 
-\code{\link{expression}} with a mathematical formula for the computation of these values.}
+\code{\link{call}} with a mathematical formula for the computation of these values.}
 
 \item{lag}{Integer vector of length 1 with the lag to use when the input object is of class 
-\linkS4class{StQList}.}
+\linkS4class{StQList}. Its default value is \code{NULL}. If its value is not \code{NULL}, it is
+not possible to use an object of class \code{\link{call}} in "Value".}
 
 \item{by}{Character vector with the names of the variables specifying those statistical units 
-groups under which the mathematical formula will be applied.}
+groups under which the mathematical formula will be applied. Its default value is \code{NULL}.}
 }
 \value{
 Object of the same class as the input object with the new variable included.

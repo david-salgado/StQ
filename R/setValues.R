@@ -152,13 +152,12 @@ setMethod(
             newUnitNames <- IDDDToUnitNames(newExprVariables, newDD)
             UnitQuotedValue <- QuotedValue
             for (indexVar in seq(along = newUnitNames)){
-                
+
                 UnitQuotedValue <- sub(ExprVariables[indexVar], newUnitNames[indexVar], UnitQuotedValue)
-                    
+
             }
             
             newData <- getData(object, unique(ExtractNames(newExprVariables)))
-            
             
             newObject <- StQ(Data = newData, DD = newDD)
             IDQuals <- getIDQual(newObject, DDslot)
@@ -169,9 +168,9 @@ setMethod(
               newData <- newObject.dt[, unique(c(IDQuals, newExprVariables, by)), with = F]
               unitnewExprVariables <- IDDDToUnitNames(newExprVariables, newDD)
               setnames(newData, newExprVariables, unitnewExprVariables)
-              
+           
               Value <- parse(text = UnitQuotedValue)
-              
+            
               if (is.null(by)){
                 
                 newData[, Value := eval(Value)]
@@ -182,11 +181,11 @@ setMethod(
                 newData[, Value := eval(Value), by = eval(by)]
                 
               }
-              
+
               setnames(newData, unitnewExprVariables, newExprVariables)
               newData[, (newExprVariables) := NULL]
               newData[, IDDD := ExtractNames(NewIDDDName)]
-              newData <- merge(newData, NewVardt, all.x = TRUE)
+              newData <- merge(newData, NewVardt, by = 'IDDD')
               setcolorder(newData,
                           c(setdiff(names(newData), c('Value', 'IDDD')),
                             'IDDD', 'Value'))
