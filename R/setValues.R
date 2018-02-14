@@ -211,7 +211,7 @@ setMethod(
             newData[, Value := Value]
             setkeyv(newData, 'IDDD')
 
-            newData <- merge(newData, NewVardt, all.x = TRUE)
+            newData <- merge(newData, NewVardt, by = 'IDDD')
             setcolorder(newData,
                         c(setdiff(names(newData), c('Value', 'IDDD')),
                           'IDDD', 'Value'))
