@@ -7,7 +7,7 @@
 #'
 #' @param DD Object of class \link{DD} with the definition and properties of the variables.
 #'
-#' @return An object of class \linkS{DD} involving only the compound variable names specified in the input 
+#' @return An object of class \link{DD} involving only the compound variable names specified in the input 
 #' parameter \code{VarNames}.
 #'
 #'
