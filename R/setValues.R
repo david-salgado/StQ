@@ -74,213 +74,212 @@ setGeneric("setValues", function(object,
 #'
 #' @export
 setMethod(
-    f = "setValues",
-    signature = c("StQ", "DD"),
-    function(object,
-             newDD,
-             DDslot = 'MicroData',
-             Value,
-             lag = NULL,
-             by = NULL){
-
-        if (missing(newDD)) {
-
-            stop("[StQ::setValues] A new DD object for the new variable is needed.")
-        }
-        
-        if (dim(getVNC(newDD)[[DDslot]][IDDD != ''])[1] != 1) {
-
-            stop('[StQ::setValues] Only one new variable at a time.')
-        }
-        
-        if (length(DDslot) > 1){
-            
-            stop('[StQ::setValues] DDslot must be a character vector of length 1.')
-        }
-        
-        
-        if (!DDslot %in% names(newDD)){
-            
-            stop('[StQ::setValues] DDslot is not a component of the slot DD of the input object.')
-        }
-
-        if (missing(Value)) {
-
-            stop('[StQ::setValues] Value must be a vector of values or an object of class expression.')
-        }
-
-        if (!class(Value) %in% c('call', 'integer', 'numeric', 'character', 'logical')){
-            
-            stop('[StQ::setValues] Value must be an atomic vector or of class call')
-        }
-        
-        Data <- getData(object)
-        
-        if (is.call(Value)){ 
-           
-            QuotedValue <- deparse(Value[[1]])
-            QuotedValue <- gsub('\"', '', QuotedValue)
-            subQuotedValue <- gsub('-', 'DasH', QuotedValue)
-            subQuotedValue <- gsub('.', 'DoT', subQuotedValue, fixed = TRUE)
-            subQuotedValue <- gsub(':', 'CoLoN', subQuotedValue)
-
-            ExprVariables <- c(all.vars(parse(text = subQuotedValue)), by)
-            ExprVariables <- gsub('DoT', '.', ExprVariables)
-            ExprVariables <- gsub('CoLoN', ':', ExprVariables)
-            ExprVariables <- gsub('DasH', '-', ExprVariables)
-
-            IDDD <- getIDDD(object)
-            indexVar <- which(ExtractNames(ExprVariables) %in% IDDD)
-            ExprVariables <- ExprVariables[indexVar]
-            newVNC <- getVNC(newDD)[[DDslot]][IDDD != '']
-            NewUnitName <- newVNC[['UnitName']]
-            NewIDDDName <- UnitToIDDDNames(NewUnitName, newDD)
-            NewVardt <- VarNamesToDT(NewIDDDName, newDD)
-            setkeyv(Data, names(NewVardt))
-            DD <- getDD(object)
-            oldUnitNames <- IDDDToUnitNames(ExprVariables, DD)
-
-            if (ExtractNames(NewIDDDName) %in% DD[[DDslot]][['Variable']]){
-                
-                DD[[DDslot]] <- DD[[DDslot]][!Variable %in% newDD[[DDslot]][Sort == 'IDDD'][['Variable']]]
-                setDD(object) <- DD
-                
-            }
-            newDD <- DD + newDD
-
-            newExprVariables <- UnitToIDDDNames(oldUnitNames, newDD)
-            newUnitNames <- IDDDToUnitNames(newExprVariables, newDD)
-            UnitQuotedValue <- QuotedValue
-            for (indexVar in seq(along = newUnitNames)){
-                
-                UnitQuotedValue <- sub(ExprVariables[indexVar], newUnitNames[indexVar], UnitQuotedValue)
-                    
-            }
-            
-            newData <- getData(object, unique(ExtractNames(newExprVariables)))
-            
-            
-            newObject <- StQ(Data = newData, DD = newDD)
-            IDQuals <- getIDQual(newObject, DDslot)
-            
-            newObject.dt <- dcast_StQ(newObject)
-            if (length(intersect(names(newObject.dt), newExprVariables)) == length(newExprVariables)){
-              
-              newData <- newObject.dt[, unique(c(IDQuals, newExprVariables, by)), with = F]
-              unitnewExprVariables <- IDDDToUnitNames(newExprVariables, newDD)
-              setnames(newData, newExprVariables, unitnewExprVariables)
-              
-              Value <- parse(text = UnitQuotedValue)
-              
-              if (is.null(by)){
-                
-                newData[, Value := eval(Value)]
-                
-              } else {
-                
-                setkeyv(newData, by)
-                newData[, Value := eval(Value), by = eval(by)]
-                
-              }
-              
-              setnames(newData, unitnewExprVariables, newExprVariables)
-              newData[, (newExprVariables) := NULL]
-              newData[, IDDD := ExtractNames(NewIDDDName)]
-              newData <- merge(newData, NewVardt, all.x = TRUE)
-              setcolorder(newData,
-                          c(setdiff(names(newData), c('Value', 'IDDD')),
-                            'IDDD', 'Value'))
-              newObject <- StQ(Data = newData, DD = newDD)
-              output <- object + newObject
-              
-            } else {
-              
-              setDD(object) <- newDD
-              output <- object
-            }
-
-            
-        } else {
-            
-            newVNC <- getVNC(newDD)[[DDslot]][IDDD != '']
-            NewUnitName <- newVNC[['UnitName']]
-            NewIDDDName <- UnitToIDDDNames(NewUnitName, newDD)
-            NewVardt <- VarNamesToDT(NewIDDDName, newDD)
-            
-            newData <- getUnits(object)
-            newData[, IDDD := ExtractNames(NewIDDDName)]
-            newData[, Value := Value]
-            setkeyv(newData, 'IDDD')
-
-            newData <- merge(newData, NewVardt, all.x = TRUE)
-            setcolorder(newData,
-                        c(setdiff(names(newData), c('Value', 'IDDD')),
-                          'IDDD', 'Value'))
-            NewObject <- StQ(Data = newData, DD = newDD)
-            output <- object + NewObject
-            
-        }
-        
-        return(output)
+  f = "setValues",
+  signature = c("StQ", "DD"),
+  function(object,
+           newDD,
+           DDslot = 'MicroData',
+           Value,
+           lag = NULL,
+           by = NULL){
+    
+    if (missing(newDD)) {
+      
+      stop("[StQ::setValues] A new DD object for the new variable is needed.")
     }
+    
+    if (dim(getVNC(newDD)[[DDslot]][IDDD != ''])[1] != 1) {
+      
+      stop('[StQ::setValues] Only one new variable at a time.')
+    }
+    
+    if (length(DDslot) > 1){
+      
+      stop('[StQ::setValues] DDslot must be a character vector of length 1.')
+    }
+    
+    
+    if (!DDslot %in% names(newDD)){
+      
+      stop('[StQ::setValues] DDslot is not a component of the slot DD of the input object.')
+    }
+    
+    if (missing(Value)) {
+      
+      stop('[StQ::setValues] Value must be a vector of values or an object of class expression.')
+    }
+    
+    if (!class(Value) %in% c('call', 'integer', 'numeric', 'character', 'logical')){
+      
+      stop('[StQ::setValues] Value must be an atomic vector or of class call')
+    }
+    
+    Data <- getData(object)
+    
+    if (is.call(Value)){ 
+      
+      QuotedValue <- deparse(Value[[1]])
+      QuotedValue <- gsub('\"', '', QuotedValue)
+      subQuotedValue <- gsub('-', 'DasH', QuotedValue)
+      subQuotedValue <- gsub('.', 'DoT', subQuotedValue, fixed = TRUE)
+      subQuotedValue <- gsub(':', 'CoLoN', subQuotedValue)
+      
+      ExprVariables <- c(all.vars(parse(text = subQuotedValue)), by)
+      ExprVariables <- gsub('DoT', '.', ExprVariables)
+      ExprVariables <- gsub('CoLoN', ':', ExprVariables)
+      ExprVariables <- gsub('DasH', '-', ExprVariables)
+      
+      IDDD <- getIDDD(object)
+      indexVar <- which(ExtractNames(ExprVariables) %in% IDDD)
+      ExprVariables <- ExprVariables[indexVar]
+      newVNC <- getVNC(newDD)[[DDslot]][IDDD != '']
+      NewUnitName <- newVNC[['UnitName']]
+      NewIDDDName <- UnitToIDDDNames(NewUnitName, newDD)
+      NewVardt <- VarNamesToDT(NewIDDDName, newDD)
+      setkeyv(Data, names(NewVardt))
+      DD <- getDD(object)
+      oldUnitNames <- IDDDToUnitNames(ExprVariables, DD)
+      
+      if (ExtractNames(NewIDDDName) %in% DD[[DDslot]][['Variable']]){
+        
+        DD[[DDslot]] <- DD[[DDslot]][!Variable %in% newDD[[DDslot]][Sort == 'IDDD'][['Variable']]]
+        setDD(object) <- DD
+        
+      }
+      newDD <- DD + newDD
+      
+      newExprVariables <- UnitToIDDDNames(oldUnitNames, newDD)
+      newUnitNames <- IDDDToUnitNames(newExprVariables, newDD)
+      UnitQuotedValue <- QuotedValue
+      for (indexVar in seq(along = newUnitNames)){
+        
+        UnitQuotedValue <- sub(ExprVariables[indexVar], newUnitNames[indexVar], UnitQuotedValue)
+        
+      }
+      
+      newData <- getData(object, unique(ExtractNames(newExprVariables)))
+      
+      newObject <- StQ(Data = newData, DD = newDD)
+      IDQuals <- getIDQual(newObject, DDslot)
+      
+      newObject.dt <- dcast_StQ(newObject)
+      if (length(intersect(names(newObject.dt), newExprVariables)) == length(newExprVariables)){
+        
+        newData <- newObject.dt[, unique(c(IDQuals, newExprVariables, by)), with = F]
+        unitnewExprVariables <- IDDDToUnitNames(newExprVariables, newDD)
+        setnames(newData, newExprVariables, unitnewExprVariables)
+        
+        Value <- parse(text = UnitQuotedValue)
+        
+        if (is.null(by)){
+          
+          newData[, Value := eval(Value)]
+          
+        } else {
+          
+          setkeyv(newData, by)
+          newData[, Value := eval(Value), by = eval(by)]
+          
+        }
+        
+        setnames(newData, unitnewExprVariables, newExprVariables)
+        newData[, (newExprVariables) := NULL]
+        newData[, IDDD := ExtractNames(NewIDDDName)]
+        newData <- merge(newData, NewVardt, by = 'IDDD')
+        setcolorder(newData,
+                    c(setdiff(names(newData), c('Value', 'IDDD')),
+                      'IDDD', 'Value'))
+        newObject <- StQ(Data = newData, DD = newDD)
+        output <- object + newObject
+        
+      } else {
+        
+        setDD(object) <- newDD
+        output <- object
+      }
+      
+      
+    } else {
+      
+      newVNC <- getVNC(newDD)[[DDslot]][IDDD != '']
+      NewUnitName <- newVNC[['UnitName']]
+      NewIDDDName <- UnitToIDDDNames(NewUnitName, newDD)
+      NewVardt <- VarNamesToDT(NewIDDDName, newDD)
+      
+      newData <- getUnits(object)
+      newData[, IDDD := ExtractNames(NewIDDDName)]
+      newData[, Value := Value]
+      setkeyv(newData, 'IDDD')
+      
+      newData <- merge(newData, NewVardt, by = 'IDDD')
+      setcolorder(newData,
+                  c(setdiff(names(newData), c('Value', 'IDDD')),
+                    'IDDD', 'Value'))
+      NewObject <- StQ(Data = newData, DD = newDD)
+      output <- object + NewObject
+      
+    }
+    
+    return(output)
+  }
 )
 
 #' @rdname setValues
 #'
 #' @export
 setMethod(
-    f = "setValues",
-    signature = c("StQList", "DD"),
-    function(object,
-             newDD,
-             DDslot = 'MicroData',
-             Value,
-             lag = NULL,
-             by = NULL){
-        
-        Object.List <- getData(object)
-        mc <- match.call()
+  f = "setValues",
+  signature = c("StQList", "DD"),
+  function(object,
+           newDD,
+           DDslot = 'MicroData',
+           Value,
+           lag = NULL,
+           by = NULL){
+    
+    Object.List <- getData(object)
+    mc <- match.call()
+    
+    output <- lapply(seq(along = Object.List), function(i){
 
-        output <- lapply(seq(along = Object.List), function(i){
-          
-         cat(paste0('  [StQ::setValues] Setting values for time period ', names(Object.List)[i], '... '))
-         Localmc <- mc
-          
-         if (!is.null(lag)){
-             
-             if (i <= lag){
-               
-               LocalOutput <- Object.List[[i]]
-               DD.Aux <- getDD(LocalOutput)
-               DD.Aux <- DD.Aux + newDD
-               setDD(LocalOutput) <- DD.Aux
-             } else {
-               
-               LocalOutput.init <- Object.List[[i]]
-               Localmc[['object']] <- Object.List[[(i - lag)]]
-               Localmc[['Value']] <- getValues(Object.List[[(i - lag)]], Value)[[Value]]
-               LocalOutputAux <- eval(Localmc)
-               DD.Aux <- getDD(LocalOutputAux)
-               setDD(LocalOutput.init) <- DD.Aux
-               Var <- newDD[[DDslot]][Sort == 'IDDD'][['Variable']]
-               LocalOutputAux.Data <- getData(LocalOutputAux, c(getIDQual(LocalOutputAux), Var))
-               LocalOutputAux <- StQ(LocalOutputAux.Data, DD.Aux)
-               LocalOutput <- LocalOutput.init + LocalOutputAux
-             }
-           
-         } else {
-           
-           Localmc[['object']] <- Object.List[[i]]
-           LocalOutput <- eval(Localmc)
-         }
-          cat(' ok.\n')
-          return(LocalOutput)
-        })
-       
-        cat('  [StQ::setValues] Building StQList object ...')
-        names(output) <- names(Object.List)
-        output <- BuildStQList(output)
-        cat('   ok.\n')
-        return(output)
-    }
+      cat(paste0('  [StQ::setValues] Setting values for time period ', names(Object.List)[i], '... '))
+      Localmc <- mc
+
+      if (!is.null(lag)) {
+
+        if (i <= lag) {
+
+          LocalOutput <- Object.List[[i]]
+          DD.Aux <- getDD(LocalOutput)
+          DD.Aux <- DD.Aux + newDD
+          setDD(LocalOutput) <- DD.Aux
+        } else {
+
+          LocalOutput.init <- Object.List[[i]]
+          Localmc[['object']] <- Object.List[[(i - lag)]]
+          Localmc[['Value']] <- getValues(Object.List[[(i - lag)]], Value)[[Value]]
+          LocalOutputAux <- eval(Localmc)
+          DD.Aux <- getDD(LocalOutputAux)
+          setDD(LocalOutput.init) <- DD.Aux
+          Var <- newDD[[DDslot]][Sort == 'IDDD'][['Variable']]
+          LocalOutputAux.Data <- getData(LocalOutputAux, c(getIDQual(LocalOutputAux), Var))
+          LocalOutputAux <- StQ(LocalOutputAux.Data, DD.Aux)
+          LocalOutput <- LocalOutput.init + LocalOutputAux
+        }
+
+      } else {
+
+        Localmc[['object']] <- Object.List[[i]]
+        LocalOutput <- eval(Localmc)
+      }
+      cat(' ok.\n')
+      return(LocalOutput)
+    })
+    
+    cat('  [StQ::setValues] Building StQList object ...')
+    names(output) <- names(Object.List)
+    output <- BuildStQList(output)
+    cat('   ok.\n')
+    return(output)
+  }
 )
