@@ -6,7 +6,7 @@
 \alias{ParseUnitName,character,RepoTimeInt-method}
 \alias{ParseUnitName,character,integer-method}
 \alias{ParseUnitName,character,character-method}
-\title{Produce a vector of file names parsed out of a pattern and a sequence of time period names}
+\title{Produce a vector of file names parsed out of a pattern and some metavalues}
 \usage{
 ParseUnitName(UnitNames, MetaValues)
 
