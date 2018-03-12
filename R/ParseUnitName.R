@@ -1,4 +1,4 @@
-#' @title Produce a vector of file names parsed out of a pattern and a sequence of time period names
+#' @title Produce a vector of file names parsed out of a pattern and some metavalues
 #' 
 #' @description This function parses each component of a vector of file names with a pattern filling
 #'  out the corresponding codes with the input metavalues.
@@ -151,11 +151,19 @@ setMethod(
   function(UnitNames, MetaValues){
     
     IntChars <- MetaValues
-    output <- unlist(lapply(IntChars, function(IntChars){
+    output <- unlist(lapply(IntChars, function(IntChar){
       
-      outLocal <- gsub('[ccaa]', IntChars, UnitNames, fixed = TRUE)
+      outLocal <- gsub('[ccaa]', IntChar, UnitNames, fixed = TRUE)
+      
+      outLocal <- gsub('[bbbb+2]', as.integer(IntChar) + 2, UnitNames, fixed = TRUE)
+      outLocal <- gsub('[bbbb]', IntChar, outLocal, fixed = TRUE)
+      outLocal <- gsub('[bbbb-2]', as.integer(IntChar) - 2, outLocal, fixed = TRUE)
+      
+      outLocal <- gsub('[bb+2]', substr(as.integer(IntChar) + 2, 3, 4), outLocal, fixed = TRUE)
+      outLocal <- gsub('[bb]', substr(IntChar, 3, 4), outLocal, fixed = TRUE)
+      outLocal <- gsub('[bb-2]', substr(as.integer(IntChar) - 2, 3, 4), outLocal, fixed = TRUE)
+      
       return(outLocal)
-      
       
     }))
     

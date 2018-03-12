@@ -70,10 +70,11 @@ StQ <- function(Data = data.table(IDDD = character(0), Value = character(0)),
     }
              
     # Comparamos los calificadores en los slots Data y DD: Todos los calificadores en Data deben estar definidos en algún slot de DD
+    #if ('Period' %in% colData) colData <- setdiff(colData, 'Period')
     QualinData <- sort(setdiff(colData, colsData))
     QualinDD <- c()
     IDDDinDD <- c()
-             
+           
     DDslotNames <- setdiff(names(DD), 'VNC')
     for (DDslot in DDslotNames){
                  

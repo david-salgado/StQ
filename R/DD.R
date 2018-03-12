@@ -2,7 +2,7 @@
 #'
 #' @description Definition of an S3 class named \code{DD} with the specification of each variable.
 #'
-#' The class \code{DD} comprises a \linkS{list} whose first component is an object of class 
+#' The class \code{DD} comprises a \link{list} whose first component is an object of class 
 #' \linkS4class{VarNameCorresp} and name \code{VNC} and the rest of components are objects of class 
 #' \linkS4class{data.table} of names \code{ID}, \code{MicroData}, \code{ParaData}, 
 #' \code{Aggregates}, \code{AggWeights}, \code{Other}.
@@ -244,7 +244,7 @@ DD <- function(VNC = BuildVNC(),
     IDQuals <- c()
     NonIDQuals <- c()
     IDDDs <- c()
-    for (DDdtName in DDdtNames){
+    for (DDdtName in DDdtNames) {
         
         localObject <- object[[DDdtName]]
         auxIDQual <- unique(localObject[Sort == 'IDQual'][['Variable']])
@@ -276,14 +276,14 @@ DD <- function(VNC = BuildVNC(),
     }
       
     variablesVNC <- c()
-    for (Component in object[['VNC']]){
+    for (Component in object[['VNC']]) {
       
       auxVar <- Component[['IDDD']]
       auxVar <- auxVar[auxVar != '']
       variablesVNC <- c(variablesVNC, auxVar)
     }
   
-    if (length(variablesDD) > 0 & length(variablesVNC) == 0)stop('[StQ:: validity DD] The component VNC must be specified with the variables in the other components')
+    if (length(variablesDD) > 0 & length(variablesVNC) == 0) stop('[StQ:: validity DD] The component VNC must be specified with the variables in the other components')
     varDDnotinVNC <- setdiff(variablesDD, variablesVNC)
     if (length(varDDnotinVNC) > 0) {
       
