@@ -82,7 +82,7 @@ setMethod(
              Value,
              lag = NULL,
              by = NULL){
-        
+
         if (missing(newDD)) {
             
             stop("[StQ::setValues] A new DD object for the new variable is needed.")
@@ -137,6 +137,7 @@ setMethod(
             NewIDDDName <- UnitToIDDDNames(NewUnitName, newDD)
             NewVardt <- VarNamesToDT(NewIDDDName, newDD)
             setkeyv(Data, names(NewVardt))
+
             DD <- getDD(object)
             oldUnitNames <- IDDDToUnitNames(ExprVariables, DD)
             
@@ -158,17 +159,16 @@ setMethod(
             }
             
             newData <- getData(object, unique(ExtractNames(newExprVariables)))
-            
             newObject <- StQ(Data = newData, DD = newDD)
             IDQuals <- getIDQual(newObject, DDslot)
-            
+              
             newObject.dt <- dcast_StQ(newObject)
             if (length(intersect(names(newObject.dt), newExprVariables)) == length(newExprVariables)){
-                
+                      
                 newData <- newObject.dt[, unique(c(IDQuals, newExprVariables, by)), with = F]
                 unitnewExprVariables <- IDDDToUnitNames(newExprVariables, newDD)
                 setnames(newData, newExprVariables, unitnewExprVariables)
-                
+                           
                 Value <- parse(text = UnitQuotedValue)
                 
                 if (is.null(by)){
@@ -185,6 +185,7 @@ setMethod(
                 setnames(newData, unitnewExprVariables, newExprVariables)
                 newData[, (newExprVariables) := NULL]
                 newData[, IDDD := ExtractNames(NewIDDDName)]
+                if (any(IDQuals %in% names(NewVardt))) NewVardt[, intersect(names(NewVardt), IDQuals) := NULL]
                 newData <- merge(newData, NewVardt, by = 'IDDD')
                 setcolorder(newData,
                             c(setdiff(names(newData), c('Value', 'IDDD')),
@@ -211,6 +212,8 @@ setMethod(
             newData[, Value := Value]
             setkeyv(newData, 'IDDD')
             
+            IDQuals <- getIDQual(object, DDslot)
+            if (any(IDQuals %in% names(NewVardt))) NewVardt[, intersect(names(NewVardt), IDQuals) := NULL]
             newData <- merge(newData, NewVardt, by = 'IDDD')
             setcolorder(newData,
                         c(setdiff(names(newData), c('Value', 'IDDD')),
