@@ -88,8 +88,6 @@ setMethod(
             Data[is.na(get(col)), (col) := '']
         }
 
-        #Datadt <- new(Class = 'Datadt', Data)
-        #Q <- new(Class = 'StQ', Data = Datadt, DD = DD)
         Q <- StQ(Data, DD)
         
         return(Q)

@@ -37,8 +37,30 @@ setReplaceMethod(
     signature = c("StQ", "data.table"),
     function(object, value){
         
-        object$Data <- value
-        return(object)
+      DD <- getDD(object)
+      IDDD <- unique(value[['IDDD']])
+      Quals <- c()
+      
+      for (var in IDDD) {
+        
+        for (Sheet in setdiff(names(DD), 'VNC')) {
+          
+          DDdt <- DD[[Sheet]]
+          if (var %in% DD[[Sheet]][['Variable']]) {
+            
+            Quals.var <- t(DDdt[Variable == var, names(DDdt)[grep('Qual', names(DDdt))], with = FALSE])[, 1]
+            Quals.var <- Quals.var[Quals.var != '']
+            Quals <- unique(c(Quals, Quals.var))
+            break
+          }
+        }
+      }
+      
+      value <- value[, c(intersect(names(value), Quals), 'IDDD', 'Value'), with = FALSE]
+      
+      object$Data <- value
+      
+      return(object)
     }
 )
 

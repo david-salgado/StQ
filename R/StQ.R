@@ -52,12 +52,10 @@ StQ <- function(Data = data.table(IDDD = character(0), Value = character(0)),
         
         stop('[StQ:: validity StQ] The last second column of compnent Data must be IDDD.')
     }
-
-    # Si un identificador de unidad o variable está idénticamente en blanco, esta columna se elimina
-    colData <- names(Datadt)
-    colsData <- c('IDDD', 'Value')
          
     # Detección de filas duplicadas
+    colData <- names(Datadt)
+    colsData <- c('IDDD', 'Value')
     if (dim(Datadt)[[1]] != 0){
                  
         setkeyv(Datadt, colData[-which(colData == 'Value')])

@@ -31,6 +31,7 @@
     
     mc <- match.call()
     auxDT <- getData(x)
+    DD <- getDD(x)
     mc[[1L]] <- data.table:::`[.data.table`
     mc[['x']] <- auxDT
     x.subsetted <- eval(mc, envir = auxDT, enclos = parent.frame())
