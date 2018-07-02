@@ -116,7 +116,7 @@ setMethod(
         
         Data <- getData(object)
         
-        if (is.call(Value)){ 
+        if (is.call(Value)) { 
             
             QuotedValue <- deparse(Value[[1]])
             QuotedValue <- gsub('\"', '', QuotedValue)

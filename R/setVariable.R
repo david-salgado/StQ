@@ -59,9 +59,9 @@ setMethod(
       Quals <- DD.aux[, names(DD.aux)[grep('Qual', names(DD.aux))], with = FALSE]
       Quals <- as.vector(t(Quals))
       Quals <- Quals[Quals != '']
-      if (length(setdiff(Quals, names(QualsValues))) > 0) {
+      if (!identical(Quals, names(QualsValues))) {
         
-        stop(paste0('[setVariable validation] The names of slot QualsValues in Var must be: ', paste0(Quals, collapse = ','), '. If any  qualifier is not necessary, its value must be \'\' .'))
+        stop(paste0('[setVariable validation] The names of slot QualsValues in Var must be: ', paste0(Quals, collapse = ','), ' and in this order. If any  qualifier is not necessary, its value must be \'\' .'))
       }
       setcolorder(QualsValues, Quals)
     }
