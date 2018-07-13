@@ -99,7 +99,6 @@ setMethod(
 
         Datadt <- rbindlist(DataList)
         out <- StQ(Data = Datadt, DD = DD)
-
         return(out)
     }
 )
