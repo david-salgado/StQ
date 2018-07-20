@@ -3,9 +3,9 @@
 \docType{methods}
 \name{getDoubleDotQual}
 \alias{getDoubleDotQual}
-\alias{getDoubleDotQual,VNC-method}
 \alias{getDoubleDotQual,DD-method}
 \alias{getDoubleDotQual,StQ-method}
+\alias{getDoubleDotQual,VNC-method}
 \title{Return qualifiers used in compound variable names}
 \usage{
 getDoubleDotQual(object, Component = names(object))
@@ -62,3 +62,4 @@ VNC <- BuildVNC(VarList)
 getDoubleDotQual(VNC)
 
 }
+

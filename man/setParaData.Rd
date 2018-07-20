@@ -3,8 +3,8 @@
 \docType{methods}
 \name{setParaData<-}
 \alias{setParaData<-}
-\alias{setParaData<-,VNC,data.table-method}
 \alias{setParaData<-,DD,data.table-method}
+\alias{setParaData<-,VNC,data.table-method}
 \title{Set value of slot \code{ParaData}}
 \usage{
 setParaData(object) <- value
@@ -53,3 +53,4 @@ setParaData(DD) <- Paradt
 DD
 
 }
+

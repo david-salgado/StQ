@@ -3,8 +3,8 @@
 \docType{methods}
 \name{getID}
 \alias{getID}
-\alias{getID,VNC-method}
 \alias{getID,DD-method}
+\alias{getID,VNC-method}
 \title{Return component ID from an object}
 \usage{
 getID(object)
@@ -59,3 +59,4 @@ VNC <- BuildVNC(VarList)
 getID(VNC)
 
 }
+
