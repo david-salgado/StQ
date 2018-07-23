@@ -52,7 +52,13 @@ melt_StQ <- function(DataMatrix, DD){
 
     DM <- copy(DataMatrix)
     namesDM <- names(DM)
-    setnames(DM, UnitToIDDDNames(namesDM, DD))
+    if (!all(ExtractNames(namesDM) %in% getVariables(DD))) {
+      
+      newNamesDM <- UnitToIDDDNames(namesDM, DD)
+      if (any(is.null(newNamesDM))) stop('[StQ::melt_StQ] Column names not identified in the DD object.')
+      setnames(DM, newNamesDM)  
+    }
+    
 
     IDQuals <- intersect(getIDQual(DD), namesDM)
     NonIDQuals <- getNonIDQual(DD)
@@ -111,9 +117,12 @@ melt_StQ <- function(DataMatrix, DD){
       } else {
         
         if (length(localNonIDQual) != 0){
-          
-          outLocal <- out[, c(auxMeasureVar[[QualName]], localNonIDQual) := tstrsplit(IDDD, '_', fixed = TRUE, fill = '')][
-            , IDDD := NULL]
+
+          colNames <- c(auxMeasureVar[[QualName]], localNonIDQual)
+          outLocal <- out[,  tstrsplit(IDDD, '_', fixed = TRUE, fill = '')]
+          if (length(colNames) == dim(outLocal)[2] + 1) outLocal[, (colNames[length(colNames)]) := '']
+          setnames(outLocal, colNames)
+          outLocal <- out[, (names(outLocal)) := outLocal][, IDDD := NULL]
           setnames(outLocal, auxMeasureVar[[QualName]], 'IDDD')
           localdotQuals <- intersect(dotQuals, names(outLocal))
           localdotdotQuals <- intersect(dotdotQuals, names(outLocal))
@@ -128,7 +137,7 @@ melt_StQ <- function(DataMatrix, DD){
         return(outLocal)  
       }
     })
-    
+
     names(moltenData) <- names(auxMeasureVar)
     moltenData <- rbindlist(moltenData, fill = TRUE)
     
