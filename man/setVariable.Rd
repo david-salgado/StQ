@@ -41,3 +41,4 @@ ExampleStQList <- BuildStQList(list(MM012012 = ExampleStQ, MM022012 = ExampleStQ
 ExampleStQList <- setVariable(ExampleStQList, Var)
 
 }
+
