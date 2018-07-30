@@ -40,7 +40,7 @@
 melt_StQ <- function(DataMatrix, DD){
 
     # Función que elimina carácter blanco al principio y al final
-    trim <- function (x) gsub("^\\s+|\\s+$", "", x, useBytes = T)
+    trim <- function(x) gsub("^\\s+|\\s+$", "", x, useBytes = T)
 
     # Función para construir nombres de variables
     pasteNA <- function(x, y){
@@ -53,17 +53,12 @@ melt_StQ <- function(DataMatrix, DD){
     DM <- copy(DataMatrix)
     DMnames <- names(DM)
 
-     # for (col in DMnames){
-     #     
-     #     if (all(DM[[col]] == '')){
-     #         
-     #         DM <- DM[, setdiff(names(DM), col), with = FALSE]
-     #     }
-     # }
-    
-    DMnames <- UnitToIDDDNames(names(DM), DD)
-    if (is.null(DMnames)) DMnames <- names(DM)
-    setnames(DM, DMnames)
+    VNC <- rbindlist(DD$VNC, fill = TRUE)
+    if (length(intersect(ExtractNames(DMnames), VNC[['IDDD']])) == 0) DMnames <- UnitToIDDDNames(names(DM), DD)
+     
+    # DMnames <- UnitToIDDDNames(names(DM), DD)
+    # if (is.null(DMnames)) DMnames <- names(DM)
+    # setnames(DM, DMnames)
 
     #Construimos un objeto DD auxiliar
     slots <- setdiff(names(getVNC(DD)), 'VarSpec')
@@ -79,11 +74,12 @@ melt_StQ <- function(DataMatrix, DD){
         IDDD <- DDdtlocal[Sort == 'IDDD', Variable]
 
         # Calificadores ID, calificadores NonID y variables IDDD en la matriz de datos
-        DM.Names <- names(DM)
+        DM.Names <- ExtractNames(names(DM))
         DM.IDQual <- DM.Names[DM.Names %in% IDQual]
         DM.NonIDQual <- DM.Names[DM.Names %in% NonIDQual]
         DM.IDDD <- setdiff(DM.Names, c(DM.IDQual, DM.NonIDQual))
-        auxDDdt <- auxDDdt[Variable %in% ExtractNames(DM.IDDD)]
+        # auxDDdt <- auxDDdt[Variable %in% ExtractNames(DM.IDDD)]
+        auxDDdt <- auxDDdt[Variable %in% DM.IDDD]
         auxDDdt[, Qual := '']
         for (i in 1:nQual){
 

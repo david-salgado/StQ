@@ -97,16 +97,18 @@ setMethod(
 
         # Se asocia a cada fórmula su correspondiente data.table dcasted
         auxData <- split(auxDD[['Variable']], auxDD[['Form']])
-
+        
+        Data <- getData(object)
+        Units.DT <- getUnits(object)
         dcastData <- lapply(names(auxData), function(Form){
 
             #Preparamos la data.table aux que vamos a reformatear con dcast.data.table
-            Data <- getData(object)
+            
             aux <- Data[IDDD %in% auxData[[Form]]]
 
             if (dim(aux)[[1]] == 0) {
                 
-                return(getUnits(object))
+                return(Units.DT)
                 
             }
             
