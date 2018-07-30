@@ -3,9 +3,9 @@
 \docType{methods}
 \name{getIDDD}
 \alias{getIDDD}
-\alias{getIDDD,VNC-method}
 \alias{getIDDD,DD-method}
 \alias{getIDDD,StQ-method}
+\alias{getIDDD,VNC-method}
 \title{Return IDDD identifiers (statistical variable names) from the input object}
 \usage{
 getIDDD(object, CompNames = names(object))
@@ -69,3 +69,4 @@ getIDDD(VNC)
 
 
 }
+

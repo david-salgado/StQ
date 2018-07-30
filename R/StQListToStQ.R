@@ -62,14 +62,14 @@ setMethod(
             setcolorder(newDDdt.DT, c('Variable', 'Sort', 'Class', 'Length', paste0('Qual', 1:nQual), 'ValueRegExp'))
         })
         names(DDdt.list) <- DDdtNames.list
-        
+
         DD$ID <- DDdt.list[['ID']]
         DD$MicroData <- DDdt.list[['MicroData']]
         DD$ParaData <- DDdt.list[['ParaData']]
         DD$Aggregates <- DDdt.list[['Aggregates']]
         DD$AggWeights <- DDdt.list[['AggWeights']]
         DD$Other <- DDdt.list[['Other']]
-        
+
         namesVNC <- names(DD$VNC)
         for (nameVNC in namesVNC){
       
