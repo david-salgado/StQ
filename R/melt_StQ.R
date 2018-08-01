@@ -118,12 +118,11 @@ melt_StQ <- function(DataMatrix, DD){
         
         if (length(localNonIDQual) != 0){
 
-          colNames <- c(auxMeasureVar[[QualName]], localNonIDQual)
+          colNames <- c('IDDD', localNonIDQual)
           outLocal <- out[,  tstrsplit(IDDD, '_', fixed = TRUE, fill = '')]
           if (length(colNames) == dim(outLocal)[2] + 1) outLocal[, (colNames[length(colNames)]) := '']
           setnames(outLocal, colNames)
-          outLocal <- out[, (names(outLocal)) := outLocal][, IDDD := NULL]
-          setnames(outLocal, auxMeasureVar[[QualName]], 'IDDD')
+          outLocal <- copy(out)[, IDDD := NULL][, (names(outLocal)) := outLocal]
           localdotQuals <- intersect(dotQuals, names(outLocal))
           localdotdotQuals <- intersect(dotdotQuals, names(outLocal))
           setcolorder(outLocal, unique(c(localID, localNonIDQual, localdotQuals, localdotdotQuals,  'IDDD', 'Value')))

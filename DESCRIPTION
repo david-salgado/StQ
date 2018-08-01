@@ -1,6 +1,6 @@
 Package: StQ
 Title: Tools to manage metadata-incorporated key-value pair datasets
-Version: 0.4.61
+Version: 0.4.62
 Authors@R: c(
     person("David", "Salgado", email = "david.salgado.fernandez@gmail.com", role = c("cre", "aut")),
     person("Elisa", "Esteban", email = "elisa.esteban.segurado@gmail.com", role = "aut"),
@@ -103,7 +103,7 @@ Collate:
     'sub.rawStQ.R'
     'sub.rawStQList.R'
     'subPeriods.R'
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 URL: https://github.com/david-salgado/StQ
 BugReports: https://github.com/david-salgado/StQ/issues
 Suggests:
