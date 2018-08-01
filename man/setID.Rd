@@ -3,8 +3,8 @@
 \docType{methods}
 \name{setID<-}
 \alias{setID<-}
-\alias{setID<-,DD,data.table-method}
 \alias{setID<-,VNC,data.table-method}
+\alias{setID<-,DD,data.table-method}
 \title{Set value of slot \code{ID} of an object \linkS4class{DD}}
 \usage{
 setID(object) <- value
@@ -51,4 +51,3 @@ setID(DD) <- IDdt
 DD
 
 }
-
