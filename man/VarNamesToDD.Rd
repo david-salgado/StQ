@@ -28,4 +28,3 @@ VarNames <- c('Turnover', 'Employees', 'NACE09', 'Stocks')
 VarNamesToDD(VarNames, ExampleDD)                     
 
 }
-

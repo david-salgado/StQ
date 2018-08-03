@@ -56,4 +56,3 @@ VNC
 str(VNC)
 
 }
-

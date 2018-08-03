@@ -33,4 +33,3 @@ data(ExampleStQ)
 renVar(ExampleStQ, 'Stocks', 'NewStocks')
 
 }
-

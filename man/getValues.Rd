@@ -39,4 +39,3 @@ getValues(ExampleStQ, 'Employees_1.')
 getValues(ExampleStQ, 'Turnover', Units = data.table(ID = c('00001', '00002')))
 
 }
-
