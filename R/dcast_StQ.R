@@ -97,21 +97,12 @@ setMethod(
         
         # Se asocia a cada fórmula su correspondiente data.table dcasted
         auxData <- split(auxDD[['Variable']], auxDD[['Form']])
-        
         Data <- getData(object)
-        Units.DT <- getUnits(object)
+        WithIDDD <- sapply(auxData, function(Vars){dim(Data[IDDD %chin% Vars])[1] > 0})
+        auxData <- auxData[WithIDDD]
         dcastData <- lapply(names(auxData), function(Form){
             
-            #Preparamos la data.table aux que vamos a reformatear con dcast.data.table
-            
             aux <- Data[IDDD %in% auxData[[Form]]]
-            
-            if (dim(aux)[[1]] == 0) {
-                
-                return(Units.DT)
-                
-            }
-            
             ColNames <- names(aux)
             setkeyv(aux, setdiff(ColNames, 'Value'))
             Dup <- aux[duplicated(aux, by = key(aux))]
@@ -142,47 +133,13 @@ setMethod(
             }
             return(out)
         })
-        names(dcastData) <- names(auxData)
         
-        # Eliminamos componentes NULL de la lista de data.tables transformadas
-        for (i in names(dcastData)){
-            if (is.null(dcastData[[i]])) dcastData[[i]] <- NULL
-            next
-        }
-        
-        # Combinamos las data.tables de la lista en una sola data.table
-        output <- Reduce(
-            function(x, y){
-                
-                CommonCols <- intersect(names(x), names(y))
-                if (length(CommonCols) > 0) {
-                    
-                    out <- merge(x, y, by = CommonCols, all = TRUE)
-                    
-                } else {
-                    
-                    out <- rbindlist(list(x, y), fill = TRUE)
-                    
-                }
-                ColNames <- names(out)
-                for (col in ColNames){
-                    
-                    out[is.na(get(col)), (col) := '']
-                }
-                return(out)
-            },
-            dcastData,
-            init = dcastData[[1]])
-        
-        # Asignamos los tipos a cada variable sustituyendo blancos por NA
-        outCols <- names(output)
-        for (col in outCols){
+        dcastData <- rbindlist(dcastData, fill = TRUE)
+        colNames <- names(dcastData)
+        for (col in colNames){
             
             colClass <- unique(DDdt[Variable == ExtractNames(col)][['Class']])
-            output[, (col) := as(get(col), colClass)]
-            output[get(col) == '', (col) := NA]
-            
-        }
-        return(output[])
-    }
-)
+            dcastData[, (col) := as(get(col), colClass)]
+        } 
+        return(dcastData[])
+    })

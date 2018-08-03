@@ -33,4 +33,3 @@ rmVar(ExampleStQ)
 rmVar(ExampleStQ, 'TotalEmpl')
 
 }
-

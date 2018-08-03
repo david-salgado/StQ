@@ -45,13 +45,42 @@ setMethod(
     f = "VarNamesToFormula",
     signature = c("character", "DD"),
     function(VarNames, DD){
-
-        trim <- function (x) gsub("^\\s+|\\s+$", "", x, useBytes = T)
+        
+        trimPlus <- function (x) gsub("^\\s{1}[+]{1}\\s{1}|\\s{1}[+]{1}\\s{1}$", "", x, useBytes = T)
+        #trim <- function (x) gsub("^\\s+|\\s+$", "", x, useBytes = T)
         
         NotPresentVar  <- setdiff(ExtractNames(VarNames), getVariables(DD))
         if (length(NotPresentVar) > 0) stop(paste0('[StQ::VarNamesToDD] The following variables are not contained in the DD slot: ', NotPresentVar, '.\n'))
-        DotQual <- getDotQual(DD)
+        IDQuals <- getIDQual(DD)
+        DotQuals <- setdiff(IDQuals, getDotQual(DD))
+        DDdt <- rbindlist(lapply(DD, function(DT){DT})[-1], fill = TRUE)[Sort == 'IDDD']
+        AllCols <- c('Variable', names(DDdt)[grep('Qual', names(y))])
+        ConcatCols <- setdiff(AllCols, 'Variable') 
+        setkeyv(y, AllCols)
+        DDdtUnique <- DDdt[!duplicated(DDdt, by = key(DDdt)), AllCols, with=FALSE][
+            Variable %chin% ExtractNames(VarNames)]
+        IDQuals <- getIDQual(DD)
+        dotQuals <- setdiff(getDotQual(DD), IDQuals)
+        trimPlus <- function (x) gsub("^\\s{1}[+]{1}\\s{1}|\\s{1}[+]{1}\\s{1}$", "", x, useBytes = T)
+        for (i in seq_along(ConcatCols)){
+            
+            qual <- paste0('Qual', i)
+            if (i == 1) { 
+                
+                DDdtUnique[, LHS := ifelse(get(qual) %chin% c(IDQuals, dotQuals), get(qual), '')]
+                DDdtUnique[, RHS := ifelse(!get(qual) %chin% c(IDQuals, dotQuals), paste('IDDD', get(qual), sep = ' + '), 'IDDD')]
+                
+            } else {
+                
+                DDdtUnique[, LHS := ifelse(get(qual) %chin% c(IDQuals, dotQuals), paste(trimPlus(LHS), get(qual), sep = ' + '), LHS)]
+                DDdtUnique[, RHS := ifelse(!get(qual) %chin% c(IDQuals, dotQuals), paste(trimPlus(RHS), get(qual), sep = ' + '), RHS)]
+                
+            }
+        }
+        DDdtUnique[, RHS := trimPlus(RHS)]
+        DDdtUnique <- DDdtUnique[, Form := paste(LHS, RHS, sep = ' ~ ')][, c('Variable', 'Form'), with = FALSE]
         
+return(DDdtUnique)        
         # Para una variable
         if (is.character(VarNames) & length(VarNames) == 1){
             

@@ -40,7 +40,7 @@
 melt_StQ <- function(DataMatrix, DD){
     
     # Función que elimina carácter blanco al principio y al final
-    trim <- function (x) gsub("^\\s+|\\s+$", "", x, useBytes = T)
+    trim <- function(x) gsub("^\\s+|\\s+$", "", x, useBytes = T)
     
     # Función para construir nombres de variables
     pasteNA <- function(x, y){
@@ -79,7 +79,7 @@ melt_StQ <- function(DataMatrix, DD){
     auxDDDT <- rbindlist(auxDDDT)
     auxDDDT <- auxDDDT[!duplicated(auxDDDT)]
     nQual <- length(grep('Qual', names(auxDDDT))) - 1
-    for (i in 1:nQual){
+    for (i in 1:nQual) {
         
         auxDDDT[, Qual := ifelse(get(paste0('Qual', i)) != '',
                                  trim(paste(Qual, get(paste0('Qual',i)))),
@@ -99,7 +99,7 @@ melt_StQ <- function(DataMatrix, DD){
         localID <- intersect(unique(c(IDQuals, dotQuals)), localQuals)
         out <- data.table::melt.data.table(localDM,
                                            id.vars = localID,
-                                           measure.vars= setdiff(names(localDM), localID),
+                                           measure.vars = setdiff(names(localDM), localID),
                                            variable.name = 'IDDD',
                                            value.name = 'Value',
                                            variable.factor = FALSE,
@@ -116,14 +116,13 @@ melt_StQ <- function(DataMatrix, DD){
             
         } else {
             
-            if (length(localNonIDQual) != 0){
+            if (length(localNonIDQual) != 0) {
                 
-                colNames <- c(auxMeasureVar[[QualName]], localNonIDQual)
+                colNames <- c('IDDD', localNonIDQual)
                 outLocal <- out[,  tstrsplit(IDDD, '_', fixed = TRUE, fill = '')]
                 if (length(colNames) == dim(outLocal)[2] + 1) outLocal[, (colNames[length(colNames)]) := '']
                 setnames(outLocal, colNames)
-                outLocal <- out[, (names(outLocal)) := outLocal][, IDDD := NULL]
-                setnames(outLocal, auxMeasureVar[[QualName]], 'IDDD')
+                outLocal <- copy(out)[, IDDD := NULL][, (names(outLocal)) := outLocal]
                 localdotQuals <- intersect(dotQuals, names(outLocal))
                 localdotdotQuals <- intersect(dotdotQuals, names(outLocal))
                 setcolorder(outLocal, unique(c(localID, localNonIDQual, localdotQuals, localdotdotQuals,  'IDDD', 'Value')))
@@ -152,7 +151,7 @@ melt_StQ <- function(DataMatrix, DD){
         moltenData <- moltenData[!duplicated(moltenData, by = key(moltenData))]
         setcolorder(moltenData, c(setdiff(names(moltenData), c('Value', 'IDDD')), 'IDDD', 'Value'))
         ColNames <- names(moltenData)
-        for (col in ColNames){
+        for (col in ColNames) {
             
             moltenData[is.na(get(col)), (col) := '']
         }

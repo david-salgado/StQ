@@ -29,4 +29,3 @@ data(ExampleStQ)
 StQTorawStQ(ExampleStQ)
  
 }
-
