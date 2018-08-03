@@ -142,4 +142,4 @@ setMethod(
         dcastData[, (col) := as(get(col), colClass)]
     } 
     return(dcastData[])
-}
+})
