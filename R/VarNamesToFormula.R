@@ -54,9 +54,9 @@ setMethod(
         IDQuals <- getIDQual(DD)
         DotQuals <- setdiff(IDQuals, getDotQual(DD))
         DDdt <- rbindlist(lapply(DD, function(DT){DT})[-1], fill = TRUE)[Sort == 'IDDD']
-        AllCols <- c('Variable', names(DDdt)[grep('Qual', names(y))])
+        AllCols <- c('Variable', names(DDdt)[grep('Qual', names(DDdt))])
         ConcatCols <- setdiff(AllCols, 'Variable') 
-        setkeyv(y, AllCols)
+        setkeyv(DDdt, AllCols)
         DDdtUnique <- DDdt[!duplicated(DDdt, by = key(DDdt)), AllCols, with=FALSE][
             Variable %chin% ExtractNames(VarNames)]
         IDQuals <- getIDQual(DD)
@@ -80,73 +80,6 @@ setMethod(
         DDdtUnique[, RHS := trimPlus(RHS)]
         DDdtUnique <- DDdtUnique[, Form := paste(LHS, RHS, sep = ' ~ ')][, c('Variable', 'Form'), with = FALSE]
         
-return(DDdtUnique)        
-        # Para una variable
-        if (is.character(VarNames) & length(VarNames) == 1){
-            
-            DDSlotNames <- setdiff(names(DD), 'VNC')
-            output <- list()
-            for (DDslot in DDSlotNames){
-
-                DDlocal <- DD[[DDslot]]
-                IDQual <- DDlocal[Sort == 'IDQual', Variable]
-                NonIDQual <- DDlocal[Sort == 'NonIDQual', Variable]
-                Quals <- names(DDlocal)[grep('Qual', names(DDlocal))]
-                auxDD <- DDlocal[Variable == ExtractNames(VarNames), c('Variable', Quals), with = F]
-                auxDD[, LHS := '']
-                auxDD[, RHS := '']
-
-                for (Qual in Quals){
-
-                    auxDD[, LHS := ifelse(get(Qual) %in% IDQual | get(Qual) %in% DotQual, 
-                                          trim(paste(LHS, get(Qual))), 
-                                          trim(LHS))]
-                    auxDD[, RHS := ifelse(get(Qual) %in% NonIDQual & !get(Qual) %in% DotQual,
-                                          trim(paste(RHS, get(Qual))),
-                                          trim(RHS))]
-                }
-
-                auxDD[, Form := ifelse(LHS != '',
-                                       ifelse(RHS != '',
-                                              paste(gsub(' ', ' + ', trim(LHS)),
-                                                    ' ~ IDDD +',
-                                                    gsub(' ', ' + ', trim(RHS))),
-                                              paste(gsub(' ', ' + ', trim(LHS)),
-                                                    '~ IDDD')),
-                                       ifelse(RHS != '',
-                                              paste('. ~ IDDD +',
-                                                    gsub(' ', ' + ', trim(RHS))),
-                                              paste('. ~ IDDD')))]
-
-                auxDD <- auxDD[, c('Variable', 'Form'), with = F]
-                auxDD[, Form := as.character(Form)]
-                output[[DDslot]] <- auxDD
-            }
-
-            outputGlobal <- Reduce(function(x, y){
-                merge(x, y, all = TRUE,
-                      by = intersect(names(x), names(y)))},
-                output)
-            return(outputGlobal)
-
-
-        } else {# Ahora para el resto de variables
-
-            out.list <- lapply(as.list(VarNames), VarNamesToFormula, DD = DD)
-
-            if (length(out.list) == 1){
-
-                out <- out.list[[1L]]
-
-            } else {
-
-                out <- Reduce(
-                        function(x, y){
-                            merge(x, y, all = TRUE,
-                                  by = intersect(names(x), names(y)))},
-                        out.list)
-            }
-            return(out)
-        }
+        return(DDdtUnique)
     }
 )
