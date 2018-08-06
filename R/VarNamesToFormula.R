@@ -54,9 +54,9 @@ setMethod(
         IDQuals <- getIDQual(DD)
         DotQuals <- setdiff(IDQuals, getDotQual(DD))
         DDdt <- rbindlist(lapply(DD, function(DT){DT})[-1], fill = TRUE)[Sort == 'IDDD']
-        AllCols <- c('Variable', names(DDdt)[grep('Qual', names(y))])
+        AllCols <- c('Variable', names(DDdt)[grep('Qual', names(DDdt))])
         ConcatCols <- setdiff(AllCols, 'Variable') 
-        setkeyv(y, AllCols)
+        setkeyv(DDdt, AllCols)
         DDdtUnique <- DDdt[!duplicated(DDdt, by = key(DDdt)), AllCols, with=FALSE][
             Variable %chin% ExtractNames(VarNames)]
         IDQuals <- getIDQual(DD)
