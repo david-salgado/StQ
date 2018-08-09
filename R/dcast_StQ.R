@@ -133,8 +133,8 @@ setMethod(
             }
             return(out)
         })
-        
-        dcastData <- rbindlist(dcastData, fill = TRUE)
+     
+        dcastData <- Reduce(function(x, y) {merge(x, y, all = TRUE)}, dcastData)
         colNames <- names(dcastData)
         for (col in colNames){
             
