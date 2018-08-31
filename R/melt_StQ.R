@@ -60,10 +60,12 @@ melt_StQ <- function(DataMatrix, DD){
     }
     
     
-    IDQuals <- intersect(getIDQual(DD), namesDM)
-    NonIDQuals <- getNonIDQual(DD)
-    dotQuals <- intersect(getDotQual(DD), namesDM)
-    dotdotQuals <- intersect(getDoubleDotQual(DD), namesDM)
+    IDQuals <- getIDQual(DD)
+    localIDQuals <- intersect(IDQuals, names(DM))
+    dotQuals <- getDotQual(DD)
+    localdotQuals <- intersect(dotQuals, names(DM))
+    dotdotQuals <- getDoubleDotQual(DD)
+    localdotdotQuals <- intersect(dotdotQuals, names(DM))
     IDDDs <- intersect(getIDDD(DD), ExtractNames(namesDM))
     slots <- setdiff(names(getVNC(DD)), 'VarSpec')
     auxDDDT <- lapply(slots, function(VNCname){
@@ -95,8 +97,8 @@ melt_StQ <- function(DataMatrix, DD){
         localQuals <- strsplit(QualName, ' ')[[1]]
         ColNames <- c(localQuals, names(DM)[indexCol])
         localDM <- DM[, intersect(ColNames, namesDM), with = F]
-        localDM[, lapply(.SD, as.character), by = IDQuals]
-        localID <- intersect(unique(c(IDQuals, dotQuals)), localQuals)
+        localDM[, lapply(.SD, as.character), by = localIDQuals]
+        localID <- intersect(unique(c(localIDQuals, localdotQuals)), localQuals)
         out <- data.table::melt.data.table(localDM,
                                            id.vars = localID,
                                            measure.vars = setdiff(names(localDM), localID),
@@ -107,8 +109,8 @@ melt_StQ <- function(DataMatrix, DD){
         
         out <- out[Value != '']
         
-        localNonIDQual <- strsplit(QualName, ' ', fixed = TRUE)[[1]]
-        localNonIDQual <- setdiff(localNonIDQual, c(IDQuals, dotQuals, dotdotQuals))
+        localNonIDQual.aux <- strsplit(QualName, ' ', fixed = TRUE)[[1]]
+        localNonIDQual <- setdiff(localNonIDQual.aux, c(IDQuals, dotQuals, dotdotQuals))
         
         if (dim(out)[1] == 0) {
             
@@ -123,6 +125,7 @@ melt_StQ <- function(DataMatrix, DD){
                 if (length(colNames) == dim(outLocal)[2] + 1) outLocal[, (colNames[length(colNames)]) := '']
                 setnames(outLocal, colNames)
                 outLocal <- copy(out)[, IDDD := NULL][, (names(outLocal)) := outLocal]
+                if (length(dim(outLocal)[2]) != (length(localNonIDQual.aux) + 2)) outLocal[, setdiff(localNonIDQual.aux, (setdiff(names(outLocal), c('IDDD', 'Value')))) := '']
                 localdotQuals <- intersect(dotQuals, names(outLocal))
                 localdotdotQuals <- intersect(dotdotQuals, names(outLocal))
                 setcolorder(outLocal, unique(c(localID, localNonIDQual, localdotQuals, localdotdotQuals,  'IDDD', 'Value')))
