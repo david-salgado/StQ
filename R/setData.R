@@ -39,7 +39,7 @@ setReplaceMethod(
         
       DD <- getDD(object)
       IDDD <- unique(value[['IDDD']])
-      Quals <- c()
+      Quals <- c(getIDQual(object), getNonIDQual(object))
       
       for (var in IDDD) {
         
