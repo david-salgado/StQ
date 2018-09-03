@@ -39,7 +39,7 @@ setReplaceMethod(
         
       DD <- getDD(object)
       IDDD <- unique(value[['IDDD']])
-      Quals <- c(getIDQual(object), getNonIDQual(object))
+      Quals <- c()
       
       for (var in IDDD) {
         
@@ -56,7 +56,8 @@ setReplaceMethod(
         }
       }
       
-      value <- value[, c(intersect(names(value), Quals), 'IDDD', 'Value'), with = FALSE]
+      IDQuals <- getIDQual(object)
+      value <- value[, c(intersect(IDQuals, names(value)), Quals, 'IDDD', 'Value'), with = FALSE]
       
       object$Data <- value
       
