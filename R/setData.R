@@ -57,7 +57,8 @@ setReplaceMethod(
       }
       
       IDQuals <- getIDQual(object)
-      value <- value[, c(intersect(IDQuals, names(value)), Quals, 'IDDD', 'Value'), with = FALSE]
+      Quals.local <- unique(c(intersect(IDQuals, names(value)), Quals))
+      value <- value[, c(Quals.local, 'IDDD', 'Value'), with = FALSE]
       
       object$Data <- value
       
