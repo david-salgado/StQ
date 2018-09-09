@@ -43,4 +43,3 @@ Var <- new(Class = 'Variable', UnitName = 'LRTEmp',
 IDDDName <- VariableIDDDNames(Var, DD)
 
 }
-

@@ -71,7 +71,7 @@ setMethod(
         DD$Other <- DDdt.list[['Other']]
 
         namesVNC <- names(DD$VNC)
-        for (nameVNC in namesVNC){
+        for (nameVNC in namesVNC) {
       
             DD$VNC[[nameVNC]][IDDD != '', Period := '.']
         }
@@ -90,16 +90,14 @@ setMethod(
         Periods <- names(DataList)
 
         for (Per in Periods) {
-            DataList[[Per]][ , Period:= Per]
+            DataList[[Per]][ , Period := Per]
             setcolorder(DataList[[Per]], c(intersect(IDQual, names(DataList[[Per]])),
                                            intersect(NonIDQual, names(DataList[[Per]])),
                                            c('IDDD', 'Value')))
         }
 
-
         Datadt <- rbindlist(DataList)
         out <- StQ(Data = Datadt, DD = DD)
-
         return(out)
     }
 )

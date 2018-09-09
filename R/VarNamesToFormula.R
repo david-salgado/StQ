@@ -45,79 +45,41 @@ setMethod(
     f = "VarNamesToFormula",
     signature = c("character", "DD"),
     function(VarNames, DD){
-
-        trim <- function (x) gsub("^\\s+|\\s+$", "", x, useBytes = T)
+        
+        trimPlus <- function (x) gsub("^\\s{1}[+]{1}\\s{1}|\\s{1}[+]{1}\\s{1}$", "", x, useBytes = T)
+        #trim <- function (x) gsub("^\\s+|\\s+$", "", x, useBytes = T)
         
         NotPresentVar  <- setdiff(ExtractNames(VarNames), getVariables(DD))
         if (length(NotPresentVar) > 0) stop(paste0('[StQ::VarNamesToDD] The following variables are not contained in the DD slot: ', NotPresentVar, '.\n'))
-        DotQual <- getDotQual(DD)
-        
-        # Para una variable
-        if (is.character(VarNames) & length(VarNames) == 1){
+        IDQuals <- getIDQual(DD)
+        DotQuals <- setdiff(IDQuals, getDotQual(DD))
+        DDdt <- rbindlist(lapply(DD, function(DT){DT})[-1], fill = TRUE)[Sort == 'IDDD']
+        AllCols <- c('Variable', names(DDdt)[grep('Qual', names(DDdt))])
+        ConcatCols <- setdiff(AllCols, 'Variable') 
+        setkeyv(DDdt, AllCols)
+        DDdtUnique <- DDdt[!duplicated(DDdt, by = key(DDdt)), AllCols, with=FALSE][
+            Variable %chin% ExtractNames(VarNames)]
+        IDQuals <- getIDQual(DD)
+        dotQuals <- setdiff(getDotQual(DD), IDQuals)
+        trimPlus <- function (x) gsub("^\\s{1}[+]{1}\\s{1}|\\s{1}[+]{1}\\s{1}$", "", x, useBytes = T)
+        for (i in seq_along(ConcatCols)){
             
-            DDSlotNames <- setdiff(names(DD), 'VNC')
-            output <- list()
-            for (DDslot in DDSlotNames){
-
-                DDlocal <- DD[[DDslot]]
-                IDQual <- DDlocal[Sort == 'IDQual', Variable]
-                NonIDQual <- DDlocal[Sort == 'NonIDQual', Variable]
-                Quals <- names(DDlocal)[grep('Qual', names(DDlocal))]
-                auxDD <- DDlocal[Variable == ExtractNames(VarNames), c('Variable', Quals), with = F]
-                auxDD[, LHS := '']
-                auxDD[, RHS := '']
-
-                for (Qual in Quals){
-
-                    auxDD[, LHS := ifelse(get(Qual) %in% IDQual | get(Qual) %in% DotQual, 
-                                          trim(paste(LHS, get(Qual))), 
-                                          trim(LHS))]
-                    auxDD[, RHS := ifelse(get(Qual) %in% NonIDQual & !get(Qual) %in% DotQual,
-                                          trim(paste(RHS, get(Qual))),
-                                          trim(RHS))]
-                }
-
-                auxDD[, Form := ifelse(LHS != '',
-                                       ifelse(RHS != '',
-                                              paste(gsub(' ', ' + ', trim(LHS)),
-                                                    ' ~ IDDD +',
-                                                    gsub(' ', ' + ', trim(RHS))),
-                                              paste(gsub(' ', ' + ', trim(LHS)),
-                                                    '~ IDDD')),
-                                       ifelse(RHS != '',
-                                              paste('. ~ IDDD +',
-                                                    gsub(' ', ' + ', trim(RHS))),
-                                              paste('. ~ IDDD')))]
-
-                auxDD <- auxDD[, c('Variable', 'Form'), with = F]
-                auxDD[, Form := as.character(Form)]
-                output[[DDslot]] <- auxDD
-            }
-
-            outputGlobal <- Reduce(function(x, y){
-                merge(x, y, all = TRUE,
-                      by = intersect(names(x), names(y)))},
-                output)
-            return(outputGlobal)
-
-
-        } else {# Ahora para el resto de variables
-
-            out.list <- lapply(as.list(VarNames), VarNamesToFormula, DD = DD)
-
-            if (length(out.list) == 1){
-
-                out <- out.list[[1L]]
-
+            qual <- paste0('Qual', i)
+            if (i == 1) { 
+                
+                DDdtUnique[, LHS := ifelse(get(qual) %chin% c(IDQuals, dotQuals), get(qual), '')]
+                DDdtUnique[, RHS := ifelse(!get(qual) %chin% c(IDQuals, dotQuals), paste('IDDD', get(qual), sep = ' + '), 'IDDD')]
+                
             } else {
-
-                out <- Reduce(
-                        function(x, y){
-                            merge(x, y, all = TRUE,
-                                  by = intersect(names(x), names(y)))},
-                        out.list)
+                
+                DDdtUnique[, LHS := ifelse(get(qual) %chin% c(IDQuals, dotQuals), paste(trimPlus(LHS), get(qual), sep = ' + '), LHS)]
+                DDdtUnique[, RHS := ifelse(!get(qual) %chin% c(IDQuals, dotQuals), paste(trimPlus(RHS), get(qual), sep = ' + '), RHS)]
+                
             }
-            return(out)
         }
+        DDdtUnique[, RHS := trimPlus(RHS)]
+        DDdtUnique <- DDdtUnique[, Form := paste(LHS, RHS, sep = ' ~ ')][, c('Variable', 'Form'), with = FALSE]
+        
+        return(DDdtUnique)
     }
 )

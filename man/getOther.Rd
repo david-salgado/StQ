@@ -3,8 +3,8 @@
 \docType{methods}
 \name{getOther}
 \alias{getOther}
-\alias{getOther,DD-method}
 \alias{getOther,VNC-method}
+\alias{getOther,DD-method}
 \title{Return slot Other from an object}
 \usage{
 getOther(object)
@@ -58,4 +58,3 @@ VNC <- BuildVNC(VarList)
 getOtherDD(VNC)
 
 }
-

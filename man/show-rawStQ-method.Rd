@@ -26,4 +26,3 @@ object. It is indeed the method \link[methods]{show} adapted to class \linkS4cla
 show(new(Class = 'rawStQ'))
 
 }
-

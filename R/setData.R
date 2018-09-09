@@ -56,7 +56,13 @@ setReplaceMethod(
         }
       }
       
-      value <- value[, c(intersect(names(value), Quals), 'IDDD', 'Value'), with = FALSE]
+      if (length(Quals) == 0) {
+          
+          value <- value[, c(intersect(getIDQual(object), names(value)), 'IDDD', 'Value'), with = FALSE]
+      } else {
+          
+          value <- value[, c(Quals, 'IDDD', 'Value'), with = FALSE]
+      }
       
       object$Data <- value
       
