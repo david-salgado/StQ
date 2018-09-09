@@ -94,19 +94,19 @@ setMethod(
 
         # Creamos una data.table auxDD con la fórmula asociada a cada variable según el slot DD
         auxDD <- VarNamesToFormula(IDDDVarNames, DD)
-
+        
         # Se asocia a cada fórmula su correspondiente data.table dcasted
         auxData <- split(auxDD[['Variable']], auxDD[['Form']])
-
+        Data <- getData(object)
+        Units.DT <- getUnits(object)
         dcastData <- lapply(names(auxData), function(Form){
 
             #Preparamos la data.table aux que vamos a reformatear con dcast.data.table
-            Data <- getData(object)
-            aux <- Data[IDDD %in% auxData[[Form]]]
+            aux <- Data[IDDD %chin% auxData[[Form]]]
 
             if (dim(aux)[[1]] == 0) {
                 
-                return(getUnits(object))
+                return(Units.DT)
                 
             }
             
@@ -132,16 +132,20 @@ setMethod(
                                                 formula = as.formula(Form),
                                                 drop = TRUE,
                                                 value.var = 'Value')
+            notAllNAs <- names(out)[unlist(out[, lapply(.SD, function(x){!all(is.na(x))})][1])]
+            out <- out[, notAllNAs, with = FALSE]
+return(out)
+            if ('.' %in% names(out)) out[, '.', with = FALSE]
 
-            outNames <- sort(names(out))
-            for (col in outNames){
-              if (all(is.na(out[[col]]))) out[, (col) := NULL]
-              if (col == '.') out[, (col) := NULL]
-            }
+            #outNames <- sort(names(out))
+            #for (col in outNames){
+            #  if (all(is.na(out[[col]]))) out[, (col) := NULL]
+            #  if (col == '.') out[, (col) := NULL]
+            #}
             return(out)
         })
         names(dcastData) <- names(auxData)
-
+return(dcastData)
         # Eliminamos componentes NULL de la lista de data.tables transformadas
         for (i in names(dcastData)){
           if (is.null(dcastData[[i]])) dcastData[[i]] <- NULL
