@@ -98,23 +98,9 @@ setMethod(
         # Se asocia a cada fórmula su correspondiente data.table dcasted
         auxData <- split(auxDD[['Variable']], auxDD[['Form']])
         Data <- getData(object)
-<<<<<<< HEAD
-        Units.DT <- getUnits(object)
-        dcastData <- lapply(names(auxData), function(Form){
-
-            #Preparamos la data.table aux que vamos a reformatear con dcast.data.table
-            aux <- Data[IDDD %chin% auxData[[Form]]]
-
-            if (dim(aux)[[1]] == 0) {
-                
-                return(Units.DT)
-                
-            }
-=======
         WithIDDD <- sapply(auxData, function(Vars){dim(Data[IDDD %chin% Vars])[1] > 0})
         auxData <- auxData[WithIDDD]
         dcastData <- lapply(names(auxData), function(Form){
->>>>>>> 69a4b0c73dcd29b771f9c0268a9c8e65c3430355
             
             aux <- Data[IDDD %in% auxData[[Form]]]
             ColNames <- names(aux)
@@ -139,56 +125,6 @@ setMethod(
                                                 formula = as.formula(Form),
                                                 drop = TRUE,
                                                 value.var = 'Value')
-<<<<<<< HEAD
-            notAllNAs <- names(out)[unlist(out[, lapply(.SD, function(x){!all(is.na(x))})][1])]
-            out <- out[, notAllNAs, with = FALSE]
-return(out)
-            if ('.' %in% names(out)) out[, '.', with = FALSE]
-
-            #outNames <- sort(names(out))
-            #for (col in outNames){
-            #  if (all(is.na(out[[col]]))) out[, (col) := NULL]
-            #  if (col == '.') out[, (col) := NULL]
-            #}
-            return(out)
-        })
-        names(dcastData) <- names(auxData)
-return(dcastData)
-        # Eliminamos componentes NULL de la lista de data.tables transformadas
-        for (i in names(dcastData)){
-          if (is.null(dcastData[[i]])) dcastData[[i]] <- NULL
-          next
-        }
-
-        # Combinamos las data.tables de la lista en una sola data.table
-        output <- Reduce(
-            function(x, y){
-
-                CommonCols <- intersect(names(x), names(y))
-                if (length(CommonCols) > 0) {
-
-                    out <- merge(x, y, by = CommonCols, all = TRUE)
-
-                } else {
-
-                    out <- rbindlist(list(x, y), fill = TRUE)
-
-                }
-                ColNames <- names(out)
-                for (col in ColNames){
-
-                    out[is.na(get(col)), (col) := '']
-                }
-                return(out)
-            },
-            dcastData,
-            init = dcastData[[1]])
-
-        # Asignamos los tipos a cada variable sustituyendo blancos por NA
-        outCols <- names(output)
-        for (col in outCols){
-
-=======
             
             outNames <- sort(names(out))
             for (col in outNames){
@@ -197,12 +133,11 @@ return(dcastData)
             }
             return(out)
         })
-     
+        
         dcastData <- Reduce(function(x, y) {merge(x, y, all = TRUE)}, dcastData)
         colNames <- names(dcastData)
         for (col in colNames){
             
->>>>>>> 69a4b0c73dcd29b771f9c0268a9c8e65c3430355
             colClass <- unique(DDdt[Variable == ExtractNames(col)][['Class']])
             dcastData[, (col) := as(get(col), colClass)]
         } 
