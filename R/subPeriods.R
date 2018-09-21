@@ -9,10 +9,10 @@
 #' @param x object of class \linkS4class{StQList}.
 #'
 #' @param i,j,... Indices corresponding to the elements to be extracted. These indices are numeric
-#' vector or character vector or \link{missing} or \link{NULL}. Numeric values are coerced
-#' internally to \code{integer} through \code{\link{as.integer}} (and thus truncated to zero).
-#' Character vector correspond to names of the respective time period of each component object of
-#' class \linkS4class{StQ}.
+#' vector or character vector, objects of class \linkS4class{RepoTimeInt} or \link{missing} or
+#' \link{NULL}. Numeric values are coerced internally to \code{integer} through
+#' \code{\link{as.integer}} (and thus truncated to zero). Character vector correspond to names of
+#' the respective time period of each component object of class \linkS4class{StQ}.
 #'
 #' @param drop Included by coherence.
 #'
@@ -46,6 +46,7 @@ setMethod(
     function(x, i){
 
      DataList <- getData(x)
+     if (class(i) == 'RepoTimeInt') i <- getRepo(i)
 
      output <- DataList[i]
      names(output) <- names(DataList[i])
