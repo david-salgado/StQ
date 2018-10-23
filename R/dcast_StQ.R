@@ -134,7 +134,15 @@ setMethod(
             return(out)
         })
      
-        dcastData <- Reduce(function(x, y) {merge(x, y, all = TRUE)}, dcastData)
+        IDQuals <- unique(unlist(lapply(names(auxData), function(Form){
+          
+          out <- strsplit(Form, '~')[[1]][1]
+          out <- strsplit(out, '\\+')[[1]]
+          out <- trimws(out)
+          return(out)
+        })))
+        
+        dcastData <- Reduce(function(x, y) {merge(x, y, all = TRUE, by = intersect(IDQuals, intersect(names(x), names(y))))}, dcastData)
         colNames <- names(dcastData)
         for (col in colNames){
             
