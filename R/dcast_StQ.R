@@ -141,8 +141,19 @@ setMethod(
           out <- trimws(out)
           return(out)
         })))
+      
+        dcastData <- Reduce(function(x, y) {
+            if (length(intersect(names(x), names(y))) > 0){
+                out <- merge(x, y, all = TRUE, by = intersect(IDQuals, intersect(names(x), names(y))))
+            }else {
+                out <- rbindlist(list(x, y), fill = TRUE)
+            }
+            return(out)
+            }, 
+            dcastData
+            )
         
-        dcastData <- Reduce(function(x, y) {merge(x, y, all = TRUE, by = intersect(IDQuals, intersect(names(x), names(y))))}, dcastData)
+        
         colNames <- names(dcastData)
         for (col in colNames){
             
