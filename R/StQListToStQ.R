@@ -31,7 +31,7 @@ setMethod(
                                NonIDQual = '',
                                IDDD = '',
                                Period = '',
-                               UnitName = '',
+                               UnitName = 'Periodo',
                                InFiles = '')
 
         VNC <- getVNC(DD)
