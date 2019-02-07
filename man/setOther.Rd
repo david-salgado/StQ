@@ -3,8 +3,8 @@
 \docType{methods}
 \name{setOther<-}
 \alias{setOther<-}
-\alias{setOther<-,VNC,data.table-method}
 \alias{setOther<-,DD,data.table-method}
+\alias{setOther<-,VNC,data.table-method}
 \title{Set value of slot \code{Other}}
 \usage{
 setOther(object) <- value
@@ -48,3 +48,4 @@ setOther(DD) <- Otherdt
 DD
 
 }
+

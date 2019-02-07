@@ -34,7 +34,6 @@ with columns \code{IDDDKey}, \code{QualKey} and \code{Value} will be initiated.}
 \code{DD} is not specified as an input parameter, an empty \linkS4class{DD} object with all its
 components  will be initiated.}
 }}
-
 \examples{
 # An empty standardized questionnaire set:
 rawStQ()
@@ -47,3 +46,4 @@ rawData <- data.table(IDDDKey = c('Employees', 'Employees', 'RemEmployees', 'Tur
 rawStQ(rawData, ExampleDD)
 
 }
+

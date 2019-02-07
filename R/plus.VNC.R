@@ -1,6 +1,6 @@
 #' @title Method \code{+} for the class \linkS4class{VarNameCorresp}
 #'
-#' @description \code{+} sums two objects of class \linkS4class{VarNameCorresp}. This method 
+#' @description \code{+} sums two objects of class \linkS4class{VarNameCorresp}. This method
 #' overloads the operator \link{+} and returns a new object of class \linkS4class{VarNameCorresp}.
 #'
 #' The integration is carried out according to the names of the components.
@@ -9,7 +9,7 @@
 #'
 #' @param e2 Object of class \linkS4class{VarNameCorresp}.
 #'
-#' @return Object of class \linkS4class{VarNameCorresp} resulting from integrating both 
+#' @return Object of class \linkS4class{VarNameCorresp} resulting from integrating both
 #' \linkS4class{VarNameCorresp} objects in a single \linkS4class{VarNameCorresp} object.
 #'
 #' @examples
@@ -92,16 +92,15 @@
         for (Name in CommonNames){
 
             #outVarList[[Name]] <- e1[[Name]] + e2[[Name]]
-
             CommonCols <- intersect(names(e1[[Name]]), names(e2[[Name]]))
             VNCdt1 <- setkeyv(e1[[Name]], CommonCols)
             VNCdt2 <- setkeyv(e2[[Name]], CommonCols)
 
             outVar <- rbindlist(list(VNCdt1, VNCdt2), fill = TRUE)
             for (col in names(outVar)) {
-                
+
                 outVar[, (col) := ifelse(is.na(get(col)), '', get(col))]
-                
+
             }
 
             setkeyv(outVar, setdiff(names(outVar), c('UnitName', 'InFiles')))
@@ -112,7 +111,7 @@
             NonIDQual <- unique(outVar[which(NonIDQual != "")][['NonIDQual']])
             NonIDQual <- setdiff(NonIDQual, IDQual)
             setcolorder(outVar, c('IDQual', 'NonIDQual', 'IDDD', IDQual, NonIDQual, 'UnitName', 'InFiles'))
-            outVarList[[Name]] <- outVar     
+            outVarList[[Name]] <- outVar
 
         }
 

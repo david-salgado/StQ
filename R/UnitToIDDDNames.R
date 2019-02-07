@@ -9,7 +9,7 @@
 #' @param Correspondence Object with the IDDD variable name.
 #'
 #' @return Returns a \code{character} vector with all the corresponding IDDD variable names. For
-#' objects the classes \link{DD} and \link{StQ} it returns the IDDD in the slot 
+#' objects the classes \link{DD} and \link{StQ} it returns the IDDD in the slot
 #' VarNameCorresp of the corresponding DD object.
 #'
 #' @details IDDD and qualifiers compose together the so-called IDDDname of the variable by pasting
@@ -100,15 +100,15 @@
 #' # An example for StQ objects:
 #' data(ExampleStQ)
 #' UnitToIDDDNames(ExampleStQ, UnitNames = c('cnae09','C11','C121','C122' , 'EXISTENCIAS', 'B1'))
-#' 
+#'
 #'
 #' @include getIDQual.R VNC.R DD.R BuildVNC.R BuildDD.R StQ.R getDD.R
-#' 
+#'
 #' @export
 setGeneric("UnitToIDDDNames", function(UnitNames, Correspondence){standardGeneric("UnitToIDDDNames")})
 
 #' @rdname UnitToIDDDNames
-#' 
+#'
 #' @include DD.R VarNamesToDD.R getVNC.R BuildDD.R BuildVNC.R VNC.R
 #'
 #' @import data.table
@@ -159,7 +159,7 @@ setMethod(
                 ColsNotUnit <- t(as.matrix(auxDT[, names(auxDT)[grep('Qual', names(auxDT))], with = FALSE]))[,1]
                 ColsNotUnit <- setdiff(ColsNotUnit, c(IDQual, DotQual))
                 ColsNotUnit <- ColsNotUnit[ColsNotUnit != '']
-                
+
                 for (col in ColsNotUnit) {
 
                     #if (all(xls[[col]] == '.') | all(is.na(xls[[col]]))) next

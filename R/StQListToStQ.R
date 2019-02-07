@@ -1,7 +1,7 @@
 #' @title Method to transform an \linkS4class{StQList} object into a StQ object
 #'
-#' @description \code{StQListToStQ} transform an \linkS4class{StQList} object into a StQ object 
-#' with a new variable "Period" to take into account the interval period times related to 
+#' @description \code{StQListToStQ} transform an \linkS4class{StQList} object into a StQ object
+#' with a new variable "Period" to take into account the interval period times related to
 #' \linkS4class{StQList} object.
 #'
 #' This method creates a variable with the name \code{Period} in Data slot with the period related
@@ -12,9 +12,9 @@
 #' @return object of class \linkS4class{StQ}.
 #'
 #' @include StQList.R StQ.R getData.R getDD.R BuildVNC.R plus.DD.R DD.R BuildDD.R setID.R setMicroData.R setParaData.R setAggregates.R setAggWeights.R setOther.R
-#' 
+#'
 #' @import data.table
-#' 
+#'
 #' @export
 setGeneric("StQListToStQ", function(object){standardGeneric("StQListToStQ")})
 
@@ -25,7 +25,7 @@ setMethod(
     f = "StQListToStQ",
     signature = c("StQList"),
     function(object){
-        
+
         DD <- Reduce('+', getDD(object))
         auxVNCdt <- data.table(IDQual = c('Period'),
                                NonIDQual = '',
@@ -33,13 +33,13 @@ setMethod(
                                Period = '',
                                UnitName = '',
                                InFiles = '')
-        
+
         VNC <- getVNC(DD)
         VNCnames <- union(names(VNC), c('ID', 'MicroData', 'ParaData', 'Other', 'AggWeights', 'Aggregates'))
         VNClist <- lapply(VNCnames, function(name){auxVNCdt})
         names(VNClist) <- VNCnames
         VNCPer <- do.call(BuildVNC, list(VNClist))
-               
+
         NewDDdt <- data.table(Variable = c('Period'),
                               Sort = c('IDQual'),
                               Class = c('character'),
@@ -52,10 +52,10 @@ setMethod(
 
         DDdtNames.list <- setdiff(names(DD), 'VNC')
         DDdt.list <- lapply(DDdtNames.list, function(Name){
-                             
+
             newDDdt.DT <- copy(DD[[Name]])
             ColnewDDdt.DT <- names(newDDdt.DT)
-            
+
             nQual <- length(grep('Qual', ColnewDDdt.DT)) + 1
             newDDdt.DT[Sort == 'IDDD', (paste0('Qual', nQual)) := 'Period']
             newDDdt.DT[Sort != 'IDDD', (paste0('Qual', nQual)) := '']
@@ -72,10 +72,10 @@ setMethod(
 
         namesVNC <- names(DD$VNC)
         for (nameVNC in namesVNC) {
-      
+
             DD$VNC[[nameVNC]][IDDD != '', Period := '.']
         }
-        
+
         #setID(DD) <- DDdt.list[['ID']]
         #setMicroData(DD) <- DDdt.list[['MicroData']]
         #setParaData(DD) <- DDdt.list[['ParaData']]
@@ -96,7 +96,7 @@ setMethod(
                                            c('IDDD', 'Value')))
         }
 
-        Datadt <- rbindlist(DataList)
+        Datadt <- rbindlist(DataList, fill = TRUE)
         out <- StQ(Data = Datadt, DD = DD)
         return(out)
     }
