@@ -26,7 +26,7 @@ setMethod(
     signature = c("StQList"),
     function(object){
 
-        DD <- Reduce('+', getDD(object))
+        DDold <- Reduce('+', getDD(object))
         auxVNCdt <- data.table(IDQual = c('Period'),
                                NonIDQual = '',
                                IDDD = '',
@@ -34,7 +34,7 @@ setMethod(
                                UnitName = 'Periodo',
                                InFiles = '')
 
-        VNC <- getVNC(DD)
+        VNC <- getVNC(DDold)
         VNCnames <- union(names(VNC), c('ID', 'MicroData', 'ParaData', 'Other', 'AggWeights', 'Aggregates'))
         VNClist <- lapply(VNCnames, function(name){auxVNCdt})
         names(VNClist) <- VNCnames
@@ -48,17 +48,20 @@ setMethod(
                               ValueRegExp = '.+')
         DDPer <- DD(VNC = VNCPer, ID = NewDDdt, MicroData = NewDDdt, ParaData = NewDDdt)
 
-        DD <- DD + DDPer
+
+        DD <- DDold + DDPer
 
         DDdtNames.list <- setdiff(names(DD), 'VNC')
         DDdt.list <- lapply(DDdtNames.list, function(Name){
 
             newDDdt.DT <- copy(DD[[Name]])
             ColnewDDdt.DT <- names(newDDdt.DT)
-
+            nIDQual <- length(getIDQual(DDold, Name))
             nQual <- length(grep('Qual', ColnewDDdt.DT)) + 1
-            newDDdt.DT[Sort == 'IDDD', (paste0('Qual', nQual)) := 'Period']
+            setnames(newDDdt.DT, paste0('Qual', (nIDQual + 1):(nQual - 1)), paste0('Qual', (nIDQual + 2):nQual))
+            newDDdt.DT[Sort == 'IDDD', (paste0('Qual', nIDQual + 1)) := 'Period']
             newDDdt.DT[Sort != 'IDDD', (paste0('Qual', nQual)) := '']
+            newDDdt.DT[Sort != 'IDDD', (paste0('Qual', nIDQual + 1)) := '']
             setcolorder(newDDdt.DT, c('Variable', 'Sort', 'Class', 'Length', paste0('Qual', 1:nQual), 'ValueRegExp'))
         })
         names(DDdt.list) <- DDdtNames.list
