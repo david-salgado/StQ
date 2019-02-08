@@ -143,15 +143,19 @@ setMethod(
         })))
         
         dcastData <- Reduce(function(x, y) {
-            if (length(intersect(names(x), names(y))) > 0){
-                out <- merge(x, y, all = TRUE, by = intersect(IDQuals, intersect(names(x), names(y))))
-            }else {
+            
+          if (length(intersect(names(x), names(y))) > 0){
+          
+                  out <- merge(x, y, all = TRUE, by = intersect(IDQuals, intersect(names(x), names(y))))
+            
+          } else {
+            
                 out <- rbindlist(list(x, y), fill = TRUE)
-            }
-            return(out)
-        }, 
-        dcastData
-        )
+            
+          }
+          
+          return(out)}, 
+        dcastData)
         
         
         colNames <- names(dcastData)

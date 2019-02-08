@@ -39,21 +39,44 @@ setMethod(
         VNClist <- lapply(VNCnames, function(name){auxVNCdt})
         names(VNClist) <- VNCnames
         VNCPer <- do.call(BuildVNC, list(VNClist))
-
-        NewDDdt <- data.table(Variable = c('Period'),
-                              Sort = c('IDQual'),
-                              Class = c('character'),
-                              Length = c('8'),
-                              Qual1 = '',
-                              ValueRegExp = '.+')
-        DDPer <- DD(VNC = VNCPer, ID = NewDDdt, MicroData = NewDDdt, ParaData = NewDDdt)
-
-
-        DD <- DDold + DDPer
-
-        DDdtNames.list <- setdiff(names(DD), 'VNC')
-        DDdt.list <- lapply(DDdtNames.list, function(Name){
-
+        
+        if ('Period' %in% getIDQual(DDold)) {
+          
+          
+          IDQual <- getIDQual(DDold)
+          NonIDQual <- getNonIDQual(DDold)
+          DataList <- lapply(getData(object), getData)
+          Periods <- names(DataList)
+          
+          for (Per in Periods) {
+            DataList[[Per]][ , Period := Per]
+            setcolorder(DataList[[Per]], c(intersect(IDQual, names(DataList[[Per]])),
+                                           intersect(NonIDQual, names(DataList[[Per]])),
+                                           c('IDDD', 'Value')))
+          }
+          
+          Datadt <- rbindlist(DataList, fill = TRUE)
+          out <- StQ(Data = Datadt, DD = DD)
+          return(out)
+          
+        } else {
+          
+        
+          NewDDdt <- data.table(Variable = c('Period'),
+                                Sort = c('IDQual'),
+                                Class = c('character'),
+                                Length = c('8'),
+                                Qual1 = '',
+                                ValueRegExp = '.+')
+          
+          DDPer <- DD(VNC = VNCPer, ID = NewDDdt, MicroData = NewDDdt, ParaData = NewDDdt)
+          
+          
+          DD <- DDold + DDPer
+          
+          DDdtNames.list <- setdiff(names(DD), 'VNC')
+          DDdt.list <- lapply(DDdtNames.list, function(Name){
+            
             newDDdt.DT <- copy(DD[[Name]])
             ColnewDDdt.DT <- names(newDDdt.DT)
             nIDQual <- length(getIDQual(DDold, Name))
@@ -63,44 +86,47 @@ setMethod(
             newDDdt.DT[Sort != 'IDDD', (paste0('Qual', nQual)) := '']
             newDDdt.DT[Sort != 'IDDD', (paste0('Qual', nIDQual + 1)) := '']
             setcolorder(newDDdt.DT, c('Variable', 'Sort', 'Class', 'Length', paste0('Qual', 1:nQual), 'ValueRegExp'))
-        })
-        names(DDdt.list) <- DDdtNames.list
-
-        DD$ID <- DDdt.list[['ID']]
-        DD$MicroData <- DDdt.list[['MicroData']]
-        DD$ParaData <- DDdt.list[['ParaData']]
-        DD$Aggregates <- DDdt.list[['Aggregates']]
-        DD$AggWeights <- DDdt.list[['AggWeights']]
-        DD$Other <- DDdt.list[['Other']]
-
-        namesVNC <- names(DD$VNC)
-        for (nameVNC in namesVNC) {
-
+          })
+          names(DDdt.list) <- DDdtNames.list
+          
+          DD$ID <- DDdt.list[['ID']]
+          DD$MicroData <- DDdt.list[['MicroData']]
+          DD$ParaData <- DDdt.list[['ParaData']]
+          DD$Aggregates <- DDdt.list[['Aggregates']]
+          DD$AggWeights <- DDdt.list[['AggWeights']]
+          DD$Other <- DDdt.list[['Other']]
+          
+          namesVNC <- names(DD$VNC)
+          for (nameVNC in namesVNC) {
+            
             DD$VNC[[nameVNC]][IDDD != '', Period := '.']
-        }
-
-        #setID(DD) <- DDdt.list[['ID']]
-        #setMicroData(DD) <- DDdt.list[['MicroData']]
-        #setParaData(DD) <- DDdt.list[['ParaData']]
-        #setAggregates(DD) <- DDdt.list[['Aggregates']]
-        #setAggWeights(DD) <- DDdt.list[['AggWeights']]
-        #setOther(DD) <- DDdt.list[['Other']]
-        #getVNC(DD)[['MicroData']][IDDD != "", Period := '.', Period]
-
-        IDQual <- getIDQual(DD)
-        NonIDQual <- getNonIDQual(DD)
-        DataList <- lapply(getData(object), getData)
-        Periods <- names(DataList)
-
-        for (Per in Periods) {
+          }
+          
+          #setID(DD) <- DDdt.list[['ID']]
+          #setMicroData(DD) <- DDdt.list[['MicroData']]
+          #setParaData(DD) <- DDdt.list[['ParaData']]
+          #setAggregates(DD) <- DDdt.list[['Aggregates']]
+          #setAggWeights(DD) <- DDdt.list[['AggWeights']]
+          #setOther(DD) <- DDdt.list[['Other']]
+          #getVNC(DD)[['MicroData']][IDDD != "", Period := '.', Period]
+          
+          IDQual <- getIDQual(DD)
+          NonIDQual <- getNonIDQual(DD)
+          DataList <- lapply(getData(object), getData)
+          Periods <- names(DataList)
+          
+          for (Per in Periods) {
             DataList[[Per]][ , Period := Per]
             setcolorder(DataList[[Per]], c(intersect(IDQual, names(DataList[[Per]])),
                                            intersect(NonIDQual, names(DataList[[Per]])),
                                            c('IDDD', 'Value')))
+          }
+          
+          Datadt <- rbindlist(DataList, fill = TRUE)
+          out <- StQ(Data = Datadt, DD = DD)
+          return(out)
+          
         }
-
-        Datadt <- rbindlist(DataList, fill = TRUE)
-        out <- StQ(Data = Datadt, DD = DD)
-        return(out)
+        
     }
 )
