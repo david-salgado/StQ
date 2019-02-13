@@ -56,7 +56,7 @@ setMethod(
           }
           
           Datadt <- rbindlist(DataList, fill = TRUE)
-          out <- StQ(Data = Datadt, DD = DD)
+          out <- StQ(Data = Datadt, DD = DDold)
           return(out)
           
         } else {

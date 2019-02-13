@@ -20,7 +20,7 @@ UnitToIDDDNames(UnitNames, Correspondence)
 }
 \value{
 Returns a \code{character} vector with all the corresponding IDDD variable names. For
-objects the classes \link{DD} and \link{StQ} it returns the IDDD in the slot 
+objects the classes \link{DD} and \link{StQ} it returns the IDDD in the slot
 VarNameCorresp of the corresponding DD object.
 }
 \description{
