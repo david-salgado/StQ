@@ -4,8 +4,8 @@
 \name{ParseUnitName}
 \alias{ParseUnitName}
 \alias{ParseUnitName,character,RepoTimeInt-method}
-\alias{ParseUnitName,character,character-method}
 \alias{ParseUnitName,character,integer-method}
+\alias{ParseUnitName,character,character-method}
 \title{Produce a vector of file names parsed out of a pattern and some metavalues}
 \usage{
 ParseUnitName(UnitNames, MetaValues)
@@ -37,4 +37,3 @@ ParseUnitName(c('dat[mm][aa].sas7bdat', 'in[aaaa][mm].txt'),
 ParseUnitName(c('PONALI_[ccaa]'), c(paste0(0, 1:9), 10:12))
       
 }
-

@@ -24,4 +24,3 @@ taking into account the interval period times related to data) into the correspo
 The variable \code{Period} with the period related to each data will be removed from the DD
 components in the new \linkS4class{StQList} object.
 }
-

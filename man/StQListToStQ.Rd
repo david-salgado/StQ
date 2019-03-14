@@ -17,11 +17,10 @@ StQListToStQ(object)
 object of class \linkS4class{StQ}.
 }
 \description{
-\code{StQListToStQ} transform an \linkS4class{StQList} object into a StQ object 
-with a new variable "Period" to take into account the interval period times related to 
+\code{StQListToStQ} transform an \linkS4class{StQList} object into a StQ object
+with a new variable "Period" to take into account the interval period times related to
 \linkS4class{StQList} object.
 
 This method creates a variable with the name \code{Period} in Data slot with the period related
 to each Data and adds this variable to DD slot of the new StQ object.
 }
-

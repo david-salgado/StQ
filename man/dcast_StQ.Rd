@@ -51,4 +51,3 @@ dcast_StQ(ExampleStQ[ID != ''])
 \code{\link[data.table]{melt.data.table}}, \code{\link[reshape2]{melt}},
 \code{\link[reshape2]{dcast}}
 }
-
