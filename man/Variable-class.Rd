@@ -34,6 +34,7 @@ new variable will be created.}
 
 \item{\code{Literal}}{\code{character} vector of length 1 with a comment for the variable.}
 }}
+
 \examples{
 Var <- new(Class = 'Variable', UnitName = 'LRTEmp',
                                IDDD = 'Employees',
@@ -46,4 +47,3 @@ Var <- new(Class = 'Variable', UnitName = 'LRTEmp',
                                Literal = '')
 
 }
-

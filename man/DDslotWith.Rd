@@ -8,7 +8,8 @@
 \usage{
 DDslotWith(object, VarName, DDslot = "MicroData")
 
-\S4method{DDslotWith}{DD,character}(object, VarName, DDslot = "MicroData")
+\S4method{DDslotWith}{DD,character}(object, VarName,
+  DDslot = "MicroData")
 }
 \arguments{
 \item{object}{Object of class \linkS4class{DD}.}
@@ -32,4 +33,3 @@ data(ExampleDD)
 DDslotWith(ExampleDD, 'Turnover')
 
 }
-

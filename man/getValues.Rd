@@ -12,7 +12,8 @@
 
 getValues(object, VarName, Units = getUnits(object))
 
-\S4method{getValues}{StQ,character}(object, VarName, Units = getUnits(object))
+\S4method{getValues}{StQ,character}(object, VarName,
+  Units = getUnits(object))
 
 \S4method{getValues}{StQList,character}(object, VarName,
   Units = getUnits(object))
@@ -39,4 +40,3 @@ getValues(ExampleStQ, 'Employees_1.')
 getValues(ExampleStQ, 'Turnover', Units = data.table(ID = c('00001', '00002')))
 
 }
-

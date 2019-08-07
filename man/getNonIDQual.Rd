@@ -3,20 +3,21 @@
 \docType{methods}
 \name{getNonIDQual}
 \alias{getNonIDQual}
+\alias{getNonIDQual,VNC-method}
 \alias{getNonIDQual,DD-method}
 \alias{getNonIDQual,StQ-method}
 \alias{getNonIDQual,StQList-method}
-\alias{getNonIDQual,VNC-method}
 \title{Return non-unit qualifiers from an object}
 \usage{
 getNonIDQual(object, CompNames = names(object))
 
 \S4method{getNonIDQual}{VNC}(object, CompNames = names(object))
 
-\S4method{getNonIDQual}{DD}(object, CompNames = setdiff(names(object), "VNC"))
-
-\S4method{getNonIDQual}{StQ}(object, CompNames = setdiff(names(getDD(object)),
+\S4method{getNonIDQual}{DD}(object, CompNames = setdiff(names(object),
   "VNC"))
+
+\S4method{getNonIDQual}{StQ}(object,
+  CompNames = setdiff(names(getDD(object)), "VNC"))
 
 \S4method{getNonIDQual}{StQList}(object, CompNames = names(object))
 }
@@ -78,4 +79,3 @@ getNonIDQual(ExampleStQ)
 getNonIDQual(ExampleStQ, 'Aggregates')
 
 }
-

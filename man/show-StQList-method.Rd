@@ -31,4 +31,3 @@ show(QList)
 str(QList)
 
 }
-

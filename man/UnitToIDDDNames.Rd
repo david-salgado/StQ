@@ -120,4 +120,3 @@ UnitToIDDDNames(ExampleStQ, UnitNames = c('cnae09','C11','C121','C122' , 'EXISTE
 
 
 }
-

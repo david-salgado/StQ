@@ -4,8 +4,8 @@
 \alias{rawStQ}
 \title{S4 class for sets of \emph{raw} \emph{St}andarized \emph{Q}uestionnaires}
 \usage{
-rawStQ(rawData = data.table(IDDDKey = character(0), QualKey = character(0),
-  Value = character(0)), DD = BuildDD())
+rawStQ(rawData = data.table(IDDDKey = character(0), QualKey =
+  character(0), Value = character(0)), DD = BuildDD())
 }
 \description{
 Definition of an S4 class named \code{rawStQ} for sets of raw standardized 
@@ -34,6 +34,7 @@ with columns \code{IDDDKey}, \code{QualKey} and \code{Value} will be initiated.}
 \code{DD} is not specified as an input parameter, an empty \linkS4class{DD} object with all its
 components  will be initiated.}
 }}
+
 \examples{
 # An empty standardized questionnaire set:
 rawStQ()
@@ -46,4 +47,3 @@ rawData <- data.table(IDDDKey = c('Employees', 'Employees', 'RemEmployees', 'Tur
 rawStQ(rawData, ExampleDD)
 
 }
-

@@ -78,7 +78,6 @@ melt_StQ <- function(DataMatrix, DD){
         auxDDdt[, Qual := '']
         return(auxDDdt)
     })
-
     auxDDDT <- rbindlist(auxDDDT, fill = TRUE)
     auxDDDT <- auxDDDT[!duplicated(auxDDDT)]
     nQual <- length(grep('Qual', names(auxDDDT))) - 1
@@ -89,6 +88,7 @@ melt_StQ <- function(DataMatrix, DD){
                                  trim(Qual))]
 
     }
+
     auxMeasureVar <- split(auxDDDT[['Variable']], auxDDDT[['Qual']])
 
     moltenData <- lapply(seq_along(auxMeasureVar), function(index.auxMeasureVar){
@@ -100,6 +100,7 @@ melt_StQ <- function(DataMatrix, DD){
         localDM <- DM[, intersect(ColNames, namesDM), with = F]
         localDM[, lapply(.SD, as.character), by = localIDQuals]
         localID <- intersect(unique(c(localIDQuals, localdotQuals)), localQuals)
+
         out <- data.table::melt.data.table(localDM,
                                            id.vars = localID,
                                            measure.vars = setdiff(names(localDM), localID),
@@ -124,14 +125,24 @@ melt_StQ <- function(DataMatrix, DD){
 
                 # colNames <- c('IDDD', localNonIDQual)
                 outLocal <- out[,  tstrsplit(IDDD, '_', fixed = TRUE, fill = '')]
-                if (dim(outLocal)[2] == length(localNonIDQual) + 1) {
+##
+## ATTENTION: if _ is final character of IDDD, the last column is empty and automatically removed by tstrsplit
+## Some change is needed, especially when we have __ as final characters for two dotdotQuals
+                if ( dim(outLocal)[2] == length(localNonIDQual) + 1 ) {
 
                     colNames <- c('IDDD', localNonIDQual)
+                    
                 } else {
 
                     colNames <- c('IDDD', setdiff(localNonIDQual, c(dotQuals, dotdotQuals)))
+
                 }
+
                 if (length(colNames) == dim(outLocal)[2] + 1) outLocal[, (colNames[length(colNames)]) := '']
+                
+# Temporal change for the case with two dotdotquals
+                if (length(colNames) == dim(outLocal)[2] - 1) outLocal[, (names(outLocal)[dim(outLocal)[2]]) := NULL]
+
                 setnames(outLocal, colNames)
                 outLocal <- copy(out)[, IDDD := NULL][, (names(outLocal)) := outLocal]
                 if (dim(outLocal)[2] != (length(localNonIDQual.aux) + 2)) outLocal[, setdiff(localNonIDQual.aux, (setdiff(names(outLocal), c('IDDD', 'Value')))) := '']
