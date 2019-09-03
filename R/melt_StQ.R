@@ -43,12 +43,12 @@ melt_StQ <- function(DataMatrix, DD){
     trim <- function(x) gsub("^\\s+|\\s+$", "", x, useBytes = T)
 
     # Función para construir nombres de variables
-    pasteNA <- function(x, y){
-
-        out <- ifelse(is.na(y) | y == '', paste0(x, ''), paste(x, y, sep = "_"))
-        return(out)
-
-    }
+    # pasteNA <- function(x, y){
+    # 
+    #     out <- ifelse(is.na(y) | y == '', paste0(x, ''), paste(x, y, sep = "_"))
+    #     return(out)
+    # 
+    # }
 
     DM <- copy(DataMatrix)
     namesDM <- names(DM)
