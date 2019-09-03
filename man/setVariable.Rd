@@ -9,9 +9,11 @@
 \usage{
 setVariable(object, Var, lag = NULL, by = NULL)
 
-\S4method{setVariable}{StQ,Variable}(object, Var, lag = NULL, by = NULL)
+\S4method{setVariable}{StQ,Variable}(object, Var, lag = NULL,
+  by = NULL)
 
-\S4method{setVariable}{StQList,Variable}(object, Var, lag = NULL, by = NULL)
+\S4method{setVariable}{StQList,Variable}(object, Var, lag = NULL,
+  by = NULL)
 }
 \arguments{
 \item{object}{Object of class \linkS4class{StQ} or \linkS4class{StQList}.}

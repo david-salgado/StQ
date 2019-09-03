@@ -114,15 +114,18 @@ setMethod(
           NonIDQual <- getNonIDQual(DD)
           DataList <- lapply(getData(object), getData)
           Periods <- names(DataList)
-          
+
           for (Per in Periods) {
             DataList[[Per]][ , Period := Per]
-            setcolorder(DataList[[Per]], c(intersect(IDQual, names(DataList[[Per]])),
-                                           intersect(NonIDQual, names(DataList[[Per]])),
-                                           c('IDDD', 'Value')))
+            #setcolorder(DataList[[Per]], c(intersect(IDQual, names(DataList[[Per]])),
+            #                               intersect(NonIDQual, names(DataList[[Per]])),
+            #                               c('IDDD', 'Value')))
           }
           
           Datadt <- rbindlist(DataList, fill = TRUE)
+          setcolorder(Datadt, c(intersect(IDQual, names(Datadt)), 
+                                intersect(NonIDQual, names(Datadt)),
+                                c('IDDD', 'Value')))
           out <- StQ(Data = Datadt, DD = DD)
           return(out)
           
