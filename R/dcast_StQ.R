@@ -227,10 +227,10 @@ setMethod(
                 
                 return(out)
             }, meta_dc)
-            
+        
+        dcastData <- merge(dcastData, meta_dc, all = TRUE, by = intersect(names(dcastData), names(meta_dc)))    
+                
         }
-
-        dcastData <- merge(dcastData, meta_dc, all = TRUE, by = intersect(names(dcastData), names(meta_dc)))
         
         return(dcastData[])
     })
