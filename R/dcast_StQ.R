@@ -15,7 +15,10 @@
 #'
 #' @param object Object of class \linkS4class{StQ} whose slot \code{Data} will be converted.
 #'
-#' @param VarNames \code{Character} vector with names of the output variables.
+#' @param VarNames \code{Character} vector with names of the output variables (default \code{NULL}).
+#'
+#' @param UnitNames \code{TRUE} or \code{FALSE} (default) to return output with UnitNames in dcasted
+#'  form.
 #'
 #' @return Returns a \linkS4class{data.table} with data from slot \code{Data} of the input
 #' \linkS4class{StQ} object with statistical units by rows and variables by columns. Only variables
@@ -36,7 +39,7 @@
 #' \code{\link[data.table]{melt.data.table}}, \code{\link[reshape2]{melt}},
 #' \code{\link[reshape2]{dcast}}
 #'
-#' @include StQ.R DDslotWith.R getNonIDQual.R getDD.R getData.R getVNC.R getIDQual.R VarNamesToFormula.R sub.StQ.R getIDDD.R ExtractNames.R getUnits.R
+#' @include StQ.R DDslotWith.R getNonIDQual.R getDD.R getData.R getVNC.R getIDQual.R VarNamesToFormula.R sub.StQ.R getIDDD.R ExtractNames.R getUnits.R ParseUnitName.R
 #' 
 #' @importFrom formula.tools lhs.vars
 #'
@@ -46,7 +49,7 @@
 #'
 #' @export
 setGeneric("dcast_StQ",
-           function(object, VarNames = NULL){standardGeneric("dcast_StQ")})
+           function(object, VarNames = NULL, UnitNames = FALSE){standardGeneric("dcast_StQ")})
 
 #' @rdname dcast_StQ
 #'
@@ -54,7 +57,7 @@ setGeneric("dcast_StQ",
 setMethod(
     f = "dcast_StQ",
     signature = c("StQ"),
-    function(object, VarNames = NULL){
+    function(object, VarNames = NULL, UnitNames = FALSE){
         
         DD <- getDD(object)
         VNC <- getVNC(DD)
@@ -134,12 +137,102 @@ setMethod(
             return(out)
         })
         
-        dcastData <- Reduce(function(x, y) {merge(x, y, all = TRUE)}, dcastData)
+        IDQuals <- unique(unlist(lapply(names(auxData), function(Form){
+            
+            out <- strsplit(Form, '~')[[1]][1]
+            out <- strsplit(out, '\\+')[[1]]
+            out <- trimws(out)
+            return(out)
+        })))
+        
+        dcastData <- lapply(dcastData, function(DT){
+            
+            DTnames <- names(DT)
+            absentIDQuals <- setdiff(IDQuals, DTnames)
+            if (length(absentIDQuals) > 0) {
+                
+                DT[, (absentIDQuals) := '']
+                
+            }
+            return(DT)
+        })
+        
+        dcastData <- Reduce(function(x, y) {
+            
+            if (length(intersect(names(x), names(y))) > 0){
+                
+                out <- merge(x, y, all = TRUE, by = intersect(IDQuals, intersect(names(x), names(y))))
+                
+            } else {
+                
+                out <- rbindlist(list(x, y), fill = TRUE)
+                
+            }
+            
+            return(out)
+        }, dcastData)
+        
+        for (idQual in IDQuals){
+            
+            id <- unique(dcastData[[idQual]])
+            if (length(id) == 1 &&  id == '') dcastData[, (idQual) := NULL]
+            
+        }
+        
         colNames <- names(dcastData)
         for (col in colNames){
             
             colClass <- unique(DDdt[Variable == ExtractNames(col)][['Class']])
             dcastData[, (col) := as(get(col), colClass)]
         } 
+        
+        
+        if (UnitNames) {
+            
+            setnames(dcastData, IDDDToUnitNames(names(dcastData), DD))
+            metaVariables <- names(dcastData)[grep('[', names(dcastData), fixed = TRUE)]
+            metaVariables <- unlist(lapply(names(dcastData), function(col){metaVariables[grep(col, metaVariables)]}))
+            
+            if (length(metaVariables) == 0) return(dcastData[])
+            
+            meta_dc <- vector(mode = 'list', length = length(metaVariables))
+            names(meta_dc) <- metaVariables
+            
+            for (metaVar in metaVariables){
+                
+                metaVar_text <- unique(sub(".*\\[(.*)\\].*", "\\1", metaVar))
+                metaID <- setdiff(IDDDToUnitNames(IDQuals, DD), metaVar_text)
+                metaID <- intersect(metaID, names(dcastData))
+                tempDT <- dcastData[, c(metaID, metaVar_text, metaVar), with = FALSE]
+                tempDT <- tempDT[!duplicated(tempDT)]
+                form <- paste( c(paste(metaID, collapse = ' + '), paste(metaVar_text, collapse = ' + ')), collapse = ' ~ ')
+                tempDT_dc <- data.table::dcast.data.table(tempDT, formula = as.formula(form), value.var = metaVar)
+                if ('V1' %in% names(tempDT_dc)) tempDT_dc[, V1 := NULL]
+                varNames <- setdiff(names(tempDT_dc), metaID)
+                newNames <- ParseUnitName(metaVar, varNames)
+                setnames(tempDT_dc, varNames, newNames)
+                meta_dc[[metaVar]] <- tempDT_dc
+                
+            }
+            dcastData[, (metaVariables) := NULL]
+            meta_dc <- Reduce(function(x, y) {
+                
+                if (length(intersect(names(x), names(y))) > 0){
+                    
+                    out <- merge(x, y, all = TRUE, by = intersect(names(x), names(y)))
+                    
+                } else {
+                    
+                    out <- rbindlist(list(x, y), fill = TRUE)
+                    
+                }
+                
+                return(out)
+            }, meta_dc)
+            
+            dcastData <- merge(dcastData, meta_dc, all = TRUE, by = intersect(names(dcastData), names(meta_dc)))    
+            
+        }
+        
         return(dcastData[])
     })
