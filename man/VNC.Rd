@@ -4,11 +4,10 @@
 \alias{VNC}
 \title{S3 class object constructor for the correspondence between variable names}
 \usage{
-VNC(ID = data.table(IDQual = character(0), NonIDQual = character(0), IDDD
-  = character(0), UnitName = character(0), InFiles = character(0)),
-  MicroData = data.table(IDQual = character(0), NonIDQual = character(0),
-  IDDD = character(0), UnitName = character(0), InFiles = character(0)),
-  ...)
+VNC(ID = data.table(IDQual = character(0), NonIDQual = character(0), IDDD =
+  character(0), UnitName = character(0), InFiles = character(0)),
+  MicroData = data.table(IDQual = character(0), NonIDQual = character(0), IDDD
+  = character(0), UnitName = character(0), InFiles = character(0)), ...)
 }
 \description{
 Definition of an S3 class named \link{VarNameCorresp} with the correspondence 
