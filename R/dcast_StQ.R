@@ -193,6 +193,8 @@ setMethod(
             metaVariables <- names(dcastData)[grep('[', names(dcastData), fixed = TRUE)]
             metaVariables <- unlist(lapply(names(dcastData), function(col){metaVariables[grep(col, metaVariables)]}))
             
+            if (length(metaVariables) == 0) return(dcastData[])
+                       
             meta_dc <- vector(mode = 'list', length = length(metaVariables))
             names(meta_dc) <- metaVariables
 
