@@ -16,6 +16,7 @@
 #' ParseUnitName(c('dat[mm][aa].sas7bdat', 'in[aaaa][mm].txt'), 
 #'               RepoTime::newRepoTime(c('MM122015', 'MM012016', 'MM022016')))
 #' ParseUnitName(c('PONALI_[ccaa]'), c(paste0(0, 1:9), 10:12))
+#' ParseUnitName(c('primeraDepu_[IDEdit]', 'ultimaDepu_[IDEdit]'), c('logCNPR', 'logEX', 'Range'))
 #'       
 #' @export
 setGeneric("ParseUnitName", function(UnitNames, MetaValues){standardGeneric("ParseUnitName")})
@@ -154,15 +155,19 @@ setMethod(
     output <- unlist(lapply(IntChars, function(IntChar){
       
       outLocal <- gsub('[ccaa]', IntChar, UnitNames, fixed = TRUE)
+      outLocal <- gsub('[NombreEdit]', IntChar, outLocal, fixed = TRUE)
       
-      outLocal <- gsub('[bbbb+2]', as.integer(IntChar) + 2, UnitNames, fixed = TRUE)
-      outLocal <- gsub('[bbbb]', IntChar, outLocal, fixed = TRUE)
-      outLocal <- gsub('[bbbb-2]', as.integer(IntChar) - 2, outLocal, fixed = TRUE)
+      if (regexpr('[0-9]+', IntChar) == 1) {
+        
+        outLocal <- gsub('[bbbb+2]', as.integer(IntChar) + 2, outLocal, fixed = TRUE)
+        outLocal <- gsub('[bbbb]', IntChar, outLocal, fixed = TRUE)
+        outLocal <- gsub('[bbbb-2]', as.integer(IntChar) - 2, outLocal, fixed = TRUE)
+        
+        outLocal <- gsub('[bb+2]', substr(as.integer(IntChar) + 2, 3, 4), outLocal, fixed = TRUE)
+        outLocal <- gsub('[bb]', substr(IntChar, 3, 4), outLocal, fixed = TRUE)
+        outLocal <- gsub('[bb-2]', substr(as.integer(IntChar) - 2, 3, 4), outLocal, fixed = TRUE)
       
-      outLocal <- gsub('[bb+2]', substr(as.integer(IntChar) + 2, 3, 4), outLocal, fixed = TRUE)
-      outLocal <- gsub('[bb]', substr(IntChar, 3, 4), outLocal, fixed = TRUE)
-      outLocal <- gsub('[bb-2]', substr(as.integer(IntChar) - 2, 3, 4), outLocal, fixed = TRUE)
-      
+      }  
       return(outLocal)
       
     }))
