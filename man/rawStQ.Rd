@@ -4,8 +4,8 @@
 \alias{rawStQ}
 \title{S4 class for sets of \emph{raw} \emph{St}andarized \emph{Q}uestionnaires}
 \usage{
-rawStQ(rawData = data.table(IDDDKey = character(0), QualKey =
-  character(0), Value = character(0)), DD = BuildDD())
+rawStQ(rawData = data.table(IDDDKey = character(0), QualKey = character(0),
+  Value = character(0)), DD = BuildDD())
 }
 \description{
 Definition of an S4 class named \code{rawStQ} for sets of raw standardized 

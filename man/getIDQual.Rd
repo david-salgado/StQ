@@ -13,11 +13,10 @@ getIDQual(object, CompNames = names(object))
 
 \S4method{getIDQual}{VNC}(object, CompNames = names(object))
 
-\S4method{getIDQual}{DD}(object, CompNames = setdiff(names(object),
-  "VNC"))
+\S4method{getIDQual}{DD}(object, CompNames = setdiff(names(object), "VNC"))
 
-\S4method{getIDQual}{StQ}(object,
-  CompNames = setdiff(names(getDD(object)), "VNC"))
+\S4method{getIDQual}{StQ}(object, CompNames = setdiff(names(getDD(object)),
+  "VNC"))
 
 \S4method{getIDQual}{StQList}(object, CompNames = names(object))
 }
