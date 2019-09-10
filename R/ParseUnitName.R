@@ -154,15 +154,17 @@ setMethod(
     output <- unlist(lapply(IntChars, function(IntChar){
       
       outLocal <- gsub('[ccaa]', IntChar, UnitNames, fixed = TRUE)
+      outLocal <- gsub('[IDEdit]', IntChar, outLocal, fixed = TRUE)
       
-      outLocal <- gsub('[bbbb+2]', as.integer(IntChar) + 2, UnitNames, fixed = TRUE)
-      outLocal <- gsub('[bbbb]', IntChar, outLocal, fixed = TRUE)
-      outLocal <- gsub('[bbbb-2]', as.integer(IntChar) - 2, outLocal, fixed = TRUE)
-      
-      outLocal <- gsub('[bb+2]', substr(as.integer(IntChar) + 2, 3, 4), outLocal, fixed = TRUE)
-      outLocal <- gsub('[bb]', substr(IntChar, 3, 4), outLocal, fixed = TRUE)
-      outLocal <- gsub('[bb-2]', substr(as.integer(IntChar) - 2, 3, 4), outLocal, fixed = TRUE)
-      
+      if (regexpr('[0-9]+', IntChar) == 1) {
+        outLocal <- gsub('[bbbb+2]', as.integer(IntChar) + 2, outLocal, fixed = TRUE)
+        outLocal <- gsub('[bbbb]', IntChar, outLocal, fixed = TRUE)
+        outLocal <- gsub('[bbbb-2]', as.integer(IntChar) - 2, outLocal, fixed = TRUE)
+        
+        outLocal <- gsub('[bb+2]', substr(as.integer(IntChar) + 2, 3, 4), outLocal, fixed = TRUE)
+        outLocal <- gsub('[bb]', substr(IntChar, 3, 4), outLocal, fixed = TRUE)
+        outLocal <- gsub('[bb-2]', substr(as.integer(IntChar) - 2, 3, 4), outLocal, fixed = TRUE)
+      }  
       return(outLocal)
       
     }))
