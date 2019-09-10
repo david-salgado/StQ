@@ -16,6 +16,7 @@
 #' ParseUnitName(c('dat[mm][aa].sas7bdat', 'in[aaaa][mm].txt'), 
 #'               RepoTime::newRepoTime(c('MM122015', 'MM012016', 'MM022016')))
 #' ParseUnitName(c('PONALI_[ccaa]'), c(paste0(0, 1:9), 10:12))
+#' ParseUnitName(c('primeraDepu_[IDEdit]', 'ultimaDepu_[IDEdit]'), c('logCNPR', 'logEX', 'Range'))
 #'       
 #' @export
 setGeneric("ParseUnitName", function(UnitNames, MetaValues){standardGeneric("ParseUnitName")})
