@@ -120,79 +120,108 @@
 #'
 #' @export
 `+.DD` <- function(e1, e2){        
+  
+  sumDDdt <- function(dt1, dt2){
+    
+    CommonCols <- intersect(names(dt1), names(dt2))
+    DDdt1 <- setkeyv(dt1, CommonCols)
+    DDdt2 <- setkeyv(dt2, CommonCols)
+    
+    outVar <- rbindlist(list(DDdt1, DDdt2), fill = TRUE)
+    for (col in names(outVar)){outVar[, (col) := ifelse(is.na(get(col)), '', get(col))]}
+    setkeyv(outVar, setdiff(names(outVar), 'ValueRegExp'))
+    outVar <- outVar[!duplicated(outVar, by = key(outVar))]
+    setkeyv(outVar, 'Variable')
+    
+    #TechDebt
+    dupVars <- outVar[['Variable']][duplicated(outVar[['Variable']])]
+    dupOutVar <- outVar[Variable %chin% dupVars]
+    outVar <- outVar[!data.frame(Variable = dupVars)]
+    qualCols <- names(dupOutVar)[grep('Qual', names(dupOutVar))]
+    newOutVar <- copy(dupOutVar)[1]
+    for (qual in qualCols){
+      
+      quals <- unique(dupOutVar[[qual]])
+      quals <- quals[quals != '']
+      same.qual <- (length(quals) <= 1)
+      if (same.qual) {
         
-    sumDDdt <- function(dt1, dt2){
-            
-        CommonCols <- intersect(names(dt1), names(dt2))
-        DDdt1 <- setkeyv(dt1, CommonCols)
-        DDdt2 <- setkeyv(dt2, CommonCols)
-            
-        outVar <- rbindlist(list(DDdt1, DDdt2), fill = TRUE)
-        for (col in names(outVar)){outVar[, (col) := ifelse(is.na(get(col)), '', get(col))]}
-        setkeyv(outVar, setdiff(names(outVar), 'ValueRegExp'))
-        outVar <- outVar[!duplicated(outVar, by = key(outVar))]
-        setkeyv(outVar, 'Variable')
-        if (sum(duplicated(outVar[Sort == 'IDDD'], by = key(outVar))) > 0) {
-                
-            stop('[StQ::+.DD] No duplicate IDDD variable allowed.')
-                
-        }
-        outVar <- outVar[!duplicated(outVar, by = key(outVar))]
-        if (dim(outVar)[1] == 0) {
-                
-            output <- data.table(Variable = character(0),
-                                 Sort = character(0),
-                                 Class = character(0),
-                                 Length = character(0),
-                                 Qual1 = character(0),
-                                 ValueRegExp = character(0))
-                
-        } else {
-                
-            QualCol <- names(outVar)[grep('Qual', names(outVar))]
-            setkeyv(outVar, setdiff(names(outVar), QualCol))
-            outVar <- outVar[!duplicated(outVar, by = key(outVar))]
-            setcolorder(outVar, c('Variable', 'Sort', 'Class', 'Length', QualCol, 'ValueRegExp'))
-            output <- outVar
-        } 
-            
-        return(output)
-    }        
+        if (length(quals) == 0) quals <- ''
+        newOutVar[, (qual) := quals]
         
-        DD1slots <- names(e1)
-        DD2slots <- names(e2)
-        CommonSlots <- intersect(DD1slots, DD2slots)
-        In1Not2Names <- setdiff(DD1slots, DD2slots)
-        In2Not1Names <- setdiff(DD2slots, DD1slots)
+      } else {
         
-        outVarList <- list()
-
-        for (Name in CommonSlots) {
-            
-            if (Name == 'VNC') {
-                
-                outVarList[['VNC']] <- e1[[Name]] + e2[[Name]]
-                
-            } else {
-                
-                outVarList[[Name]] <- sumDDdt(e1[[Name]], e2[[Name]])
-            }
-        }
-
-
-        for (Name in In1Not2Names) {outVarList[[Name]] <- e1[[Name]]}
-        
-        for (Name in In2Not1Names) {outVarList[[Name]] <- e2[[Name]]}
-
-        output <- DD(VNC = outVarList[['VNC']],
-                     ID = outVarList[['ID']],
-                     MicroData = outVarList[['MicroData']],
-                     ParaData = outVarList[['ParaData']],
-                     Aggregates = outVarList[['Aggregates']],
-                     AggWeights = outVarList[['AggWeights']],
-                     Other = outVarList[['Other']])
-        return(output)
-        
+        stop('[StQ::+.DD] Same IDDD with different quals found.')
+      }
+      
+      
+    }
+    outVar <- rbindlist(list(outVar, newOutVar))
+    setkeyv(outVar, 'Variable')
+    ### End TechDebt
+    if (sum(duplicated(outVar[Sort == 'IDDD'], by = key(outVar))) > 0) {
+      
+      stop('[StQ::+.DD] No duplicate IDDD variable allowed.')
+      
+    }
+    outVar <- outVar[!duplicated(outVar, by = key(outVar))]
+    if (dim(outVar)[1] == 0) {
+      
+      output <- data.table(Variable = character(0),
+                           Sort = character(0),
+                           Class = character(0),
+                           Length = character(0),
+                           Qual1 = character(0),
+                           ValueRegExp = character(0))
+      
+    } else {
+      
+      QualCol <- names(outVar)[grep('Qual', names(outVar))]
+      setkeyv(outVar, setdiff(names(outVar), QualCol))
+      outVar <- outVar[!duplicated(outVar, by = key(outVar))]
+      setcolorder(outVar, c('Variable', 'Sort', 'Class', 'Length', QualCol, 'ValueRegExp'))
+      output <- outVar
+    } 
+    
+    return(output)
+  }        
+  
+  DD1slots <- names(e1)
+  DD2slots <- names(e2)
+  CommonSlots <- intersect(DD1slots, DD2slots)
+  In1Not2Names <- setdiff(DD1slots, DD2slots)
+  In2Not1Names <- setdiff(DD2slots, DD1slots)
+  
+  outVarList <- list()
+  
+  for (Name in CommonSlots) {
+    
+    if (Name == 'VNC') {
+      
+      outVarList[['VNC']] <- e1[[Name]] + e2[[Name]]
+      
+    } else {
+      
+      outVarList[[Name]] <- sumDDdt(e1[[Name]], e2[[Name]])
+      if (Name == 'ID') return(outVarList[[Name]])      
+      
+    }
+  }
+  
+  
+  for (Name in In1Not2Names) {outVarList[[Name]] <- e1[[Name]]}
+  
+  for (Name in In2Not1Names) {outVarList[[Name]] <- e2[[Name]]}
+  
+  output <- DD(VNC = outVarList[['VNC']],
+               ID = outVarList[['ID']],
+               MicroData = outVarList[['MicroData']],
+               ParaData = outVarList[['ParaData']],
+               Aggregates = outVarList[['Aggregates']],
+               AggWeights = outVarList[['AggWeights']],
+               Other = outVarList[['Other']])
+  return(output)
+  
 }
 
 
