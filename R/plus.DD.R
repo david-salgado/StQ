@@ -135,29 +135,32 @@
     
     #TechDebt
     dupVars <- outVar[['Variable']][duplicated(outVar[['Variable']])]
-    dupOutVar <- outVar[Variable %chin% dupVars]
-    outVar <- outVar[!data.frame(Variable = dupVars)]
-    qualCols <- names(dupOutVar)[grep('Qual', names(dupOutVar))]
-    newOutVar <- copy(dupOutVar)[1]
-    for (qual in qualCols){
+    if (length(dupVars) != 0){
       
-      quals <- unique(dupOutVar[[qual]])
-      quals <- quals[quals != '']
-      same.qual <- (length(quals) <= 1)
-      if (same.qual) {
+      dupOutVar <- outVar[Variable %chin% dupVars]
+      outVar <- outVar[!data.frame(Variable = dupVars)]
+      qualCols <- names(dupOutVar)[grep('Qual', names(dupOutVar))]
+      newOutVar <- copy(dupOutVar)[1]
+      for (qual in qualCols){
         
-        if (length(quals) == 0) quals <- ''
-        newOutVar[, (qual) := quals]
+        quals <- unique(dupOutVar[[qual]])
+        quals <- quals[quals != '']
+        same.qual <- (length(quals) <= 1)
+        if (same.qual) {
+          
+          if (length(quals) == 0) quals <- ''
+          newOutVar[, (qual) := quals]
+          
+        } else {
+          
+          stop('[StQ::+.DD] Same IDDD with different quals found.')
+        }
         
-      } else {
         
-        stop('[StQ::+.DD] Same IDDD with different quals found.')
       }
-      
-      
+      outVar <- rbindlist(list(outVar, newOutVar))
+      setkeyv(outVar, 'Variable')
     }
-    outVar <- rbindlist(list(outVar, newOutVar))
-    setkeyv(outVar, 'Variable')
     ### End TechDebt
     if (sum(duplicated(outVar[Sort == 'IDDD'], by = key(outVar))) > 0) {
       
@@ -203,7 +206,6 @@
     } else {
       
       outVarList[[Name]] <- sumDDdt(e1[[Name]], e2[[Name]])
-      if (Name == 'ID') return(outVarList[[Name]])      
       
     }
   }
