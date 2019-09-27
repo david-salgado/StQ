@@ -13,10 +13,11 @@ getNonIDQual(object, CompNames = names(object))
 
 \S4method{getNonIDQual}{VNC}(object, CompNames = names(object))
 
-\S4method{getNonIDQual}{DD}(object, CompNames = setdiff(names(object), "VNC"))
-
-\S4method{getNonIDQual}{StQ}(object, CompNames = setdiff(names(getDD(object)),
+\S4method{getNonIDQual}{DD}(object, CompNames = setdiff(names(object),
   "VNC"))
+
+\S4method{getNonIDQual}{StQ}(object,
+  CompNames = setdiff(names(getDD(object)), "VNC"))
 
 \S4method{getNonIDQual}{StQList}(object, CompNames = names(object))
 }

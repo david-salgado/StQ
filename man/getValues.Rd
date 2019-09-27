@@ -12,7 +12,8 @@
 
 getValues(object, VarName, Units = getUnits(object))
 
-\S4method{getValues}{StQ,character}(object, VarName, Units = getUnits(object))
+\S4method{getValues}{StQ,character}(object, VarName,
+  Units = getUnits(object))
 
 \S4method{getValues}{StQList,character}(object, VarName,
   Units = getUnits(object))
