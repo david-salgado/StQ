@@ -9,9 +9,11 @@
 \usage{
 setVariable(object, Var, lag = NULL, by = NULL)
 
-\S4method{setVariable}{StQ,Variable}(object, Var, lag = NULL, by = NULL)
+\S4method{setVariable}{StQ,Variable}(object, Var, lag = NULL,
+  by = NULL)
 
-\S4method{setVariable}{StQList,Variable}(object, Var, lag = NULL, by = NULL)
+\S4method{setVariable}{StQList,Variable}(object, Var, lag = NULL,
+  by = NULL)
 }
 \arguments{
 \item{object}{Object of class \linkS4class{StQ} or \linkS4class{StQList}.}
@@ -34,7 +36,8 @@ Var <- new(Class = 'Variable', UnitName = 'LRTEmp',
                                ValueRegExp = '[.]+',
                                Formula = as.call(list('log( 1 + (Turnover / (Employees_1. + Employees_2.1.)))')),
                                SlotName = 'MicroData',
-                               Literal = '')
+                               Literal = '',
+                               DDversion = '1')
 ExampleStQ <- setVariable(ExampleStQ, Var)
 
 ExampleStQList <- BuildStQList(list(MM012012 = ExampleStQ, MM022012 = ExampleStQ))

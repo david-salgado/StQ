@@ -6,14 +6,17 @@
 \alias{dcast_StQ,StQ-method}
 \title{Convert an \linkS4class{StQ} object into a dcasted \linkS4class{data.table}}
 \usage{
-dcast_StQ(object, VarNames = NULL)
+dcast_StQ(object, VarNames = NULL, UnitNames = FALSE)
 
-\S4method{dcast_StQ}{StQ}(object, VarNames = NULL)
+\S4method{dcast_StQ}{StQ}(object, VarNames = NULL, UnitNames = FALSE)
 }
 \arguments{
 \item{object}{Object of class \linkS4class{StQ} whose slot \code{Data} will be converted.}
 
-\item{VarNames}{\code{Character} vector with names of the output variables.}
+\item{VarNames}{\code{Character} vector with names of the output variables (default \code{NULL}).}
+
+\item{UnitNames}{\code{TRUE} or \code{FALSE} (default) to return output with UnitNames in dcasted
+form.}
 }
 \value{
 Returns a \linkS4class{data.table} with data from slot \code{Data} of the input

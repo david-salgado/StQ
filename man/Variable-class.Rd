@@ -44,6 +44,7 @@ Var <- new(Class = 'Variable', UnitName = 'LRTEmp',
                                ValueRegExp = '[.]+',
                                Formula = as.call(list('log( 1 + (Turnover / (Employees_1. + Employees_2.1.)))')),
                                SlotName = 'MicroData',
-                               Literal = '')
+                               Literal = '',
+                               DDversion = '1')
 
 }

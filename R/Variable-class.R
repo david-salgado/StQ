@@ -36,7 +36,8 @@ setClassUnion('characterOrcall', c('character', 'call'))
 #'                                ValueRegExp = '[.]+',
 #'                                Formula = as.call(list('log( 1 + (Turnover / (Employees_1. + Employees_2.1.)))')),
 #'                                SlotName = 'MicroData',
-#'                                Literal = '')
+#'                                Literal = '',
+#'                                DDversion = '1')
 #'
 #' @export
 setClass(
@@ -49,7 +50,8 @@ setClass(
             ValueRegExp = 'character',
             Formula = 'characterOrcall',
             SlotName = 'character',
-            Literal = 'character'
+            Literal = 'character',
+            DDversion = 'character'
   ),
   validity = function(object){
     
@@ -59,6 +61,7 @@ setClass(
     if (length(object@ClassVar) != 1) stop('[Variable validation] ClassVar must be a character vector of length 1.')
     if (length(object@ValueRegExp) != 1) stop('[Variable validation] ValueRegExp must be a character vector of length 1.')
     if (length(object@Literal) != 1) stop('[Variable validation] Literal must be a character vector of length 1.')
+    if (length(object@DDversion) != 1) stop('[Variable validation] DDversion must be a character vector of length 1.')
     if (!object@SlotName %in% c('ID', 'MicroData', 'ParaData', 'Aggregates', 'AggWeights', 'Other' )) stop('[Variable validation] The valid names for SlotName parameter are: ID, MicroData, ParaData, Aggregates, AggWeights or Other.')
     if (!object@ClassVar %in% c('character', 'numeric')) stop('[Variable validation] The valid names for ClassVar parameter are character and numeric.')
     if (length(names(object@QualsValues)) != length(object@QualsValues))  stop('[Variable validation] All elements in QualsValues parameter must have a name.')
