@@ -117,7 +117,7 @@
 #' @include DD.R plus.DD.R plus.VNC.R
 #'
 #' @import data.table
-#'
+#' @export
 `+.DD` <- function(e1, e2){        
     
     sumDDdt <- function(dt1, dt2){
@@ -139,29 +139,34 @@
             dupOutVar <- outVar[Variable %chin% dupVars]
             outVar <- outVar[!data.frame(Variable = dupVars)]
             qualCols <- names(dupOutVar)[grep('Qual', names(dupOutVar))]
-            newOutVar <- copy(dupOutVar)[1]
             
-            for (qual in qualCols){
+            for (var in dupVars){
                 
-                quals <- unique(dupOutVar[[qual]])
-                quals <- quals[quals != '']
-                same.qual <- (length(quals) <= 1)
-                if (same.qual) {
+                dupOutVar.local <- dupOutVar[Variable == var]
+                newOutVar <- copy(dupOutVar.local)[nrow(dupOutVar.local)]
+                for (qual in qualCols){
                     
-                    if (length(quals) == 0) quals <- ''
-                    newOutVar[, (qual) := quals]
-                    
-                } else {
-                    
-                    setkeyv(outVar, setdiff(names(outVar), 'ValueRegExp'))
-                    newOutVar <- dupOutVar[!duplicated(dupOutVar, fromLast = TRUE, by = key(dupOutVar))]
+                    quals <- unique(dupOutVar.local[[qual]])
+                    quals <- quals[quals != '']
+                    same.qual <- (length(quals) <= 1)
+                    if (same.qual) {
+                        
+                        if (length(quals) == 0) quals <- ''
+                        newOutVar[, (qual) := quals]
+                        
+                    } else {
+                        
+                        setkeyv(outVar, setdiff(names(outVar), 'ValueRegExp'))
+                        newOutVar <- dupOutVar.local[!duplicated(dupOutVar.local, fromLast = TRUE, by = key(dupOutVar))]
+                        
+                    }
                     
                 }
                 
-                
+                outVar <- rbindlist(list(outVar, newOutVar))
+                setkeyv(outVar, 'Variable')
             }
-            outVar <- rbindlist(list(outVar, newOutVar))
-            setkeyv(outVar, 'Variable')
+            
         }
         ### End TechDebt
         if (sum(duplicated(outVar[Sort == 'IDDD'], by = key(outVar))) > 0) {

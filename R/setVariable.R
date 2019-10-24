@@ -189,7 +189,6 @@ setMethod(
                     Localmc[['Var']] <- Var
                     LocalOutputAux <- eval(Localmc)
                     DD.Aux <- getDD(LocalOutputAux)
-                    setDD(LocalOutput.init) <- DD.Aux
                     
                     LocalOutputAux <- LocalOutputAux[IDDD == Var@IDDD]
                     cols <- names(getData(LocalOutputAux))
