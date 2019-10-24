@@ -118,7 +118,6 @@
 #'
 #' @import data.table
 #'
-#' @export
 `+.DD` <- function(e1, e2){        
     
     sumDDdt <- function(dt1, dt2){
