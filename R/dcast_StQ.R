@@ -136,7 +136,7 @@ setMethod(
             }
             return(out)
         })
-       
+        
         IDQuals <- unique(unlist(lapply(names(auxData), function(Form){
             
             out <- strsplit(Form, '~')[[1]][1]
@@ -159,17 +159,17 @@ setMethod(
         
         dcastData <- Reduce(function(x, y) {
             
-          if (length(intersect(names(x), names(y))) > 0){
-          
-                  out <- merge(x, y, all = TRUE, by = intersect(IDQuals, intersect(names(x), names(y))))
-            
-          } else {
-            
+            if (length(intersect(names(x), names(y))) > 0){
+                
+                out <- merge(x, y, all = TRUE, by = intersect(IDQuals, intersect(names(x), names(y))))
+                
+            } else {
+                
                 out <- rbindlist(list(x, y), fill = TRUE)
+                
+            }
             
-          }
-          
-          return(out)
+            return(out)
         }, dcastData)
         
         for (idQual in IDQuals){
@@ -186,7 +186,7 @@ setMethod(
             dcastData[, (col) := as(get(col), colClass)]
         } 
         
-
+        
         if (UnitNames) {
             
             setnames(dcastData, IDDDToUnitNames(names(dcastData), DD))
@@ -194,12 +194,12 @@ setMethod(
             metaVariables <- unlist(lapply(names(dcastData), function(col){metaVariables[grep(col, metaVariables)]}))
             
             if (length(metaVariables) == 0) return(dcastData[])
-                       
+            
             meta_dc <- vector(mode = 'list', length = length(metaVariables))
             names(meta_dc) <- metaVariables
-
+            
             for (metaVar in metaVariables){
-
+                
                 metaVar_text <- unique(sub(".*\\[(.*)\\].*", "\\1", metaVar))
                 metaID <- setdiff(IDDDToUnitNames(IDQuals, DD), metaVar_text)
                 metaID <- intersect(metaID, names(dcastData))
@@ -229,9 +229,9 @@ setMethod(
                 
                 return(out)
             }, meta_dc)
-        
-        dcastData <- merge(dcastData, meta_dc, all = TRUE, by = intersect(names(dcastData), names(meta_dc)))    
-                
+            
+            dcastData <- merge(dcastData, meta_dc, all = TRUE, by = intersect(names(dcastData), names(meta_dc)))    
+            
         }
         
         return(dcastData[])
