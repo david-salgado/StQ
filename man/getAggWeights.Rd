@@ -5,7 +5,7 @@
 \alias{getAggWeights}
 \alias{getAggWeights,VNC-method}
 \alias{getAggWeights,DD-method}
-\title{Return slot \code{AggWeights} from a \linkS4class{DD} object}
+\title{Return slot \code{AggWeights} from a \link{DD} object}
 \usage{
 getAggWeights(object)
 
@@ -18,10 +18,10 @@ getAggWeights(object)
 }
 \value{
 \linkS4class{data.table} with data from slot \code{AggWeights} of the input 
-\linkS4class{DD} object.
+\link{DD} object.
 }
 \description{
-\code{getAggWeights} returns slot \code{AggWeights} of the input \linkS4class{DD} 
+\code{getAggWeights} returns slot \code{AggWeights} of the input \link{DD} 
 object.
 }
 \examples{

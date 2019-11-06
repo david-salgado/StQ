@@ -26,6 +26,7 @@ Object with slot \code{Other} updated.
 input object.
 }
 \examples{
+\dontrun{
 library(data.table)
 MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
                           Length = '8',
@@ -46,5 +47,6 @@ Otherdt <- data.table(Variable = c('NACE08'), Sort = c('NonIDQual'), Class = c('
                       Qual1 = c(''), ValueRegExp = c('([0-4][0-9])|(5[0-2])'))
 setOther(DD) <- Otherdt
 DD
+}
 
 }

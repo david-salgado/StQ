@@ -2,33 +2,30 @@
 % Please edit documentation in R/StQList.R
 \name{StQList}
 \alias{StQList}
-\title{S4 class to implement a named list of objects of class \linkS4class{StQ}}
+\title{S4 class to implement a named list of objects of class \link{StQ}}
 \usage{
 StQList(Data = list(), Periods = new(Class = "RepoTimeInt"))
 }
+\arguments{
+\item{Data}{\code{List} of objects of class \link{StQ};}
+
+\item{Periods}{An object of class \linkS4class{RepoTimeInt};}
+}
 \description{
 Definition of an S4 class of name \code{StQList} with a list of objects of class
-\linkS4class{StQ}. Instead of an atomic vector as a name, we associate with it an object of class
+\link{StQ}. Instead of an atomic vector as a name, we associate with it an object of class
 \linkS4class{RepoTimeInt} containing the names of the time periods corresponding to each
-\linkS4class{StQ} object.
+\link{StQ} object.
 
 The structure of this S4 class \code{StQList} comprises 2 attributes:
 
 \itemize{
 
-\item the attribute \code{Data}, which is a \code{list} of objects of class \linkS4class{StQ};
+\item the attribute \code{Data}, which is a \code{list} of objects of class \link{StQ};
 
 \item  the attribute \code{Periods}, which is an object of class \linkS4class{RepoTimeInt}.
 }
 }
-\section{Slots}{
-
-\describe{
-\item{\code{Data}}{\code{List} of objects of class \linkS4class{StQ};}
-
-\item{\code{Periods}}{An object of class \linkS4class{RepoTimeInt};}
-}}
-
 \examples{
 mm <- c(paste0('0', 1:9), 10:12)
 TimePer <- paste0('MM', mm, '2015')

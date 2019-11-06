@@ -54,6 +54,7 @@ VNCAdd <- BuildVNC(VarListAdd)
 setVNC(DD) <- VNCAdd
 DD
 
+\dontrun{
 # On an object of class StQ:
 library(data.table)
 MicroDataDD <- data.table(Variable = 'IEPEntradaPed', Sort = 'IDDD', Class = 'numeric',
@@ -84,5 +85,6 @@ VarListAdd <- list(MicroData = new(Class = 'VNCdt', data.table(IDQual = c('NumId
 VNCAdd <- BuildVNC(VarListAdd)                                                    
 setVNC(StQ) <- VNCAdd
 getDD(StQ)
+}
 
 }

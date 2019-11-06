@@ -3,21 +3,21 @@
 \docType{methods}
 \name{show,VNC-method}
 \alias{show,VNC-method}
-\title{Show an object of class \linkS4class{VNC}}
+\title{Show an object of class \link{VNC}}
 \usage{
 \S4method{show}{VNC}(object)
 }
 \arguments{
-\item{object}{Object of class \linkS4class{VNC}.}
+\item{object}{Object of class \link{VNC}.}
 }
 \value{
 Invisible object of class \code{\link{NULL}}.
 }
 \description{
-The method \code{show} shows the slots of an object \linkS4class{VNC}
+The method \code{show} shows the slots of an object \link{VNC}
 limiting the number of columns on screen up to 8.
 
-It is indeed the method \link[methods]{show} adapted to the class \linkS4class{VNC}.
+It is indeed the method \link[methods]{show} adapted to the class \link{VNC}.
 }
 \examples{
 # A trivial example
@@ -43,15 +43,7 @@ VarList <- list(
                        NonIDQual = character(0), 
                        IDDD = character(0),
                        UnitName = character(0),
-                       InFiles = character(0)),
- Aggregates = data.table(IDQual = c('Province', 'NACE', 'Market', ''),
-                         NonIDQual = rep('', 4),
-                         IDDD = c('', '', '', 'TotalTurnover'),
-                         Province = c('', '', '', '.'),
-                         NACE = c('', '', '', '.'),
-                         Market = c('', '', '', '2.'),
-                         UnitName = c('provincia', 'actividad', '', 'cn01'),
-                         InFiles = rep('FA', 4)))
+                       InFiles = character(0)))
 VNC <- BuildVNC(VarList)
 show(VNC)
 

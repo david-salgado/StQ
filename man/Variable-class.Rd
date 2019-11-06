@@ -33,6 +33,8 @@ variable.}
 new variable will be created.}
 
 \item{\code{Literal}}{\code{character} vector of length 1 with a comment for the variable.}
+
+\item{\code{DDversion}}{\code{character} vector of length 1 with the version of the DD.}
 }}
 
 \examples{

@@ -9,7 +9,7 @@
 #'
 #' @param object Object of class \linkS4class{StQList} to be transformed.
 #'
-#' @return object of class \linkS4class{StQ}.
+#' @return object of class \link{StQ}.
 #'
 #' @include StQList.R StQ.R getData.R getDD.R BuildVNC.R plus.DD.R DD.R BuildDD.R setID.R setMicroData.R setParaData.R setAggregates.R setAggWeights.R setOther.R
 #'

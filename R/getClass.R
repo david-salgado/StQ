@@ -3,7 +3,7 @@
 #' @description \code{getClass} returns the class for each input variable from the dictionary of the 
 #' input object.
 #'
-#' @param object Object whose class for each input variable in the slot \linkS4class{DD} are 
+#' @param object Object whose class for each input variable in the slot \link{DD} are 
 #' required.
 #'
 #' @param variables \code{Character} vector with the names of the variables whose class is required.

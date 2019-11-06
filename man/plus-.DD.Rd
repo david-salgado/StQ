@@ -2,22 +2,22 @@
 % Please edit documentation in R/plus.DD.R
 \name{+.DD}
 \alias{+.DD}
-\title{Method \code{+} for the class \linkS4class{DD}}
+\title{Method \code{+} for the class \link{DD}}
 \usage{
 \method{+}{DD}(e1, e2)
 }
 \arguments{
-\item{e1}{Object of class \linkS4class{DD}.}
+\item{e1}{Object of class \link{DD}.}
 
-\item{e2}{Object of class \linkS4class{DD}.}
+\item{e2}{Object of class \link{DD}.}
 }
 \value{
-Object of class \linkS4class{DD} resulting from integrating both \linkS4class{DD} objects
- in a single \linkS4class{DD} object.
+Object of class \link{DD} resulting from integrating both \link{DD} objects
+ in a single \link{DD} object.
 }
 \description{
-\code{+} sums two objects of class \linkS4class{DD}. This method overloads the 
-operator \link{+} and returns a new object of class \linkS4class{DD}.
+\code{+} sums two objects of class \link{DD}. This method overloads the 
+operator \link{+} and returns a new object of class \link{DD}.
 }
 \examples{
 library(data.table)
@@ -35,16 +35,7 @@ VarList1 <- list(ID = data.table(IDQual = c('ID', rep('', 4)),
                                                     ID = c(rep('', 2), '.'),
                                                     Market = c(rep('', 2), '1'),
                                                     UnitName = c('numidest', '', 'cn05'),
-                                                    InFiles = rep('FF, FD, FG', 3)),
-                Aggregates = data.table(IDQual = c('Province', 'NACE', 'Market', ''),
-                                                    NonIDQual = c(rep('', 4)),
-                                                    IDDD = c('', '', '', 'Turnover'),
-                                                    Province = c('', '', '', '.'),
-                                                    NACE = c('', '', '', '.'),
-                                                    Market = c('', '', '', '2'),
-                                                    UnitName = c('provincia', 'actividad', '', 
-                                                              'cn01'),
-                                                    InFiles = rep('FP', 4)))
+                                                    InFiles = rep('FF, FD, FG', 3)))
 VNC1 <- BuildVNC(VarList1)
 
 ID1dt <- data.table(Variable = c('ID', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),
@@ -85,16 +76,7 @@ VarList2 <- list(ID = data.table(IDQual = c('ID', rep('', 4)),
                                                    ID = c(rep('', 2), '.'),
                                                    Market = c(rep('', 2), '1.'),
                                                    UnitName = c('numidest', '', 'cp09'),
-                                                   InFiles = rep('FF, FD, FG', 3)),
-                Aggregates = data.table(IDQual = c('Province', 'NACE', 'Market', ''),
-                                                   NonIDQual = c(rep('', 4)),
-                                                   IDDD = c('', '', '', 'NewOrders'),
-                                                   Province = c('', '', '', '.'),
-                                                   NACE = c('', '', '', '.'),
-                                                   Market = c('', '', '', '2.'),
-                                                   UnitName = c('provincia', 'actividad','', 
-                                                             'cp02'),
-                                                   InFiles = rep('FP', 4)))
+                                                   InFiles = rep('FF, FD, FG', 3)))
 VNC2 <- BuildVNC(VarList2)
 
 ID2dt <- data.table(Variable = c('ID', 'Name', 'Surname', 'PostalAddr', 'PhoneNo'),

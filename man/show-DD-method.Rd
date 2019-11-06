@@ -3,21 +3,21 @@
 \docType{methods}
 \name{show,DD-method}
 \alias{show,DD-method}
-\title{Show an object of class \linkS4class{DD}}
+\title{Show an object of class \link{DD}}
 \usage{
 \S4method{show}{DD}(object)
 }
 \arguments{
-\item{object}{Object of class \linkS4class{DD}.}
+\item{object}{Object of class \link{DD}.}
 }
 \value{
 Invisible object of class \code{\link{NULL}}.
 }
 \description{
-The method \code{show} shows the slots of an object \linkS4class{DD} limiting the
+The method \code{show} shows the slots of an object \link{DD} limiting the
 number of columns on screen up to 8.
 
-It is indeed the method \link[methods]{show} adapted to the class \linkS4class{DD}.
+It is indeed the method \link[methods]{show} adapted to the class \link{DD}.
 }
 \examples{
 library(data.table)

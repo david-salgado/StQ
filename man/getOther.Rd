@@ -55,6 +55,6 @@ AggWeights = data.table(IDQual = c('CCAA', 'NACE09', ''),
                         InFiles = rep('FF', 3)))
 
 VNC <- BuildVNC(VarList)
-getOtherDD(VNC)
+getOther(VNC)
 
 }

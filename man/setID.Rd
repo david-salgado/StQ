@@ -5,7 +5,7 @@
 \alias{setID<-}
 \alias{setID<-,VNC,data.table-method}
 \alias{setID<-,DD,data.table-method}
-\title{Set value of slot \code{ID} of an object \linkS4class{DD}}
+\title{Set value of slot \code{ID} of an object \link{DD}}
 \usage{
 setID(object) <- value
 
@@ -19,13 +19,14 @@ setID(object) <- value
 \item{value}{\linkS4class{data.table} to be assigned to the slot \code{ID}.}
 }
 \value{
-Object \linkS4class{DD} with slot \code{ID} updated.
+Object \link{DD} with slot \code{ID} updated.
 }
 \description{
 \code{setID} assigns a \linkS4class{data.table} to the slot \code{ID} of the input
 object.
 }
 \examples{
+\dontrun{
 library(data.table)
 MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
                           Length = '8',
@@ -49,5 +50,6 @@ IDdt <- data.table(Variable = c('NumIdEst', 'Name', 'Surname', 'PostalAddr', 'Ph
                    ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}'))
 setID(DD) <- IDdt
 DD
+}
 
 }

@@ -1,11 +1,11 @@
 #' @title Return slot Aggregates from the input object
 #'
-#' @description \code{getAggregates} returns slot \code{Aggregates} of the input \linkS4class{DD} object.
+#' @description \code{getAggregates} returns slot \code{Aggregates} of the input \link{DD} object.
 #' 
 #' @param object A DD Object whose slot \code{Aggregates} is queried.
 #'
 #' @return \linkS4class{data.table} with data from slot \code{Aggregates} of the
-#' input \linkS4class{DD} object.
+#' input \link{DD} object.
 #'
 #' @examples
 #' # An example:

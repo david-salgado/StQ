@@ -3,12 +3,12 @@
 \docType{data}
 \name{ExampleStQ}
 \alias{ExampleStQ}
-\title{Object of class \linkS4class{StQ}}
+\title{Object of class \link{StQ}}
 \format{Object of class \code{StQ}. Its slot \code{Data} has 354458 rows and 4 columns.}
 \usage{
 data(ExampleStQ)
 }
 \description{
-\code{ExampleStQ} is an object of class \linkS4class{StQ} containing severely
+\code{ExampleStQ} is an object of class \link{StQ} containing severely
 perturbed anonymised data from a real official statistical operation.
 }

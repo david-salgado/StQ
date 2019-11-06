@@ -6,7 +6,7 @@
 #' This method returns the same input object with those variables specified in the input parameter
 #' \code{VarNames} removed from the data set.
 #'
-#' @param object Input object of class \linkS4class{StQ} to remove the variables from.
+#' @param object Input object of class \link{StQ} to remove the variables from.
 #'
 #' @param VarNames Character vector with the variable names to remove.
 #'

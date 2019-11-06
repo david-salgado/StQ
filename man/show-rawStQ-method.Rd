@@ -22,7 +22,7 @@ This method displays only the content of slot \code{Data} from the input \linkS4
 object. It is indeed the method \link[methods]{show} adapted to class \linkS4class{rawStQ}.
 }
 \examples{
-# A trivial example
-show(new(Class = 'rawStQ'))
+data(ExamplerawStQ)
+show(ExamplerawStQ)
 
 }

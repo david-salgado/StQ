@@ -39,7 +39,7 @@
 #'                         InFiles = rep('FF', 3)))
 #' 
 #' VNC <- BuildVNC(VarList)
-#' getOtherDD(VNC)
+#' getOther(VNC)
 #' 
 #' @include VNC.R DD.R
 #' 

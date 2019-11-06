@@ -1,11 +1,11 @@
 #' @title Constructor of objects of class \linkS4class{StQList}
 #'
 #' @description This constructor returns an object of class \linkS4class{StQList}.
-#' The input parameter is a named \code{list} of objects of class \linkS4class{StQ}. Notice that 
+#' The input parameter is a named \code{list} of objects of class \link{StQ}. Notice that 
 #' the names of the \code{list} must be valid time period names according to package 
 #' \link[=RepoTime]{RepoTime}.
 #'
-#' @param Data \code{List} of objects of class \linkS4class{StQ}.
+#' @param Data \code{List} of objects of class \link{StQ}.
 #'
 #' @return An object of class \linkS4class{StQList}.
 #'

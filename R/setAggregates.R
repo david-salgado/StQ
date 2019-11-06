@@ -10,6 +10,7 @@
 #' @return Object with slot Aggregates updated.
 #'
 #' @examples
+#' \dontrun{
 #' library(data.table)
 #' MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
 #'                           Length = '8',
@@ -33,6 +34,7 @@
 #'                     ValueRegExp = c('([0-4][0-9])|(5[0-2])', '([0-9]{1, 15}| )'))  
 #' setAggregates(DD) <- Aggdt
 #' DD
+#' }
 #'
 #' @rdname setAggregates
 #'

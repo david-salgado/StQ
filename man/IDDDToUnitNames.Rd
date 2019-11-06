@@ -16,8 +16,8 @@ IDDDToUnitNames(IDDDNames, Correspondence)
 \arguments{
 \item{IDDDNames}{Character vector with the IDDD variables.}
 
-\item{Correspondence}{Object with the IDDD variable identifiers (of class \linkS4class{DD} or 
-\linkS4class{StQ}).}
+\item{Correspondence}{Object with the IDDD variable identifiers (of class \link{DD} or 
+\link{StQ}).}
 }
 \value{
 \code{Character} vector with the production unit names and their corresponding IDDD

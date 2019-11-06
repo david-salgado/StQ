@@ -1,13 +1,13 @@
-#' @title Method to transform an \linkS4class{StQ} object into a \linkS4class{StQList} object
+#' @title Method to transform an \link{StQ} object into a \linkS4class{StQList} object
 #'
-#' @description \code{StQToStQList} transform an \linkS4class{StQ} object (with a variable "Period"
+#' @description \code{StQToStQList} transform an \link{StQ} object (with a variable "Period"
 #' taking into account the interval period times related to data) into the corresponding
 #'  \linkS4class{StQList} object.
 #'
 #' The variable \code{Period} with the period related to each data will be removed from the DD
 #' components in the new \linkS4class{StQList} object.
 #'
-#' @param object Object of class \linkS4class{StQ} to be transformed.
+#' @param object Object of class \link{StQ} to be transformed.
 #'
 #' @return object of class \linkS4class{StQList}.
 #'

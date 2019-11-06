@@ -5,8 +5,8 @@
 #' 
 #' @param IDDDNames Character vector with the IDDD variables.
 #' 
-#' @param Correspondence Object with the IDDD variable identifiers (of class \linkS4class{DD} or 
-#' \linkS4class{StQ}).
+#' @param Correspondence Object with the IDDD variable identifiers (of class \link{DD} or 
+#' \link{StQ}).
 #' 
 #' @return \code{Character} vector with the production unit names and their corresponding IDDD
 #' variable names as the names of the vector.

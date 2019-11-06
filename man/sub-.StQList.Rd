@@ -19,7 +19,7 @@
 vector or character vector or \link{missing} or \link{NULL}. Numeric values are coerced
 internally to \code{integer} through \code{\link{as.integer}} (and thus truncated to zero).
 Character vector correspond to names of the respective time period of each component object of
-class \linkS4class{StQ}.}
+class \link{StQ}.}
 
 \item{drop}{Included by coherence.}
 }

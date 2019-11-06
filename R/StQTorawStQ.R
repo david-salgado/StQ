@@ -1,9 +1,9 @@
-#' @title Generates an object of class \linkS4class{rawStQ} from the input \linkS4class{StQ} object.
+#' @title Generates an object of class \linkS4class{rawStQ} from the input \link{StQ} object.
 #'
 #' @description \code{StQTorawStQ} returns an object of class \linkS4class{rawStQ} from the input
-#' \linkS4class{StQ} object. 
+#' \link{StQ} object. 
 #' 
-#' @param Q Object of class \linkS4class{StQ} whose slot Data has at least the columns \code{IDDD}
+#' @param Q Object of class \link{StQ} whose slot Data has at least the columns \code{IDDD}
 #' and \code{Value}.
 #'
 #' @return Object of class \linkS4class{rawStQ} whose slot Data has the key-value pair structure.

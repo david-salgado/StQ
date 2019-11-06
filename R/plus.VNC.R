@@ -30,15 +30,7 @@
 #'                            Var1 = c('', '', '', '', '', ''),
 #'                            Var2 = c('', '', '', '', '', ''),
 #'                            UnitName = c('', '', '', '', '','cp09'),
-#'                            InFiles = rep('FF', 6)),
-#'     Aggregates = data.table(IDQual = c('Province', 'NACE', 'Market', ''),
-#'                             NonIDQual = rep('', 4),
-#'                             IDDD = c('', '', '', 'TotalTurnover'),
-#'                             Province = c('', '', '', '.'),
-#'                             NACE = c('', '', '', '.'),
-#'                             Market = c('', '', '', '2.'),
-#'                             UnitName = c('provincia', 'actividad', '', 'cn01'),
-#'                             InFiles = rep('FP', 4)))
+#'                            InFiles = rep('FF', 6)))
 #' VNC1 <- BuildVNC(VarList1)
 #'
 #' VarList2 <- list(
@@ -57,15 +49,7 @@
 #'                            Var1 = c('', '', '', '', '', ''),
 #'                            Var2 = c('', '', '', '', '', ''),
 #'                            UnitName = c('', '', '', '', '','cp09'),
-#'                            InFiles = rep('FF', 6)),
-#'     Aggregates = data.table(IDQual = c('Province', 'NACE', 'Market', ''),
-#'                             NonIDQual = rep('', 4),
-#'                             IDDD = c('', '', '', 'TotalTurnover'),
-#'                             Province = c('', '', '', '.'),
-#'                             NACE = c('', '', '', '.'),
-#'                             Market = c('', '', '', '2.'),
-#'                             UnitName = c('provincia', 'actividad', '', 'cn01'),
-#'                             InFiles = rep('FA', 4)))
+#'                            InFiles = rep('FF', 6)))
 #'
 #' VNC2 <- BuildVNC(VarList2)
 #'

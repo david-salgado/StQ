@@ -3,7 +3,7 @@
 #' @description \code{[[} extracts parts of an object of class \linkS4class{StQList}.
 #'
 #' It is indeed the method \code{[[} for the class \linkS4class{StQList}. This method returns
-#' objects of class \linkS4class{StQ} from the slot \code{Data} of the input object \code{x}.
+#' objects of class \link{StQ} from the slot \code{Data} of the input object \code{x}.
 #'
 #' @param x object of class \linkS4class{StQList}.
 #'
@@ -11,11 +11,11 @@
 #' vector or character vector or \link{missing} or \link{NULL}. Numeric values are coerced
 #' internally to \code{integer} through \code{\link{as.integer}} (and thus truncated to zero).
 #' Character vector correspond to names of the respective time period of each component object of
-#' class \linkS4class{StQ}.
+#' class \link{StQ}.
 #'
 #' @param exact Included by coherence.
 #'
-#' @return Object of class \linkS4class{StQ}.
+#' @return Object of class \link{StQ}.
 #'
 #' @examples
 #' mm <- c(paste0('0', 1:9), 10:12)

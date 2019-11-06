@@ -13,7 +13,7 @@ VarNamesToFormula(VarNames, DD)
 \arguments{
 \item{VarNames}{Character vector with compound variable names.}
 
-\item{DD}{Object of class \linkS4class{DD} with the definition and properties of the variables.}
+\item{DD}{Object of class \link{DD} with the definition and properties of the variables.}
 }
 \value{
 \linkS4class{data.table} with columns \code{Variable} and \code{Form}. The column

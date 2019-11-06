@@ -7,6 +7,14 @@
 StQ(Data = data.table(IDDD = character(0), Value = character(0)),
   DD = BuildDD())
 }
+\arguments{
+\item{Data}{Object of class \linkS4class{data.table}.}
+
+\item{DD}{Object of class \link{DD}}
+}
+\value{
+Object of class \code{\link{StQ}}.
+}
 \description{
 Definition of an S3 class named \code{StQ} for sets of standardized questionnaires.
 
@@ -18,9 +26,9 @@ some metadata) together with their corresponding values. If \code{Data} is not s
 input parameter, an empty \linkS4class{data.table} object with columns \code{IDDD} and 
 \code{Value} will be initiated.
 
-\item the component \code{DD}, which is an object of class \linkS4class{DD}. with the definition 
+\item the component \code{DD}, which is an object of class \link{DD}. with the definition 
 and properties of all variables. If \code{DD} is not specified as an input parameter, an empty 
-\linkS4class{DD} object with columns \code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} and
+\link{DD} object with columns \code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} and
 \code{ValueRegExp} will be initiated.
 }
 

@@ -2,7 +2,7 @@
 #'
 #' @description \code{getUnitName} returns the UnitNames from input object.
 #'
-#' @param object Object whose UnitNames in the slot \linkS4class{DD} are required.
+#' @param object Object whose UnitNames in the slot \link{DD} are required.
 #'
 #' @param CompNames \code{Character} vector with the names of components or slots of the object from
 #'  which the UnitNames are requested.

@@ -16,7 +16,7 @@ setVariable(object, Var, lag = NULL, by = NULL)
   by = NULL)
 }
 \arguments{
-\item{object}{Object of class \linkS4class{StQ} or \linkS4class{StQList}.}
+\item{object}{Object of class \link{StQ} or \linkS4class{StQList}.}
 
 \item{Var}{Object of class \linkS4class{Variable}.}
 }

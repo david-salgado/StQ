@@ -29,7 +29,7 @@ mm <- c(paste0('0', 1:9), 10:12)
 TimePer <- paste0('MM', mm, '2015')
 PeriodList <- RepoTime::newRepoTime(TimePer)
 
-EmptyrawQ <- rawStQ())
+EmptyrawQ <- rawStQ()
 EmptyrawQList <- vector('list', 12)
 EmptyrawQList <- lapply(EmptyrawQList, function(x) EmptyrawQ)
 rawQList <- rawStQList(Data = EmptyrawQList, Periods = PeriodList)

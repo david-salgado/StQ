@@ -4,14 +4,14 @@
 \name{dcast_StQ}
 \alias{dcast_StQ}
 \alias{dcast_StQ,StQ-method}
-\title{Convert an \linkS4class{StQ} object into a dcasted \linkS4class{data.table}}
+\title{Convert an \link{StQ} object into a dcasted \linkS4class{data.table}}
 \usage{
 dcast_StQ(object, VarNames = NULL, UnitNames = FALSE)
 
 \S4method{dcast_StQ}{StQ}(object, VarNames = NULL, UnitNames = FALSE)
 }
 \arguments{
-\item{object}{Object of class \linkS4class{StQ} whose slot \code{Data} will be converted.}
+\item{object}{Object of class \link{StQ} whose slot \code{Data} will be converted.}
 
 \item{VarNames}{\code{Character} vector with names of the output variables (default \code{NULL}).}
 
@@ -20,23 +20,23 @@ form.}
 }
 \value{
 Returns a \linkS4class{data.table} with data from slot \code{Data} of the input
-\linkS4class{StQ} object with statistical units by rows and variables by columns. Only variables
+\link{StQ} object with statistical units by rows and variables by columns. Only variables
 in \code{VarNames} will be output. If no variable name is specified, all variables in the input
 object will be output.
 }
 \description{
 \code{dcast_StQ} returns a \linkS4class{data.table} in dcasted form (observations by
-row and variables by columns) with data from the input \linkS4class{StQ} object.
+row and variables by columns) with data from the input \link{StQ} object.
 
 This method converts the slot \code{Data} from the input \code{StQ} object into a
 \linkS4class{data.table} with statistical units by row and variables specified in the input
 parameter \code{VarNames} by columns.
 
 To distinguish between variables and qualifiers this function makes use of the slot \code{DD} of
-input \linkS4class{StQ} variable.
+input \link{StQ} variable.
 
 This method is indeed a wrapper for the function \code{\link[data.table]{dcast.data.table}} of
-the package \linkS4class{data.table}, adapted to the structure of object \linkS4class{StQ}.
+the package \linkS4class{data.table}, adapted to the structure of object \link{StQ}.
 }
 \examples{
 data(ExampleStQ)

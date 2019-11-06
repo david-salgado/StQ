@@ -5,7 +5,7 @@
 #'
 #' Input objects can be of class:
 #' \itemize{
-#' \item \code{StQ}: The input parameters are an object of class \linkS4class{StQ} and a character
+#' \item \code{StQ}: The input parameters are an object of class \link{StQ} and a character
 #' vector, \code{VarNames}, with variable names. It returns the \code{data.table} corresponding to
 #' slot \code{Data} of such an object, but only with variables included in \code{VarNames}. If in 
 #' \code{VarNames} only the roots of variable names in the column \code{IDDD} of slot \code{Data}
@@ -14,7 +14,7 @@
 #' If no variable name is specified in \code{VarNames}, it returns the complete slot \code{Data}.
 #'
 #' \item \code{StQList}: The input parameters are an object of class \linkS4class{StQList} and a
-#' character vector, \code{VarNames}, with variable names. It returns a list of \linkS4class{StQ}
+#' character vector, \code{VarNames}, with variable names. It returns a list of \link{StQ}
 #' objects, but only with variables included in \code{VarNames}, as it is explained above.
 #'
 #' \item \code{rawStQ}: The input parameters are an object of class \linkS4class{rawStQ} and a
@@ -30,11 +30,11 @@
 #'
 #' @param VarNames \code{Character} vector with the variable names subsetting the data set.
 #'
-#' @return In the case of \linkS4class{StQ}/\linkS4class{rawStQ} objects, it returns a
+#' @return In the case of \link{StQ}/\linkS4class{rawStQ} objects, it returns a
 #' \linkS4class{data.table} with key-value pair structure corresponding to slot \code{Data} from the
 #' input object with the values of the variables restricted to variable names specified in
 #' \code{VarNames}. In the case of \linkS4class{StQList}/\linkS4class{rawStQList} objects, it
-#' returns a list of \linkS4class{StQ}/linkS4class{rawStQ} objects.
+#' returns a list of \link{StQ}/linkS4class{rawStQ} objects.
 #'
 #' @examples
 #' # From an StQ object

@@ -19,7 +19,7 @@ getValues(object, VarName, Units = getUnits(object))
   Units = getUnits(object))
 }
 \arguments{
-\item{object}{Object of class \linkS4class{StQ} or \linkS4class{StQList}.}
+\item{object}{Object of class \link{StQ} or \linkS4class{StQList}.}
 
 \item{VarName}{Character vector with the name of the variable.}
 

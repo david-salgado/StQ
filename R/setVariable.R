@@ -2,7 +2,7 @@
 #'
 #' @description \code{setVariable} .
 #'
-#' @param object Object of class \linkS4class{StQ} or \linkS4class{StQList}.
+#' @param object Object of class \link{StQ} or \linkS4class{StQList}.
 #' 
 #' @param Var Object of class \linkS4class{Variable}.
 #'

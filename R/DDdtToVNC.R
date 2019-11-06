@@ -1,8 +1,8 @@
-#' @title Returns the corresponding object of class \linkS4class{VNC} according to the input 
+#' @title Returns the corresponding object of class \link{VNC} according to the input 
 #' \linkS4class{data.table}
 #'
 #' @description \code{DDdtToVNC} returns the corresponding object of class 
-#' \linkS4class{VNC} according to the input \linkS4class{data.table}.
+#' \link{VNC} according to the input \linkS4class{data.table}.
 #'
 #' @param DDdt Object of class \linkS4class{data.table}.
 #'
@@ -14,12 +14,14 @@
 #' @return Returns the corresponding object of class \linkS4class{VarNameCorresp}.
 #'
 #' @examples
+#' \dontrun{
 #' library(data.table)
 #' AggWeights <- data.table(Variable = c('ID', 'Pond1'), Sort = c('IDQual', 'IDDD'),
 #'                          Class = c('character', 'character'),
 #'                          Length = c('11', '7'),
 #'                          Qual1 = c('', 'ID'), ValueRegExp = c('', ''))
 #' DDdtToVNC(AggWeights, 'AggWeights', rep('FA', 2))
+#' }
 #'
 #' @include VNC.R BuildVNC.R DD.R BuildDD.R getIDQual.R getNonIDQual.R getIDDD.R
 #'

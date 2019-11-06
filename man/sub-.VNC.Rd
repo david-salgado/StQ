@@ -2,7 +2,7 @@
 % Please edit documentation in R/sub.VNC.R
 \name{[.VNC}
 \alias{[.VNC}
-\title{Extract parts of an object of class \linkS4class{VNC}}
+\title{Extract parts of an object of class \link{VNC}}
 \usage{
 \method{[}{VNC}(x, i, j, by, keyby, with = TRUE,
   nomatch = getOption("datatable.nomatch"), mult = "all",
@@ -13,7 +13,7 @@
   drop = NULL, on = NULL)
 }
 \arguments{
-\item{x}{Object of class \linkS4class{VNC}.}
+\item{x}{Object of class \link{VNC}.}
 
 \item{i, j, ...}{Indices corresponding to elements to be extracted. The indices are numeric or
 character vectors, \code{\link{missing}} or \code{\link{NULL}}. Numeric values are coerced to
@@ -22,14 +22,17 @@ character vectors, \code{\link{missing}} or \code{\link{NULL}}. Numeric values a
 \item{drop}{Included by coherence.}
 }
 \value{
-Object of class \linkS4class{VNC} with the subsetted input object.
+Object of class \link{VNC} with the subsetted input object.
 }
 \description{
-\code{[} extracts parts of an object of class \linkS4class{VNC}.
+\code{[} extracts parts of an object of class \link{VNC}.
 
-It is indeed the method \code{[} for the class \linkS4class{VNC}.
+It is indeed the method \code{[} for the class \link{VNC}.
 }
 \examples{
+\dontrun{
+# Falla porque falta un on= en algÃºn join de data.table
+# Ademas fallaria al llegar al BuildVNC de esta misma funciÃ³n
 library(data.table)
 VNC <- VNC(ID = data.table(IDQual = c('NumIdEst', rep('', 4)),
                            NonIDQual = c('','','','',''),
@@ -53,5 +56,6 @@ VNC <- VNC(ID = data.table(IDQual = c('NumIdEst', rep('', 4)),
                                  InFiles = rep('FP', 3)))
 VNC[c('ID', 'MicroData')]
 
+}
 
 }

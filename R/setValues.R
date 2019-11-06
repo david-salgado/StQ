@@ -5,7 +5,7 @@
 #' This method creates a variable with the name \code{VarName} with values specified in the input 
 #' \code{Value}. If the variable is already present in the input variable, the method overwrites it.
 #'
-#' It is also necessary to provide as input parameter an object of class \linkS4class{DD} named 
+#' It is also necessary to provide as input parameter an object of class \link{DD} named 
 #' \code{newDD} with the row corresponding to the variable set with this method to be included in
 #' the slot \code{DD}. This row is specified as a \linkS4class{data.table} with a single row and 
 #' columns Variable, Sort, Class, Qual1-Qualn (as many as so many qualifiers are necessary) and
@@ -16,7 +16,7 @@
 #'
 #' @param object Object in which to include the new variable.
 #' 
-#' @param newDD \linkS4class{DD} object with the information of the new variable needed for the slot
+#' @param newDD \link{DD} object with the information of the new variable needed for the slot
 #'  \code{DD} of the input object.
 #'  
 #' @param DDslot Character vector of length 1 with the name of the slot of newDD in which the new 
@@ -40,6 +40,7 @@
 #' @include StQ.R dcast_StQ.R getData.R getDD.R setData.R getUnits.R plus.StQ.R
 #'
 #' @examples
+#' \dontrun{
 #' library(data.table)
 #' data(ExampleStQ)
 #' newVNCVar <- data.table(IDQual = '', NonIDQual = '', IDDD = 'lTurnover',
@@ -55,9 +56,9 @@
 #' NewQ <- setValues(object = ExampleStQ,
 #'                newDD = newDD,
 #'                DDslot = 'MicroData',
-#'                Value = expression(log(1 + as.numeric(Turnover))))
+#'                Value = log(1 + as.numeric(Turnover)))
 #' getValues(NewQ, 'lTurnover')
-#' 
+#' }
 #' @include StQ.R DD.R getData.R getDD.R getUnits.R setDD.R setData.R dcast_StQ.R plus.StQ.R getVNC.R IDDDToUnitNames.R UnitToIDDDNames.R ExtractNames.R
 #'
 #' @export

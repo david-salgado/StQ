@@ -5,7 +5,7 @@
 \alias{rawStQToStQ}
 \alias{rawStQToStQ,rawStQ-method}
 \alias{rawStQToStQ,rawStQList-method}
-\title{Generates an object of class \linkS4class{StQ} from the input \linkS4class{rawStQ} object.}
+\title{Generates an object of class \link{StQ} from the input \linkS4class{rawStQ} object.}
 \usage{
 rawStQToStQ(rawQ)
 
@@ -18,11 +18,11 @@ rawStQToStQ(rawQ)
 structure.}
 }
 \value{
-Object of class \linkS4class{StQ} whose slot Data has at least the columns \code{IDDD}
+Object of class \link{StQ} whose slot Data has at least the columns \code{IDDD}
 and \code{Value}.
 }
 \description{
-\code{rawStQToStQ} returns an object of class \linkS4class{StQ} from the input
+\code{rawStQToStQ} returns an object of class \link{StQ} from the input
 \linkS4class{rawStQ} object.
 }
 \examples{

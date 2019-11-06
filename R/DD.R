@@ -6,6 +6,21 @@
 #' \linkS4class{VarNameCorresp} and name \code{VNC} and the rest of components are objects of class 
 #' \linkS4class{data.table} of names \code{ID}, \code{MicroData}, \code{ParaData}, 
 #' \code{Aggregates}, \code{AggWeights}, \code{Other}.
+#' 
+#' @param VNC Object of class \link{VNC}.
+#'
+#' @param ID Object of class \linkS4class{data.table}.
+#'
+#' @param MicroData Object of class \linkS4class{data.table}.
+#' 
+#' @param ParaData Object of class \linkS4class{data.table}.
+#'
+#' @param Aggregates Object of class \linkS4class{data.table}.
+#'
+#' @param AggWeights Object of class \linkS4class{data.table}.
+#' 
+#' @param Other Object of class \linkS4class{data.table}.
+#'
 #'
 #' @examples
 #' library(data.table)

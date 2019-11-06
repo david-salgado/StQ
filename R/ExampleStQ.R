@@ -1,6 +1,6 @@
-#' @title Object of class \linkS4class{StQ}
+#' @title Object of class \link{StQ}
 #'
-#' @description \code{ExampleStQ} is an object of class \linkS4class{StQ} containing severely
+#' @description \code{ExampleStQ} is an object of class \link{StQ} containing severely
 #' perturbed anonymised data from a real official statistical operation.
 #'
 #' @docType data

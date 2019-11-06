@@ -2,7 +2,7 @@
 % Please edit documentation in R/sub.DD.R
 \name{[.DD}
 \alias{[.DD}
-\title{Extract parts of an object of class \linkS4class{DD}}
+\title{Extract parts of an object of class \link{DD}}
 \usage{
 \method{[}{DD}(x, i, j, by, keyby, with = TRUE,
   nomatch = getOption("datatable.nomatch"), mult = "all",
@@ -13,7 +13,7 @@
   drop = NULL, on = NULL)
 }
 \arguments{
-\item{x}{Object of class \linkS4class{DD}.}
+\item{x}{Object of class \link{DD}.}
 
 \item{i, j, ...}{indices corresponding to elements to be extracted. The indices are numeric or
 character vectors, \code{\link{missing}} or \code{\link{NULL}}. Numeric values are coerced to
@@ -22,17 +22,19 @@ character vectors, \code{\link{missing}} or \code{\link{NULL}}. Numeric values a
 \item{drop}{Included by coherence.}
 }
 \value{
-Object of class \linkS4class{DD} with the subsetted input object.
+Object of class \link{DD} with the subsetted input object.
 }
 \description{
-\code{[} extracts parts of an object of class \linkS4class{DD}. 
+\code{[} extracts parts of an object of class \link{DD}. 
 
-It is indeed the method \code{[} for the class \linkS4class{DD}. This method returns subsets from
-an object of class \linkS4class{DD} specified as an input parameter. The output is an object of
-the same class \linkS4class{DD} as the input parameter \code{x}.
+It is indeed the method \code{[} for the class \link{DD}. This method returns subsets from
+an object of class \link{DD} specified as an input parameter. The output is an object of
+the same class \link{DD} as the input parameter \code{x}.
 }
 \examples{
 data(ExampleDD)
+\dontrun{
 ExampleDD[Variable == 'Turnover']
+}
 
 }

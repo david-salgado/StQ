@@ -1,11 +1,11 @@
-#' @title Show an object of class \linkS4class{DD}
+#' @title Show an object of class \link{DD}
 #'
-#' @description The method \code{show} shows the slots of an object \linkS4class{DD} limiting the
+#' @description The method \code{show} shows the slots of an object \link{DD} limiting the
 #' number of columns on screen up to 8.
 #'
-#' It is indeed the method \link[methods]{show} adapted to the class \linkS4class{DD}.
+#' It is indeed the method \link[methods]{show} adapted to the class \link{DD}.
 #'
-#' @param object Object of class \linkS4class{DD}.
+#' @param object Object of class \link{DD}.
 #'
 #' @return Invisible object of class \code{\link{NULL}}.
 #'

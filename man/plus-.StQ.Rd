@@ -2,7 +2,7 @@
 % Please edit documentation in R/plus.StQ.R
 \name{+.StQ}
 \alias{+.StQ}
-\title{Method \code{+} for the class \linkS4class{StQ}}
+\title{Method \code{+} for the class \link{StQ}}
 \usage{
 \method{+}{StQ}(e1, e2)
 }
@@ -16,10 +16,10 @@ Object of class \code{StQ} with the join of both slots \code{DD} and
 \code{Data}.
 }
 \description{
-\code{+} joins two objects of class \linkS4class{StQ} in a single object of the same
+\code{+} joins two objects of class \link{StQ} in a single object of the same
  class.
 
-This method overloads the operator \code{\link{+}} and builds a new \linkS4class{StQ} object 
+This method overloads the operator \code{\link{+}} and builds a new \link{StQ} object 
 combining both input objects.
 }
 \examples{

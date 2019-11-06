@@ -2,7 +2,7 @@
 % Please edit documentation in R/sub.StQ.R
 \name{[.StQ}
 \alias{[.StQ}
-\title{Extract parts of an object of class \linkS4class{StQ}}
+\title{Extract parts of an object of class \link{StQ}}
 \usage{
 \method{[}{StQ}(x, i, j, by, keyby, with = TRUE,
   nomatch = getOption("datatable.nomatch"), mult = "all",
@@ -13,7 +13,7 @@
   drop = NULL, on = NULL)
 }
 \arguments{
-\item{x}{Object of class \linkS4class{StQ}.}
+\item{x}{Object of class \link{StQ}.}
 
 \item{i, j, ...}{Indices corresponding to elements to be extracted. The indices are numeric or
 character vectors, \code{\link{missing}} or \code{\link{NULL}}. Numeric values are coerced to
@@ -22,14 +22,14 @@ character vectors, \code{\link{missing}} or \code{\link{NULL}}. Numeric values a
 \item{drop}{Included by coherence.}
 }
 \value{
-Object of class \linkS4class{StQ} with the subsetted input object.
+Object of class \link{StQ} with the subsetted input object.
 }
 \description{
-\code{[} extracts parts of an object of class \linkS4class{StQ}.
+\code{[} extracts parts of an object of class \link{StQ}.
 
-It is indeed the method \code{[} for the class \linkS4class{StQ}. This method returns subsets of
-the slot \code{Data} from an object of class \linkS4class{StQ} specified as an input parameter.
-The output is an object of the same class \linkS4class{StQ} as the input parameter \code{x}.
+It is indeed the method \code{[} for the class \link{StQ}. This method returns subsets of
+the slot \code{Data} from an object of class \link{StQ} specified as an input parameter.
+The output is an object of the same class \link{StQ} as the input parameter \code{x}.
 }
 \examples{
 data(ExampleStQ)

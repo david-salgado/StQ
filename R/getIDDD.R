@@ -2,7 +2,7 @@
 #'
 #' @description \code{getIDDD} returns the IDDD identifiers from input object.
 #'
-#' @param object Object whose IDDD identifiers in the slot \linkS4class{DD} are required.
+#' @param object Object whose IDDD identifiers in the slot \link{DD} are required.
 #'
 #' @param CompNames \code{Character} vector with the names of components or slots of the object from
 #'  which the IDDD identifiers are requested.

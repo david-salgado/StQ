@@ -1,19 +1,19 @@
-#' @title Convert an \linkS4class{StQ} object into a dcasted \linkS4class{data.table}
+#' @title Convert an \link{StQ} object into a dcasted \linkS4class{data.table}
 #'
 #' @description \code{dcast_StQ} returns a \linkS4class{data.table} in dcasted form (observations by
-#' row and variables by columns) with data from the input \linkS4class{StQ} object.
+#' row and variables by columns) with data from the input \link{StQ} object.
 #'
 #' This method converts the slot \code{Data} from the input \code{StQ} object into a
 #' \linkS4class{data.table} with statistical units by row and variables specified in the input
 #' parameter \code{VarNames} by columns.
 #'
 #' To distinguish between variables and qualifiers this function makes use of the slot \code{DD} of
-#' input \linkS4class{StQ} variable.
+#' input \link{StQ} variable.
 #'
 #' This method is indeed a wrapper for the function \code{\link[data.table]{dcast.data.table}} of
-#' the package \linkS4class{data.table}, adapted to the structure of object \linkS4class{StQ}.
+#' the package \linkS4class{data.table}, adapted to the structure of object \link{StQ}.
 #'
-#' @param object Object of class \linkS4class{StQ} whose slot \code{Data} will be converted.
+#' @param object Object of class \link{StQ} whose slot \code{Data} will be converted.
 #'
 #' @param VarNames \code{Character} vector with names of the output variables (default \code{NULL}).
 #'
@@ -21,7 +21,7 @@
 #'  form.
 #'
 #' @return Returns a \linkS4class{data.table} with data from slot \code{Data} of the input
-#' \linkS4class{StQ} object with statistical units by rows and variables by columns. Only variables
+#' \link{StQ} object with statistical units by rows and variables by columns. Only variables
 #' in \code{VarNames} will be output. If no variable name is specified, all variables in the input
 #' object will be output.
 #'
@@ -150,18 +150,38 @@ setMethod(
                     localMetaCols <- otherCols_Meta[grep(pattrn, otherCols_Meta)]
                     allLocalCols <- unique(c(localIDQuals, mStr, localMetaCols))
                     tempDT <- tempData_dcasted_Meta[, ..allLocalCols]
+                    
+                    valueVar <- gsub(paste0('_\\[', mStr, '\\]'), '', localMetaCols)
+                    
                     formla <- paste(
                         paste0(localIDQuals, collapse = ' + '),
                         mStr,
                         sep = ' ~ '
                     )
-                    valueVar <- gsub(paste0('_\\[', mStr, '\\]'), '', localMetaCols)
+                    
+                    
                     setnames(tempDT, localMetaCols, valueVar)
+                    
+                    # Add an auxiliary variable to be sure dcast keep the names
+                    # even when valueVar has length 1.
+                    if(length(valueVar) == 1){
+                        tempDT[, '.aux' := NA]
+                        valueVar <- c(valueVar, '.aux')
+                        flagDel <- 1
+                    }
+                    
                     tempDT_parsed <- data.table::dcast.data.table(
                         data = tempDT,
                         formula = as.formula(formla),
                         drop = TRUE,
                         value.var = valueVar)
+                    
+                    if(flagDel){
+                       
+                        set(tempDT_parsed, j = grep('.aux',  names(tempDT_parsed)), value = NULL)
+                    
+                    }
+                    
                     tempData_dcasted_parsed <- merge(tempData_dcasted_parsed, tempDT_parsed, 
                                                   by = intersect(names(tempData_dcasted_parsed),
                                                                  names(tempDT_parsed)),

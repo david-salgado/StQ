@@ -11,7 +11,7 @@ renVar(object, VarNames, NewVarNames)
 \S4method{renVar}{StQ,character,character}(object, VarNames, NewVarNames)
 }
 \arguments{
-\item{object}{Input object of class \linkS4class{StQ}.}
+\item{object}{Input object of class \link{StQ}.}
 
 \item{VarNames}{Character vector with the variable names to be renamed.}
 

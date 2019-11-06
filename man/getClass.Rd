@@ -14,7 +14,7 @@ getClass(object, variables = NULL)
 \S4method{getClass}{StQ}(object, variables = NULL)
 }
 \arguments{
-\item{object}{Object whose class for each input variable in the slot \linkS4class{DD} are 
+\item{object}{Object whose class for each input variable in the slot \link{DD} are 
 required.}
 
 \item{variables}{\code{Character} vector with the names of the variables whose class is required.}

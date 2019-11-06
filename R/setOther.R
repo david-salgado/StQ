@@ -10,6 +10,7 @@
 #' @return Object with slot \code{Other} updated.
 #'
 #' @examples
+#' \dontrun{
 #' library(data.table)
 #' MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
 #'                           Length = '8',
@@ -30,6 +31,7 @@
 #'                       Qual1 = c(''), ValueRegExp = c('([0-4][0-9])|(5[0-2])'))
 #' setOther(DD) <- Otherdt
 #' DD
+#' }
 #'
 #' @rdname setOther
 #'

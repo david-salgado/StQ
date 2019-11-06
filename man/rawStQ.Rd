@@ -17,7 +17,7 @@ The structure of the class \code{rawStQ} comprises 2 attributes:
 key-value pair structure containing all statistical variables, both from the questionnaire and 
 any resulting metadata from the data processing.
 
-\item The attribute \code{DD}, which is an object of class \linkS4class{DD}. It basically 
+\item The attribute \code{DD}, which is an object of class \link{DD}. It basically 
 contains the definition and properties of each variable.
 }
 }
@@ -30,8 +30,8 @@ statistical variables (including some metadata) together with their correspondin
 \code{rawData} is not specified as an input parameter, an empty \linkS4class{data.table} object 
 with columns \code{IDDDKey}, \code{QualKey} and \code{Value} will be initiated.}
 
-\item{\code{DD}}{Object of class \linkS4class{DD} with the definition and properties of all variables. If
-\code{DD} is not specified as an input parameter, an empty \linkS4class{DD} object with all its
+\item{\code{DD}}{Object of class \link{DD} with the definition and properties of all variables. If
+\code{DD} is not specified as an input parameter, an empty \link{DD} object with all its
 components  will be initiated.}
 }}
 

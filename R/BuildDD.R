@@ -1,6 +1,6 @@
-#' @title Constructor of objects of class \linkS4class{DD}
+#' @title Constructor of objects of class \link{DD}
 #'
-#' @description This constructor returns an object of class \linkS4class{DD}. The input parameter is
+#' @description This constructor returns an object of class \link{DD}. The input parameter is
 #'  a named \code{list} of objects of classes \linkS4class{VarNameCorresp} (named \code{VNC}) and 
 #'  \linkS4class{data.table}. Notice that the names of this \code{list} must be, apart from VNC, any
 #'   of 'ID', 'MicroData', 'ParaData', 'Aggregates', AggWeights', 'Other'.
@@ -8,7 +8,7 @@
 #' @param Data A named \code{list} of objects of classes \linkS4class{VarNameCorresp} and 
 #' \linkS4class{data.table}.
 #'
-#' @return An object of class \linkS4class{DD} with components specified in the input parameter 
+#' @return An object of class \link{DD} with components specified in the input parameter 
 #' \code{Data}. Components 'ID' and/or 'MicroData' not being specified are set as an empty
 #' \linkS4class{data.table}.
 #' 
