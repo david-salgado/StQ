@@ -162,12 +162,14 @@ setMethod(
                     
                     setnames(tempDT, localMetaCols, valueVar)
                     
+                    flagDel <- FALSE
+                    
                     # Add an auxiliary variable to be sure dcast keep the names
                     # even when valueVar has length 1.
                     if(length(valueVar) == 1){
                         tempDT[, '.aux' := NA]
                         valueVar <- c(valueVar, '.aux')
-                        flagDel <- 1
+                        flagDel <- TRUE
                     }
                     
                     tempDT_parsed <- data.table::dcast.data.table(
