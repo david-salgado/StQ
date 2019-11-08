@@ -122,6 +122,19 @@ setMethod(
         IDQualsGlobal <- getIDQual(Correspondence)
         DD <- Correspondence
         Correspondence <- getVNC(DD)
+        
+        prefix <- gsub("_.+", '', UnitNames)
+        all_U <- getUnitName(Correspondence)
+        allWithSuffix <- all_U[grep("_\\[.+\\]", all_U)]
+        allPrefix <- gsub("_\\[.+\\]", '', allWithSuffix)
+        whichChange <- UnitNames[prefix %in% allPrefix]
+        if(length(whichChange) > 0){
+            oriUnitNames <- UnitNames
+            suffixChanged <- allWithSuffix[allPrefix %in% prefix]
+            UnitNames[which(prefix %in% allPrefix)] <- suffixChanged
+            infoChange <- data.table(Unit = suffixChanged, oriUnit = whichChange)
+        }
+       
         output.list <- lapply(names(Correspondence), function(nameVNC){
 
             VNC <- Correspondence[[nameVNC]]
@@ -242,9 +255,20 @@ setMethod(
         })
 
         outDT <- rbindlist(output.list)
+        if(length(whichChange) > 0){
+            
+            outDT <- outDT[infoChange, Unit := infoChange[, oriUnit], on = "Unit"]
+            UnitNames <- oriUnitNames
+            
+        }
+        
         setkeyv(outDT, names(outDT))
         outDT <- outDT[!duplicated(outDT, by = key(outDT))]
-        outDT[, Suffixes := gsub('([A-Za-z]+_)((\\[.*)|(.*))','\\2', Unit)]
+        if(nrow(outDT) > 0 ){
+         outDT[, Suffixes := strsplit(Unit, split = '_', fixed = TRUE)[[1]][2]]
+        }
+         # outDT[, Suffixes := gsub('([A-Za-z]+_)((\\[.*)|(.*))','\\2', Unit)]
+        
         outDT.list <- split(outDT, outDT[['Suffixes']])
         outDT.list <- lapply(outDT.list, function(DT){
 
