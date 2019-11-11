@@ -127,10 +127,15 @@ setMethod(
         all_U <- getUnitName(Correspondence)
         allWithSuffix <- all_U[grep("_\\[.+\\]", all_U)]
         allPrefix <- gsub("_\\[.+\\]", '', allWithSuffix)
+        names(allWithSuffix) <- allPrefix
         whichChange <- UnitNames[prefix %in% allPrefix]
+        
         if(length(whichChange) > 0){
+            prefixChange <- prefix[prefix %in% allPrefix]
+            names(whichChange) <- prefixChange
             oriUnitNames <- UnitNames
             suffixChanged <- allWithSuffix[allPrefix %in% prefix]
+            suffixChanged <- suffixChanged[names(whichChange)]
             UnitNames[which(prefix %in% allPrefix)] <- suffixChanged
             infoChange <- data.table(Unit = suffixChanged, oriUnit = whichChange)
         }
@@ -257,7 +262,10 @@ setMethod(
         outDT <- rbindlist(output.list)
         if(length(whichChange) > 0){
             
-            outDT <- outDT[infoChange, Unit := infoChange[, oriUnit], on = "Unit"]
+            addOutDT <- merge(infoChange, outDT, by = "Unit", all.x = TRUE)
+            addOutDT <- addOutDT[, Unit := NULL]
+            setnames(addOutDT, "oriUnit", "Unit")
+            outDT <- rbind(outDT[!addOutDT, on = "IDDD"], addOutDT)
             UnitNames <- oriUnitNames
             
         }
@@ -265,7 +273,8 @@ setMethod(
         setkeyv(outDT, names(outDT))
         outDT <- outDT[!duplicated(outDT, by = key(outDT))]
         if(nrow(outDT) > 0 ){
-         outDT[, Suffixes := strsplit(Unit, split = '_', fixed = TRUE)[[1]][2]]
+            Suf <- sub("^[^_]*_", "", outDT[, Unit])
+         outDT[, Suffixes := Suf]
         }
          # outDT[, Suffixes := gsub('([A-Za-z]+_)((\\[.*)|(.*))','\\2', Unit)]
         

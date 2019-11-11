@@ -27,6 +27,7 @@ Input object including the new variable.
 \code{setVariable} .
 }
 \examples{
+\dontrun{
 data(ExampleStQ)
 Var <- new(Class = 'Variable', UnitName = 'LRTEmp',
                                IDDD = 'Employees',
@@ -42,5 +43,6 @@ ExampleStQ <- setVariable(ExampleStQ, Var)
 
 ExampleStQList <- BuildStQList(list(MM012012 = ExampleStQ, MM022012 = ExampleStQ))
 ExampleStQList <- setVariable(ExampleStQList, Var)
+}
 
 }
