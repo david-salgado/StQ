@@ -9,7 +9,7 @@ VarNamesToDT(VarNames, DD)
 \arguments{
 \item{VarNames}{Character vector with the compound variable names.}
 
-\item{DD}{Object of class \link{DD} with the definition and properties of the variables.}
+\item{DD}{Object of class \linkS4class{DD} with the definition and properties of the variables.}
 }
 \value{
 \linkS4class{data.table} with as many rows as the length of \code{VarNames}, with the
@@ -26,7 +26,7 @@ This function is designed for variable names with suffixes appending qualifier v
 underscores _.
 
 The function determines the correspondind qualifier names for the values contained in the
-compound variable names using the information from the \link{DD} object specified as the
+compound variable names using the information from the \linkS4class{DD} object specified as the
 second input parameter.
 
 \code{VarNamesToDD} has been designed fundamentally for internal use in the construction of

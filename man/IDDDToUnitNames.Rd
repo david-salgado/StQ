@@ -7,16 +7,16 @@
 \alias{IDDDToUnitNames,character,StQ-method}
 \title{Convert IDDD variable names into their corresponding production unit names}
 \usage{
-IDDDToUnitNames(IDDDNames, Correspondence)
+IDDDToUnitNames(IDDDNames, object)
 
-\S4method{IDDDToUnitNames}{character,DD}(IDDDNames, Correspondence)
+\S4method{IDDDToUnitNames}{character,DD}(IDDDNames, object)
 
-\S4method{IDDDToUnitNames}{character,StQ}(IDDDNames, Correspondence)
+\S4method{IDDDToUnitNames}{character,StQ}(IDDDNames, object)
 }
 \arguments{
 \item{IDDDNames}{Character vector with the IDDD variables.}
 
-\item{Correspondence}{Object with the IDDD variable identifiers (of class \link{DD} or 
+\item{object}{Object with the IDDD variable identifiers (of class \link{DD} or 
 \link{StQ}).}
 }
 \value{

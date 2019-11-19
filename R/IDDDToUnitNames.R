@@ -5,7 +5,7 @@
 #' 
 #' @param IDDDNames Character vector with the IDDD variables.
 #' 
-#' @param Correspondence Object with the IDDD variable identifiers (of class \link{DD} or 
+#' @param object Object with the IDDD variable identifiers (of class \link{DD} or 
 #' \link{StQ}).
 #' 
 #' @return \code{Character} vector with the production unit names and their corresponding IDDD
@@ -86,7 +86,7 @@
 #'
 #'
 #' @export
-setGeneric("IDDDToUnitNames", function(IDDDNames, Correspondence){standardGeneric("IDDDToUnitNames")})
+setGeneric("IDDDToUnitNames", function(IDDDNames, object){standardGeneric("IDDDToUnitNames")})
 
 #' @rdname IDDDToUnitNames
 #'
@@ -94,130 +94,140 @@ setGeneric("IDDDToUnitNames", function(IDDDNames, Correspondence){standardGeneri
 #' 
 #' @export
 setMethod(
-    f = "IDDDToUnitNames",
-    signature = c("character", "DD"),
-    function(IDDDNames, Correspondence){
-        
-        if (missing(IDDDNames)) stop('[StQ::IDDDToUnitNames] A character vector of IDDDNames must be specified.\n')
-        if (missing(Correspondence)) stop('[StQ::IDDDToUnitNames] A correspondence object (DD or StQ) must be specified.\n')
+  f = "IDDDToUnitNames",
+  signature = c("character", "DD"),
+  function(IDDDNames, object){
+    
+    if (missing(IDDDNames)) stop('[StQ::IDDDToUnitNames] A character vector of IDDDNames must be specified.\n')
+    if (missing(object)) stop('[StQ::IDDDToUnitNames] A object object (DD or StQ) must be specified.\n')
+    
+    IDDDNames_Orig <- IDDDNames
+    IDDDNames <- setdiff(IDDDNames, getDotQual(object))
+
+    IDQualsGlobal <- getIDQual(object)
+    
+    # Suffix Extraction
+    if (length(IDDDNames) > 0){
       
-        IDDDNames_Orig <- IDDDNames
-        IDDDNames <- setdiff(IDDDNames, getDotQual(Correspondence))
-        IDQualsGlobal <- getIDQual(Correspondence)
-        if (length(IDDDNames) > 0){
-          Suffixes <- VarNamesToDT(IDDDNames, Correspondence)
-          CommonDDQual <- intersect(names(Suffixes), getDoubleDotQual(Correspondence))
-          Suffixes <- Suffixes[, c('IDDD', CommonDDQual), with = FALSE]
-          # OJO: ESTAMOS SUPONIENDO QUE SOLO SE TIENE UN CALIFICADOR .. (LO CONTRARIO SERIA UNA 
-          # LOCURA PARA LLAMAR A LAS VARIABLES; ESTAMOS POR TANTO ESTE COMPORTAMIENTO EN LA 
-          # CONSTRUCCION DE NOMBRES DE VARIABLES)
-          Suffixes[, Suffix := '']
-          colSuffixes <- names(Suffixes)
-          for (col in setdiff(colSuffixes, 'IDDD')){
-            
-            Suffixes[, Suffix := ifelse(Suffix == '', get(col), Suffix)]
-            
-          }
-          Suffixes <- Suffixes[, c('IDDD', 'Suffix'), with = F] 
-          
-        } else {
-          
-          Suffixes <- data.table(IDDD = character(0), Suffix = character(0))
-        }
+      Suffixes <- VarNamesToDT(IDDDNames, object)
+      CommonDDQual <- intersect(names(Suffixes), getDoubleDotQual(object))
+      IDvar <- intersect(names(Suffixes), c('IDDD', 'IDQual', 'NonIDQual'))
+      
+      Suffixes <- Suffixes[, c(IDvar, CommonDDQual), with = FALSE]
 
-        VNC <- getVNC(Correspondence)
-        XLS <- rbindlist(VNC, fill = TRUE)
-        XLS[, IDDDName := '']
+      # OJO: ESTAMOS SUPONIENDO QUE SOLO SE TIENE UN CALIFICADOR .. (LO CONTRARIO SERIA UNA 
+      # LOCURA PARA LLAMAR A LAS VARIABLES; ESTAMOS POR TANTO ESTE COMPORTAMIENTO EN LA 
+      # CONSTRUCCION DE NOMBRES DE VARIABLES)
+      Suffixes[, Suffix := '']
+      colSuffixes <- names(Suffixes)
+      for (col in setdiff(colSuffixes, IDvar)){
         
-        DDslots <- setdiff(names(Correspondence), 'VNC')
-        DDlist <- vector(mode = 'list', length = length(DDslots))
-        for (DDslot in DDslots){
-            
-            DDlist[[DDslot]] <- Correspondence[[DDslot]]
-        }
-        DDdt <- rbindlist(DDlist, fill = TRUE)
-        RootNames <- unique(ExtractNames(IDDDNames_Orig))
-        DotQual <- getDotQual(Correspondence)
-
-        Quals.list <- lapply(RootNames, function(IDDDName){
-            
-            QualsDT <- DDdt[Variable == IDDDName, names(DDdt)[grep('Qual', names(DDdt))], with = F]
-            Quals <- t(QualsDT)[, 1]
-            Quals <- Quals[Quals != '' & !is.na(Quals)]
-            Quals <- Quals[!Quals %in% DotQual]
-            Quals <- setdiff(Quals, IDQualsGlobal)
-            return(Quals)
-        })
+        Suffixes[, Suffix := ifelse(Suffix == '', get(col), Suffix)]
         
-        names(Quals.list) <- RootNames
-        XLS <- XLS[IDDD %in% RootNames | IDQual %in% RootNames | NonIDQual %in% RootNames]
-        
-        NotBlankIDDDNames <- XLS[['IDDD']]
-        NotBlankIDDDNames <- unique(NotBlankIDDDNames[NotBlankIDDDNames != ''])
-        IDQuals <- getIDQual(Correspondence)
-        NonIDQuals <- getNonIDQual(Correspondence)
-        UnitNames <- lapply(NotBlankIDDDNames, function(IDDDname){
-
-            localXLS <- XLS[IDDD == IDDDname & IDDD != '']
-            QualNames <- Quals.list[[IDDDname]]
-            localXLS <- localXLS[, c('IDDD', QualNames, 'UnitName', 'IDDDName'), with = F]
-            localNonIDQuals <- setdiff(intersect(names(localXLS), NonIDQuals), setdiff(IDQuals, NonIDQuals))
-            for (col in localNonIDQuals) {
-                
-                #if (any(localXLS[[col]] == '.')) next
-                localXLS[, IDDDName := paste(IDDDName, get(col), sep = '_')]
-                
-            }
-            localXLS[, IDDDName := paste0(IDDD, IDDDName)]
-            localXLS <- localXLS[, c('UnitName', 'IDDDName'), with = F]
-            #localXLS <- localXLS[IDDDName %in% IDDDNames | ExtractNames(IDDDName) %in% IDDDNames][, c('UnitName', 'IDDDName'), with = F]
-            #IDDD_aux <- localXLS[grep('\\.\\.', localXLS[['IDDDName']]), 'IDDDName']
-            #IDDD_aux <- strsplit(t(IDDD_aux), '\\.\\.')
-            #IDDD_aux <- unlist(lapply(IDDD_aux, function(x){x[1]}))
-            #IDDD_aux <- unlist(lapply(IDDD_aux, function(name){localXLS[grep(name, localXLS[['IDDDName']]), 'IDDDName'][['IDDDName']]}))
-            #localXLS <- localXLS[IDDDName %in% IDDDNames | ExtractNames(IDDDName) %in% IDDDNames| IDDDName %in% IDDD_aux][, c('UnitName', 'IDDDName'), with = F]
-            return(localXLS)
-            
-        })
-        names(UnitNames) <- NotBlankIDDDNames
-
-        if (any(Suffixes[['Suffix']] != '')){
-            
-            outList <- lapply(1:(dim(Suffixes)[1]), function(IDDDNamesRoot.index){
-                        IDDDNamesRoot <- Suffixes[IDDDNamesRoot.index][['IDDD']]
-                        Suffix <- Suffixes[IDDDNamesRoot.index][['Suffix']]
-                        out <- copy(UnitNames[[IDDDNamesRoot]])
-                        out[, IDDDName := gsub('..', Suffix, IDDDName, fixed = TRUE)]
-                        out[, UnitName := gsub('\\[.+\\]', Suffix, UnitName)]
-                        out <- out[IDDDName %in% IDDDNames | ExtractNames(IDDDName) %in% IDDDNames]
-                        return(out)
-            })
-            
-        } else {
-            
-            outList <- UnitNames
-            
-        }
-
-        UnitNames <- rbindlist(outList)
-
-        IDQualXLS <- XLS[IDQual != '']
-        IDQualXLS[, IDDDName := IDQual]
-        IDQualXLS <- IDQualXLS[, c('UnitName', 'IDDDName'), with = F]
-        
-        NonIDQualXLS <- XLS[NonIDQual != '']
-        NonIDQualXLS[, IDDDName := NonIDQual]
-        NonIDQualXLS <- NonIDQualXLS[, c('UnitName', 'IDDDName'), with = F]
-        UnitNames <- rbindlist(list(IDQualXLS, NonIDQualXLS, UnitNames))
-
-        IDDDNamesDT <- data.table(IDDDName = IDDDNames_Orig)
-        outDT <- merge(UnitNames, IDDDNamesDT, by = 'IDDDName', all.y = TRUE)
-
-        out <- outDT[['UnitName']]
-        names(out) <- outDT[['IDDDName']]
-        out <- out[IDDDNames_Orig]
-        return(out)
+      }
+      IDvar <- intersect(names(Suffixes), c('IDDD', 'IDQual', 'NonIDQual'))
+      Suffixes <- Suffixes[, c(IDvar, 'Suffix'), with = F] 
+      
+    } else {
+      
+      #IDvar <- intersect(names(VarNamesToDT(IDDDNames_Orig, object)), c('IDDD', 'IDQual', 'NonIDQual'))
+      Suffixes <- data.table(IDDD = character(0), Suffix = character(0))
+      
     }
+
+    VNC <- getVNC(object)
+    XLS <- rbindlist(VNC, fill = TRUE)
+    XLS[, IDDDName := '']
+    
+    DDslots <- setdiff(names(object), 'VNC')
+    DDlist <- vector(mode = 'list', length = length(DDslots))
+    for (DDslot in DDslots){
+      
+      DDlist[[DDslot]] <- object[[DDslot]]
+    }
+    DDdt <- rbindlist(DDlist, fill = TRUE)
+    RootNames <- unique(ExtractNames(IDDDNames_Orig))
+    DotQual <- getDotQual(object)
+    
+    Quals.list <- lapply(RootNames, function(IDDDName){
+      
+      QualsDT <- DDdt[Variable == IDDDName, names(DDdt)[grep('Qual', names(DDdt))], with = F]
+      Quals <- t(QualsDT)[, 1]
+      Quals <- Quals[Quals != '' & !is.na(Quals)]
+      Quals <- Quals[!Quals %in% DotQual]
+      Quals <- setdiff(Quals, IDQualsGlobal)
+      return(Quals)
+    })
+    
+    names(Quals.list) <- RootNames
+    XLS <- XLS[IDDD %in% RootNames | IDQual %in% RootNames | NonIDQual %in% RootNames]
+    
+    NotBlankIDDDNames <- XLS[['IDDD']]
+    NotBlankIDDDNames <- unique(NotBlankIDDDNames[NotBlankIDDDNames != ''])
+    IDQuals <- getIDQual(object)
+    NonIDQuals <- getNonIDQual(object)
+    UnitNames <- lapply(NotBlankIDDDNames, function(IDDDname){
+      
+      localXLS <- XLS[IDDD == IDDDname & IDDD != '']
+      QualNames <- Quals.list[[IDDDname]]
+      localXLS <- localXLS[, c('IDDD', QualNames, 'UnitName', 'IDDDName'), with = F]
+      localNonIDQuals <- setdiff(intersect(names(localXLS), NonIDQuals), setdiff(IDQuals, NonIDQuals))
+      for (col in localNonIDQuals) {
+        
+        #if (any(localXLS[[col]] == '.')) next
+        localXLS[, IDDDName := paste(IDDDName, get(col), sep = '_')]
+        
+      }
+      localXLS[, IDDDName := paste0(IDDD, IDDDName)]
+      localXLS <- localXLS[, c('UnitName', 'IDDDName'), with = F]
+      #localXLS <- localXLS[IDDDName %in% IDDDNames | ExtractNames(IDDDName) %in% IDDDNames][, c('UnitName', 'IDDDName'), with = F]
+      #IDDD_aux <- localXLS[grep('\\.\\.', localXLS[['IDDDName']]), 'IDDDName']
+      #IDDD_aux <- strsplit(t(IDDD_aux), '\\.\\.')
+      #IDDD_aux <- unlist(lapply(IDDD_aux, function(x){x[1]}))
+      #IDDD_aux <- unlist(lapply(IDDD_aux, function(name){localXLS[grep(name, localXLS[['IDDDName']]), 'IDDDName'][['IDDDName']]}))
+      #localXLS <- localXLS[IDDDName %in% IDDDNames | ExtractNames(IDDDName) %in% IDDDNames| IDDDName %in% IDDD_aux][, c('UnitName', 'IDDDName'), with = F]
+      return(localXLS)
+      
+    })
+    names(UnitNames) <- NotBlankIDDDNames
+
+    if (any(Suffixes[['Suffix']] != '')){
+      
+      outList <- lapply(1:(dim(Suffixes)[1]), function(IDDDNamesRoot.index){
+        IDDDNamesRoot <- Suffixes[IDDDNamesRoot.index][['IDDD']]
+        Suffix <- Suffixes[IDDDNamesRoot.index][['Suffix']]
+        out <- copy(UnitNames[[IDDDNamesRoot]])
+        out[, IDDDName := gsub('..', Suffix, IDDDName, fixed = TRUE)]
+        out[, UnitName := gsub('\\[.+\\]', Suffix, UnitName)]
+        out <- out[IDDDName %in% IDDDNames | ExtractNames(IDDDName) %in% IDDDNames]
+        return(out)
+      })
+      
+    } else {
+      
+      outList <- UnitNames
+      
+    }
+    
+    UnitNames <- rbindlist(outList)
+    
+    IDQualXLS <- XLS[IDQual != '']
+    IDQualXLS[, IDDDName := IDQual]
+    IDQualXLS <- IDQualXLS[, c('UnitName', 'IDDDName'), with = F]
+    
+    NonIDQualXLS <- XLS[NonIDQual != '']
+    NonIDQualXLS[, IDDDName := NonIDQual]
+    NonIDQualXLS <- NonIDQualXLS[, c('UnitName', 'IDDDName'), with = F]
+    UnitNames <- rbindlist(list(IDQualXLS, NonIDQualXLS, UnitNames))
+    
+    IDDDNamesDT <- data.table(IDDDName = IDDDNames_Orig)
+    outDT <- merge(UnitNames, IDDDNamesDT, by = 'IDDDName', all.y = TRUE)
+    
+    out <- outDT[['UnitName']]
+    names(out) <- outDT[['IDDDName']]
+    out <- out[IDDDNames_Orig]
+    return(out)
+  }
 )
 
 #' @rdname IDDDToUnitNames
@@ -226,16 +236,16 @@ setMethod(
 #' 
 #' @export
 setMethod(
-    f = "IDDDToUnitNames",
-    signature = c("character", "StQ"),
-    function(IDDDNames, Correspondence){
-        
-        
-        DD <- getDD(Correspondence)
-        
-        output <- IDDDToUnitNames(IDDDNames, DD)
-        
-        return(output)
-        
-    }
+  f = "IDDDToUnitNames",
+  signature = c("character", "StQ"),
+  function(IDDDNames, object){
+    
+    
+    DD <- getDD(object)
+    
+    output <- IDDDToUnitNames(IDDDNames, DD)
+    
+    return(output)
+    
+  }
 )
