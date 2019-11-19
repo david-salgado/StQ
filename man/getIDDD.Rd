@@ -18,7 +18,7 @@ getIDDD(object, CompNames = names(object))
   "VNC"))
 }
 \arguments{
-\item{object}{Object whose IDDD identifiers in the slot \linkS4class{DD} are required.}
+\item{object}{Object whose IDDD identifiers in the slot \link{DD} are required.}
 
 \item{CompNames}{\code{Character} vector with the names of components or slots of the object from
 which the IDDD identifiers are requested.}

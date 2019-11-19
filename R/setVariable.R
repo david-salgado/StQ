@@ -2,13 +2,14 @@
 #'
 #' @description \code{setVariable} .
 #'
-#' @param object Object of class \linkS4class{StQ} or \linkS4class{StQList}.
+#' @param object Object of class \link{StQ} or \linkS4class{StQList}.
 #' 
 #' @param Var Object of class \linkS4class{Variable}.
 #'
 #' @return Input object including the new variable.
 #'
 #' @examples
+#' \dontrun{
 #' data(ExampleStQ)
 #' Var <- new(Class = 'Variable', UnitName = 'LRTEmp',
 #'                                IDDD = 'Employees',
@@ -24,6 +25,7 @@
 #' 
 #' ExampleStQList <- BuildStQList(list(MM012012 = ExampleStQ, MM022012 = ExampleStQ))
 #' ExampleStQList <- setVariable(ExampleStQList, Var)
+#' }
 #' 
 #' @include VNC.R DD.R StQ.R getDD.R getVNC.R getMicroData.R getIDDD.R BuildVNC.R  BuildDD.R setValues.R
 #' 

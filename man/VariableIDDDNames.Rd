@@ -4,7 +4,7 @@
 \name{VariableIDDDNames}
 \alias{VariableIDDDNames}
 \alias{VariableIDDDNames,Variable,DD-method}
-\title{Convert production unit names of an object of class \link{Variable} into their
+\title{Convert production unit names of an object of class \linkS4class{Variable} into their
 corresponding statistical variable names (IDDD)}
 \usage{
 VariableIDDDNames(Variable, Correspondence)
@@ -22,7 +22,7 @@ Returns a \code{character} vector with the corresponding IDDD variable name.
 \description{
 \code{VariableIDDDNames} returns a \linkS4class{character} vector with the
 statistical variable name (IDDD + Qualifiers) corresponding to the production unit variable name
-of the \link{variable} object specified as input argument.
+of the \linkS4class{Variable} object specified as input argument.
 }
 \details{
 IDDD and qualifiers compose together the so-called IDDDname of the variable by pasting
@@ -39,7 +39,8 @@ Var <- new(Class = 'Variable', UnitName = 'LRTEmp',
                                ValueRegExp = '[.]+',
                                Formula = as.call(list('log( 1 + (Turnover / (Employees_1. + Employees_2.1.)))')),
                                SlotName = 'MicroData',
-                               Literal = '')
+                               Literal = '',
+                               DDversion = '1')
 IDDDName <- VariableIDDDNames(Var, DD)
 
 }

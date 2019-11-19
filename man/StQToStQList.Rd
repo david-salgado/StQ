@@ -4,20 +4,20 @@
 \name{StQToStQList}
 \alias{StQToStQList}
 \alias{StQToStQList,StQ-method}
-\title{Method to transform an \linkS4class{StQ} object into a \linkS4class{StQList} object}
+\title{Method to transform an \link{StQ} object into a \linkS4class{StQList} object}
 \usage{
 StQToStQList(object)
 
 \S4method{StQToStQList}{StQ}(object)
 }
 \arguments{
-\item{object}{Object of class \linkS4class{StQ} to be transformed.}
+\item{object}{Object of class \link{StQ} to be transformed.}
 }
 \value{
 object of class \linkS4class{StQList}.
 }
 \description{
-\code{StQToStQList} transform an \linkS4class{StQ} object (with a variable "Period"
+\code{StQToStQList} transform an \link{StQ} object (with a variable "Period"
 taking into account the interval period times related to data) into the corresponding
  \linkS4class{StQList} object.
 

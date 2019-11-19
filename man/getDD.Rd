@@ -17,11 +17,11 @@ getDD(object)
 \S4method{getDD}{StQList}(object)
 }
 \arguments{
-\item{object}{Object of class \linkS4class{StQ}, \linkS4class{rawStQ}, \linkS4class{StQList} or 
+\item{object}{Object of class \link{StQ}, \linkS4class{rawStQ}, \linkS4class{StQList} or 
 \linkS4class{rawStQList}.}
 }
 \value{
-Object of class \linkS4class{DD} corresponding to the slot \code{DD} of the input 
+Object of class \link{DD} corresponding to the slot \code{DD} of the input 
 parameter.
 }
 \description{

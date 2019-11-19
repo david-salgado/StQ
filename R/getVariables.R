@@ -6,16 +6,16 @@
 #' 
 #' @param varSort Character vector with the Sort of Variables ('IDDD', 'IDQual', 'NonIDQual').
 #' 
-#' @param slots Character vector with the slot names if object class is \linkS4class{DD} or 
-#' \linkS4class{StQ}.
+#' @param slots Character vector with the slot names if object class is \link{DD} or 
+#' \link{StQ}.
 #'
 #' @return Returns a character vector with the variable names.
 #'
 #' @examples
 #' data(ExampleDD) 
 #' getVariables(ExampleDD)
-#' getVariables(ExampleDD, Sort = 'IDDD', slots = 'MicroData')
-#' getVariables(ExampleStQ, Sort = 'IDDD', slots = 'Aggregates')
+#' getVariables(ExampleDD, varSort = 'IDDD', slots = 'MicroData')
+#' getVariables(ExampleStQ, varSort = 'IDDD', slots = 'Aggregates')
 #' 
 #' @include DD.R VNC.R StQ.R getDD.R
 #' 

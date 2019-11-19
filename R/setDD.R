@@ -1,13 +1,13 @@
 #' @title Set value of slot \code{DD}
 #'
-#' @description \code{setDD} assigns an object of class \linkS4class{DD} to the slot \code{DD} of 
+#' @description \code{setDD} assigns an object of class \link{DD} to the slot \code{DD} of 
 #' the input object.
 #'
 #' @param object Object whose slot \code{DD} is to be set.
 #'
-#' @param value Object of class \linkS4class{DD} to be assigned to the input object.
+#' @param value Object of class \link{DD} to be assigned to the input object.
 #'
-#' @return Object of class \linkS4class{StQ} with slot DD updated.
+#' @return Object of class \link{StQ} with slot DD updated.
 #'
 #' @examples
 #' # We build an empty StQ object:

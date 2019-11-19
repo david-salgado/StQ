@@ -11,7 +11,7 @@ rmVar(object, VarNames = character(0))
 \S4method{rmVar}{StQ}(object, VarNames = character(0))
 }
 \arguments{
-\item{object}{Input object of class \linkS4class{StQ} to remove the variables from.}
+\item{object}{Input object of class \link{StQ} to remove the variables from.}
 
 \item{VarNames}{Character vector with the variable names to remove.}
 }

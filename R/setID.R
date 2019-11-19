@@ -1,4 +1,4 @@
-#' @title Set value of slot \code{ID} of an object \linkS4class{DD}
+#' @title Set value of slot \code{ID} of an object \link{DD}
 #'
 #' @description \code{setID} assigns a \linkS4class{data.table} to the slot \code{ID} of the input
 #' object.
@@ -7,9 +7,10 @@
 #'
 #' @param value \linkS4class{data.table} to be assigned to the slot \code{ID}.
 #'
-#' @return Object \linkS4class{DD} with slot \code{ID} updated.
+#' @return Object \link{DD} with slot \code{ID} updated.
 #'
 #' @examples
+#' \dontrun{
 #' library(data.table)
 #' MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
 #'                           Length = '8',
@@ -33,6 +34,7 @@
 #'                    ValueRegExp = c('[0-9]{9}PP', '.+', '.+', '.+', '(6|9)[0-9]{8}'))
 #' setID(DD) <- IDdt
 #' DD
+#' }
 #' 
 #' @rdname setID
 #'

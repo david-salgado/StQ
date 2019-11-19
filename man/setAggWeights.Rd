@@ -25,6 +25,7 @@ Object with slot AggWeights updated.
 \code{setAggrWeights} assigns a \linkS4class{DDdt} to the slot \code{AggrWeights} of the input object.
 }
 \examples{
+\dontrun{
 library(data.table)
 MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
                           Length = '8',
@@ -47,5 +48,6 @@ AggWeights <- data.table(Variable = c('ID', 'Pond1'), Sort = c('IDQual', 'IDDD')
 
 setAggWeights(DD) <- AggWeights
 DD
+}
 
 }

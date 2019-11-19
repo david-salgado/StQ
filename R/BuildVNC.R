@@ -1,6 +1,6 @@
 #' @title Constructor of objects of class \linkS4class{VarNameCorresp}
 #'
-#' @description This constructor returns an object of class \linkS4class{VNC}.
+#' @description This constructor returns an object of class \link{VNC}.
 #' The input parameter is a named \code{list} of objects of class \linkS4class{data.table}. Notice 
 #' that the names of this \code{list} must be any of 'ID', 'MicroData', 'ParaData', 'Aggregates', 
 #' 'AggWeights', 'Other' or compound names with these roots (e.g. ParaData_Editing).
@@ -27,15 +27,7 @@
 #'                          NumIdEst = c(rep('', 2), '.'),
 #'                          Market = c(rep('', 2), '1.'),
 #'                          UnitName = c('numidest', '', 'cp09'),
-#'                          InFiles = rep('FF, FD, FG', 3)),
-#'  Aggregates = data.table(IDQual = c('Province', 'NACE', 'Market', ''),
-#'                          NonIDQual = rep('', 4),
-#'                          IDDD = c('', '', '', 'TotalTurnover'),
-#'                          Province = c('', '', '', '.'),
-#'                          NACE = c('', '', '', '.'),
-#'                          Market = c('', '', '', '1.'),
-#'                          UnitName = c('provincia', 'actividad', '', 'cn01'),
-#'                          InFiles = rep('FP', 4)))
+#'                          InFiles = rep('FF, FD, FG', 3)))
 #'                      
 #' VNC <- BuildVNC(VarList)
 #' VNC

@@ -38,6 +38,7 @@
 #' setVNC(DD) <- VNCAdd
 #' DD
 #'
+#'\dontrun{
 #' # On an object of class StQ:
 #' library(data.table)
 #' MicroDataDD <- data.table(Variable = 'IEPEntradaPed', Sort = 'IDDD', Class = 'numeric',
@@ -68,6 +69,7 @@
 #' VNCAdd <- BuildVNC(VarListAdd)                                                    
 #' setVNC(StQ) <- VNCAdd
 #' getDD(StQ)
+#' }
 #' 
 #' @rdname setVNC
 #'

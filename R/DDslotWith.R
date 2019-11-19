@@ -1,11 +1,11 @@
-#' @title Return the slot of the input \linkS4class{DD} object containing the input variable name
+#' @title Return the slot of the input \link{DD} object containing the input variable name
 #'
-#' @description \code{DDslotWith} returns the slot of the input \linkS4class{DD} object which 
+#' @description \code{DDslotWith} returns the slot of the input \link{DD} object which 
 #'  contains the variable name specified as input parameter \code{VarName}. If the variable is 
 #'  present in more than one slot, the input parameter \code{DDslot} is used to choose the correct
 #'  slot (with default value MicroData).
 #'  
-#' @param object Object of class \linkS4class{DD}.
+#' @param object Object of class \link{DD}.
 #' 
 #' @param VarName \code{Character} vector with the name of the variable.
 #' 

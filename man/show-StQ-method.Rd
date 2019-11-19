@@ -3,29 +3,27 @@
 \docType{methods}
 \name{show,StQ-method}
 \alias{show,StQ-method}
-\title{Show an object of class \linkS4class{StQ}}
+\title{Show an object of class \link{StQ}}
 \usage{
 \S4method{show}{StQ}(object)
 }
 \arguments{
-\item{object}{Object of class \linkS4class{StQ}.}
+\item{object}{Object of class \link{StQ}.}
 }
 \value{
 Invisible \code{\link{NULL}}.
 }
 \description{
-\code{show} displays the slot \code{Data} of the input \linkS4class{StQ} object limiting the
+\code{show} displays the slot \code{Data} of the input \link{StQ} object limiting the
 number of columns on screen up to 8.
-}
-\details{
-This method displays only the content of slot \code{Data} from the input \linkS4class{StQ} 
-object. It is indeed the method \link[methods]{show} adapted to class \linkS4class{StQ}.
+
+This method displays only the content of slot \code{Data} from the input \link{StQ} 
+object. It is indeed the method \link[methods]{show} adapted to class \link{StQ}.
 }
 \examples{
-# A trivial example
-show(new(Class = 'StQ'))
 data(ExampleStQ)
 show(ExampleStQ)
 ExampleStQ
+
 
 }

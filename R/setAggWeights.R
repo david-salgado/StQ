@@ -9,6 +9,7 @@
 #' @return Object with slot AggWeights updated.
 #'
 #' @examples
+#' \dontrun{
 #' library(data.table)
 #' MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
 #'                           Length = '8',
@@ -31,6 +32,7 @@
 #' 
 #' setAggWeights(DD) <- AggWeights
 #' DD
+#' }
 #'
 #' @rdname setAggWeights
 #'

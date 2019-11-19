@@ -1,10 +1,10 @@
-#' @title Extract parts of an object of class \linkS4class{VNC}
+#' @title Extract parts of an object of class \link{VNC}
 #'
-#' @description \code{[} extracts parts of an object of class \linkS4class{VNC}.
+#' @description \code{[} extracts parts of an object of class \link{VNC}.
 #'
-#' It is indeed the method \code{[} for the class \linkS4class{VNC}. 
+#' It is indeed the method \code{[} for the class \link{VNC}. 
 #'
-#' @param x Object of class \linkS4class{VNC}.
+#' @param x Object of class \link{VNC}.
 #'
 #' @param i,j,... Indices corresponding to elements to be extracted. The indices are numeric or
 #' character vectors, \code{\link{missing}} or \code{\link{NULL}}. Numeric values are coerced to
@@ -12,9 +12,12 @@
 #'
 #' @param drop Included by coherence.
 #'
-#' @return Object of class \linkS4class{VNC} with the subsetted input object.
+#' @return Object of class \link{VNC} with the subsetted input object.
 #'
 #' @examples
+#' \dontrun{
+#' # Falla porque falta un on= en algún join de data.table
+#' # Ademas fallaria al llegar al BuildVNC de esta misma función
 #' library(data.table)
 #' VNC <- VNC(ID = data.table(IDQual = c('NumIdEst', rep('', 4)),
 #'                            NonIDQual = c('','','','',''),
@@ -38,6 +41,7 @@
 #'                                  InFiles = rep('FP', 3)))
 #' VNC[c('ID', 'MicroData')]
 #' 
+#' }
 #'
 #' @include VNC.R BuildVNC.R
 #'

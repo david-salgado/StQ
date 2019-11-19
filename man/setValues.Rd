@@ -13,13 +13,13 @@ setValues(object, newDD, DDslot = "MicroData", Value, lag = NULL,
 \S4method{setValues}{StQ,DD}(object, newDD, DDslot = "MicroData", Value,
   lag = NULL, by = NULL)
 
-\S4method{setValues}{StQList,DD}(object, newDD, DDslot = "MicroData", Value,
-  lag = NULL, by = NULL)
+\S4method{setValues}{StQList,DD}(object, newDD, DDslot = "MicroData",
+  Value, lag = NULL, by = NULL)
 }
 \arguments{
 \item{object}{Object in which to include the new variable.}
 
-\item{newDD}{\linkS4class{DD} object with the information of the new variable needed for the slot
+\item{newDD}{\link{DD} object with the information of the new variable needed for the slot
 \code{DD} of the input object.}
 
 \item{DDslot}{Character vector of length 1 with the name of the slot of newDD in which the new 
@@ -45,7 +45,7 @@ Object of the same class as the input object with the new variable included.
 This method creates a variable with the name \code{VarName} with values specified in the input 
 \code{Value}. If the variable is already present in the input variable, the method overwrites it.
 
-It is also necessary to provide as input parameter an object of class \linkS4class{DD} named 
+It is also necessary to provide as input parameter an object of class \link{DD} named 
 \code{newDD} with the row corresponding to the variable set with this method to be included in
 the slot \code{DD}. This row is specified as a \linkS4class{data.table} with a single row and 
 columns Variable, Sort, Class, Qual1-Qualn (as many as so many qualifiers are necessary) and
@@ -55,6 +55,7 @@ Input parameters \code{by} and \code{lag} are optional and specify how to comput
 the new variable in some circunstamces.
 }
 \examples{
+\dontrun{
 library(data.table)
 data(ExampleStQ)
 newVNCVar <- data.table(IDQual = '', NonIDQual = '', IDDD = 'lTurnover',
@@ -70,7 +71,7 @@ newDD <- DD(VNC = newVNC,
 NewQ <- setValues(object = ExampleStQ,
                newDD = newDD,
                DDslot = 'MicroData',
-               Value = expression(log(1 + as.numeric(Turnover))))
+               Value = log(1 + as.numeric(Turnover)))
 getValues(NewQ, 'lTurnover')
-
+}
 }

@@ -10,14 +10,19 @@
 #' input parameter, an empty \linkS4class{data.table} object with columns \code{IDDD} and 
 #' \code{Value} will be initiated.
 #'
-#' \item the component \code{DD}, which is an object of class \linkS4class{DD}. with the definition 
+#' \item the component \code{DD}, which is an object of class \link{DD}. with the definition 
 #' and properties of all variables. If \code{DD} is not specified as an input parameter, an empty 
-#' \linkS4class{DD} object with columns \code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} and
+#' \link{DD} object with columns \code{Variable}, \code{Sort}, \code{Class}, \code{Qual1} and
 #' \code{ValueRegExp} will be initiated.
 #' }
 #'
 #' Every variable name in the component \code{Data} must be present in the component \code{DD}.
+#' 
+#' @param Data Object of class \linkS4class{data.table}.
 #'
+#' @param DD Object of class \link{DD}
+#' 
+#' @return Object of class \code{\link{StQ}}.
 #' 
 #' @examples
 #' library(data.table)

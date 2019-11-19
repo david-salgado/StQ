@@ -3,7 +3,7 @@
 #' @description \code{getValues} returns the values of the variable specified as input parameter of
 #' those statistical units also specified as an input parameter of the input object.
 #'
-#' @param object Object of class \linkS4class{StQ} or \linkS4class{StQList}.
+#' @param object Object of class \link{StQ} or \linkS4class{StQList}.
 #' 
 #' @param VarName Character vector with the name of the variable.
 #' 

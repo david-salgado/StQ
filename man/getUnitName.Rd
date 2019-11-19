@@ -17,7 +17,7 @@ getUnitName(object, CompNames = names(object))
 \S4method{getUnitName}{StQ}(object, CompNames = names(object))
 }
 \arguments{
-\item{object}{Object whose UnitNames in the slot \linkS4class{DD} are required.}
+\item{object}{Object whose UnitNames in the slot \link{DD} are required.}
 
 \item{CompNames}{\code{Character} vector with the names of components or slots of the object from
 which the UnitNames are requested.}

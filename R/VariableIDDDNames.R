@@ -1,9 +1,9 @@
-#' @title Convert production unit names of an object of class \link{Variable} into their
+#' @title Convert production unit names of an object of class \linkS4class{Variable} into their
 #' corresponding statistical variable names (IDDD)
 #'
 #' @description \code{VariableIDDDNames} returns a \linkS4class{character} vector with the
 #' statistical variable name (IDDD + Qualifiers) corresponding to the production unit variable name
-#' of the \link{variable} object specified as input argument.
+#' of the \linkS4class{Variable} object specified as input argument.
 #'
 #' @param Variable Object with its main attributes
 #' 
@@ -25,7 +25,8 @@
 #'                                ValueRegExp = '[.]+',
 #'                                Formula = as.call(list('log( 1 + (Turnover / (Employees_1. + Employees_2.1.)))')),
 #'                                SlotName = 'MicroData',
-#'                                Literal = '')
+#'                                Literal = '',
+#'                                DDversion = '1')
 #' IDDDName <- VariableIDDDNames(Var, DD)
 #' 
 #' @export

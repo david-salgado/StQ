@@ -94,6 +94,7 @@ VarNamesToDT <- function(VarNames, DD){
 
                     if ('..' %in% localVNC[[col]]) {
 
+
                         localVNC[, (col) := paste0(ParsedNames[index_col:(length(ParsedNames))], collapse = '_')]
                         next
                     }
@@ -104,12 +105,12 @@ VarNamesToDT <- function(VarNames, DD){
                 
                 localVNC <- localVNC[, which(sapply(localVNC, function(x)all(x != ''))), with = FALSE]
                 localVNC <- localVNC[, which(sapply(localVNC, function(x)!all(is.na(x)))), with = FALSE]
-                
+         
                 output[[DDslot]] <- localVNC
 
                 # IDQualCounter <- 0
                 # 
-                # ColNames <- setdiff(names(Names.DT), IDvar)
+                # ColNames <- setdiff(names(Names.DT), 'IDDD')
                 # 
                 # if (length(ColNames) > 0){
                 #     for (i in seq(along = ColNames)){

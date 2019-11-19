@@ -11,10 +11,10 @@ getUnits(object, DDslot = "MicroData")
 \S4method{getUnits}{StQ}(object, DDslot = "MicroData")
 }
 \arguments{
-\item{object}{Object of class \linkS4class{StQ}.}
+\item{object}{Object of class \link{StQ}.}
 
 \item{DDslot}{\code{Character} vector of length 1 with the name of slot of the attribute 
-\linkS4class{DD}. The default value is \code{MicroData}.}
+\link{DD}. The default value is \code{MicroData}.}
 }
 \value{
 It returns a \code{data.table} with the statistical units from the input object.

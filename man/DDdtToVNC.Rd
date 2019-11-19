@@ -2,7 +2,7 @@
 % Please edit documentation in R/DDdtToVNC.R
 \name{DDdtToVNC}
 \alias{DDdtToVNC}
-\title{Returns the corresponding object of class \linkS4class{VNC} according to the input 
+\title{Returns the corresponding object of class \link{VNC} according to the input 
 \linkS4class{data.table}}
 \usage{
 DDdtToVNC(DDdt, NameVNC, InFiles = rep("", dim(DDdt)[1]))
@@ -20,14 +20,16 @@ Returns the corresponding object of class \linkS4class{VarNameCorresp}.
 }
 \description{
 \code{DDdtToVNC} returns the corresponding object of class 
-\linkS4class{VNC} according to the input \linkS4class{data.table}.
+\link{VNC} according to the input \linkS4class{data.table}.
 }
 \examples{
+\dontrun{
 library(data.table)
 AggWeights <- data.table(Variable = c('ID', 'Pond1'), Sort = c('IDQual', 'IDDD'),
                          Class = c('character', 'character'),
                          Length = c('11', '7'),
                          Qual1 = c('', 'ID'), ValueRegExp = c('', ''))
 DDdtToVNC(AggWeights, 'AggWeights', rep('FA', 2))
+}
 
 }

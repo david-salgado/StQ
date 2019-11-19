@@ -12,13 +12,16 @@
 #' vector or character vector or \link{missing} or \link{NULL}. Numeric values are coerced
 #' internally to \code{integer} through \code{\link{as.integer}} (and thus truncated to zero).
 #' Character vector correspond to names of the respective time period of each component object of
-#' class \linkS4class{StQ}.
+#' class \link{StQ}.
 #'
 #' @param drop Included by coherence.
 #'
 #' @return Object of class \linkS4class{rawStQList} with the corresponding data subset.
 #'
 #' @examples
+#' \dontrun{
+#' # Error in eval(mc, rawStQObj, parent.frame()) : 
+#' # invalid 'envir' argument of type 'character' 
 #' mm <- c(paste0('0', 1:9), 10:12)
 #' TimePer <- paste0('MM', mm, '2015')
 #' QList <- vector('list', 12)
@@ -26,6 +29,7 @@
 #' names(QList) <- TimePer
 #' QList <- rawStQList(Data = QList, Periods = RepoTime::newRepoTime(TimePer))
 #' QList[c('MM092015', 'MM102015')]
+#' }
 #'
 #' @include rawStQList.R getData.R
 #'

@@ -13,13 +13,13 @@ setDD(object) <- value
 \arguments{
 \item{object}{Object whose slot \code{DD} is to be set.}
 
-\item{value}{Object of class \linkS4class{DD} to be assigned to the input object.}
+\item{value}{Object of class \link{DD} to be assigned to the input object.}
 }
 \value{
-Object of class \linkS4class{StQ} with slot DD updated.
+Object of class \link{StQ} with slot DD updated.
 }
 \description{
-\code{setDD} assigns an object of class \linkS4class{DD} to the slot \code{DD} of 
+\code{setDD} assigns an object of class \link{DD} to the slot \code{DD} of 
 the input object.
 }
 \examples{

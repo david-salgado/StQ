@@ -17,7 +17,7 @@
 #'
 #' @param VarNames Character vector with compound variable names.
 #'
-#' @param DD Object of class \linkS4class{DD} with the definition and properties of the variables.
+#' @param DD Object of class \link{DD} with the definition and properties of the variables.
 #'
 #' @return \linkS4class{data.table} with columns \code{Variable} and \code{Form}. The column
 #' \code{Variable} indicates the root name of each input variable name and the column \code{Form}

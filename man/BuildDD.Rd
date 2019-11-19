@@ -2,25 +2,26 @@
 % Please edit documentation in R/BuildDD.R
 \name{BuildDD}
 \alias{BuildDD}
-\title{Constructor of objects of class \linkS4class{DD}}
+\title{Constructor of objects of class \link{DD}}
 \usage{
 BuildDD(Data = list(ID = data.table(Variable = character(0), Sort =
   character(0), Class = character(0), Length = character(0), Qual1 =
-  character(0), ValueRegExp = character(0)), MicroData = data.table(Variable =
-  character(0), Sort = character(0), Class = character(0), Length =
-  character(0), Qual1 = character(0), ValueRegExp = character(0))))
+  character(0), ValueRegExp = character(0)), MicroData =
+  data.table(Variable = character(0), Sort = character(0), Class =
+  character(0), Length = character(0), Qual1 = character(0), ValueRegExp =
+  character(0))))
 }
 \arguments{
 \item{Data}{A named \code{list} of objects of classes \linkS4class{VarNameCorresp} and 
 \linkS4class{data.table}.}
 }
 \value{
-An object of class \linkS4class{DD} with components specified in the input parameter 
+An object of class \link{DD} with components specified in the input parameter 
 \code{Data}. Components 'ID' and/or 'MicroData' not being specified are set as an empty
 \linkS4class{data.table}.
 }
 \description{
-This constructor returns an object of class \linkS4class{DD}. The input parameter is
+This constructor returns an object of class \link{DD}. The input parameter is
  a named \code{list} of objects of classes \linkS4class{VarNameCorresp} (named \code{VNC}) and 
  \linkS4class{data.table}. Notice that the names of this \code{list} must be, apart from VNC, any
   of 'ID', 'MicroData', 'ParaData', 'Aggregates', AggWeights', 'Other'.

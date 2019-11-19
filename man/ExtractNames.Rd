@@ -21,7 +21,7 @@ This function is thought to be applied on those variable names with suffixes con
 underscores (_) and qualifier values. It takes as input parameter \code{NamesVector} a character 
 vector with the names of possibly several variables and extracts their root names dropping out 
 every suffix. The returned variable root names must have an exact correspondence with the 
-variable names (column "Variable") of class \linkS4class{DD}.
+variable names (column "Variable") of class \link{DD}.
 }
 \examples{
 ExtractNames(c('ICMCifraNeg', 'ICMEmpleo_1.', 'ICMEmpleo_2.1', 'ICMEmpleo_2.2'))

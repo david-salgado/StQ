@@ -14,7 +14,7 @@ StQListToStQ(object)
 \item{object}{Object of class \linkS4class{StQList} to be transformed.}
 }
 \value{
-object of class \linkS4class{StQ}.
+object of class \link{StQ}.
 }
 \description{
 \code{StQListToStQ} transform an \linkS4class{StQList} object into a StQ object

@@ -1,12 +1,12 @@
-#' @title Extract parts of an object of class \linkS4class{DD} 
+#' @title Extract parts of an object of class \link{DD} 
 #' 
-#' @description \code{[} extracts parts of an object of class \linkS4class{DD}. 
+#' @description \code{[} extracts parts of an object of class \link{DD}. 
 #' 
-#' It is indeed the method \code{[} for the class \linkS4class{DD}. This method returns subsets from
-#' an object of class \linkS4class{DD} specified as an input parameter. The output is an object of
-#' the same class \linkS4class{DD} as the input parameter \code{x}. 
+#' It is indeed the method \code{[} for the class \link{DD}. This method returns subsets from
+#' an object of class \link{DD} specified as an input parameter. The output is an object of
+#' the same class \link{DD} as the input parameter \code{x}. 
 #' 
-#' @param x Object of class \linkS4class{DD}. 
+#' @param x Object of class \link{DD}. 
 #'
 #' @param i,j,... indices corresponding to elements to be extracted. The indices are numeric or
 #' character vectors, \code{\link{missing}} or \code{\link{NULL}}. Numeric values are coerced to
@@ -14,11 +14,13 @@
 #'       
 #' @param drop Included by coherence. 
 #'
-#' @return Object of class \linkS4class{DD} with the subsetted input object.
+#' @return Object of class \link{DD} with the subsetted input object.
 #'  
 #' @examples
 #' data(ExampleDD)
+#' \dontrun{
 #' ExampleDD[Variable == 'Turnover']
+#' }
 #' 
 #' @include getVNC.R BuildDD.R VNC.R DD.R
 #' 

@@ -3,8 +3,8 @@
 \docType{data}
 \name{ExampleDD}
 \alias{ExampleDD}
-\title{Object of class \linkS4class{DD}}
-\format{Object of class \linkS4class{DD}. Its slot \code{VarNameCorresp} has two components of
+\title{Object of class \link{DD}}
+\format{Object of class \link{DD}. Its slot \code{VarNameCorresp} has two components of
 class \linkS4class{VNCdt}: \code{MicroData}, with 15 rows and 7 columns; and \code{Aggregates},
 with 3 rows and 6 columns. Its slot \code{MicroData} is a data.table of class \linkS4class{DDdt}
 with 13 rows and 7 columns and its slot \code{Aggregates} is a data.table of class
@@ -13,7 +13,7 @@ with 13 rows and 7 columns and its slot \code{Aggregates} is a data.table of cla
 data(ExampleDD)
 }
 \description{
-\code{ExampleDD} is an object of class \linkS4class{DD}.
+\code{ExampleDD} is an object of class \link{DD}.
 
 The slot \code{VarNameCorresp} is of class \linkS4class{VarNameCorresp} with components
 \code{MicroData} and \code{Aggregates}. The corresponding slots \code{MicroData} and 

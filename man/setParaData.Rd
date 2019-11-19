@@ -26,6 +26,7 @@ Object with slot ParaData updated.
 of the input object.
 }
 \examples{
+\dontrun{
 library(data.table)
 MicroDataDD <- data.table(Variable = 'NewOrders', Sort = 'IDDD', Class = 'numeric',
                           Length = '8',
@@ -51,5 +52,5 @@ Paradt <- data.table(
                              '(([0-9]{2}-(0[1-9]|1(0-2))-[0-9]{4})| )'))       
 setParaData(DD) <- Paradt
 DD
-
+}
 }

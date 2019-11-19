@@ -104,6 +104,7 @@ setMethod(
     IDDDNames_Orig <- IDDDNames
     IDDDNames <- setdiff(IDDDNames, getDotQual(object))
 
+
     IDQualsGlobal <- getIDQual(object)
     
     # Suffix Extraction
@@ -112,6 +113,7 @@ setMethod(
       Suffixes <- VarNamesToDT(IDDDNames, object)
       CommonDDQual <- intersect(names(Suffixes), getDoubleDotQual(object))
       IDvar <- intersect(names(Suffixes), c('IDDD', 'IDQual', 'NonIDQual'))
+
 
       Suffixes <- Suffixes[, c(IDvar, CommonDDQual), with = FALSE]
 

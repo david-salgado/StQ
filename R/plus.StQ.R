@@ -1,9 +1,9 @@
-#' @title Method \code{+} for the class \linkS4class{StQ}
+#' @title Method \code{+} for the class \link{StQ}
 #'
-#' @description \code{+} joins two objects of class \linkS4class{StQ} in a single object of the same
+#' @description \code{+} joins two objects of class \link{StQ} in a single object of the same
 #'  class.
 #'
-#' This method overloads the operator \code{\link{+}} and builds a new \linkS4class{StQ} object 
+#' This method overloads the operator \code{\link{+}} and builds a new \link{StQ} object 
 #' combining both input objects.
 #'
 #' @param e1 Object of class \code{StQ}.

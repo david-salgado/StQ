@@ -5,12 +5,12 @@
 \title{Extract parts of an object of class \linkS4class{StQList}}
 \usage{
 \method{[}{StQList}(x, i, j, by, keyby, with = TRUE,
-  nomatch = getOption("datatable.nomatch"), mult = "all", roll = FALSE,
-  rollends = if (roll == "nearest") c(TRUE, TRUE) else if (roll >= 0) c(FALSE,
-  TRUE) else c(TRUE, FALSE), which = FALSE, .SDcols,
+  nomatch = getOption("datatable.nomatch"), mult = "all",
+  roll = FALSE, rollends = if (roll == "nearest") c(TRUE, TRUE) else if
+  (roll >= 0) c(FALSE, TRUE) else c(TRUE, FALSE), which = FALSE, .SDcols,
   verbose = getOption("datatable.verbose"),
-  allow.cartesian = getOption("datatable.allow.cartesian"), drop = NULL,
-  on = NULL)
+  allow.cartesian = getOption("datatable.allow.cartesian"),
+  drop = NULL, on = NULL)
 }
 \arguments{
 \item{x}{object of class \linkS4class{StQList}.}
@@ -19,7 +19,7 @@
 vector or character vector or \link{missing} or \link{NULL}. Numeric values are coerced
 internally to \code{integer} through \code{\link{as.integer}} (and thus truncated to zero).
 Character vector correspond to names of the respective time period of each component object of
-class \linkS4class{StQ}.}
+class \link{StQ}.}
 
 \item{drop}{Included by coherence.}
 }

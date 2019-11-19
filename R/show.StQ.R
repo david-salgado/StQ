@@ -1,21 +1,20 @@
-#' Show an object of class \linkS4class{StQ}
+#' @title Show an object of class \link{StQ}
 #'
-#' \code{show} displays the slot \code{Data} of the input \linkS4class{StQ} object limiting the
+#' @description \code{show} displays the slot \code{Data} of the input \link{StQ} object limiting the
 #' number of columns on screen up to 8.
 #'
-#' This method displays only the content of slot \code{Data} from the input \linkS4class{StQ} 
-#' object. It is indeed the method \link[methods]{show} adapted to class \linkS4class{StQ}.
+#' This method displays only the content of slot \code{Data} from the input \link{StQ} 
+#' object. It is indeed the method \link[methods]{show} adapted to class \link{StQ}.
 #'
-#' @param object Object of class \linkS4class{StQ}.
+#' @param object Object of class \link{StQ}.
 #'
 #' @return Invisible \code{\link{NULL}}.
 #'
 #' @examples
-#' # A trivial example
-#' show(new(Class = 'StQ'))
 #' data(ExampleStQ)
 #' show(ExampleStQ)
 #' ExampleStQ
+#' 
 #'
 #' @include StQ.R getData.R
 #'

@@ -9,12 +9,14 @@
 \usage{
 setVariable(object, Var, lag = NULL, by = NULL)
 
-\S4method{setVariable}{StQ,Variable}(object, Var, lag = NULL, by = NULL)
+\S4method{setVariable}{StQ,Variable}(object, Var, lag = NULL,
+  by = NULL)
 
-\S4method{setVariable}{StQList,Variable}(object, Var, lag = NULL, by = NULL)
+\S4method{setVariable}{StQList,Variable}(object, Var, lag = NULL,
+  by = NULL)
 }
 \arguments{
-\item{object}{Object of class \linkS4class{StQ} or \linkS4class{StQList}.}
+\item{object}{Object of class \link{StQ} or \linkS4class{StQList}.}
 
 \item{Var}{Object of class \linkS4class{Variable}.}
 }
@@ -25,6 +27,7 @@ Input object including the new variable.
 \code{setVariable} .
 }
 \examples{
+\dontrun{
 data(ExampleStQ)
 Var <- new(Class = 'Variable', UnitName = 'LRTEmp',
                                IDDD = 'Employees',
@@ -40,5 +43,6 @@ ExampleStQ <- setVariable(ExampleStQ, Var)
 
 ExampleStQList <- BuildStQList(list(MM012012 = ExampleStQ, MM022012 = ExampleStQ))
 ExampleStQList <- setVariable(ExampleStQList, Var)
+}
 
 }

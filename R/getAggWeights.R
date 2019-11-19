@@ -1,12 +1,12 @@
-#' @title Return slot \code{AggWeights} from a \linkS4class{DD} object
+#' @title Return slot \code{AggWeights} from a \link{DD} object
 #'
-#' @description \code{getAggWeights} returns slot \code{AggWeights} of the input \linkS4class{DD} 
+#' @description \code{getAggWeights} returns slot \code{AggWeights} of the input \link{DD} 
 #' object.
 #' 
 #' @param object A DD Object whose slot \code{AggWeights} is queried.
 #'
 #' @return \linkS4class{data.table} with data from slot \code{AggWeights} of the input 
-#' \linkS4class{DD} object.
+#' \link{DD} object.
 #'
 #' @examples
 #' # An example:

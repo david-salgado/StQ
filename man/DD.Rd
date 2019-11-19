@@ -6,19 +6,35 @@
 \usage{
 DD(VNC = BuildVNC(), ID = data.table(Variable = character(0), Sort =
   character(0), Class = character(0), Length = character(0), Qual1 =
-  character(0), ValueRegExp = character(0)), MicroData = data.table(Variable =
+  character(0), ValueRegExp = character(0)),
+  MicroData = data.table(Variable = character(0), Sort = character(0),
+  Class = character(0), Length = character(0), Qual1 = character(0),
+  ValueRegExp = character(0)), ParaData = data.table(Variable =
   character(0), Sort = character(0), Class = character(0), Length =
   character(0), Qual1 = character(0), ValueRegExp = character(0)),
-  ParaData = data.table(Variable = character(0), Sort = character(0), Class =
-  character(0), Length = character(0), Qual1 = character(0), ValueRegExp =
-  character(0)), Aggregates = data.table(Variable = character(0), Sort =
-  character(0), Class = character(0), Length = character(0), Qual1 =
-  character(0), ValueRegExp = character(0)), AggWeights = data.table(Variable
-  = character(0), Sort = character(0), Class = character(0), Length =
+  Aggregates = data.table(Variable = character(0), Sort = character(0),
+  Class = character(0), Length = character(0), Qual1 = character(0),
+  ValueRegExp = character(0)), AggWeights = data.table(Variable =
+  character(0), Sort = character(0), Class = character(0), Length =
   character(0), Qual1 = character(0), ValueRegExp = character(0)),
-  Other = data.table(Variable = character(0), Sort = character(0), Class =
-  character(0), Length = character(0), Qual1 = character(0), ValueRegExp =
-  character(0)))
+  Other = data.table(Variable = character(0), Sort = character(0), Class
+  = character(0), Length = character(0), Qual1 = character(0), ValueRegExp
+  = character(0)))
+}
+\arguments{
+\item{VNC}{Object of class \link{VNC}.}
+
+\item{ID}{Object of class \linkS4class{data.table}.}
+
+\item{MicroData}{Object of class \linkS4class{data.table}.}
+
+\item{ParaData}{Object of class \linkS4class{data.table}.}
+
+\item{Aggregates}{Object of class \linkS4class{data.table}.}
+
+\item{AggWeights}{Object of class \linkS4class{data.table}.}
+
+\item{Other}{Object of class \linkS4class{data.table}.}
 }
 \description{
 Definition of an S3 class named \code{DD} with the specification of each variable.

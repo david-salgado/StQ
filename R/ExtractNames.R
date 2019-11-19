@@ -7,7 +7,7 @@
 #' underscores (_) and qualifier values. It takes as input parameter \code{NamesVector} a character 
 #' vector with the names of possibly several variables and extracts their root names dropping out 
 #' every suffix. The returned variable root names must have an exact correspondence with the 
-#' variable names (column "Variable") of class \linkS4class{DD}.
+#' variable names (column "Variable") of class \link{DD}.
 #'
 #' @param NamesVector \code{Character} vector with the original compound variable names.
 #'

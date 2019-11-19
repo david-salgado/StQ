@@ -11,8 +11,8 @@
 #' @return Invisible \code{\link{NULL}}.
 #'
 #' @examples
-#' # A trivial example
-#' show(new(Class = 'rawStQ'))
+#' data(ExamplerawStQ)
+#' show(ExamplerawStQ)
 #'
 #' @include rawStQ.R getData.R
 #'
