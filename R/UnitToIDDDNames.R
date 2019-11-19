@@ -118,12 +118,30 @@ setMethod(
     f = "UnitToIDDDNames",
     signature = c("character", "DD"),
     function(UnitNames, Correspondence){
-
+        
         IDQualsGlobal <- getIDQual(Correspondence)
         DD <- Correspondence
         Correspondence <- getVNC(DD)
+        
+        prefix <- gsub("_.+", '', UnitNames)
+        all_U <- getUnitName(Correspondence)
+        allWithSuffix <- all_U[grep("_\\[.+\\]", all_U)]
+        allPrefix <- gsub("_\\[.+\\]", '', allWithSuffix)
+        names(allWithSuffix) <- allPrefix
+        whichChange <- UnitNames[prefix %in% allPrefix]
+        
+        if(length(whichChange) > 0){
+            prefixChange <- prefix[prefix %in% allPrefix]
+            names(whichChange) <- prefixChange
+            oriUnitNames <- UnitNames
+            suffixChanged <- allWithSuffix[allPrefix %in% prefix]
+            suffixChanged <- suffixChanged[names(whichChange)]
+            UnitNames[which(prefix %in% allPrefix)] <- suffixChanged
+            infoChange <- data.table(Unit = suffixChanged, oriUnit = whichChange)
+        }
+        
         output.list <- lapply(names(Correspondence), function(nameVNC){
-
+            
             VNC <- Correspondence[[nameVNC]]
             nameVNC <- ExtractNames(nameVNC)
             XLS <- VNC[UnitName %in% UnitNames]
@@ -136,57 +154,57 @@ setMethod(
             IDQual <- XLS.Quals[IDQual != '']
             IDQual <- IDQual[IDQual != '']
             DotQual <- getDotQual(Correspondence)
-
+            
             XLS <- XLS[IDDD != '']
             XLS <- XLS[, setdiff(names(XLS), IDQual), with = F]
             XLS.list <- split(XLS, XLS[['IDDD']])
-
+            
             XLS.list <- lapply(XLS.list, function(xls){
-
+                
                 #ColNames <- setdiff(names(xls), IDQualsGlobal)
                 #NotEmptyCols <- c()
                 #for (col in ColNames){
-
+                
                 #    if (!all(is.na(xls[[col]]) | xls[[col]] == '')) NotEmptyCols <- c(NotEmptyCols, col)
                 #
                 #}
-
+                
                 #xls <- xls[, NotEmptyCols, with = F]
-
+                
                 #ColsNotUnit <- setdiff(names(xls), c('IDDD', 'UnitName', 'IDDDName', 'InFiles'))
                 #ColsNotUnit <- intersect(names(VNC), ColsNotUnit)
                 auxDT <- DD[[nameVNC]][Variable == unique(xls[['IDDDName']])]
                 ColsNotUnit <- t(as.matrix(auxDT[, names(auxDT)[grep('Qual', names(auxDT))], with = FALSE]))[,1]
                 ColsNotUnit <- setdiff(ColsNotUnit, c(IDQual, DotQual))
                 ColsNotUnit <- ColsNotUnit[ColsNotUnit != '']
-
+                
                 for (col in ColsNotUnit) {
-
+                    
                     #if (all(xls[[col]] == '.') | all(is.na(xls[[col]]))) next
                     if (any(xls[[col]] == '.')) next
                     xls[, IDDDName := paste(IDDDName, get(col), sep = '_')]
-
+                    
                 }
                 return(xls)
             })
-
+            
             output <- rbindlist(XLS.list, fill = TRUE)
             output <- rbindlist(list(output, XLS.Quals), fill = TRUE)
-
+            
             aux <- output[, c('UnitName', 'IDDDName'), with = FALSE]
-
+            
             # Patterns in UnitNames : [mm], [aa], [aaaa], [n], etc.
             UnitNames_aux <- unique(aux[['UnitName']])
             patrones <- UnitNames_aux[grep('[[]', UnitNames_aux)]
             UnitToIDDDNames.local <- function(UnitNamesLocal){
-
+                
                 outputNewName <- UnitNamesLocal[!UnitNamesLocal %in% output[['UnitName']]]
-
-
+                
+                
                 if (length(outputNewName) > 0 & length(patrones) > 0){
-
+                    
                     metaVar <- lapply(patrones, function(patron){
-
+                        
                         patron_aux <- patron
                         patron <- gsub('\\[mm\\]', '(([0][1-9])|([1][0-2]))', patron)
                         patron <- gsub('\\[aa\\]', '[0-9]{2}', patron)
@@ -201,27 +219,27 @@ setMethod(
                             names(out) <- rep(aux[UnitName %in% patron_aux][['IDDDName']], length(out))
                             return(out)
                         })
-
+                        
                         return(Var)
                     })
-
+                    
                     metaVar <- unlist(metaVar)
                     #outputNew <- setdiff(outputNewName, metaVar)
                     if (length(metaVar) > 0) {
-
+                        
                         outputMetaVar <- data.table(UnitName = metaVar, IDDDName = names(metaVar))
-
+                        
                     } else {
-
+                        
                         outputMetaVar <- data.table()
-
+                        
                     }
                 } else {
-
+                    
                     outputMetaVar <- data.table()
                     #outputNew <- outputNewName
                 }
-
+                
                 #outputNew <- data.table(UnitName = outputNew, IDDDName = outputNew)
                 output <- output[which(output[['UnitName']] %in% UnitNamesLocal),
                                  c('UnitName','IDDDName'), with = F]
@@ -240,14 +258,29 @@ setMethod(
             outDT <- outDT[Unit %in% UnitNames]
             return(outDT)
         })
-
+        
         outDT <- rbindlist(output.list)
+        if(length(whichChange) > 0){
+            
+            addOutDT <- merge(infoChange, outDT, by = "Unit", all.x = TRUE)
+            addOutDT <- addOutDT[, Unit := NULL]
+            setnames(addOutDT, "oriUnit", "Unit")
+            outDT <- rbind(outDT[!addOutDT, on = "IDDD"], addOutDT)
+            UnitNames <- oriUnitNames
+            
+        }
+        
         setkeyv(outDT, names(outDT))
         outDT <- outDT[!duplicated(outDT, by = key(outDT))]
-        outDT[, Suffixes := gsub('([A-Za-z]+_)((\\[.*)|(.*))','\\2', Unit)]
+        if(nrow(outDT) > 0 ){
+            Suf <- sub("^[^_]*_", "", outDT[, Unit])
+            outDT[, Suffixes := Suf]
+        }
+        # outDT[, Suffixes := gsub('([A-Za-z]+_)((\\[.*)|(.*))','\\2', Unit)]
+        
         outDT.list <- split(outDT, outDT[['Suffixes']])
         outDT.list <- lapply(outDT.list, function(DT){
-
+            
             DT[, IDDD := gsub('..', unique(Suffixes), IDDD, fixed = TRUE)]
             DT[, Suffixes := NULL]
             return(DT)
@@ -258,7 +291,7 @@ setMethod(
         outVector <- outVector[UnitNames]
         return(outVector)
     }
-
+    
 )
 
 #' @rdname UnitToIDDDNames
@@ -270,13 +303,13 @@ setMethod(
     f = "UnitToIDDDNames",
     signature = c("character", "StQ"),
     function(UnitNames, Correspondence){
-
-
+        
+        
         DD <- getDD(Correspondence)
-
+        
         output <- UnitToIDDDNames(UnitNames, DD)
-
+        
         return(output)
-
+        
     }
 )

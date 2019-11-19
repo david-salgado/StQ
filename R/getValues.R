@@ -99,7 +99,7 @@ setMethod(
         Periods <- RepoTime::getRepo(object$Periods)
         MissingUnits <- missing(Units)
         output <- lapply(seq(along = ListofStQ), function(indexStQ){
-            
+
             StQ <- ListofStQ[[indexStQ]]
             if (MissingUnits) Units <- getUnits(StQ)
             out <- getValues(StQ, VarName = VarName, Units = Units)

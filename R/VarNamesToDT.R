@@ -31,17 +31,29 @@
 #' @include ExtractNames.R getVariables.R
 #'
 #' @import data.table
-#'
+#' 
+#' 
 #' @export
 VarNamesToDT <- function(VarNames, DD){
 
     NotPresentVar  <- setdiff(ExtractNames(VarNames), getVariables(DD))
     if (length(NotPresentVar) > 0) stop(paste0('[StQ::VarNamesToDD] The following variables are not contained in the DD slot: ', NotPresentVar, '.\n'))
     DotQual <- getDotQual(DD)
-    
+    DoubleDotQual <- getDoubleDotQual(DD)
+    IDQual <- getIDQual(DD)
+    completeVNC <- rbindlist(getVNC(DD), fill = TRUE)
+
     # Para una sola variable
     if (is.character(VarNames) & length(VarNames) == 1){
-
+        
+        tempVNC <- completeVNC[IDDD == ExtractNames(VarNames) | IDQual == ExtractNames(VarNames) | NonIDQual == ExtractNames(VarNames)]
+        tempVNC <- tempVNC[!duplicated(tempVNC, by = c('UnitName'))]
+        tempVNC <- tempVNC[, which(sapply(tempVNC, function(x)!all(is.na(x)))), with = FALSE]
+        
+        if (!all(tempVNC[['IDQual']] == '')) IDvar <- 'IDQual'
+        if (!all(tempVNC[['NonIDQual']] == '')) IDvar <- 'NonIDQual'
+        if (!all(tempVNC[['IDDD']] == '')) IDvar <- 'IDDD'
+        
         DDSlotNames <- setdiff(names(DD), 'VNC')
 
         output <- list()
@@ -55,51 +67,80 @@ VarNamesToDT <- function(VarNames, DD){
             if(dim(Names.DT)[1] == 0) {
 
                 out <- data.table(IDDD = character(0))
+                setnames(out, 'IDDD', IDvar)
                 output[[DDslot]] <- out
 
             } else {
 
-                setnames(Names.DT, 'Variable', 'IDDD')
+                setnames(Names.DT, 'Variable', IDvar)
                 Names.DT[, Sort := NULL]
                 Names.DT[, Class := NULL]
                 Names.DT[, Length := NULL]
                 Names.DT[, ValueRegExp := NULL]
+                Qual_w_Values <- unlist(Names.DT)
+                Qual_w_Values <- Qual_w_Values[which(!Qual_w_Values %in% c(ExtractNames(VarNames), DotQual))]
+                Qual_w_Values <- Qual_w_Values[Qual_w_Values != '']
 
-                ParsedNames <- strsplit(VarNames, '_')[[1]]
-                IDQualCounter <- 0
+                localVNC <- copy(tempVNC)[, c(IDvar, Qual_w_Values), with = FALSE]
 
-                ColNames <- setdiff(names(Names.DT), 'IDDD')
+                ParsedNames <- stringr::str_split(VarNames, '_')[[1]]
+                ParsedNames <- ParsedNames[-1]
+                
+                
+                for (index_col in seq_along(Qual_w_Values)){
+                    
+                    
+                    col <- Qual_w_Values[index_col]
 
-                if (length(ColNames) > 0){
-                    for (i in seq(along = ColNames)){
+                    if ('..' %in% localVNC[[col]]) {
 
-                        if (Names.DT[[paste0('Qual', i)]] %in% DotQual) {
-
-                            Names.DT[, (paste0('Qual', i)) := NULL]
-                            IDQualCounter <- IDQualCounter + 1
-                            next
-                        }
-
-                        auxName <- Names.DT[[paste0('Qual', i)]]
-                        if (auxName == '') {
-
-                            Names.DT[, (paste0('Qual', i)) := NULL]
-                            next
-                        }
-                        setnames(Names.DT, paste0('Qual', i), auxName)
-                        Names.DT[, (auxName) := ParsedNames[i - IDQualCounter + 1]]
-                }
-
-
-                    # Eliminamos columnas vacías
-                    for (col in names(Names.DT)){
-
-                        Names.DT[is.na(get(col)), (col) := '']
-
+                        localVNC[, (col) := paste0(ParsedNames[index_col:(length(ParsedNames))], collapse = '_')]
+                        next
                     }
-
-                    output[[DDslot]] <- Names.DT
+                    
+                    localVNC <- localVNC[get(col) == ParsedNames[index_col]]
+                    
                 }
+                
+                localVNC <- localVNC[, which(sapply(localVNC, function(x)all(x != ''))), with = FALSE]
+                localVNC <- localVNC[, which(sapply(localVNC, function(x)!all(is.na(x)))), with = FALSE]
+                
+                output[[DDslot]] <- localVNC
+
+                # IDQualCounter <- 0
+                # 
+                # ColNames <- setdiff(names(Names.DT), IDvar)
+                # 
+                # if (length(ColNames) > 0){
+                #     for (i in seq(along = ColNames)){
+                # 
+                #         if (Names.DT[[paste0('Qual', i)]] %in% DotQual) {
+                # 
+                #             Names.DT[, (paste0('Qual', i)) := NULL]
+                #             IDQualCounter <- IDQualCounter + 1
+                #             next
+                #         }
+                # 
+                #         auxName <- Names.DT[[paste0('Qual', i)]]
+                #         if (auxName == '') {
+                # 
+                #             Names.DT[, (paste0('Qual', i)) := NULL]
+                #             next
+                #         }
+                #         setnames(Names.DT, paste0('Qual', i), auxName)
+                #         Names.DT[, (auxName) := ParsedNames[i - IDQualCounter + 1]]
+                # }
+# 
+# 
+#                     # Eliminamos columnas vacías
+#                     for (col in names(Names.DT)){
+# 
+#                         Names.DT[is.na(get(col)), (col) := '']
+# 
+#                     }
+# 
+#                     output[[DDslot]] <- Names.DT
+#                 }
 
 
             }
