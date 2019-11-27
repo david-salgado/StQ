@@ -103,8 +103,8 @@ VarNamesToDT <- function(VarNames, DD){
                     
                 }
                 
-                localVNC <- localVNC[, which(sapply(localVNC, function(x)all(x != ''))), with = FALSE]
-                localVNC <- localVNC[, which(sapply(localVNC, function(x)!all(is.na(x)))), with = FALSE]
+                # localVNC <- localVNC[, which(sapply(localVNC, function(x)all(x != ''))), with = FALSE]
+                # localVNC <- localVNC[, which(sapply(localVNC, function(x)!all(is.na(x)))), with = FALSE]
          
                 output[[DDslot]] <- localVNC
 
@@ -162,7 +162,7 @@ VarNamesToDT <- function(VarNames, DD){
         for (col in Cols){
 
             out[, (col) := ifelse(is.na(get(col)), '', get(col))]
-            if (all(out[[col]] == '')) out[, (col) := NULL]
+            # if (all(out[[col]] == '')) out[, (col) := NULL]
 
         }
         return(out[])
