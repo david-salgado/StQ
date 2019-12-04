@@ -59,6 +59,15 @@ setMethod(
     signature = c("StQ"),
     function(object, VarNames = NULL, UnitNames = FALSE){
         
+        IDQual_R <- getIDQual(object)
+        dotQual_R <- getDotQual(object)
+        allQual <- union(IDQual_R, dotQual_R)
+        if (UnitNames) {
+            
+            allQual <- IDDDToUnitNames(allQual_R, DD)
+            
+        }
+        
         IDDDs <- getVariables(object)
         invalidIDDD <- VarNames[!VarNames %in% IDDDs]
         if (length(invalidIDDD) != 0) {
@@ -105,7 +114,7 @@ setMethod(
                 formula = as.formula(formla),
                 drop = TRUE,
                 value.var = 'Value')
-            
+#return(tempData_dcasted)
             tempDataCols <- sort(names(tempData_dcasted))
             for (col in tempDataCols){
                 
@@ -113,13 +122,13 @@ setMethod(
                 if (col == '.') tempData_dcasted[, (col) := NULL]
                 
             }
-            
+#return(list(tempData_dcasted, varClasses))            
             for (col in names(tempData_dcasted)){
                 
                 colClass <- varClasses[[ExtractNames(col)]]
                 tempData_dcasted[, (col) := as(get(col), colClass)]
             }
-            
+#return(tempData_dcasted)            
             if (UnitNames) {
                 
                 unitNames <- IDDDToUnitNames(names(tempData_dcasted), DD)
@@ -130,6 +139,7 @@ setMethod(
                                 paste0(invalidIDDDnames, collapse = ', ')))
                 }
                 setnames(tempData_dcasted, unitNames)
+#return(tempData_dcasted)
                 colNames_UnitName <- names(tempData_dcasted)
                 localIDQuals <- intersect(IDQuals_UnitName, colNames_UnitName)
                 otherCols <- setdiff(colNames_UnitName, localIDQuals)
@@ -144,6 +154,7 @@ setMethod(
                     , c(localIDQuals, otherCols_nonMeta), with = FALSE]
                 tempData_dcasted_Meta <- tempData_dcasted[
                     , c(localIDQuals, otherCols_Meta), with = FALSE]
+#return(list(tempData_dcasted_parsed, tempData_dcasted_Meta, metaStrings))
                 for (mStr in metaStrings){
                     
                     pattrn <- paste0('\\[', mStr, '\\]')
@@ -162,6 +173,7 @@ setMethod(
                     
                     setnames(tempDT, localMetaCols, valueVar)
                     
+#return(list(tempDT, formla))                    
                     flagDel <- FALSE
                     
                     # Add an auxiliary variable to be sure dcast keep the names
@@ -177,24 +189,31 @@ setMethod(
                         formula = as.formula(formla),
                         drop = TRUE,
                         value.var = valueVar)
-                    
+#return(tempDT_parsed)                    
                     if(flagDel){
                         
                         set(tempDT_parsed, j = grep('.aux',  names(tempDT_parsed)), value = NULL)
                         
                     }
-                    
-                    tempData_dcasted_parsed <- merge(tempData_dcasted_parsed, tempDT_parsed, 
+#return(list(tempData_dcasted_parsed, tempDT_parsed))                    
+                    tempData_dcasted <- merge(tempData_dcasted_parsed, tempDT_parsed, 
                                                      by = intersect(names(tempData_dcasted_parsed),
                                                                     names(tempDT_parsed)),
                                                      all = TRUE)
                 }
-                return(tempData_dcasted_parsed)
+                
+            }
+            
+            newIDQual <- setdiff(allQual, names(tempData_dcasted))
+            for (col in newIDQual){
+
+                tempData_dcasted[, (col) := '']
             }
             
             return(tempData_dcasted)
         })
         
+#names(Data_byform_dcasted) <- names(IDDDs_by_form)
         
         
         Data_dcasted <- Reduce(
@@ -214,8 +233,7 @@ setMethod(
                 return(combinedDT)
             }, Data_byform_dcasted)
         
-        
-        return(Data_dcasted)
+        return(Data_dcasted[])
         
     }
 )
