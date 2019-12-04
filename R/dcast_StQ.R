@@ -87,6 +87,8 @@ setMethod(
         Data <- getData(object)[IDDD %chin% IDDDs]
         IDDDs_in_Data <- unique(Data[['IDDD']])
         formulas.dt <- VarNamesToFormula(IDDDs_in_Data, DD)
+        allVars_inForm <- unique(Reduce(c, lapply(formulas.dt$Form, function(x){all.vars(as.formula(x))})))
+        allQual <- intersect(allQual, allVars_inForm)
         IDDDs_by_form <- split(formulas.dt[['Variable']], formulas.dt[['Form']])
         Data_byform_dcasted <- lapply(names(IDDDs_by_form), function(formla){
             
