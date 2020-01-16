@@ -62,9 +62,10 @@ setMethod(
         IDQual_R <- getIDQual(object)
         dotQual_R <- getDotQual(object)
         allQual <- union(IDQual_R, dotQual_R)
+        DD <- getDD(object)
         if (UnitNames) {
             
-            allQual <- IDDDToUnitNames(allQual_R, DD)
+            allQual <- IDDDToUnitNames(allQual, DD)
             
         }
         
@@ -81,7 +82,6 @@ setMethod(
         if (!is.null(VarNames)) IDDDs <- VarNames
         
         # For each reshape formula we create a data.table to dcast
-        DD <- getDD(object)
         IDQuals_UnitName <- IDDDToUnitNames(getIDQual(DD), DD)
         varClasses <- getClass(object)
         Data <- getData(object)[IDDD %chin% IDDDs]
