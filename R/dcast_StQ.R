@@ -199,20 +199,33 @@ setMethod(
                                                      all = TRUE)
                 }
                 allQual <- IDDDToUnitNames(allQual, DD)
+                     
                 
+            }
+            newQual <- setdiff(allQual, names(tempData_dcasted))
+            for (col in newQual){
+                
+                tempData_dcasted[, (col) := '']
+            }
+            
+            IDQualinDT <- intersect(allQual, names(tempData_dcasted))
+            for (col in IDQualinDT){
+                
+                tempData_dcasted[is.na(get(col)), (col) := '']
             }
             
             return(tempData_dcasted)
         })
         
 #names(Data_byform_dcasted) <- names(IDDDs_by_form)
-
-      
+#return(Data_byform_dcasted)
+        
         Data_dcasted <- Reduce(
             
             function(x, y) {
                 
                 if (length(intersect(names(x), names(y))) > 0){
+                    
                     
                     combinedDT <- merge(x, y, all = TRUE, by = intersect(names(x), names(y)))
                     
@@ -224,12 +237,6 @@ setMethod(
                 
                 return(combinedDT)
             }, Data_byform_dcasted)
-
-        IDQualinDT <- intersect(allQual, names(Data_dcasted))
-        for (col in IDQualinDT){
-            
-            Data_dcasted[is.na(get(col)), (col) := '']
-        }        
         
         return(Data_dcasted[])
         
