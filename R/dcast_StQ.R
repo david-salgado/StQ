@@ -63,12 +63,7 @@ setMethod(
         dotQual_R <- getDotQual(object)
         allQual <- union(IDQual_R, dotQual_R)
         DD <- getDD(object)
-        if (UnitNames) {
-            
-            allQual <- IDDDToUnitNames(allQual, DD)
-            
-        }
-        
+       
         IDDDs <- getVariables(object)
         invalidIDDD <- VarNames[!VarNames %in% IDDDs]
         if (length(invalidIDDD) != 0) {
@@ -203,21 +198,16 @@ setMethod(
                                                                     names(tempDT_parsed)),
                                                      all = TRUE)
                 }
+                allQual <- IDDDToUnitNames(allQual, DD)
                 
-            }
-            
-            newIDQual <- setdiff(allQual, names(tempData_dcasted))
-            for (col in newIDQual){
-
-                tempData_dcasted[, (col) := '']
             }
             
             return(tempData_dcasted)
         })
         
 #names(Data_byform_dcasted) <- names(IDDDs_by_form)
-        
-        
+
+      
         Data_dcasted <- Reduce(
             
             function(x, y) {
@@ -234,6 +224,12 @@ setMethod(
                 
                 return(combinedDT)
             }, Data_byform_dcasted)
+
+        IDQualinDT <- intersect(allQual, names(Data_dcasted))
+        for (col in IDQualinDT){
+            
+            Data_dcasted[is.na(get(col)), (col) := '']
+        }        
         
         return(Data_dcasted[])
         
