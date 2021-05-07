@@ -62,11 +62,7 @@ setMethod(
         IDQual_R <- getIDQual(object)
         dotQual_R <- getDotQual(object)
         allQual <- union(IDQual_R, dotQual_R)
-        if (UnitNames) {
-            
-            allQual <- IDDDToUnitNames(allQual_R, DD)
-            
-        }
+        DD <- getDD(object)
         
         IDDDs <- getVariables(object)
         invalidIDDD <- VarNames[!VarNames %in% IDDDs]
@@ -81,10 +77,8 @@ setMethod(
         if (!is.null(VarNames)) IDDDs <- VarNames
         
         # For each reshape formula we create a data.table to dcast
-        DD <- getDD(object)
         IDQuals_UnitName <- IDDDToUnitNames(getIDQual(DD), DD)
         varClasses <- getClass(object)
-return(list(getData(object), IDDDs))
         Data <- getData(object)[IDDD %chin% IDDDs]
         IDDDs_in_Data <- unique(Data[['IDDD']])
         formulas.dt <- VarNamesToFormula(IDDDs_in_Data, DD)
@@ -117,7 +111,7 @@ return(list(getData(object), IDDDs))
                 formula = as.formula(formla),
                 drop = TRUE,
                 value.var = 'Value')
-#return(tempData_dcasted)
+            #return(tempData_dcasted)
             tempDataCols <- sort(names(tempData_dcasted))
             for (col in tempDataCols){
                 
@@ -125,13 +119,13 @@ return(list(getData(object), IDDDs))
                 if (col == '.') tempData_dcasted[, (col) := NULL]
                 
             }
-#return(list(tempData_dcasted, varClasses))            
+            #return(list(tempData_dcasted, varClasses))            
             for (col in names(tempData_dcasted)){
                 
                 colClass <- varClasses[[ExtractNames(col)]]
                 tempData_dcasted[, (col) := as(get(col), colClass)]
             }
-#return(tempData_dcasted)            
+            #return(tempData_dcasted)            
             if (UnitNames) {
                 
                 unitNames <- IDDDToUnitNames(names(tempData_dcasted), DD)
@@ -142,7 +136,7 @@ return(list(getData(object), IDDDs))
                                 paste0(invalidIDDDnames, collapse = ', ')))
                 }
                 setnames(tempData_dcasted, unitNames)
-#return(tempData_dcasted)
+                #return(tempData_dcasted)
                 colNames_UnitName <- names(tempData_dcasted)
                 localIDQuals <- intersect(IDQuals_UnitName, colNames_UnitName)
                 otherCols <- setdiff(colNames_UnitName, localIDQuals)
@@ -157,7 +151,7 @@ return(list(getData(object), IDDDs))
                     , c(localIDQuals, otherCols_nonMeta), with = FALSE]
                 tempData_dcasted_Meta <- tempData_dcasted[
                     , c(localIDQuals, otherCols_Meta), with = FALSE]
-#return(list(tempData_dcasted_parsed, tempData_dcasted_Meta, metaStrings))
+                #return(list(tempData_dcasted_parsed, tempData_dcasted_Meta, metaStrings))
                 for (mStr in metaStrings){
                     
                     pattrn <- paste0('\\[', mStr, '\\]')
@@ -176,7 +170,7 @@ return(list(getData(object), IDDDs))
                     
                     setnames(tempDT, localMetaCols, valueVar)
                     
-#return(list(tempDT, formla))                    
+                    #return(list(tempDT, formla))                    
                     flagDel <- FALSE
                     
                     # Add an auxiliary variable to be sure dcast keep the names
@@ -192,38 +186,46 @@ return(list(getData(object), IDDDs))
                         formula = as.formula(formla),
                         drop = TRUE,
                         value.var = valueVar)
-#return(tempDT_parsed)                    
+                    #return(tempDT_parsed)                    
                     if(flagDel){
                         
                         set(tempDT_parsed, j = grep('.aux',  names(tempDT_parsed)), value = NULL)
                         
                     }
-#return(list(tempData_dcasted_parsed, tempDT_parsed))                    
+                    #return(list(tempData_dcasted_parsed, tempDT_parsed))                    
                     tempData_dcasted <- merge(tempData_dcasted_parsed, tempDT_parsed, 
-                                                     by = intersect(names(tempData_dcasted_parsed),
-                                                                    names(tempDT_parsed)),
-                                                     all = TRUE)
+                                              by = intersect(names(tempData_dcasted_parsed),
+                                                             names(tempDT_parsed)),
+                                              all = TRUE)
                 }
+                allQual <- IDDDToUnitNames(allQual, DD)
+                
                 
             }
-            
-            newIDQual <- setdiff(allQual, names(tempData_dcasted))
-            for (col in newIDQual){
-
+            newQual <- setdiff(allQual, names(tempData_dcasted))
+            for (col in newQual){
+                
                 tempData_dcasted[, (col) := '']
+            }
+            
+            IDQualinDT <- intersect(allQual, names(tempData_dcasted))
+            for (col in IDQualinDT){
+                
+                tempData_dcasted[is.na(get(col)), (col) := '']
             }
             
             return(tempData_dcasted)
         })
         
-#names(Data_byform_dcasted) <- names(IDDDs_by_form)
-#return(Data_byform_dcasted)        
+        #names(Data_byform_dcasted) <- names(IDDDs_by_form)
+        #return(Data_byform_dcasted)
         
         Data_dcasted <- Reduce(
             
             function(x, y) {
                 
                 if (length(intersect(names(x), names(y))) > 0){
+                    
                     
                     combinedDT <- merge(x, y, all = TRUE, by = intersect(names(x), names(y)))
                     
