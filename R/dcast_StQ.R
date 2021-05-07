@@ -84,6 +84,7 @@ setMethod(
         DD <- getDD(object)
         IDQuals_UnitName <- IDDDToUnitNames(getIDQual(DD), DD)
         varClasses <- getClass(object)
+return(list(getData(object), IDDDs))
         Data <- getData(object)[IDDD %chin% IDDDs]
         IDDDs_in_Data <- unique(Data[['IDDD']])
         formulas.dt <- VarNamesToFormula(IDDDs_in_Data, DD)
@@ -216,7 +217,7 @@ setMethod(
         })
         
 #names(Data_byform_dcasted) <- names(IDDDs_by_form)
-        
+#return(Data_byform_dcasted)        
         
         Data_dcasted <- Reduce(
             
