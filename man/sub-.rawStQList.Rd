@@ -4,13 +4,25 @@
 \alias{[.rawStQList}
 \title{Extract parts of an object of class \linkS4class{rawStQList}}
 \usage{
-\method{[}{rawStQList}(x, i, j, by, keyby, with = TRUE,
-  nomatch = getOption("datatable.nomatch"), mult = "all",
-  roll = FALSE, rollends = if (roll == "nearest") c(TRUE, TRUE) else if
-  (roll >= 0) c(FALSE, TRUE) else c(TRUE, FALSE), which = FALSE, .SDcols,
+\method{[}{rawStQList}(
+  x,
+  i,
+  j,
+  by,
+  keyby,
+  with = TRUE,
+  nomatch = getOption("datatable.nomatch"),
+  mult = "all",
+  roll = FALSE,
+  rollends = if (roll == "nearest") c(TRUE, TRUE) else if (roll >= 0) c(FALSE, TRUE)
+    else c(TRUE, FALSE),
+  which = FALSE,
+  .SDcols,
   verbose = getOption("datatable.verbose"),
   allow.cartesian = getOption("datatable.allow.cartesian"),
-  drop = NULL, on = NULL)
+  drop = NULL,
+  on = NULL
+)
 }
 \arguments{
 \item{x}{object of class \linkS4class{rawStQList}.}

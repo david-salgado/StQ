@@ -4,7 +4,9 @@
 \name{ExamplerawStQ}
 \alias{ExamplerawStQ}
 \title{Object of class \linkS4class{rawStQ}}
-\format{Object of class \code{rawStQ}. Its slot \code{Data} has 354458 rows and 3 columns.}
+\format{
+Object of class \code{rawStQ}. Its slot \code{Data} has 354458 rows and 3 columns.
+}
 \usage{
 data(ExamplerawStQ)
 }

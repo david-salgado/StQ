@@ -4,7 +4,9 @@
 \name{ExampleDatadt}
 \alias{ExampleDatadt}
 \title{Object of class \linkS4class{data.table}}
-\format{Object of class \code{data.table}. Its slot \code{Data} has 354458 rows and 5 columns.}
+\format{
+Object of class \code{data.table}. Its slot \code{Data} has 354458 rows and 5 columns.
+}
 \usage{
 data(ExampleDatadt)
 }

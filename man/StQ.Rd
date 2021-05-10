@@ -4,8 +4,10 @@
 \alias{StQ}
 \title{S3 class for sets of \emph{St}andarized \emph{Q}uestionnaires}
 \usage{
-StQ(Data = data.table(IDDD = character(0), Value = character(0)),
-  DD = BuildDD())
+StQ(
+  Data = data.table(IDDD = character(0), Value = character(0)),
+  DD = BuildDD()
+)
 }
 \arguments{
 \item{Data}{Object of class \linkS4class{data.table}.}

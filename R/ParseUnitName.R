@@ -27,6 +27,8 @@ setGeneric("ParseUnitName", function(UnitNames, MetaValues){standardGeneric("Par
 #' 
 #' @importClassesFrom RepoTime RepoTimeInt
 #' 
+#' @importFrom stringr str_pad
+#' 
 #' @export
 setMethod(
     f = "ParseUnitName",
@@ -50,17 +52,18 @@ setMethod(
             year4 <- unlist(as.integer(substr(TimePeriod, 5, 8)))
             ParsedUnitNames <- unlist(lapply(ParsedUnitNames, function(UnitName){
                 
-                outLocal <- gsub('[aaaa + 1]', year4 + 1, UnitName, fixed = TRUE)
-                outLocal <- gsub('[aaaa]', year4, outLocal, fixed = TRUE)
-                outLocal <- gsub('[aaaa - 1]', year4 - 1, outLocal, fixed = TRUE)
+                outLocal <- gsub('[aaaa + 1]', str_pad(year4 + 1, 4, 'left', '0'), UnitName, fixed = TRUE)
+                outLocal <- gsub('[aaaa]', str_pad(year4, 4, 'left', '0'), outLocal, fixed = TRUE)
+                outLocal <- gsub('[aaaa - 1]', str_pad(year4 - 1, 4, 'left', '0'), outLocal, fixed = TRUE)
                 return(outLocal)
             }))
+
             year2 <- unlist(as.integer(substr(TimePeriod, 7, 8)))
             ParsedUnitNames <- unlist(lapply(ParsedUnitNames, function(UnitName){
                 
-                outLocal <- gsub('[aa + 1]', year2 + 1, UnitName, fixed = TRUE)
-                outLocal <- gsub('[aa]', year2, outLocal, fixed = TRUE)
-                outLocal <- gsub('[aa - 1]', year2 - 1, outLocal, fixed = TRUE)
+                outLocal <- gsub('[aa + 1]', str_pad(year2 + 1, 2, 'left', '0'), UnitName, fixed = TRUE)
+                outLocal <- gsub('[aa]', str_pad(year2, 2, 'left', '0'), outLocal, fixed = TRUE)
+                outLocal <- gsub('[aa - 1]', str_pad(year2 - 1, 2, 'left', '0'), outLocal, fixed = TRUE)
                 return(outLocal)
             }))
         }))
@@ -72,18 +75,19 @@ setMethod(
             year4 <- unlist(as.integer(substr(TimePeriod, 3, 6)))
             ParsedUnitNames <- unlist(lapply(UnitNames, function(UnitName){
                 
-                outLocal <- gsub('[aaaa + 1]', year4 + 1, UnitName, fixed = TRUE)
-                outLocal <- gsub('[aaaa]', year4, outLocal, fixed = TRUE)
-                outLocal <- gsub('[aaaa - 1]', year4 - 1, outLocal, fixed = TRUE)
+              outLocal <- gsub('[aaaa + 1]', str_pad(year4 + 1, 4, 'left', '0'), UnitName, fixed = TRUE)
+              outLocal <- gsub('[aaaa]', str_pad(year4, 4, 'left', '0'), outLocal, fixed = TRUE)
+              outLocal <- gsub('[aaaa - 1]', str_pad(year4 - 1, 4, 'left', '0'), outLocal, fixed = TRUE)
+                
                 return(outLocal)
             }))
             year2 <- unlist(as.integer(substr(TimePeriod, 5, 6)))
             ParsedUnitNames <- unlist(lapply(ParsedUnitNames, function(UnitName){
                 
-                outLocal <- gsub('[aa + 1]', year2 + 1, UnitName, fixed = TRUE)
-                outLocal <- gsub('[aa]', year2, outLocal, fixed = TRUE)
-                outLocal <- gsub('[aa - 1]', year2 - 1, outLocal, fixed = TRUE)
-                return(outLocal)
+              outLocal <- gsub('[aa + 1]', str_pad(year2 + 1, 2, 'left', '0'), UnitName, fixed = TRUE)
+              outLocal <- gsub('[aa]', str_pad(year2, 2, 'left', '0'), outLocal, fixed = TRUE)
+              outLocal <- gsub('[aa - 1]', str_pad(year2 - 1, 2, 'left', '0'), outLocal, fixed = TRUE)
+              return(outLocal)
             }))
         }))
     }
@@ -102,18 +106,19 @@ setMethod(
             year4 <- unlist(as.integer(substr(TimePeriod, 4, 7)))
             ParsedUnitNames <- unlist(lapply(ParsedUnitNames, function(UnitName){
                 
-                outLocal <- gsub('[aaaa + 1]', year4 + 1, UnitName, fixed = TRUE)
-                outLocal <- gsub('[aaaa]', year4, outLocal, fixed = TRUE)
-                outLocal <- gsub('[aaaa - 1]', year4 - 1, outLocal, fixed = TRUE)
-                return(outLocal)
+              outLocal <- gsub('[aaaa + 1]', str_pad(year4 + 1, 4, 'left', '0'), UnitName, fixed = TRUE)
+              outLocal <- gsub('[aaaa]', str_pad(year4, 4, 'left', '0'), outLocal, fixed = TRUE)
+              outLocal <- gsub('[aaaa - 1]', str_pad(year4 - 1, 4, 'left', '0'), outLocal, fixed = TRUE)
+              
+              return(outLocal)
             }))
             year2 <- unlist(as.integer(substr(TimePeriod, 6, 7)))
             ParsedUnitNames <- unlist(lapply(ParsedUnitNames, function(UnitName){
                 
-                outLocal <- gsub('[aa + 1]', year2 + 1, UnitName, fixed = TRUE)
-                outLocal <- gsub('[aa]', year2, outLocal, fixed = TRUE)
-                outLocal <- gsub('[aa - 1]', year2 - 1, outLocal, fixed = TRUE)
-                return(outLocal)
+              outLocal <- gsub('[aa + 1]', str_pad(year2 + 1, 2, 'left', '0'), UnitName, fixed = TRUE)
+              outLocal <- gsub('[aa]', str_pad(year2, 2, 'left', '0'), outLocal, fixed = TRUE)
+              outLocal <- gsub('[aa - 1]', str_pad(year2 - 1, 2, 'left', '0'), outLocal, fixed = TRUE)
+              return(outLocal)
             }))
         }))
     }

@@ -4,7 +4,9 @@
 \name{ExampleDM}
 \alias{ExampleDM}
 \title{\linkS4class{data.table} with a rectangular data set (data matrix)}
-\format{\code{data.table} with 29538 rows and 13 columns.}
+\format{
+\code{data.table} with 29538 rows and 13 columns.
+}
 \usage{
 data(ExampleDM)
 }

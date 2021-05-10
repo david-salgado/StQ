@@ -4,11 +4,12 @@
 \alias{BuildVNC}
 \title{Constructor of objects of class \linkS4class{VarNameCorresp}}
 \usage{
-BuildVNC(Data = list(ID = data.table(IDQual = character(0), NonIDQual =
-  character(0), IDDD = character(0), UnitName = character(0), InFiles =
-  character(0)), MicroData = data.table(IDQual = character(0), NonIDQual =
-  character(0), IDDD = character(0), UnitName = character(0), InFiles =
-  character(0))))
+BuildVNC(
+  Data = list(ID = data.table(IDQual = character(0), NonIDQual = character(0), IDDD =
+    character(0), UnitName = character(0), InFiles = character(0)), MicroData =
+    data.table(IDQual = character(0), NonIDQual = character(0), IDDD = character(0),
+    UnitName = character(0), InFiles = character(0)))
+)
 }
 \arguments{
 \item{Data}{A named \code{list} of objects of class \linkS4class{data.table}.}

@@ -89,6 +89,7 @@ melt_StQ <- function(DataMatrix, DD){
         indexCol <- ExtractNames(namesDM) %in% auxMeasureVar[[QualName]]
         localQuals <- strsplit(QualName, ' ')[[1]]
         ColNames <- c(localQuals, names(DM)[indexCol])
+
         localDM <- DM[, intersect(ColNames, namesDM), with = F]
         localDM[, lapply(.SD, as.character), by = localIDQuals]
         localID <- intersect(unique(c(localIDQuals, localdotQuals)), localQuals)
