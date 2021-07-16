@@ -91,8 +91,9 @@ melt_StQ <- function(DataMatrix, DD){
         ColNames <- c(localQuals, names(DM)[indexCol])
 
         localDM <- DM[, intersect(ColNames, namesDM), with = F]
-        localDM[, lapply(.SD, as.character), by = localIDQuals]
         localID <- intersect(unique(c(localIDQuals, localdotQuals)), localQuals)
+        localDM[, lapply(.SD, as.character), by = localID]
+        
 
         out <- data.table::melt.data.table(localDM,
                                            id.vars = localID,
