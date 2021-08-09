@@ -57,7 +57,7 @@ StQ <- function(Data = data.table(IDDD = character(0), Value = character(0)),
         
         stop('[StQ:: validity StQ] The last second column of compnent Data must be IDDD.')
     }
-         
+
     # Detección de filas duplicadas
     colData <- names(Datadt)
     colsData <- c('IDDD', 'Value')
@@ -65,8 +65,10 @@ StQ <- function(Data = data.table(IDDD = character(0), Value = character(0)),
                  
         setkeyv(Datadt, colData[-which(colData == 'Value')])
         DupRows <- duplicated(Datadt, by = key(Datadt))
+
         if (sum(DupRows) > 0) {
             warning('[StQ::validity StQ] The following rows are duplicated:\n\n')
+
             print(Datadt[DupRows])
             stop('[StQ::validity StQ] Please remove duplicated rows.')
         }
@@ -102,7 +104,7 @@ StQ <- function(Data = data.table(IDDD = character(0), Value = character(0)),
         stop(paste0('\n[StQ::validity StQ] The following variables in the column IDDD of slot "Data" are not defined in slot DD: \n',
                              paste0(NotinDD, collapse = ', '), '.\n'))
     }
-             
+
     class(object) <- append("StQ", class(object))
     return(object)    
 }

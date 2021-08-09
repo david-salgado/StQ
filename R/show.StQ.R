@@ -31,13 +31,13 @@ setMethod(
         NumCol <- length(NamesCol)
         if (NumCol <= ColMax) {
 
-            show(getData(object))
+            print(getData(object))
 
         } else {
             
             NumCols <- min(NumCol, ColMax)
             NamesShowCol <- NamesCol[c(1:(ColMax - 2), (NumCol - 1):NumCol)]
-            show(getData(object)[, NamesShowCol, with = F])
+            print(getData(object)[, NamesShowCol, with = F])
             cat('\n')
             cat(paste(rep('=', 40)), '\n\n')
             cat(paste0('[StQ::show] The following columns have been omitted:\n ',

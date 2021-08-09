@@ -54,7 +54,7 @@ setMethod(
                 Lengths <- unlist(Lengths)
                 names(Quals) <- Lengths
                 return(Quals)
-            })
+        })
 
         names(Quals.list) <- names(rawData.list)
 
@@ -87,7 +87,7 @@ setMethod(
 
             Data[is.na(get(col)), (col) := '']
         }
-        
+
         if(nrow(Data) == 0){
             Data[, IDDD := gsub("(\\w+)", "\\1", Data$V1, perl = TRUE)][
                 ,Value := gsub("(\\w+)", "\\1", Data$V1, perl = TRUE)]
