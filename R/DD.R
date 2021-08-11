@@ -115,6 +115,9 @@ DD <- function(VNC = BuildVNC(),
                                   Qual1 = character(0),
                                   ValueRegExp = character(0))){
             
+    
+    Sort <- NULL
+  
     object <- list(
         VNC = VNC,
         ID = ID,

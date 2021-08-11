@@ -26,6 +26,8 @@ setMethod(
     signature = c("StQ"),
     function(object){
         
+        IDQual <- Variable <- NULL
+        
         Data <- getData(object)
         if (!('Period' %chin% names(Data))) stop('[StQ::StQToStQList] Component Data must have a column named Period.')
         

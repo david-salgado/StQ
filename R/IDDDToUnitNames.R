@@ -98,6 +98,9 @@ setMethod(
   signature = c("character", "DD"),
   function(IDDDNames, object){
     
+    Suffix <- IDDDName <- Variable <- IDDD <- NonIDQual <- IDDD <- UnitName <- NULL
+    
+    
     if (missing(IDDDNames)) stop('[StQ::IDDDToUnitNames] A character vector of IDDDNames must be specified.\n')
     if (missing(object)) stop('[StQ::IDDDToUnitNames] A object object (DD or StQ) must be specified.\n')
     

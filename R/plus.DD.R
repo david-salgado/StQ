@@ -102,6 +102,8 @@
 #' @export
 `+.DD` <- function(e1, e2){        
     
+    Variable <- Sort <- NULL
+    
     sumDDdt <- function(dt1, dt2){
         
         CommonCols <- intersect(names(dt1), names(dt2))

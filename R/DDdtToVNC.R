@@ -30,6 +30,8 @@
 #' @export
 DDdtToVNC <- function(DDdt, NameVNC, InFiles = rep('', dim(DDdt)[1])){
     
+    Sort <- NULL
+  
     #auxVarList_DD <- list(VNC = VNC(), New = DDdt)
     #names(auxVarList_DD) <- c('VNC', NameVNC)
     #newDD <- try(BuildDD(auxVarList_DD))

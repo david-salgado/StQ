@@ -38,7 +38,9 @@
 #'
 #' @export
 melt_StQ <- function(DataMatrix, DD){
-
+    
+    Variable <- Qual <- Value <- IDDD <- Value <- NULL
+    
     # Función que elimina carácter blanco al principio y al final
     trim <- function(x) gsub("^\\s+|\\s+$", "", x, useBytes = T)
 

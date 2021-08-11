@@ -46,6 +46,8 @@ setMethod(
     signature = c("character", "DD"),
     function(VarNames, DD){
         
+        Sort <- Variable <- LHS <- RHS <- Form <- NULL
+        
         trimPlus <- function (x) gsub("^\\s{1}[+]{1}\\s{1}|\\s{1}[+]{1}\\s{1}$", "", x, useBytes = T)
         #trim <- function (x) gsub("^\\s+|\\s+$", "", x, useBytes = T)
         

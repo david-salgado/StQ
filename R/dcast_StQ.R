@@ -59,6 +59,8 @@ setMethod(
     signature = c("StQ"),
     function(object, VarNames = NULL, UnitNames = FALSE){
         
+        IDDD <- allLocalCols <- NULL
+        
         IDQual_R <- getIDQual(object)
         dotQual_R <- getDotQual(object)
         allQual <- union(IDQual_R, dotQual_R)

@@ -16,7 +16,7 @@
 #'
 #' @include rawStQ.R getData.R
 #'
-#' @import data.table
+#' @import data.table methods
 #'
 #' @export
 setMethod(
@@ -31,4 +31,4 @@ setMethod(
 )
 
 #' @export
-print.rawStQ <- function(object){show(object)}
+print.rawStQ <- function(x, ...){show(x)}

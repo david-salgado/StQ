@@ -26,6 +26,8 @@
 #' @export
 VarNamesToDD <- function(VarNames, DD){
     
+    Variable <- NULL
+    
     NotPresentVar  <- setdiff(ExtractNames(VarNames), getVariables(DD))
     if (length(NotPresentVar) > 0) stop(paste0('[StQ::VarNamesToDD] The following variables are not contained in the DD slot: ', NotPresentVar, '.\n'))
     outputDD <- DD()

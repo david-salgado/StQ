@@ -39,7 +39,7 @@
 #'
 #' @include VNC.R
 #'
-#' @import data.table
+#' @import data.table methods
 #' 
 #' @export
 setMethod(
@@ -78,4 +78,4 @@ setMethod(
 )
 
 #' @export
-print.VNC <- function(object){show(object)}
+print.VNC <- function(x, ...){show(x)}

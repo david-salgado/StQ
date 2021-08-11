@@ -28,6 +28,8 @@ setMethod(
     signature = c("StQ"),
     function(Q){
         
+        Sort <- Variable <- QualKey <- NULL
+      
         if (dim(getData(Q))[1] == 0){
           
           rawQ <- rawStQ(rawData = data.table(IDDDKey = character(0),

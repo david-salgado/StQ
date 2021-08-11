@@ -22,7 +22,7 @@
 #'
 #' @include StQList.R getPeriods.R
 #'
-#' @import data.table
+#' @import data.table methods
 #' 
 #'
 #' @export
@@ -42,4 +42,4 @@ setMethod(
 )
 
 #' @export
-print.StQList <- function(object){show(object)}
+print.StQList <- function(x, ...){show(x)}

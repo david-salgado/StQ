@@ -35,7 +35,9 @@
 #' 
 #' @export
 VarNamesToDT <- function(VarNames, DD){
-
+    
+    IDDD <- NonIDQual <- Variable <- Sort <- Class <- Length <- ValueRegExp <- NULL
+    
     NotPresentVar  <- setdiff(ExtractNames(VarNames), getVariables(DD))
     if (length(NotPresentVar) > 0) stop(paste0('[StQ::VarNamesToDD] The following variables are not contained in the DD slot: ', NotPresentVar, '.\n'))
     DotQual <- getDotQual(DD)

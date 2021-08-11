@@ -41,6 +41,8 @@
 #' @export
 StQ <- function(Data = data.table(IDDD = character(0), Value = character(0)),
                 DD = BuildDD()){
+    
+    StQ <- NULL
             
     object <- list(Data = Data, DD = DD)
     Datadt <- object$Data

@@ -119,6 +119,8 @@ setMethod(
     signature = c("character", "DD"),
     function(UnitNames, Correspondence){
         
+        UnitName <- IDDDName <- IDDD <- NonIDQual <- Variable <- Unit <- Suffixes <- NULL
+        
         IDQualsGlobal <- getIDQual(Correspondence)
         DD <- Correspondence
         Correspondence <- getVNC(DD)

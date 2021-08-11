@@ -31,6 +31,8 @@
 #'
 #' @include rawStQ.R
 #' 
+#' @import methods
+#' 
 #' @export
 rawStQList <- function(Data = list(), Periods = new(Class = 'RepoTimeInt')){
 

@@ -18,7 +18,7 @@
 #'
 #' @include StQ.R getData.R
 #'
-#' @import data.table
+#' @import data.table methods
 #'
 #' @export
 setMethod(
@@ -31,13 +31,13 @@ setMethod(
         NumCol <- length(NamesCol)
         if (NumCol <= ColMax) {
 
-            print(getData(object))
+            show(getData(object))
 
         } else {
             
             NumCols <- min(NumCol, ColMax)
             NamesShowCol <- NamesCol[c(1:(ColMax - 2), (NumCol - 1):NumCol)]
-            print(getData(object)[, NamesShowCol, with = F])
+            show(getData(object)[, NamesShowCol, with = F])
             cat('\n')
             cat(paste(rep('=', 40)), '\n\n')
             cat(paste0('[StQ::show] The following columns have been omitted:\n ',
@@ -51,4 +51,4 @@ setMethod(
 )
 
 #' @export
-print.StQ <- function(object){show(object)}
+print.StQ <- function(x, ...){show(x)}

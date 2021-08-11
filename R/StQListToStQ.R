@@ -25,7 +25,9 @@ setMethod(
     f = "StQListToStQ",
     signature = c("StQList"),
     function(object){
-
+        
+        Period <- Sort <- IDDD <- NULL
+        
         DDold <- Reduce('+', getDD(object))
         auxVNCdt <- data.table(IDQual = c('Period'),
                                NonIDQual = '',
